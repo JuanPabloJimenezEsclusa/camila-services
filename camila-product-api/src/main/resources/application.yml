@@ -1,0 +1,120 @@
+###### Default properties ######
+spring:
+  application:
+    name: "@project.name@:@project.version@"
+  banner:
+    location: classpath:/api-banner.txt
+  data:
+    mongodb:
+      uri: mongodb://camila:camila@localhost:27017/camila-db
+      authentication-database: camila-db
+      ssl:
+        enabled: false
+      auto-index-creation: true
+      uuid-representation: java_legacy
+  webflux:
+    base-path: /product-dev/api
+
+springdoc:
+  swagger-ui:
+    filter: true
+    show-common-extensions: true
+    doc-expansion: none
+    operations-sorter: method
+    persist-authorization: true
+    deep-linking: true
+    display-request-duration: true
+    defaultModelsExpandDepth: 1
+    tagsSorter: alpha
+  show-actuator: true
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+    resolve-schema-properties: true
+  show-login-endpoint: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    beans:
+      cache:
+        time-to-live: 10s
+    health:
+      show-details: always
+      show-components: always
+    shutdown:
+      enabled: true
+    prometheus:
+      enabled: true
+
+logging:
+  charset:
+    file: UTF-8
+    console: UTF-8
+  config: classpath:logback.xml
+
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 6.0.8
+
+---
+spring:
+  main:
+    log-startup-info: false
+  config:
+    activate:
+      on-profile: "loc | dev"
+
+logging:
+  level:
+    org.springframework.boot: debug
+    org.springframework: debug
+    org.springframework.data: debug
+
+---
+###### Integration properties ######
+spring:
+  main:
+    log-startup-info: false
+  config:
+    activate:
+      on-profile: "int"
+  webflux:
+    base-path: /product-int/api
+  data:
+    mongodb:
+      uri: mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
+      authentication-database: camila-db
+
+---
+###### Production properties ######
+# Turn off global debug
+debug: false
+
+# Spring base properties
+spring:
+  main:
+    log-startup-info: false
+  config:
+    activate:
+      on-profile: "pro"
+  webflux:
+    base-path: /product-pro/api
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
+
+logging:
+  level:
+    org.hibernate.validator: error
+    org.springframework: error
+    org.springframework.web: error
+    org.springframework.data: error
+    org.springframework.boot.web.embedded.netty: info

@@ -1,0 +1,5 @@
+   _   _   _   _   _   _   _      _   _   _
+  / \ / \ / \ / \ / \ / \ / \    / \ / \ / \
+ ( P ( r ( o ( d ( u ( c ( t )  ( A ( P ( I )
+  \_/ \_/ \_/ \_/ \_/ \_/ \_/    \_/ \_/ \_/
+ ${spring.application.name} - Spring-boot:${spring-boot.formatted-version}

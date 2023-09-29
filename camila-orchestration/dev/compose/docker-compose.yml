@@ -1,0 +1,53 @@
+version: '3'
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:6.0-ubi8
+    container_name: camila-product-db   
+    ports: 
+      - 27017-27019:27017-27019
+    expose:
+      - 27017
+      - 27018
+      - 27019
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=camila
+      - MONGODB_INITDB_ROOT_PASSWORD=camila
+    volumes:
+      - camila_product_mongodb_data:/data/db
+    networks: 
+      camila_product_network:
+  backend: 
+    # imagen construida con: org.graalvm.buildtools:native-maven-plugin:0.9.27
+    image: docker.io/library/camila-product-api:1.0.0
+    container_name: camila-product-api
+    environment:
+      spring.data.mongodb.uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db"
+      SPRING_PROFILES_ACTIVE: "dev"
+      LANG: "en_US.utf8"
+      LANGUAGE: "en_US.utf8"
+      LC_ALL: "en_US.utf8"
+      TIME_ZONE: UTC
+      JVM_OPTIONS: "-Xmx1024m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+    ports:
+     - 5005:5005
+     - 8080:8080
+    expose:
+     - 5005
+     - 8080
+    depends_on:
+     - "mongodb"
+    volumes:
+      - camila_product_backend_tmp:/tmp
+    networks: 
+      camila_product_network:
+
+volumes:
+  camila_product_mongodb_data:
+  camila_product_backend_tmp:
+
+networks:
+  camila_product_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/24

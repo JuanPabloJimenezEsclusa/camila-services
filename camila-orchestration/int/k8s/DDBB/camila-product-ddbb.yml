@@ -1,0 +1,158 @@
+# sources: 
+# - https://devopscube.com/deploy-mongodb-kubernetes/
+# - https://github.com/scriptcamp/kubernetes-mongodb
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mongodb
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mongodb-quota
+  namespace: mongodb
+spec:
+  hard: 
+    limits.cpu: "4"
+    limits.memory: 8192Mi
+    pods: "10"
+    requests.cpu: "4"
+    requests.memory: 4096Mi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-data-pv
+  namespace: mongodb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: mongo-data
+    namespace: mongodb
+  hostPath:
+    path: /tmp/hostpath-provisioner/data/mongo
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  volumeMode: Filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-data
+  namespace: mongodb
+spec:
+  accessModes:
+    - ReadWriteOnce 
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-creds
+  namespace: mongodb
+data:
+  password: cGFzc3dvcmQxMjM= #password123
+  username: YWRtaW51c2Vy #adminuser
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+  namespace: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - image: mongodb/mongodb-community-server:6.0-ubi8
+        name: camila-product-db
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4096Mi
+          requests:
+            cpu: "1"
+            memory: 1024Mi
+        env:
+        - name: MONGODB_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: username
+        - name: MONGODB_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: password
+        volumeMounts:
+        - name: "mongo-data-dir"
+          mountPath: "/data/db"
+      volumes:
+      - name: "mongo-data-dir"
+        persistentVolumeClaim:
+          claimName: "mongo-data"
+          readOnly: false
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongo
+  name: mongo-nodeport-svc
+  namespace: mongodb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+    targetPort: 27017
+    nodePort: 32000
+  selector:
+    app: mongo
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-ingress
+  namespace: mongodb
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: mongo-nodeport-svc
+            port:
+              number: 32000
