@@ -26,9 +26,11 @@ API Rest de productos
  ┗ 📜ProductApiApplication.java
 ```
 
+![Arquitectura-hexagonal](.docs/architecture/camila-product-api-architecture-v1.png "Diagrama Hexagonal")
+
 ## Enlaces
 
-* API DOC (dev): <http://localhost:8080/product-dev/api/webjars/swagger-ui/index.html>
+* API DOC (dev): <http://localhost:8080/product-dev/api/swagger-ui.html>
 
 ## Ejemplos de petición API
 

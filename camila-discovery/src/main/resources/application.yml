@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: "@project.name@"
+  banner:
+    # https://www.ascii-art-generator.org/
+    location: classpath:/discovery-banner.txt
+  profiles:
+    active:
+      - ${ACTIVE_SPRING_PROFILE:loc}
+
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      enabled: true
+      show-values: always
+      cache:
+        time-to-live: 60s
+    info:
+      enabled: true
+      cache:
+        time-to-live: 3600s
+    beans:
+      enabled: true
+      cache:
+        time-to-live: 10s
+    health:
+      enabled: true
+      show-details: always
+      show-components: always
+    shutdown:
+      enabled: true
+    prometheus:
+      enabled: true
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+
+server:
+  port: ${PORT:8761}
+  forward-headers-strategy: framework
+
+eureka:
+  client:
+    #registerWithEureka: false
+    #fetchRegistry: false
+    enabled: true
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    statusPageUrlPath: actuator/info
+    healthCheckUrlPath: actuator/health
+    nonSecurePortEnabled: true
+    leaseRenewalIntervalInSeconds: 15
+
+logging:
+  level:
+    org.springframework.boot: debug
+    org.springframework: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+

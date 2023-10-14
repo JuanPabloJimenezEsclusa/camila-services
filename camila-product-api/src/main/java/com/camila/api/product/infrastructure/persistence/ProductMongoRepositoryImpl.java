@@ -15,10 +15,10 @@ import static com.camila.api.product.infrastructure.persistence.ProductSorterHel
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 /**
- * The type Product repository.
+ * The type Product mongo repository.
  */
 @Repository
-class ProductRepositoryImpl implements ProductRepository {
+class ProductMongoRepositoryImpl implements ProductRepository {
 
   private final ProductMongoRepository productMongoRepository;
   private final ReactiveMongoOperations mongoOperations;
@@ -31,9 +31,9 @@ class ProductRepositoryImpl implements ProductRepository {
    * @param mongoOperations        the mongo operations
    * @param mapper                 the mapper
    */
-  public ProductRepositoryImpl(ProductMongoRepository productMongoRepository,
-                               ReactiveMongoOperations mongoOperations,
-                               ProductMapper mapper) {
+  public ProductMongoRepositoryImpl(ProductMongoRepository productMongoRepository,
+                                    ReactiveMongoOperations mongoOperations,
+                                    ProductMapper mapper) {
     this.productMongoRepository = productMongoRepository;
     this.mongoOperations = mongoOperations;
     this.mapper = mapper;

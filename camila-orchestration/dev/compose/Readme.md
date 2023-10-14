@@ -15,7 +15,7 @@ docker-compose up -d
 docker-compose ps
 
 # ver logs
-docker-compose logs backend mongodb --follow
+docker-compose logs mongodb backend-product gateway --follow
 
 # detener servicios
 docker-compose down

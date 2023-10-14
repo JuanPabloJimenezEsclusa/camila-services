@@ -15,5 +15,5 @@ docker run --rm -it \
   --env LANG=en_US.utf8 \
   --env LANGUAGE=en_US.utf8 \
   --env LC_ALL=en_US.utf8 \
-  --memory="1024m" --memory-reservation="1024m" --memory-swap="1024m" ---cpu-shares=2000 \
+  --memory="1024m" --memory-reservation="1024m" --memory-swap="1024m" --cpu-shares=2000 \
   docker.io/library/camila-product-api:1.0.0

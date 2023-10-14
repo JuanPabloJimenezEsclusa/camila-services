@@ -1,0 +1,173 @@
+spring:
+  application:
+    name: "@project.name@"
+  banner:
+    # https://www.ascii-art-generator.org/
+    location: classpath:/gateway-banner.txt
+  profiles:
+    active:
+      - ${ACTIVE_SPRING_PROFILE:loc}
+  config:
+    import: "optional:configserver:"
+    #import: optional:configserver:${CONFIG_SERVER_URI:http://localhost:8888}
+  # https://cloud.spring.io/spring-cloud-gateway/reference/html/
+  cloud:
+    config:
+      enabled: true
+      retry:
+        max-attempts: 10
+        max-interval: 10000
+        initial-interval: 1000
+        multiplier: 1.1
+      discovery:
+        enabled: true
+        service-id: "camila-config"
+      label: main
+      profile: ${ACTIVE_SPRING_PROFILE}
+      name: ${spring.application.name}
+      allow-override: true
+    loadbalancer:
+      health-check:
+        initial-delay: 5s
+        interval: 30s
+      retry:
+        backoff:
+          enabled: true
+    discovery:
+      enabled: true
+    gateway:
+      metrics:
+        enabled: true
+      routes:
+        - id: products
+          uri: ${PRODUCT_SERVER_URL:http://localhost:8080/}
+          predicates:
+            - Path=/product-*/api/**
+          filters:
+            - name: PreserveHostHeader
+            - name: CircuitBreaker
+              args:
+                name: fallbackCircuitBreaker
+                fallbackUri: forward:/fallback
+                # ReactiveResilience4JCircuitBreakerFactory.java (review)
+                minimumNumberOfCalls: 10
+            - name: Retry
+              args:
+                retries: 3
+                statuses: BAD_REQUEST, INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT
+                methods: GET, HEAD, OPTIONS
+                backoff:
+                  firstBackoff: 10ms
+                  maxBackoff: 50ms
+                  factor: 2
+                  basedOnPreviousValue: false
+            - name: RequestSize
+              args:
+                maxSize: 5000
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+      filter:
+        request-rate-limiter:
+          enabled: true
+        circuit-breaker:
+          enabled: true
+        retry:
+          enabled: true
+        fallback-headers:
+          enabled: true
+      default-filters:
+        - AddRequestHeader=proxied, true
+  main:
+    web-application-type: reactive
+    lazy-initialization: true
+
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
+
+springdoc:
+  swagger-ui:
+    filter: true
+    show-common-extensions: true
+    doc-expansion: none
+    operations-sorter: method
+    persist-authorization: true
+    deep-linking: true
+    display-request-duration: true
+    defaultModelsExpandDepth: 1
+    tagsSorter: alpha
+
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - name: API Gateway Service
+        url: /v3/api-docs
+      - name: API Products Service
+        url: /product-dev/api/v3/api-docs
+  show-actuator: true
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+    resolve-schema-properties: true
+  show-login-endpoint: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      enabled: true
+      show-values: always
+      cache:
+        time-to-live: 60s
+    info:
+      enabled: true
+      cache:
+        time-to-live: 3600s
+    beans:
+      enabled: true
+      cache:
+        time-to-live: 10s
+    health:
+      enabled: true
+      show-details: always
+      show-components: always
+    shutdown:
+      enabled: true
+    prometheus:
+      enabled: true
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+
+server:
+  port: ${PORT:8090}
+  forward-headers-strategy: framework
+
+logging:
+  level:
+    org.springframework.boot: debug
+    org.springframework: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+eureka:
+  client:
+    enabled: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    statusPageUrlPath: actuator/info
+    healthCheckUrlPath: actuator/health
+    nonSecurePortEnabled: true
+    leaseRenewalIntervalInSeconds: 15

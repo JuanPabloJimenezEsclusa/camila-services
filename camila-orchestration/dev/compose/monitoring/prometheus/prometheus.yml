@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s # Scrape targets every 15 seconds
+  scrape_timeout: 15s # Timeout after 15 seconds
+
+scrape_configs:
+  - job_name: "camila-product-api"
+    metrics_path: '/product-dev/api/actuator/prometheus'
+    scrape_interval: 10s # Override the default global interval for this job
+    scrape_timeout: 10s # Override the default global timeout for this job
+    static_configs:
+      - targets: ['backend-product:8080']
+        labels:
+          application: 'camila-product-api'
+          group: 'first-group'
+  - job_name: "camila-operations"
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s # Override the default global interval for this job
+    scrape_timeout: 10s # Override the default global timeout for this job
+    static_configs:
+      - targets: ['discovery:8761', 'gateway:8090', 'admin:8100', 'config:8888']
+        labels:
+          application: 'camila-operations'
+          group: 'first-group'

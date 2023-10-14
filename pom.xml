@@ -18,10 +18,27 @@
 
   <properties>
     <java.version>17</java.version>
+    <spring-cloud-version>2022.0.4</spring-cloud-version>
   </properties>
 
   <modules>
     <module>camila-product-api</module>
+    <module>camila-discovery</module>
+    <module>camila-gateway</module>
+    <module>camila-admin</module>
+    <module>camila-config</module>
   </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud-version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>

@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: "@project.name@"
+  banner:
+    # https://www.ascii-art-generator.org/
+    location: classpath:/admin-banner.txt
+  profiles:
+    active:
+      - ${ACTIVE_SPRING_PROFILE:loc}
+  config:
+    import: "optional:configserver:"
+    #import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      retry:
+        max-attempts: 10
+        max-interval: 10000
+        initial-interval: 1000
+        multiplier: 1.1
+      discovery:
+        enabled: true
+        service-id: "camila-config"
+      label: main
+      profile: ${ACTIVE_SPRING_PROFILE}
+      name: ${spring.application.name}
+      allow-override: true
+
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      enabled: true
+      show-values: always
+      cache:
+        time-to-live: 60s
+    info:
+      enabled: true
+      cache:
+        time-to-live: 3600s
+    beans:
+      enabled: true
+      cache:
+        time-to-live: 10s
+    health:
+      enabled: true
+      show-details: always
+      show-components: always
+    shutdown:
+      enabled: true
+    prometheus:
+      enabled: true
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+
+server:
+  port: ${PORT:8100}
+  forward-headers-strategy: framework
+
+logging:
+  level:
+    org.springframework.boot: debug
+    org.springframework: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
+
+eureka:
+  client:
+    enabled: true
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    healthcheck:
+      enabled: true
+  instance:
+    preferIpAddress: true
+    statusPageUrlPath: actuator/info
+    healthCheckUrlPath: actuator/health
+    metadata-map:
+      startup: ${random.int}
+    nonSecurePortEnabled: true
+    leaseRenewalIntervalInSeconds: 15

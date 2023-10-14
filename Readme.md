@@ -1,15 +1,25 @@
 # camila-services
 
-Proyecto de pruebas de servicios en Java
+Proyecto de servicios con |Java|Spring|
 
 ## Contenido
 
-| Módulo                                    | Descripción                |
-|-------------------------------------------|----------------------------|
+| Módulo                                        | Descripción                |
+|-----------------------------------------------|----------------------------|
 | [camila-product-api](/camila-product-api)     | Contiene el API Rest que expone la consulta de productos |
+| [camila-discovery](/camila-discovery)         | Contiene un descubridor de servicios |
+| [camila-gateway](/camila-gateway)             | Contiene un gateway para servicios |
+| [camila-config](/camila-config)               | Contiene un configurador central de servicios |
+| [camila-admin](/camila-admin)                 | Contiene un administrador de servicios (UI) |
 | [camila-orchestration](/camila-orchestration) | Contiene la configuración como código para orquestar el despliegue del API |
 
-## Historia de usuario inicial
+## Diagrama de arquitectura
+
+![Arquitectura-C1](.docs/architecture/camila-service-da-v1-C1.png "Diagrama C1")
+
+![Arquitectura-C2](.docs/architecture/camila-service-da-v1-C2.png "Diagrama C2")
+
+## Caso de uso
 
 En la plataforma **camila.com**, los productos están organizados en diversas categorías para facilitar la búsqueda de los clientes. Para optimizar la experiencia del usuario, se necesita un algoritmo que ordene los productos dentro de estas categorías. Este algoritmo debe utilizar una combinación ponderada de métricas, como el número de unidades vendidas (representando el 80% del peso) y el ratio de stock (representando el 20% del peso)
 

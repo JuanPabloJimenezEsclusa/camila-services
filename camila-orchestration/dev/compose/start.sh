@@ -7,11 +7,12 @@ set -o xtrace
 
 cd "$(dirname "$0")"
 
-# compilar y crear imagen
+# compilar y crear imágenes
 export SPRING_PROFILES_ACTIVE=dev
+
 mvn clean spring-boot:build-image \
   -Dmaven.test.skip=true \
-  -f ./../../../camila-product-api/pom.xml
+  -f ./../../../pom.xml
 
 # iniciar servicios
 docker-compose up -d
