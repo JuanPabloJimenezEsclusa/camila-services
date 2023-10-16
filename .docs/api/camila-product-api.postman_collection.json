@@ -1,0 +1,2230 @@
+{
+	"info": {
+		"_postman_id": "47a6f249-ac6d-450c-b1b7-28872d5df133",
+		"name": "Camila Product Service API",
+		"description": "API Rest in Camila Product service project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1542367"
+	},
+	"item": [
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "shutdown",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'shutdown'",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/shutdown",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"shutdown"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/shutdown",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"shutdown"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "serviceregistry",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'serviceregistry'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/serviceregistry",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"serviceregistry"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/serviceregistry",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"serviceregistry"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'serviceregistry'",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "<string>",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/actuator/serviceregistry",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"serviceregistry"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<string>",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/actuator/serviceregistry",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"serviceregistry"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "refresh",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'refresh'",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/refresh",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"refresh"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/refresh",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"refresh"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "loggers",
+					"item": [
+						{
+							"name": "{name}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'loggers-name'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/loggers/:name",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"loggers",
+												":name"
+											],
+											"variable": [
+												{
+													"key": "name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/loggers/:name",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"loggers",
+														":name"
+													],
+													"variable": [
+														{
+															"key": "name"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								},
+								{
+									"name": "Actuator web endpoint 'loggers-name'",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "ERROR",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/actuator/loggers/:name",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"loggers",
+												":name"
+											],
+											"variable": [
+												{
+													"key": "name",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "ERROR",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/actuator/loggers/:name",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"loggers",
+														":name"
+													],
+													"variable": [
+														{
+															"key": "name"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'loggers'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/loggers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"loggers"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/loggers",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"loggers"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "threaddump",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'threaddump'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain;charset=UTF-8"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/threaddump",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"threaddump"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain;charset=UTF-8"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/threaddump",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"threaddump"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "scheduledtasks",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'scheduledtasks'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/scheduledtasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"scheduledtasks"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/scheduledtasks",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"scheduledtasks"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "prometheus",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'prometheus'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain;version=0.0.4;charset=utf-8"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/prometheus",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"prometheus"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain;version=0.0.4;charset=utf-8"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/prometheus",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"prometheus"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain;version=0.0.4;charset=utf-8"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "metrics",
+					"item": [
+						{
+							"name": "{requiredMetricName}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'metrics-requiredMetricName'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/metrics/:requiredMetricName",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"metrics",
+												":requiredMetricName"
+											],
+											"variable": [
+												{
+													"key": "requiredMetricName",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/metrics/:requiredMetricName",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"metrics",
+														":requiredMetricName"
+													],
+													"variable": [
+														{
+															"key": "requiredMetricName"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'metrics'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/metrics",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"metrics"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/metrics",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"metrics"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "mappings",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'mappings'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/mappings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"mappings"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/mappings",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"mappings"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "info",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'info'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/info",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"info"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/info",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"info"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "heapdump",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'heapdump'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/octet-stream"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/heapdump",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"heapdump"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/octet-stream"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/heapdump",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"heapdump"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/octet-stream"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "health",
+					"item": [
+						{
+							"name": "{*path}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'health-path'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/health/:*path",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"health",
+												":*path"
+											],
+											"variable": [
+												{
+													"key": "*path",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/health/:*path",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"health",
+														":*path"
+													],
+													"variable": [
+														{
+															"key": "*path"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'health'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/health",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"health"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/health",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"health"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "features",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'features'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/features",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"features"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/features",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"features"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "env",
+					"item": [
+						{
+							"name": "{toMatch}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'env-toMatch'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/env/:toMatch",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"env",
+												":toMatch"
+											],
+											"variable": [
+												{
+													"key": "toMatch",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/env/:toMatch",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"env",
+														":toMatch"
+													],
+													"variable": [
+														{
+															"key": "toMatch"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'env'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/env",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"env"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/env",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"env"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "configprops",
+					"item": [
+						{
+							"name": "{prefix}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'configprops-prefix'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/configprops/:prefix",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"configprops",
+												":prefix"
+											],
+											"variable": [
+												{
+													"key": "prefix",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/configprops/:prefix",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"configprops",
+														":prefix"
+													],
+													"variable": [
+														{
+															"key": "prefix"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'configprops'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/configprops",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"configprops"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/configprops",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"configprops"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "conditions",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'conditions'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/conditions",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"conditions"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/conditions",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"conditions"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "caches",
+					"item": [
+						{
+							"name": "{cache}",
+							"item": [
+								{
+									"name": "Actuator web endpoint 'caches-cache'",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/caches/:cache",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"caches",
+												":cache"
+											],
+											"variable": [
+												{
+													"key": "cache",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/caches/:cache",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"caches",
+														":cache"
+													],
+													"variable": [
+														{
+															"key": "cache"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								},
+								{
+									"name": "Actuator web endpoint 'caches-cache'",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/caches/:cache",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"caches",
+												":cache"
+											],
+											"variable": [
+												{
+													"key": "cache",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/vnd.spring-boot.actuator.v3+json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/actuator/caches/:cache",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"actuator",
+														"caches",
+														":cache"
+													],
+													"variable": [
+														{
+															"key": "cache"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'caches'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/caches",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"caches"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/caches",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"caches"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						},
+						{
+							"name": "Actuator web endpoint 'caches'",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/caches",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"caches"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/caches",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"caches"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "beans",
+					"item": [
+						{
+							"name": "Actuator web endpoint 'beans'",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator/beans",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator",
+										"beans"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/vnd.spring-boot.actuator.v3+json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/actuator/beans",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"actuator",
+												"beans"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Actuator root web endpoint",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.spring-boot.actuator.v3+json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/actuator",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.spring-boot.actuator.v3+json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/actuator",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"actuator"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"tempor_59\": {\n    \"irureb\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"labore5\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"ullamco_559\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"culpa3\": {\n    \"consequat_76\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"Duis_96b\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"elit_7\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"ut_311\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"Excepteur_7\": {\n    \"qui4b\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  },\n  \"excd\": {\n    \"nullad\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    },\n    \"anim7\": {\n      \"href\": \"<string>\",\n      \"templated\": \"<boolean>\"\n    }\n  }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "find By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/products/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"products",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"internalId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"category\": \"<string>\",\n  \"salesUnits\": \"<integer>\",\n  \"stock\": {\n    \"dolor80\": \"<integer>\",\n    \"id_a1\": \"<integer>\",\n    \"aute_f\": \"<integer>\"\n  }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "sort Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products?salesUnits=0.80&stock=0.20&page=0&size=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "salesUnits",
+									"value": "0.80"
+								},
+								{
+									"key": "stock",
+									"value": "0.20"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?nostrud_66=<string>&ut_d8=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "nostrud_66",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "ut_d8",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"estdc0\": \"<integer>\"\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"et_49\": \"<integer>\",\n      \"ad_6\": \"<integer>\",\n      \"Duis_9\": \"<integer>\",\n      \"eu_8\": \"<integer>\"\n    }\n  }\n]"
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "scope",
+						"value": "{{tokenScope}}",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "{{tokenAccessURL}}",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "{{tokenAuthURL}}",
+						"type": "string"
+					},
+					{
+						"key": "redirect_uri",
+						"value": "{{tokenCallbackURL}}",
+						"type": "string"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{tokenClientSecret}}",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "{{tokenClientId}}",
+						"type": "string"
+					},
+					{
+						"key": "refreshRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "authRequestParams",
+						"value": [],
+						"type": "any"
+					},
+					{
+						"key": "tokenName",
+						"value": "camila-service-token",
+						"type": "string"
+					},
+					{
+						"key": "challengeAlgorithm",
+						"value": "S256",
+						"type": "string"
+					},
+					{
+						"key": "state",
+						"value": "randomstring",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					},
+					{
+						"key": "client_authentication",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

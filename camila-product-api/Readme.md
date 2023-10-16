@@ -26,7 +26,7 @@ API Rest de productos
  ┗ 📜ProductApiApplication.java
 ```
 
-![Arquitectura-hexagonal](.docs/architecture/camila-product-api-architecture-v1.png "Diagrama Hexagonal")
+![Arquitectura-hexagonal](.docs/architecture/camila-product-api-architecture-v1.svg "Diagrama Hexagonal")
 
 ## Enlaces
 

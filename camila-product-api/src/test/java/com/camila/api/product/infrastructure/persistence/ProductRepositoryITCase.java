@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @EntityScan(basePackages = "com.camila.api.product.infrastructure.persistence")
 @ComponentScan(basePackages = "com.camila.api.product.infrastructure.persistence")
 @DisplayName("[IT][ProductRepository] Product repository test")
-class ProductRepositoryIntegrationTest {
+class ProductRepositoryITCase {
 
   @Autowired
   private ProductRepository repository;

@@ -34,6 +34,10 @@ public enum Metrics {
       .orElse(UNKNOWN);
   }
 
+  Metrics(String description) {
+    this.description = description;
+  }
+
   /**
    * Gets description.
    *
@@ -41,9 +45,5 @@ public enum Metrics {
    */
   public String getDescription() {
     return this.description;
-  }
-
-  Metrics(String description) {
-    this.description = description;
   }
 }

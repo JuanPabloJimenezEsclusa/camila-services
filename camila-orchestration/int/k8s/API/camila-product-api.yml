@@ -78,7 +78,8 @@ data:
   LANGUAGE: "en_US.utf8"
   LC_ALL: "en_US.utf8"
   TIME_ZONE: UTC
-  JVM_OPTIONS: "-Xmx1024m -Xms512m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+  JVM_OPTIONS: "-Xms512m -Xmx1024m"
+  JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
 ---
 apiVersion: apps/v1

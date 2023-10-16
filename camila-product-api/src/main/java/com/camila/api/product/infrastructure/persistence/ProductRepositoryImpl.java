@@ -18,7 +18,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.newA
  * The type Product mongo repository.
  */
 @Repository
-class ProductMongoRepositoryImpl implements ProductRepository {
+class ProductRepositoryImpl implements ProductRepository {
 
   private final ProductMongoRepository productMongoRepository;
   private final ReactiveMongoOperations mongoOperations;
@@ -31,9 +31,9 @@ class ProductMongoRepositoryImpl implements ProductRepository {
    * @param mongoOperations        the mongo operations
    * @param mapper                 the mapper
    */
-  public ProductMongoRepositoryImpl(ProductMongoRepository productMongoRepository,
-                                    ReactiveMongoOperations mongoOperations,
-                                    ProductMapper mapper) {
+  public ProductRepositoryImpl(ProductMongoRepository productMongoRepository,
+                               ReactiveMongoOperations mongoOperations,
+                               ProductMapper mapper) {
     this.productMongoRepository = productMongoRepository;
     this.mongoOperations = mongoOperations;
     this.mapper = mapper;

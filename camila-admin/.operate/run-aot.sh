@@ -7,7 +7,7 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# ejecutar con oat
+# ejecutar con aot
 export SPRING_PROFILES_ACTIVE=loc
 java -Dspring.aot.enabled=true \
   -jar target/camila-admin-1.0.0.jar

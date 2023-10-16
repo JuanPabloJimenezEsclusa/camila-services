@@ -7,7 +7,7 @@ spring:
     location: classpath:/api-banner.txt
   data:
     mongodb:
-      uri: mongodb://camila:camila@localhost:27017/camila-db
+      uri: mongodb://camilauser:camilauser@localhost:27017/camila-db
       authentication-database: camila-db
       ssl:
         enabled: false
@@ -15,24 +15,6 @@ spring:
       uuid-representation: java_legacy
   webflux:
     base-path: /product-dev/api
-  config:
-    import: "optional:configserver:"
-    #import: optional:configserver:${CONFIG_SERVER_URI:http://localhost:8888}
-  cloud:
-    config:
-      enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
-      discovery:
-        enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${ACTIVE_SPRING_PROFILE}
-      name: ${spring.application.name}
-      allow-override: true
 
 info:
   app:
@@ -40,6 +22,7 @@ info:
     version: "@project.version@"
 
 springdoc:
+  enable-spring-security: false
   swagger-ui:
     filter: true
     show-common-extensions: true
@@ -107,6 +90,67 @@ de:
 server:
   port: ${PORT:8080}
 
+---
+###### Local|Dev properties ######
+spring:
+  jmx:
+    enabled: true
+  config:
+    activate:
+      on-profile: "loc|dev"
+
+logging:
+  level:
+    org.springframework.boot: debug
+    org.springframework: debug
+    org.springframework.data: debug
+    org.springframework.security: debug
+    org.springframework.security.oauth2: DEBUG
+
+---
+###### Disable config|discovery feature by default ######
+spring:
+  config:
+    activate:
+      on-profile: "!dev&!int&!pro"
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  security:
+    user:
+      name: camila
+      password: camila
+
+---
+###### Enable config|discovery feature on remote deploy ######
+spring:
+  config:
+    activate:
+      on-profile: "!default"
+    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+  cloud:
+    config:
+      enabled: true
+      retry:
+        max-attempts: 10
+        max-interval: 10000
+        initial-interval: 1000
+        multiplier: 1.1
+      discovery:
+        enabled: true
+        service-id: "camila-config"
+      label: main
+      profile: ${SPRING_PROFILES_ACTIVE}
+      name: ${spring.application.name}
+      allow-override: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}"
+
 eureka:
   client:
     enabled: true
@@ -121,25 +165,16 @@ eureka:
     nonSecurePortEnabled: true
     leaseRenewalIntervalInSeconds: 15
 
----
-spring:
-  main:
-    log-startup-info: false
-  config:
-    activate:
-      on-profile: "loc | dev"
-
-logging:
-  level:
-    org.springframework.boot: debug
-    org.springframework: debug
-    org.springframework.data: debug
+management:
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
+      connect-timeout: 10s
+      read-timeout: 30s
 
 ---
 ###### Integration properties ######
 spring:
-  main:
-    log-startup-info: false
   config:
     activate:
       on-profile: "int"

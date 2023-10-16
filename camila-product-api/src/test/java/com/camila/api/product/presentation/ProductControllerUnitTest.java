@@ -29,7 +29,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
  */
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = { ProductController.class })
-@Import({ RestExceptionHandler.class })
+@Import({ RestExceptionHandler.class, LocalSecurityConfig.class })
 @DisplayName("[UT][ProductController] Product controller test")
 class ProductControllerUnitTest {
 

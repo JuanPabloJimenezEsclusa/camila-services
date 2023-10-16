@@ -6,7 +6,8 @@ spring:
     location: classpath:/config-banner.txt
   profiles:
     active:
-      - ${ACTIVE_SPRING_PROFILE:loc}
+      - ${SPRING_PROFILES_ACTIVE:loc}
+      - native
   main:
     web-application-type: servlet
     lazy-initialization: true
@@ -24,7 +25,7 @@ spring:
           delete-untracked-branches: true
           timeout: 10
           default-label: main
-          basedir: /camila-config/src/main/resources/config-server/
+          basedir: ./camila-config/src/main/resources/config-server/
 
 info:
   app:
@@ -64,6 +65,11 @@ management:
     git:
       enabled: true
       mode: full
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
+      connect-timeout: 10s
+      read-timeout: 30s
 
 server:
   port: ${PORT:8888}

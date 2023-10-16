@@ -17,7 +17,7 @@ docker run -it --rm \
   -p 27017-27019:27017-27019 \
   --expose 27017-27019 \
   --memory="3072m" --memory-reservation="3072m" --memory-swap="3072m" --cpu-shares=2000 \
-  -e MONGO_INITDB_ROOT_USERNAME=camila \
-  -e MONGO_INITDB_ROOT_PASSWORD=camila \
+  -e MONGODB_INITDB_ROOT_USERNAME=camila \
+  -e MONGODB_INITDB_ROOT_PASSWORD=camila \
   -v mongo-data6:/data/db \
-  mongo:6.0
+  mongodb/mongodb-community-server:6.0-ubi8

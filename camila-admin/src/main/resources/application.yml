@@ -6,10 +6,9 @@ spring:
     location: classpath:/admin-banner.txt
   profiles:
     active:
-      - ${ACTIVE_SPRING_PROFILE:loc}
+      - ${SPRING_PROFILES_ACTIVE:loc}
   config:
-    import: "optional:configserver:"
-    #import: optional:configserver:http://localhost:8888
+    import: "optional:configserver:${CONFIG_SERVER_URI:}"
   cloud:
     config:
       retry:
@@ -21,7 +20,7 @@ spring:
         enabled: true
         service-id: "camila-config"
       label: main
-      profile: ${ACTIVE_SPRING_PROFILE}
+      profile: ${SPRING_PROFILES_ACTIVE}
       name: ${spring.application.name}
       allow-override: true
 

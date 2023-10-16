@@ -8,18 +8,26 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+/**
+ * The type Cors config.
+ */
 @Configuration
 public class CorsConfig extends CorsConfiguration {
 
+  /**
+   * Cors filter cors web filter.
+   *
+   * @return the cors web filter
+   */
   @Bean
   public CorsWebFilter corsFilter() {
-    CorsConfiguration config = new CorsConfiguration();
+    var config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.setAllowedOrigins(List.of("*"));
     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
     config.setAllowedHeaders(List.of("origin", "content-type", "accept", "authorization", "cookie"));
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    var source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", config);
 
     return new CorsWebFilter(source);

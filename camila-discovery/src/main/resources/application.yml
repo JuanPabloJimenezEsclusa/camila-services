@@ -6,7 +6,7 @@ spring:
     location: classpath:/discovery-banner.txt
   profiles:
     active:
-      - ${ACTIVE_SPRING_PROFILE:loc}
+      - ${SPRING_PROFILES_ACTIVE:loc}
 
 info:
   app:

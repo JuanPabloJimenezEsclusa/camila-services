@@ -35,11 +35,27 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
     <dependency>
       <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing-bridge-otel</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-zipkin</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -90,6 +106,18 @@
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
       <version>1.1.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-core</artifactId>
+      <version>1.36</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.openjdk.jmh</groupId>
+      <artifactId>jmh-generator-annprocess</artifactId>
+      <version>1.36</version>
       <scope>test</scope>
     </dependency>
 
@@ -147,6 +175,7 @@
         <configuration>
           <source>17</source>
           <target>17</target>
+          <encoding>UTF-8</encoding>
           <annotationProcessorPaths>
             <path>
               <groupId>org.springframework.boot</groupId>
@@ -169,6 +198,11 @@
               <artifactId>spring-context-indexer</artifactId>
               <version>6.0.12</version>
             </path>
+            <path>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-generator-annprocess</artifactId>
+              <version>1.35</version>
+            </path>
             <dependency>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok-mapstruct-binding</artifactId>
@@ -176,19 +210,18 @@
             </dependency>
           </annotationProcessorPaths>
           <compilerArgs>
-            <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+            <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>>
           </compilerArgs>
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-maven-plugin</artifactId>
-        <version>1.4</version>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.1.2</version>
         <executions>
           <execution>
-            <phase>integration-test</phase>
             <goals>
-              <goal>generate</goal>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
             </goals>
           </execution>
         </executions>
@@ -290,6 +323,145 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>check-dependency</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>8.3.1</version>
+            <configuration>
+              <skipProvidedScope>true</skipProvidedScope>
+              <skipRuntimeScope>true</skipRuntimeScope>
+              <failOnError>false</failOnError>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>4.0.0-M9</version>
+          </plugin>
+        </plugins>
+      </build>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-project-info-reports-plugin</artifactId>
+            <version>3.4.5</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>summary</report>
+                  <report>dependencies</report>
+                  <report>plugins</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>8.3.1</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>aggregate</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.10</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+
+    <profile>
+      <id>error-prone</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <source>17</source>
+              <target>17</target>
+              <encoding>UTF-8</encoding>
+              <annotationProcessorPaths>
+                <path>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-configuration-processor</artifactId>
+                  <version>3.1.4</version>
+                </path>
+                <path>
+                  <groupId>org.mapstruct</groupId>
+                  <artifactId>mapstruct-processor</artifactId>
+                  <version>1.5.5.Final</version>
+                </path>
+                <path>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok</artifactId>
+                  <version>1.18.26</version>
+                </path>
+                <!-- Uses the index to improve runtime startup -->
+                <path>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>spring-context-indexer</artifactId>
+                  <version>6.0.12</version>
+                </path>
+                <path>
+                  <groupId>com.google.errorprone</groupId>
+                  <artifactId>error_prone_core</artifactId>
+                  <version>2.23.0</version>
+                </path>
+                <path>
+                  <groupId>org.openjdk.jmh</groupId>
+                  <artifactId>jmh-generator-annprocess</artifactId>
+                  <version>1.35</version>
+                </path>
+                <dependency>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok-mapstruct-binding</artifactId>
+                  <version>0.2.0</version>
+                </dependency>
+              </annotationProcessorPaths>
+              <compilerArgs>
+                <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+                <arg>-XDcompilePolicy=simple</arg>
+                <arg>-Xplugin:ErrorProne -XepExcludedPaths:.*/com/camila/api/benchmark/jmh_generated/.*</arg>
+              </compilerArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
   </profiles>
 
 </project>

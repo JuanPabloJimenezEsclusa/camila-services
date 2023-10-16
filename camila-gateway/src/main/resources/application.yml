@@ -1,4 +1,22 @@
 spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          camila-keycloak:
+            token-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+            authorization-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
+            userinfo-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/userinfo"
+            user-name-attribute: preferred_username
+        registration:
+          gateway:
+            provider: camila-keycloak
+            client-id: camila-client
+            client-secret: Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}"
+            scope: profile, openid, email, roles, web-origins, camila.read, camila.write
+
   application:
     name: "@project.name@"
   banner:
@@ -6,10 +24,9 @@ spring:
     location: classpath:/gateway-banner.txt
   profiles:
     active:
-      - ${ACTIVE_SPRING_PROFILE:loc}
+      - ${SPRING_PROFILES_ACTIVE:loc}
   config:
-    import: "optional:configserver:"
-    #import: optional:configserver:${CONFIG_SERVER_URI:http://localhost:8888}
+    import: "optional:configserver:${CONFIG_SERVER_URI:}"
   # https://cloud.spring.io/spring-cloud-gateway/reference/html/
   cloud:
     config:
@@ -23,7 +40,7 @@ spring:
         enabled: true
         service-id: "camila-config"
       label: main
-      profile: ${ACTIVE_SPRING_PROFILE}
+      profile: ${SPRING_PROFILES_ACTIVE}
       name: ${spring.application.name}
       allow-override: true
     loadbalancer:
@@ -43,8 +60,17 @@ spring:
           uri: ${PRODUCT_SERVER_URL:http://localhost:8080/}
           predicates:
             - Path=/product-*/api/**
+          metadata:
+            cors:
+              allowedOrigins: '*'
+              allowedMethods: '*'
+              allowedHeaders: '*'
+              maxAge: 30
           filters:
-            - name: PreserveHostHeader
+            - name: RemoveRequestHeader
+              args:
+                name: Cookie
+            - name: TokenRelay
             - name: CircuitBreaker
               args:
                 name: fallbackCircuitBreaker
@@ -75,8 +101,6 @@ spring:
           enabled: true
         fallback-headers:
           enabled: true
-      default-filters:
-        - AddRequestHeader=proxied, true
   main:
     web-application-type: reactive
     lazy-initialization: true
@@ -92,12 +116,10 @@ springdoc:
     show-common-extensions: true
     doc-expansion: none
     operations-sorter: method
-    persist-authorization: true
     deep-linking: true
     display-request-duration: true
     defaultModelsExpandDepth: 1
     tagsSorter: alpha
-
     path: /swagger-ui.html
     config-url: /v3/api-docs/swagger-config
     urls:
@@ -111,7 +133,6 @@ springdoc:
     groups:
       enabled: true
     resolve-schema-properties: true
-  show-login-endpoint: true
 
 management:
   endpoints:
@@ -146,6 +167,11 @@ management:
     git:
       enabled: true
       mode: full
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
+      connect-timeout: 10s
+      read-timeout: 30s
 
 server:
   port: ${PORT:8090}
@@ -153,8 +179,11 @@ server:
 
 logging:
   level:
-    org.springframework.boot: debug
     org.springframework: debug
+    org.springframework.boot: debug
+    org.springframework.security: debug
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.cloud.gateway: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 

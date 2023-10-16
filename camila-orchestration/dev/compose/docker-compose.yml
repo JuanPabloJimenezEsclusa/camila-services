@@ -1,57 +1,88 @@
-version: '3'
+version: '3.9'
 services:
   config:
     image: docker.io/library/camila-config:1.0.0
     container_name: camila-config
-    environment:
-      SPRING_PROFILES_ACTIVE: "dev,native"
-      JVM_OPTIONS: "-Xmx256m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5045"
-      EUREKA_URI: "http://discovery:8761/eureka"
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    env_file:
+      - .env
     ports:
-      - "5045:5045"
+      - "5045:5005"
       - "8888:8888"
     expose:
       - 5045
       - 8888
     volumes:
       - camila_config_tmp:/tmp
+    healthcheck:
+      test: ps aux | grep java || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
         ipv4_address: 172.18.0.254
   discovery:
     image: docker.io/library/camila-discovery:1.0.0
     container_name: camila-discovery
-    environment:
-      SPRING_PROFILES_ACTIVE: "dev"
-      JVM_OPTIONS: "-Xmx256m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5025"
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    env_file:
+      - .env
     ports:
-      - "5025:5025"
+      - "5025:5005"
       - "8761:8761"
     expose:
       - 5025
       - 8761
-    depends_on:
-      - "config"
     volumes:
       - camila_discovery_tmp:/tmp
+    healthcheck:
+      test: ps aux | grep java || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
   gateway:
     image: docker.io/library/camila-gateway:1.0.0
     container_name: camila-gateway
-    environment:
-      SPRING_PROFILES_ACTIVE: "dev"
-      JVM_OPTIONS: "-Xmx256m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5015"
-      PRODUCT_SERVER_URL: "lb://CAMILA-PRODUCT-API"
-      EUREKA_URI: "http://discovery:8761/eureka"
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    env_file:
+      - .env
     ports:
-      - "5015:5015"
+      - "5015:5005"
       - "8090:8090"
     expose:
       - 5015
       - 8090
     depends_on:
-      - "config"
+      discovery:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+      config:
+        condition: service_healthy
+    links:
+      - config
+      - discovery
+      - keycloak
     volumes:
       - camila_gateway_tmp:/tmp
     networks:
@@ -59,12 +90,16 @@ services:
   admin:
     image: docker.io/library/camila-admin:1.0.0
     container_name: camila-admin
-    environment:
-      SPRING_PROFILES_ACTIVE: "dev"
-      JVM_OPTIONS: "-Xmx256m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5035"
-      EUREKA_URI: "http://discovery:8761/eureka"
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    env_file:
+      - .env
     ports:
-      - "5035:5035"
+      - "5035:5005"
       - "8100:8100"
     expose:
       - 5035
@@ -74,47 +109,60 @@ services:
       - "config"
     volumes:
       - camila_admin_tmp:/tmp
+    links:
+      - discovery
+      - config
     networks:
       camila_product_network:
   mongodb:
     image: mongodb/mongodb-community-server:6.0-ubi8
-    container_name: camila-product-db   
+    container_name: camila-product-db
+    restart: "on-failure"
+    deploy:
+      resources:
+        limits:
+          memory: "2048m"
+          cpus: "2"
+    env_file:
+      - .env
     ports: 
       - "27017-27019:27017-27019"
     expose:
       - 27017
       - 27018
       - 27019
-    environment:
-      - MONGODB_INITDB_ROOT_USERNAME=camila
-      - MONGODB_INITDB_ROOT_PASSWORD=camila
     volumes:
       - camila_product_mongodb_data:/data/db
     networks: 
       camila_product_network:
   backend-product:
     image: docker.io/library/camila-product-api:1.0.0
+    restart: "no"
+    env_file:
+      - .env
     deploy:
       mode: replicated
       replicas: 3
-    environment:
-      spring.data.mongodb.uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db"
-      SPRING_PROFILES_ACTIVE: "dev"
-      LANG: "en_US.utf8"
-      LANGUAGE: "en_US.utf8"
-      LC_ALL: "en_US.utf8"
-      TIME_ZONE: UTC
-      JVM_OPTIONS: "-Xmx512m -Xms1024m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-      EUREKA_URI: "http://discovery:8761/eureka"
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
     ports:
+      - "5500-5502:5000"
       - "5005-5007:5005"
       - "8080-8082:8080"
     expose:
+      - 5500-5502
       - 5005-5007
       - 8080-8082
     depends_on:
       - "mongodb"
       - "config"
+    links:
+      - mongodb
+      - config
+      - discovery
+      - zipkin
     volumes:
       - camila_product_backend_tmp:/tmp
     networks:
@@ -122,6 +170,14 @@ services:
   prometheus:
     image: prom/prometheus:v2.47.2
     container_name: prometheus
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
     ports:
       - "9090:9090"
     expose:
@@ -133,16 +189,66 @@ services:
   grafana:
     image: grafana/grafana:10.1.5
     container_name: grafana
-    environment:
-      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     expose:
       - 3000
-    restart: unless-stopped
     volumes:
       - ./monitoring/datasources:/etc/grafana/provisioning/datasources
       - grafana_data:/var/lib/grafana
+    links:
+      - prometheus
+    networks:
+      camila_product_network:
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.4
+    command: [ 'start-dev --hostname keycloak --http-port 9191 --import-realm' ]
+    container_name: keycloak
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    restart: "no"
+    env_file:
+      - .env
+    hostname: keycloak
+    ports:
+      - "9191:9191"
+    expose:
+      - 9191
+    volumes:
+      - ./authorization:/opt/keycloak/data/import
+      - keycloak_config:/opt/keycloak/config
+      - keycloak_data:/opt/keycloak/data
+    networks:
+      camila_product_network:
+  zipkin:
+    # https://github.com/openzipkin/zipkin#quick-start
+    image: openzipkin/zipkin:2.24.3
+    container_name: zipkin
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    environment:
+      JAVA_TOOL_OPTIONS: ""
+    ports:
+      - "9411:9411"
+    expose:
+      - 9411
     networks:
       camila_product_network:
 
@@ -153,6 +259,8 @@ volumes:
   camila_discovery_tmp:
   camila_admin_tmp:
   camila_config_tmp:
+  keycloak_config:
+  keycloak_data:
   grafana_data:
 
 networks:

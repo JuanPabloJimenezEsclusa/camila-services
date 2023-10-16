@@ -13,7 +13,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  */
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("[IT][ProductController] Product controller test")
-class ProductControllerIntegrationTest {
+class ProductControllerITCase {
 
   @Autowired
   private WebTestClient webClient;
@@ -37,7 +37,7 @@ class ProductControllerIntegrationTest {
    */
   @Test
   @DisplayName("[ProductController] sort products with stock more weight")
-  void sortProductsWithStockMoreWeihght() {
+  void sortProductsWithStockMoreWeight() {
     webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.001", "0.999")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange()

@@ -15,9 +15,9 @@ Proyecto de servicios con |Java|Spring|
 
 ## Diagrama de arquitectura
 
-![Arquitectura-C1](.docs/architecture/camila-service-da-v1-C1.png "Diagrama C1")
+![Arquitectura-C1](.docs/architecture/camila-service-da-v1-C1.svg "Diagrama C1")
 
-![Arquitectura-C2](.docs/architecture/camila-service-da-v1-C2.png "Diagrama C2")
+![Arquitectura-C2](.docs/architecture/camila-service-da-v1-C2.svg "Diagrama C2")
 
 ## Caso de uso
 
