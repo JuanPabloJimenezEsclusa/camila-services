@@ -7,17 +7,20 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-docker stop mongodb6 || true && \
-  docker rm mongodb6 || true && \
-  docker volume create mongo-data6 || true
+# preparar el espacio de trabajo
+docker stop mongodb7 || true && \
+  docker rm mongodb7 || true && \
+  docker volume create mongo-data7 || true
 
+# iniciar un servidor standalone
 docker run -it --rm \
   --network host \
-  --name mongodb6 \
+  --name mongodb7 \
   -p 27017-27019:27017-27019 \
   --expose 27017-27019 \
-  --memory="3072m" --memory-reservation="3072m" --memory-swap="3072m" --cpu-shares=2000 \
+  --oom-kill-disable \
+  --memory="6192m" --memory-reservation="4096m" --memory-swap="6192m" --cpu-shares=4000 \
   -e MONGODB_INITDB_ROOT_USERNAME=camila \
   -e MONGODB_INITDB_ROOT_PASSWORD=camila \
-  -v mongo-data6:/data/db \
-  mongodb/mongodb-community-server:6.0-ubi8
+  -v mongo-data7:/data/db \
+  mongodb/mongodb-community-server:7.0.4-ubi8

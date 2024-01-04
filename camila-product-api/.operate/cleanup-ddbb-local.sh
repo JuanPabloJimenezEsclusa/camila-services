@@ -7,8 +7,9 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# compilar y crear imagen
-export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+# copiar scripts en el contenedor
+docker cp .operate/data/ mongodb7:/
 
-mvn clean spring-boot:build-image \
-  -Dmaven.test.skip=true  -f ./pom.xml
+# ejecutar script
+docker exec -it mongodb7 \
+  bash -c "mongosh -u camila -p camila < /data/cleanup_data.script"

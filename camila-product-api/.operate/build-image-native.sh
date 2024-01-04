@@ -8,7 +8,14 @@ set -o xtrace
 cd "$(dirname "$0")/.."
 
 # compilar nativo
-export SPRING_PROFILES_ACTIVE=loc
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
 
-mvn clean package -Pnative
-mvn spring-boot:build-image -Pnative -Dmaven.test.skip=true -f ./pom.xml
+# solo para compilar/empaquetar el artefacto nativo
+#mvn clean package -Pnative -Dmaven.test.skip=true -f ./pom.xml | tee result-package-native.log
+
+# compilar/empaquetar y construir imagen para contenedores
+mvn clean spring-boot:build-image \
+  -Pnative \
+  -Dmaven.test.skip=true \
+  -f ./pom.xml | tee result-build-image-native.log

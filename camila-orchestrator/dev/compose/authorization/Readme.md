@@ -1,4 +1,4 @@
-# camila-orchestration dev authorization
+# camila-orchestrator dev authorization
 
 Para configurar `keycloak` se importa el archivo: [camila-realm.json](./camila-realm.json) el cual contiene:
 

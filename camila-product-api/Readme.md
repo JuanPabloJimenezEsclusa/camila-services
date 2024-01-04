@@ -4,13 +4,17 @@ API Rest de productos
 
 ## Pre-condiciones
 
-* JDK >= 17
+* JDK >= 21
 * Docker >= 24.0.6
-* maven >= 3.9.4
-* GraalVM >= 22.3.2
+* Maven >= 3.9.4
 * Spring >= 6.x
-* Spring-boot >= 3.1.x
-
+* Spring-boot >= 3.2.x
+* MongoDB >= 7.x
+* Native Image compilation
+  * GraalVM >= 21.0.1+12.1
+  * GCC >= (linux, x86_64, 11.4.0)
+    * `zlib1g-dev`
+  
 ## Arquitectura
 
 ```txt

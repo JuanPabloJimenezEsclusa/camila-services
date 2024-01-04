@@ -1,0 +1,5 @@
+use camila-db
+
+db.dropUser('camilauser');
+
+db.dropDatabase();

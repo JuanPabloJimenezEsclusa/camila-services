@@ -1,4 +1,4 @@
-# camila-orchestration
+# camila-orchestrator
 
 Contiene la configuración como código que permite desplegar el servicio en un ambiente de contenedores y cloud
 
@@ -24,7 +24,7 @@ Contiene la configuración como código que permite desplegar el servicio en un 
 ## Arquitectura
 
 ```txt
-📦camila-orchestration
+📦camila-orchestrator
  ┣ 📂clusters
  ┃ ┗ 📂kind (install.sh - start-cluster.sh - stop-cluster.sh)
  ┣ 📂dev

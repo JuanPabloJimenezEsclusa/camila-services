@@ -115,7 +115,7 @@ services:
     networks:
       camila_product_network:
   mongodb:
-    image: mongodb/mongodb-community-server:6.0-ubi8
+    image: mongodb/mongodb-community-server:7.0.4-ubi8
     container_name: camila-product-db
     restart: "on-failure"
     deploy:

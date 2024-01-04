@@ -1,13 +1,14 @@
 # camila-product-api-test
 
-Se plantean 4 tipos de pruebas
+Se plantean 5 tipos de pruebas
 
 | Tipo | Detalles |
 |------|----------|
-| Pruebas unitarias | Se utilizan `mocks` y el plugin: `surefire` [UT] |
+| Pruebas unitarias | Se utiliza `mocks` y el plugin: `surefire` [UT] |
 | Pruebas de integración | Se utiliza una base de datos embebida `de.flapdoodle.embed.mongo` y el plugin: `failsafe` [IT] |
 | Pruebas de arquitectura | Con la librería: `ArchUnit` [AT] |
-| Pruebas de benchmark | Con: [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] |
+| Pruebas de benchmark | Se utiliza: [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] |
+| Pruebas de rendimiento | Se utiliza: [Jmeter](https://jmeter.apache.org) |
 
 ## Arquitectura
 
@@ -46,7 +47,7 @@ mvn clean verify
 
 ### Análisis de código
 
-* Chequeo de dependencias: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)  
+* Chequeo de dependencias: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
 * Análisis de errores: [error-prone](https://github.com/google/error-prone)
 
 ```bash
@@ -54,6 +55,21 @@ mvn clean verify site -P check-dependency,error-prone
 ```
 
 > [file:///${WORKSPACE}/camila-services/camila-product-api/target/site/project-info.html]()
+ 
+### Pruebas de rendimiento
+
+* Configuración: [Readme](./resources/scripts/jmeter)
+
+```bash
+# opcional, para modificar valores por defecto
+export JMETER_TEST_PATH="/tmp/results"
+export THREADS=100
+export RAMP_UP=20 
+export LOOPS=5
+
+# ejecutar plan de pruebas
+./resources/scripts/jmeter/run.sh
+```
 
 ## Generador de datos
 

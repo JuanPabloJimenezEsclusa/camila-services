@@ -24,7 +24,7 @@ class SecurityConfig {
 
   @Bean
   public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-    var authenticationManagerResolver = new JwtIssuerReactiveAuthenticationManagerResolver(trustedIssuers);
+    var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(trustedIssuers);
     return http
       // delegamos la autenticación al servicio SSO (keycloak)
       .oauth2ResourceServer(resourceServer -> resourceServer.authenticationManagerResolver(authenticationManagerResolver))

@@ -8,6 +8,7 @@ set -o xtrace
 cd "$(dirname "$0")/.."
 
 # ejecutar con aot
-export SPRING_PROFILES_ACTIVE=loc
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+
 java -Dspring.aot.enabled=true \
   -jar target/camila-product-api-1.0.0.jar

@@ -7,7 +7,8 @@ spring:
     location: classpath:/api-banner.txt
   data:
     mongodb:
-      uri: mongodb://camilauser:camilauser@localhost:27017/camila-db
+      # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
+      uri: mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000
       authentication-database: camila-db
       ssl:
         enabled: false
@@ -85,7 +86,7 @@ de:
   flapdoodle:
     mongodb:
       embedded:
-        version: 6.0.8
+        version: 7.0.4
 
 server:
   port: ${PORT:8080}
@@ -94,7 +95,7 @@ server:
 ###### Local|Dev properties ######
 spring:
   jmx:
-    enabled: true
+    enabled: false
   config:
     activate:
       on-profile: "loc|dev"
@@ -128,7 +129,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "!default"
+      on-profile: "!default&!loc"
     import: "optional:configserver:${CONFIG_SERVER_URI:}"
   cloud:
     config:
@@ -145,6 +146,7 @@ spring:
       profile: ${SPRING_PROFILES_ACTIVE}
       name: ${spring.application.name}
       allow-override: true
+  # Enable keycloak security
   security:
     oauth2:
       resourceserver:
@@ -182,7 +184,7 @@ spring:
     base-path: /product-int/api
   data:
     mongodb:
-      uri: mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
+      uri: mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000
       authentication-database: camila-db
 
 ---
