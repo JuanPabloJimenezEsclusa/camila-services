@@ -21,14 +21,14 @@
           <elementProp name="BASE_URL" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL,localhost)}</stringProp>
-            <stringProp name="Argument.desc">localhost</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL,gateway)}</stringProp>
+            <stringProp name="Argument.desc">localhost | gateway</stringProp>
           </elementProp>
           <elementProp name="BASE_URL_PORT" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL_PORT</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL_PORT,8080)}</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL_PORT,8090)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">443 | 8080</stringProp>
+            <stringProp name="Argument.desc">443 | 8080 | 8081 | 8090</stringProp>
           </elementProp>
           <elementProp name="THREADS" elementType="Argument">
             <stringProp name="Argument.name">THREADS</stringProp>
@@ -42,7 +42,7 @@
           </elementProp>
           <elementProp name="LOOPS" elementType="Argument">
             <stringProp name="Argument.name">LOOPS</stringProp>
-            <stringProp name="Argument.value">${__P(LOOPS,10)}</stringProp>
+            <stringProp name="Argument.value">${__P(LOOPS,50)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>

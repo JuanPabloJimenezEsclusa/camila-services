@@ -23,7 +23,7 @@ http://keycloak:9191/realms/camila-realm/protocol/openid-connect/auth?response_t
 # la respuesta incluye un "code" a utilizar para solicitar el token (copiar en `random_auth_code`) (este código esta vigente por poco tiempo)
 client_id="camila-client"
 client_secret="Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE"
-random_auth_code="a1bb7a3d-501e-413a-9789-278daad56435.d2d8dcd5-515a-4744-8d1d-a572adcc2119.eafde08a-ad4f-416b-835f-c3c616960ea8"
+random_auth_code="4cbcc87c-97a9-4c06-a5b8-3f581ff40261.f7945c4f-f2ad-425f-804b-2d0ffc34ff49.eafde08a-ad4f-416b-835f-c3c616960ea8"
 
 # solicitar el token (cli)
 access_token="$(curl --location 'http://keycloak:9191/realms/camila-realm/protocol/openid-connect/token' \

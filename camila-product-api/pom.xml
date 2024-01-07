@@ -126,6 +126,12 @@
       <version>1.37</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>chaos-monkey-spring-boot</artifactId>
+      <version>3.0.1</version>
+      <scope>runtime</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.springdoc</groupId>
@@ -280,30 +286,41 @@
           <failOnNoGitDirectory>false</failOnNoGitDirectory>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.graalvm.buildtools</groupId>
-        <artifactId>native-maven-plugin</artifactId>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>build-native</id>
-            <phase>package</phase>
-            <goals>
-              <goal>compile-no-fork</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <buildArgs>
-            <buildArg>--enable-monitoring=jmxserver,jvmstat</buildArg>
-            <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-          </buildArgs>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
 
   <profiles>
+    <profile>
+      <id>native</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <buildArgs>
+                <buildArg>--enable-monitoring=jmxserver,jvmstat</buildArg>
+                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+              </buildArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>jib</id>
       <activation>

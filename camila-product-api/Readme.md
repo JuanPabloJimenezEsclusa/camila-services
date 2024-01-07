@@ -34,7 +34,7 @@ API Rest de productos
 
 ## Enlaces
 
-* API DOC (dev): <http://localhost:8080/product-dev/api/swagger-ui.html>
+* API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
 
 ## Ejemplos de petición API
 

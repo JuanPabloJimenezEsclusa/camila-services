@@ -2,6 +2,8 @@
 
 Contiene información sobre como compilar, desplegar y ejecutar el proyecto localmente
 
+❗ Se puede activar el perfil `chaos-monkey` para probar localmente [Principios de la Ingeniería del Caos](https://principlesofchaos.org/)
+
 ## Scripts
 
 | Nombre     | Descripción                          |

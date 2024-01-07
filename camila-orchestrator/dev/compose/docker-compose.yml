@@ -1,4 +1,5 @@
 version: '3.9'
+
 services:
   config:
     image: docker.io/library/camila-config:1.0.0
@@ -11,6 +12,8 @@ services:
           cpus: "2"
     env_file:
       - .env
+    environment:
+      SPRING_PROFILES_ACTIVE: "native"
     ports:
       - "5045:5005"
       - "8888:8888"
@@ -77,10 +80,7 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_started
-      config:
-        condition: service_healthy
     links:
-      - config
       - discovery
       - keycloak
     volumes:
@@ -121,7 +121,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: "2048m"
+          memory: "3072m"
           cpus: "2"
     env_file:
       - .env
@@ -133,6 +133,7 @@ services:
       - 27019
     volumes:
       - camila_product_mongodb_data:/data/db
+      - ./data/:/docker-entrypoint-initdb.d/:ro
     networks: 
       camila_product_network:
   backend-product:
@@ -142,33 +143,25 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 2
       resources:
         limits:
           memory: "1024m"
-          cpus: "2"
+          cpus: "1"
     ports:
-      - "5500-5502:5000"
-      - "5005-5007:5005"
-      - "8080-8082:8080"
+      - "8080-8081:8080"
     expose:
-      - 5500-5502
-      - 5005-5007
-      - 8080-8082
+      - 8080-8081
     depends_on:
       - "mongodb"
-      - "config"
     links:
       - mongodb
-      - config
-      - discovery
-      - zipkin
     volumes:
       - camila_product_backend_tmp:/tmp
     networks:
       camila_product_network:
   prometheus:
-    image: prom/prometheus:v2.47.2
+    image: prom/prometheus:v2.48.1
     container_name: prometheus
     restart: "no"
     deploy:
@@ -187,7 +180,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:10.1.5
+    image: grafana/grafana:10.2.3
     container_name: grafana
     restart: "no"
     deploy:
@@ -209,8 +202,9 @@ services:
     networks:
       camila_product_network:
   keycloak:
-    image: quay.io/keycloak/keycloak:22.0.4
-    command: [ 'start-dev --hostname keycloak --http-port 9191 --import-realm' ]
+    image: quay.io/keycloak/keycloak:23.0.3
+    command: |
+      start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
     deploy:
       resources:
@@ -233,7 +227,7 @@ services:
       camila_product_network:
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
-    image: openzipkin/zipkin:2.24.3
+    image: openzipkin/zipkin:2.26
     container_name: zipkin
     restart: "no"
     deploy:

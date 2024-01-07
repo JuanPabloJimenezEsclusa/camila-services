@@ -8,7 +8,7 @@ scrape_configs:
     scrape_interval: 10s # Override the default global interval for this job
     scrape_timeout: 10s # Override the default global timeout for this job
     static_configs:
-      - targets: ['backend-product:8080']
+      - targets: ['compose-backend-product-1:8080', 'compose-backend-product-2:8080']
         labels:
           application: 'camila-product-api'
           group: 'first-group'

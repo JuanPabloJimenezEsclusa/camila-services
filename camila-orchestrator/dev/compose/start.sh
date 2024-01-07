@@ -7,15 +7,40 @@ set -o xtrace
 
 cd "$(dirname "$0")"
 
-# compilar y crear imágenes
-export SPRING_PROFILES_ACTIVE=dev
+workspace="$(pwd)"
+baseProjectPath="../../../"
 
-mvn clean spring-boot:build-image \
-  -Dmaven.test.skip=true \
-  -f ./../../../pom.xml
+# variables de entorno
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
 
-# iniciar servicios
-docker-compose up -d
+__buildProjects() {
+  # vamos a la base del proyecto (camila-services)
+  cd "${workspace}/${baseProjectPath}"
 
-# mostrar servicios
-docker-compose ps
+  # compilar y empaquetar en imágenes todos los módulos del proyecto
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./pom.xml
+
+  # compilar y empaquetar en imágenes cada módulos, comentar para saltar
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-admin/pom.xml
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-config/pom.xml
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-discovery/pom.xml
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-gateway/pom.xml
+  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-product-api/pom.xml #-Pnative
+}
+
+__initServices() {
+  cd "${workspace}"
+
+  # iniciar los servicios
+  docker-compose up -d
+  # mostrar los servicios
+  docker-compose ps	
+}
+
+main() {
+  __buildProjects
+  __initServices
+}
+
+time main | tee result-dev-start.log
