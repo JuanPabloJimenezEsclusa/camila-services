@@ -5,10 +5,14 @@ spring:
   banner:
     # https://www.ascii-art-generator.org/
     location: classpath:/api-banner.txt
+  cloud:
+    refresh:
+      # https://github.com/spring-cloud/spring-cloud-release/wiki/AOT-transformations-and-native-image-support#refresh-scope
+      enabled: false
   data:
     mongodb:
       # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
-      uri: mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000
+      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
       authentication-database: camila-db
       ssl:
         enabled: false
@@ -100,6 +104,34 @@ spring:
     activate:
       on-profile: "loc|dev"
 
+management:
+  endpoint:
+    chaosmonkey:
+      enabled: true
+    chaosmonkeyjmx:
+      enabled: false
+
+# https://github.com/codecentric/chaos-monkey-spring-boot/tree/main/chaos-monkey-docs/src/main/asciidoc
+chaos:
+  monkey:
+    enabled: true
+    watcher:
+      rest-controller: true
+      service: true
+      repository: true
+      component: false
+      actuator-health: true
+      controller: false
+      rest-template: false
+      web-client: false
+    assaults:
+      level: 10
+      latency-active: true
+      exceptions-active: true
+      kill-application-active: true
+      memory-active: true
+      cpu-active: true
+
 logging:
   level:
     org.springframework.boot: debug
@@ -184,7 +216,7 @@ spring:
     base-path: /product-int/api
   data:
     mongodb:
-      uri: mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000
+      uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
       authentication-database: camila-db
 
 ---

@@ -1,10 +1,12 @@
-# camila-product-orchestration-dev
+# camila-product-orchestrator-dev
 
-La orquestación en este entorno se basa en `docker-compose`
+Basado en `docker-compose`
+
+❗ En este ambiente se activa por defecto el perfil `chaos-monkey` que permite probar [Principios de la Ingeniería del Caos](https://principlesofchaos.org/) en el servicio `backend-product`
 
 ## Operaciones
 
-> vía scripts
+### a través de scripts
 
 Para el correcto funcionamiento local, es necesario modificar el archivo: `/etc/hosts` para enlazar la IP: `127.0.0.1` con el `hostname` de los servicios del `docker-compose`
 
@@ -21,7 +23,7 @@ sudo ./mappingHosts.sh
 ./stop.sh
 ```
 
-> manual 
+### de forma manual 
 
 Es necesario que estén construidas las imágenes de los servicios:
 

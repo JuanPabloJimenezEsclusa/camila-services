@@ -18,14 +18,15 @@ spring:
       name: ${spring.application.name}
       server:
         native:
+          default-label: main
           search-locations:
             - classpath:/config-server/
-        git:
-          uri: ${CONFIG_REPO_URI:https://github.com/JuanPabloJimenezEsclusa/camila-services.git}
-          delete-untracked-branches: true
-          timeout: 10
-          default-label: main
-          basedir: ./camila-config/src/main/resources/config-server/
+        #git:
+        #  uri: ${CONFIG_REPO_URI:https://github.com/JuanPabloJimenezEsclusa/camila-services.git}
+        #  delete-untracked-branches: true
+        #  timeout: 10
+        #  default-label: main
+        #  basedir: ./camila-config/src/main/resources/config-server/
 
 info:
   app:

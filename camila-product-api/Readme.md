@@ -6,7 +6,7 @@ API Rest de productos
 
 * JDK >= 21
 * Docker >= 24.0.6
-* Maven >= 3.9.4
+* Maven >= 3.8.8
 * Spring >= 6.x
 * Spring-boot >= 3.2.x
 * MongoDB >= 7.x
@@ -34,7 +34,7 @@ API Rest de productos
 
 ## Enlaces
 
-* API DOC (dev): <http://localhost:8080/product-dev/api/swagger-ui.html>
+* API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
 
 ## Ejemplos de petición API
 

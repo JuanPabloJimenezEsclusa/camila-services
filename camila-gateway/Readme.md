@@ -6,7 +6,7 @@ Contiene un gateway para servicios (incluye los patrones: `circuit-breaker` y `r
 
 * JDK >= 21
 * Docker >= 24.0.6
-* maven >= 3.9.4
+* maven >= 3.8.8
 * Spring >= 6.x
 * Spring-boot >= 3.2.x
 
