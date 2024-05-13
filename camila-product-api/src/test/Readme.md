@@ -12,15 +12,20 @@ Se plantean 5 tipos de pruebas
 
 ## Arquitectura
 
-```bash
+```txt
 📦api
- ┣ 📂architecture
- ┣ 📂benchmark
+ ┣ 📂architecture (Architecture tests)
+ ┣ 📂benchmark (Benchmark tests)
  ┣ 📂product
  ┃ ┣ 📂application
- ┃ ┣ 📂infrastructure
- ┃ ┃ ┗ 📂persistence
- ┃ ┗ 📂presentation
+ ┃ ┃ ┗ 📂port
+ ┃ ┃   ┗ 📂input (Unit tests)
+ ┃ ┗ 📂framework
+ ┃   ┗ 📂adapter
+ ┃     ┣ 📂input
+ ┃     ┃ ┗ 📂rest (Integration tests)
+ ┃     ┗ 📂output
+ ┃       ┗ 📂repository (Integration tests)
  ┗ 📜ProductApiApplicationTests.java
 ```
 
@@ -75,4 +80,4 @@ export LOOPS=5
 
 Existe un generador de datos aleatorios que permite poblar la BBDD para pruebas de rendimiento
 
-[RandomDataGenerator](java/com/camila/api/product/infrastructure/persistence/RandomDataGenerator.java)
+[RandomDataGenerator](java/com/camila/api/product/framework/adapter/output/repository/RandomDataGenerator.java)

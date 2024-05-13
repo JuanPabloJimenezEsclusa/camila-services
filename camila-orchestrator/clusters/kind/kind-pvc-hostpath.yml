@@ -90,6 +90,14 @@ spec:
         - name: hostpath-provisioner
           image: mauilion/hostpath-provisioner:dev
           imagePullPolicy: "IfNotPresent"
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+              ephemeral-storage: "1Gi"
+            requests:
+              cpu: "0.5"
+              memory: 256Mi
           env:
             - name: NODE_NAME
               valueFrom:
@@ -98,6 +106,7 @@ spec:
           volumeMounts:
             - name: pv-volume
               mountPath: /tmp/hostpath-provisioner
+      automountServiceAccountToken: false
       serviceAccountName: hostpath-provisioner
       volumes:
       - name: pv-volume

@@ -9,13 +9,16 @@ cd "$(dirname "$0")/.."
 
 # compilar nativo
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-22.0.1+8.1"}"
 
 # solo para compilar/empaquetar el artefacto nativo
-#mvn clean package -Pnative -Dmaven.test.skip=true -f ./pom.xml | tee result-package-native.log
+mvn clean package \
+  -Pnative \
+  -Dmaven.test.skip=true \
+  -f ./pom.xml | tee result-package-native.log
 
 # compilar/empaquetar y construir imagen para contenedores
-mvn clean spring-boot:build-image \
+mvn spring-boot:build-image \
   -Pnative \
   -Dmaven.test.skip=true \
   -f ./pom.xml | tee result-build-image-native.log

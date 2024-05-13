@@ -1,3 +1,6 @@
+
+/.theia/**
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,intellij+all,intellij+iml,intellij,macos,linux,windows,database,jmeter,sonar,sonarqube,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,eclipse,intellij+all,intellij+iml,intellij,macos,linux,windows,database,jmeter,sonar,sonarqube,visualstudiocode
 
@@ -429,11 +432,11 @@ buildNumber.properties
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/

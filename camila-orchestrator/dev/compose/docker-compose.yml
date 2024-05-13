@@ -1,4 +1,4 @@
-version: '3.9'
+# dev services
 
 services:
   config:
@@ -115,7 +115,7 @@ services:
     networks:
       camila_product_network:
   mongodb:
-    image: mongodb/mongodb-community-server:7.0.4-ubi8
+    image: mongodb/mongodb-community-server:7.0.8-ubi8
     container_name: camila-product-db
     restart: "on-failure"
     deploy:
@@ -161,7 +161,7 @@ services:
     networks:
       camila_product_network:
   prometheus:
-    image: prom/prometheus:v2.48.1
+    image: prom/prometheus:v2.52.0
     container_name: prometheus
     restart: "no"
     deploy:
@@ -180,7 +180,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:10.2.3
+    image: grafana/grafana:10.4.2
     container_name: grafana
     restart: "no"
     deploy:
@@ -202,7 +202,7 @@ services:
     networks:
       camila_product_network:
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.3
+    image: quay.io/keycloak/keycloak:24.0
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
@@ -227,7 +227,7 @@ services:
       camila_product_network:
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
-    image: openzipkin/zipkin:2.26
+    image: openzipkin/zipkin:3.3
     container_name: zipkin
     restart: "no"
     deploy:

@@ -10,7 +10,6 @@
 
 	<groupId>com.camila.config</groupId>
 	<artifactId>camila-config</artifactId>
-	<version>1.0.0</version>
 	<name>camila-config</name>
 	<description>Camila Service Config</description>
 
