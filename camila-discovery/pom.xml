@@ -10,7 +10,6 @@
 
 	<groupId>com.camila.discovery</groupId>
 	<artifactId>camila-discovery</artifactId>
-	<version>1.0.0</version>
 	<name>camila-discovery</name>
 	<description>Camila Service Discovery</description>
 

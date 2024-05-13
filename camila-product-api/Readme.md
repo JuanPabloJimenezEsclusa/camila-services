@@ -20,13 +20,18 @@ API Rest de productos
 ```txt
 📦api
  ┣ 📂product
- ┃ ┣ 📂application
  ┃ ┣ 📂domain
- ┃ ┃ ┣ 📂model
- ┃ ┃ ┗ 📂service
- ┃ ┣ 📂infrastructure
- ┃ ┃ ┗ 📂persistence
- ┃ ┗ 📂presentation
+ ┃ ┣ 📂application
+ ┃ ┃ ┣ 📂usercase
+ ┃ ┃ ┗ 📂port
+ ┃ ┃   ┣ 📂input
+ ┃ ┃   ┗ 📂output
+ ┃ ┗ 📂framework
+ ┃   ┗ 📂adapter
+ ┃     ┣ 📂input
+ ┃     ┃ ┗ 📂rest
+ ┃     ┗ 📂output
+ ┃       ┗ 📂repository
  ┗ 📜ProductApiApplication.java
 ```
 

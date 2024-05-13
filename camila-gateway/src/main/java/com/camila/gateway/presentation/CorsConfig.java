@@ -20,7 +20,7 @@ public class CorsConfig extends CorsConfiguration {
    * @return the cors web filter
    */
   @Bean
-  public CorsWebFilter corsFilter() {
+  CorsWebFilter corsFilter() {
     var config = new CorsConfiguration();
     config.setAllowCredentials(true);
     config.setAllowedOrigins(List.of("*"));

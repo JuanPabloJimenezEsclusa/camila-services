@@ -10,7 +10,6 @@
 
 	<groupId>com.camila.gateway</groupId>
 	<artifactId>camila-gateway</artifactId>
-	<version>1.0.0</version>
 	<name>camila-gateway</name>
 	<description>Camila Service Gateway</description>
 

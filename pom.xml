@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.1</version>
+    <version>3.2.5</version>
   </parent>
 
   <groupId>com.camila.core</groupId>
@@ -58,7 +58,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.4.1</version>
         <executions>
           <execution>
             <id>enforce</id>
@@ -73,6 +72,7 @@
                   <excludes>
                     <exclude>org.apache.httpcomponents:httpclient</exclude>
                     <exclude>com.google.j2objc:j2objc-annotations</exclude>
+                    <exlucde>org.glassfish.hk2:hk2-api</exlucde>
                   </excludes>
                 </requireUpperBoundDeps>
                 <requireMavenVersion>

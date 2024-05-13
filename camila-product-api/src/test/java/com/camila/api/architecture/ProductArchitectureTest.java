@@ -18,8 +18,8 @@ class ProductArchitectureTest {
   private enum HEXAGONAL_LAYERS {
     DOMAIN(BASE_PKG + ".domain.."),
     APPLICATION(BASE_PKG + ".application.."),
-    INFRASTRUCTURE(BASE_PKG + ".infrastructure.."),
-    PRESENTATION(BASE_PKG + ".presentation..");
+    FRAMEWORK_ADAPTER_INPUT(BASE_PKG + ".framework.adapter.input.."),
+    FRAMEWORK_ADAPTER_OUTPUT(BASE_PKG + ".framework.adapter.output..");
 
     private final String value;
 
@@ -37,21 +37,21 @@ class ProductArchitectureTest {
     // define layers
     .layer(HEXAGONAL_LAYERS.DOMAIN.name()).definedBy(HEXAGONAL_LAYERS.DOMAIN.getValue())
     .layer(HEXAGONAL_LAYERS.APPLICATION.name()).definedBy(HEXAGONAL_LAYERS.APPLICATION.getValue())
-    .layer(HEXAGONAL_LAYERS.INFRASTRUCTURE.name()).definedBy(HEXAGONAL_LAYERS.INFRASTRUCTURE.getValue())
-    .layer(HEXAGONAL_LAYERS.PRESENTATION.name()).definedBy(HEXAGONAL_LAYERS.PRESENTATION.getValue())
+    .layer(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_INPUT.name()).definedBy(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_INPUT.getValue())
+    .layer(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_OUTPUT.name()).definedBy(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_OUTPUT.getValue())
 
     // external hexagonal layers. No others layer access
-    .whereLayer(HEXAGONAL_LAYERS.INFRASTRUCTURE.name()).mayNotBeAccessedByAnyLayer()
-    .whereLayer(HEXAGONAL_LAYERS.PRESENTATION.name()).mayNotBeAccessedByAnyLayer()
+    .whereLayer(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_INPUT.name()).mayNotBeAccessedByAnyLayer()
+    .whereLayer(HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_OUTPUT.name()).mayNotBeAccessedByAnyLayer()
 
-    // application layer. Accesible only by externals layers
+    // application layer. Accessible only by externals layers
     .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyBeAccessedByLayers(
-      HEXAGONAL_LAYERS.INFRASTRUCTURE.name(), HEXAGONAL_LAYERS.PRESENTATION.name())
+      HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_INPUT.name(), HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_OUTPUT.name())
     .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyAccessLayers(HEXAGONAL_LAYERS.DOMAIN.name())
 
     // domain layer. Not use other layer class
     .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayOnlyBeAccessedByLayers(
-      HEXAGONAL_LAYERS.INFRASTRUCTURE.name(), HEXAGONAL_LAYERS.PRESENTATION.name(), HEXAGONAL_LAYERS.APPLICATION.name())
+      HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_INPUT.name(), HEXAGONAL_LAYERS.FRAMEWORK_ADAPTER_OUTPUT.name(), HEXAGONAL_LAYERS.APPLICATION.name())
     .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayNotAccessAnyLayer()
     .ensureAllClassesAreContainedInArchitecture();
 
@@ -59,5 +59,5 @@ class ProductArchitectureTest {
   static final ArchRule DOMAIN_ONLY_DEPEND_ON_STANDARD =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.DOMAIN.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(HEXAGONAL_LAYERS.DOMAIN.getValue(),
-        "java..", "reactor.core..");
+        "java..", "reactor.core..", "org.springframework.lang..");
 }

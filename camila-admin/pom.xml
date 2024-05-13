@@ -10,7 +10,6 @@
 
 	<groupId>com.camila.admin</groupId>
 	<artifactId>camila-admin</artifactId>
-	<version>1.0.0</version>
 	<name>camila-admin</name>
 	<description>Camila Service Admin</description>
 

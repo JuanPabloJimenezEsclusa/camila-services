@@ -19,7 +19,7 @@ public class OpenAPIConfig {
    * @return the open api
    */
   @Bean
-  public OpenAPI springShopOpenAPI() {
+  OpenAPI springShopOpenAPI() {
     return new OpenAPI()
       .info(new Info().title("Camila Gateway API")
         .description("Gateway implementation to Camila Service project")

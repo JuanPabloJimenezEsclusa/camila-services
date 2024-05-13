@@ -48,3 +48,29 @@ docker-compose logs mongodb backend-product gateway --follow
 # detener los servicios
 docker-compose down
 ```
+
+## Enlaces
+
+* Database
+  * <>
+* API
+    * <http://localhost:8080/product-dev/api/swagger-ui.html>
+* Gateway
+    * <http://localhost:8090/swagger-ui.html>
+* Discovery
+    * <http://localhost:8761>
+* Admin
+  * <http://localhost:8100>
+* Config
+  * <http://localhost:8888/camila-admin/dev/main>
+  * <http://localhost:8888/camila-admin/main>
+  * <http://localhost:8888/camila-gateway/dev/main>
+  * <http://localhost:8888/camila-product-api/dev/main>
+* Prometheus
+  * <http://localhost:9090>
+* Grafana
+  * <http://localhost:3000> (admin/admin)
+* Zipkin
+  * <http://localhost:9411/zipkin>
+* Keycloak
+  * <http://keycloak:9191/admin/master/console> (admin/admin1234)
