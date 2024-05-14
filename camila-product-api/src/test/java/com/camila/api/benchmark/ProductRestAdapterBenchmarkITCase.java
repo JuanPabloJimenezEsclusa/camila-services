@@ -11,7 +11,6 @@ import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import org.openjdk.jmh.runner.options.TimeValue;
 import org.openjdk.jmh.runner.options.WarmupMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +24,7 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import({ ProductApiApplication.class })
 @State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -41,17 +40,11 @@ public class ProductRestAdapterBenchmarkITCase {
   }
 
   @Test
-  @DisplayName("[ProductRestAdapter] Run benchmark")
+  @DisplayName("[ProductRestAdapter] Run benchmarks")
   void runBenchmarks() throws Exception {
     Options options = new OptionsBuilder()
-      .include("com.camila.api.benchmark.ProductControllerBenchmarkITCase")
+      .include(".*findByInternalId.*|.*sortProductsWithStockMoreWeight.*")
       .warmupMode(WarmupMode.BULK)
-      .mode(Mode.AverageTime)
-      .warmupTime(TimeValue.seconds(1))
-      .warmupIterations(5)
-      .threads(5)
-      .measurementIterations(5)
-      .forks(0)
       .shouldFailOnError(true)
       .shouldDoGC(true)
       .result("BenchmarkITCase.csv")
@@ -63,6 +56,12 @@ public class ProductRestAdapterBenchmarkITCase {
   }
 
   @Benchmark
+  @BenchmarkMode(Mode.AverageTime)
+  @Fork(value = 0, warmups = 2)
+  @OutputTimeUnit(TimeUnit.NANOSECONDS)
+  @Warmup(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Measurement(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Threads(5)
   public void findByInternalId(Blackhole blackhole) {
     var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
 
@@ -78,6 +77,12 @@ public class ProductRestAdapterBenchmarkITCase {
   }
 
   @Benchmark
+  @BenchmarkMode(Mode.AverageTime)
+  @Fork(value = 0, warmups = 2)
+  @OutputTimeUnit(TimeUnit.NANOSECONDS)
+  @Warmup(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Measurement(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Threads(5)
   public void sortProductsWithStockMoreWeight(Blackhole blackhole) {
     var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
     var salesUnits = optionalSalesUnits.orElseThrow();
