@@ -17,6 +17,7 @@
   <properties>
     <java.version>21</java.version>
     <spring-cloud.version>2023.0.0</spring-cloud.version>
+    <cucumber.version>7.17.0</cucumber.version>
   </properties>
 
   <dependencies>
@@ -125,6 +126,32 @@
       <version>1.37</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-core</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-spring</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>de.codecentric</groupId>
       <artifactId>chaos-monkey-spring-boot</artifactId>
@@ -513,6 +540,119 @@
       </build>
     </profile>
 
+    <profile>
+      <id>pitest</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.11.0</version>
+              <configuration>
+                <showWarnings>true</showWarnings>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.pitest</groupId>
+              <artifactId>pitest-maven</artifactId>
+              <version>1.15.8</version>
+              <dependencies>
+                <dependency>
+                  <groupId>org.pitest</groupId>
+                  <artifactId>pitest-junit5-plugin</artifactId>
+                  <version>1.2.1</version>
+                </dependency>
+              </dependencies>
+              <configuration>
+                <verbose>true</verbose>
+                <threads>8</threads>
+                <timeoutFactor>1.50</timeoutFactor>
+                <timeoutConstant>5000</timeoutConstant>
+                <failWhenNoMutations>false</failWhenNoMutations>
+                <timestampedReports>false</timestampedReports>
+                <features>
+                  <feature>+EXPORT</feature>
+                  <feature>+CLASSLIMIT(limit[12])</feature>
+                </features>
+                <mutators>
+                  <mutator>CONSTRUCTOR_CALLS</mutator>
+                  <mutator>NON_VOID_METHOD_CALLS</mutator>
+                  <mutator>FALSE_RETURNS</mutator>
+                  <mutator>TRUE_RETURNS</mutator>
+                  <mutator>VOID_METHOD_CALLS</mutator>
+                  <mutator>REMOVE_CONDITIONALS_ORDER_ELSE</mutator>
+                  <mutator>NULL_RETURNS</mutator>
+                  <mutator>PRIMITIVE_RETURNS</mutator>
+                  <mutator>REMOVE_CONDITIONALS_EQUAL_IF</mutator>
+                  <mutator>REMOVE_CONDITIONALS_EQUAL_ELSE</mutator>
+                  <mutator>REMOVE_CONDITIONALS_ORDER_IF</mutator>
+                  <mutator>NEGATE_CONDITIONALS</mutator>
+                  <mutator>EMPTY_RETURNS</mutator>
+                  <mutator>CONDITIONALS_BOUNDARY</mutator>
+                </mutators>
+                <targetClasses>
+                  <param>com.camila.api.product.domain.*</param>
+                  <param>com.camila.api.product.application.port.input.*</param>
+                  <param>com.camila.api.product.framework.adapter.input.rest.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.repository.*</param>
+                </targetClasses>
+                <targetTests>
+                  <param>com.camila.api.product.application.port.input.*</param>
+                  <param>com.camila.api.product.framework.adapter.input.rest.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.repository.*</param>
+                </targetTests>
+                <avoidCallsTo>
+                  <avoidCallsTo>org.slf4j</avoidCallsTo>
+                  <avoidCallsTo>java.util.logging</avoidCallsTo>
+                  <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+                </avoidCallsTo>
+              </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>flatten-maven-plugin</artifactId>
+              <version>1.2.5</version>
+              <configuration>
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>flatten</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>flatten</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>flatten.clean</id>
+                  <phase>clean</phase>
+                  <goals>
+                    <goal>clean</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+          </pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.pitest</groupId>
+              <artifactId>pitest-maven</artifactId>
+              <executions>
+                <execution>
+                <id>pitest</id>
+                <phase>test-compile</phase>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>
