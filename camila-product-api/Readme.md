@@ -10,6 +10,7 @@ API Rest de productos
 * Spring >= 6.x
 * Spring-boot >= 3.2.x
 * MongoDB >= 7.x
+* Couchbase >= 7.x
 * Native Image compilation
   * GraalVM >= 21.0.1+12.1
   * GCC >= (linux, x86_64, 11.4.0)
@@ -31,7 +32,8 @@ API Rest de productos
  ┃     ┣ 📂input
  ┃     ┃ ┗ 📂rest
  ┃     ┗ 📂output
- ┃       ┗ 📂repository
+ ┃       ┣ 📂mongo
+ ┃       ┗ 📂couchbase
  ┗ 📜ProductApiApplication.java
 ```
 

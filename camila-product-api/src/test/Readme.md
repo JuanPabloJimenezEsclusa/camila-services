@@ -28,7 +28,8 @@ Se plantean 7 tipos de pruebas
  ┃     ┣ 📂input
  ┃     ┃ ┗ 📂rest (Integration tests)
  ┃     ┗ 📂output
- ┃       ┗ 📂repository (Integration tests)
+ ┃       ┣ 📂mongo (Integration tests)
+ ┃       ┗ 📂couchbase (Integration tests)
  ┗ 📜ProductApiApplicationTests.java
 ```
 
@@ -91,4 +92,4 @@ export LOOPS=5
 
 Existe un generador de datos aleatorios que permite poblar la BBDD para pruebas de rendimiento
 
-[RandomDataGenerator](java/com/camila/api/product/framework/adapter/output/repository/RandomDataGenerator.java)
+[RandomDataGenerator](java/com/camila/api/product/framework/adapter/output/RandomDataGenerator.java)

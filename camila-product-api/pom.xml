@@ -16,7 +16,7 @@
 
   <properties>
     <java.version>21</java.version>
-    <spring-cloud.version>2023.0.0</spring-cloud.version>
+    <spring-cloud.version>2023.0.1</spring-cloud.version>
     <cucumber.version>7.17.0</cucumber.version>
   </properties>
 
@@ -177,7 +177,32 @@
       <version>3.4.0</version>
       <scope>compile</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.couchbase.client</groupId>
+      <artifactId>java-client</artifactId>
+      <version>3.6.2</version>
+    </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers</artifactId>
+        <version>1.19.8</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>1.19.8</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>couchbase</artifactId>
+        <version>1.19.8</version>
+        <scope>test</scope>
+      </dependency>
   </dependencies>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -595,12 +620,12 @@
                   <param>com.camila.api.product.domain.*</param>
                   <param>com.camila.api.product.application.port.input.*</param>
                   <param>com.camila.api.product.framework.adapter.input.rest.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.repository.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
                 </targetClasses>
                 <targetTests>
                   <param>com.camila.api.product.application.port.input.*</param>
                   <param>com.camila.api.product.framework.adapter.input.rest.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.repository.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
                 </targetTests>
                 <avoidCallsTo>
                   <avoidCallsTo>org.slf4j</avoidCallsTo>

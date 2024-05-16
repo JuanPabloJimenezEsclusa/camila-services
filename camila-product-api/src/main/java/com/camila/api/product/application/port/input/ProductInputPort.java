@@ -6,6 +6,7 @@ import com.camila.api.product.application.usercase.ProductUserCase;
 import com.camila.api.product.domain.MetricWeight;
 import com.camila.api.product.domain.Metrics;
 import com.camila.api.product.domain.Product;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ class ProductInputPort implements ProductUserCase {
   /**
    * Instantiates a new Product service.
    *
-   * @param productOutputPort the product repository
+   * @param productOutputPort the product mongo
    */
-  public ProductInputPort(ProductOutputPort productOutputPort) {
+  public ProductInputPort(@Qualifier(value = "productCouchbase") ProductOutputPort productOutputPort) {
     this.productOutputPort = productOutputPort;
   }
 

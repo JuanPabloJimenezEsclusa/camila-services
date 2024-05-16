@@ -57,10 +57,10 @@ public class ProductRestAdapterBenchmarkITCase {
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
-  @Fork(value = 0, warmups = 2)
+  @Fork(value = 0, warmups = 0)
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  @Warmup(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
-  @Measurement(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
   @Threads(5)
   public void findByInternalId(Blackhole blackhole) {
     var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
@@ -78,10 +78,10 @@ public class ProductRestAdapterBenchmarkITCase {
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
-  @Fork(value = 0, warmups = 2)
+  @Fork(value = 0, warmups = 0)
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  @Warmup(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
-  @Measurement(time = 5, iterations = 5, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
   @Threads(5)
   public void sortProductsWithStockMoreWeight(Blackhole blackhole) {
     var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
