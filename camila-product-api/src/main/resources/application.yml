@@ -17,7 +17,11 @@ spring:
       ssl:
         enabled: false
       auto-index-creation: true
-      uuid-representation: java_legacy
+      uuid-representation: JAVA_LEGACY
+  couchbase:
+    connection-string: localhost
+    username: admin
+    password: admin1234
   webflux:
     base-path: /product-dev/api
 

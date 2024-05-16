@@ -59,5 +59,5 @@ class ProductArchitectureTest {
   static final ArchRule DOMAIN_ONLY_DEPEND_ON_STANDARD =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.DOMAIN.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(HEXAGONAL_LAYERS.DOMAIN.getValue(),
-        "java..", "reactor.core..", "org.springframework.lang..");
+        "java..", "reactor.core..", "org.springframework.lang..", "com.fasterxml.jackson.annotation..");
 }
