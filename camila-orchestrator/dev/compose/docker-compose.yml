@@ -4,7 +4,8 @@ services:
   config:
     image: docker.io/library/camila-config:1.0.0
     container_name: camila-config
-    restart: "no"
+    hostname: config
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -34,7 +35,8 @@ services:
   discovery:
     image: docker.io/library/camila-discovery:1.0.0
     container_name: camila-discovery
-    restart: "no"
+    hostname: discovery
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -50,6 +52,10 @@ services:
       - 8761
     volumes:
       - camila_discovery_tmp:/tmp
+    depends_on:
+      - config
+    links:
+      - config
     healthcheck:
       test: ps aux | grep java || exit 1
       interval: 5s
@@ -61,7 +67,8 @@ services:
   gateway:
     image: docker.io/library/camila-gateway:1.0.0
     container_name: camila-gateway
-    restart: "no"
+    hostname: gateway
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -90,7 +97,8 @@ services:
   admin:
     image: docker.io/library/camila-admin:1.0.0
     container_name: camila-admin
-    restart: "no"
+    hostname: admin
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -105,8 +113,8 @@ services:
       - 5035
       - 8100
     depends_on:
-      - "discovery"
-      - "config"
+      discovery:
+        condition: service_healthy
     volumes:
       - camila_admin_tmp:/tmp
     links:
@@ -117,6 +125,7 @@ services:
   mongodb:
     image: mongodb/mongodb-community-server:7.0.8-ubi8
     container_name: camila-product-db
+    hostname: mongodb
     restart: "on-failure"
     deploy:
       resources:
@@ -133,12 +142,40 @@ services:
       - 27019
     volumes:
       - camila_product_mongodb_data:/data/db
-      - ./data/:/docker-entrypoint-initdb.d/:ro
+      - ./data/mongodb/:/docker-entrypoint-initdb.d/:ro
     networks: 
+      camila_product_network:
+  couchbase:
+    image: couchbase/server:community-7.6.1
+    container_name: camila-couchbase-db
+    hostname: couchbase
+    restart: "on-failure"
+    stdin_open: true
+    tty: true
+    entrypoint: [""]
+    command: sh -c "/opt/couchbase/init/init-cbserver.sh"
+    deploy:
+      resources:
+        limits:
+          memory: "4096m"
+          cpus: "4"
+    env_file:
+      - .env
+    ports:
+      - "8091-8096:8091-8096"
+      - "11210-11211:11210-11211"
+    expose:
+      - 8091
+      - 11210
+    volumes:
+      - camila_product_couchbase_data:/opt/couchbase/var
+      - ./data/couchbase/:/opt/couchbase/init:rw
+    networks:
       camila_product_network:
   backend-product:
     image: docker.io/library/camila-product-api:1.0.0
-    restart: "no"
+    restart: "on-failure"
+    hostname: backend-product
     env_file:
       - .env
     deploy:
@@ -153,9 +190,16 @@ services:
     expose:
       - 8080-8081
     depends_on:
-      - "mongodb"
+      discovery:
+        condition: service_healthy
+      mongodb:
+        condition: service_started
+      couchbase:
+        condition: service_started
     links:
+      - discovery
       - mongodb
+      - couchbase
     volumes:
       - camila_product_backend_tmp:/tmp
     networks:
@@ -163,7 +207,8 @@ services:
   prometheus:
     image: prom/prometheus:v2.52.0
     container_name: prometheus
-    restart: "no"
+    hostname: prometheus
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -182,7 +227,8 @@ services:
   grafana:
     image: grafana/grafana:10.4.2
     container_name: grafana
-    restart: "no"
+    hostname: grafana
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -206,15 +252,15 @@ services:
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
+    hostname: keycloak
     deploy:
       resources:
         limits:
           memory: "1024m"
           cpus: "2"
-    restart: "no"
+    restart: "on-failure"
     env_file:
       - .env
-    hostname: keycloak
     ports:
       - "9191:9191"
     expose:
@@ -229,7 +275,8 @@ services:
     # https://github.com/openzipkin/zipkin#quick-start
     image: openzipkin/zipkin:3.3
     container_name: zipkin
-    restart: "no"
+    hostname: zipkin
+    restart: "on-failure"
     deploy:
       resources:
         limits:
@@ -248,6 +295,7 @@ services:
 
 volumes:
   camila_product_mongodb_data:
+  camila_product_couchbase_data:
   camila_product_backend_tmp:
   camila_gateway_tmp:
   camila_discovery_tmp:
