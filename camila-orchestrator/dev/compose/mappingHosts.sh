@@ -5,7 +5,7 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 set -o xtrace
 
-source_str='127.0.0.1  admin  config  discovery  gateway  prometheus  grafana  zipkin  keycloak  mongodb  compose-backend-product-1  compose-backend-product-2'
+source_str='127.0.0.1  admin  config  discovery  gateway  prometheus  grafana  zipkin  keycloak  mongodb  couchbase  compose-backend-product-1  compose-backend-product-2'
 sed -i -e "\|$source_str|h;"      `# Search for the source string and copy it to the hold space` \
     -e "\${"                      `# Go to the end of the file and run the following commands` \
     -e "x;"                       `# Exchange the last line with the hold space` \

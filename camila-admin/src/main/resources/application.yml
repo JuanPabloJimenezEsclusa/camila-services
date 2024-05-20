@@ -10,7 +10,10 @@ spring:
   config:
     import: "optional:configserver:${CONFIG_SERVER_URI:}"
   cloud:
+    discovery:
+      enabled: true
     config:
+      enabled: true
       retry:
         max-attempts: 10
         max-interval: 10000
