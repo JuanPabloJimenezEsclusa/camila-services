@@ -41,6 +41,8 @@ management:
     env:
       enabled: true
       show-values: always
+      post:
+        enabled: true
       cache:
         time-to-live: 60s
     info:
@@ -55,6 +57,9 @@ management:
       enabled: true
       show-details: always
       show-components: always
+    configprops:
+      enabled: true
+      show-values: always
     shutdown:
       enabled: true
     prometheus:

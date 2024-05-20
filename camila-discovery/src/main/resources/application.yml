@@ -36,6 +36,9 @@ management:
       enabled: true
       show-details: always
       show-components: always
+    configprops:
+      enabled: true
+      show-values: always
     shutdown:
       enabled: true
     prometheus:
