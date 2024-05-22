@@ -8,7 +8,7 @@ set -o xtrace
 cd "$(dirname "$0")"
 
 # opcional
-docker rmi docker.io/library/camila-product-api-serveless:1.0.0
+docker rmi docker.io/library/camila-product-api-serveless:1.0.0 || true
 
 # compilar imagen
 export SPRING_PROFILES_ACTIVE=int

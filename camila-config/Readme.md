@@ -1,4 +1,4 @@
-# camila-admin
+# camila-config
 
 Contiene un configurador central de servicios
 
@@ -14,7 +14,6 @@ Contiene un configurador central de servicios
 
 * Requests:
   * <http://localhost:8888/camila-admin/dev/main>
-  * <http://localhost:8888/camila-admin/main>
   * <http://localhost:8888/camila-gateway/dev/main>
   * <http://localhost:8888/camila-product-api/dev/main>
 * Actuator:

@@ -106,7 +106,7 @@ spec:
           volumeMounts:
             - name: pv-volume
               mountPath: /tmp/hostpath-provisioner
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       serviceAccountName: hostpath-provisioner
       volumes:
       - name: pv-volume

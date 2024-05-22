@@ -27,7 +27,7 @@ metadata:
   name: camila-product-api-serveless-creds
   namespace: camila-product-api-serveless-ns
 data:
-  uri: "bW9uZ29kYjovL3phcmF1c2VyOnphcmF1c2VyQG1vbmdvLW5vZGVwb3J0LXN2Yy5tb25nb2RiLnN2Yy5jbHVzdGVyLmxvY2FsOjI3MDE3L3phcmEtZGI="
+  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nby1ub2RlcG9ydC1zdmMubW9uZ29kYi5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNy9jYW1pbGEtZGI="
   #mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
 
 ---
@@ -50,6 +50,7 @@ spec:
     metadata:
       annotations:
         autoscaling.knative.dev/target: "20"
+        serving.knative.dev/progress-deadline: "10s"
     spec:
       containers:
       - image: docker.io/library/camila-product-api-serveless:1.0.0
