@@ -63,7 +63,7 @@ metadata:
   name: camila-product-api-creds
   namespace: camila-product-api-ns
 data:
-  uri: "bW9uZ29kYjovL3phcmF1c2VyOnphcmF1c2VyQG1vbmdvLW5vZGVwb3J0LXN2Yy5tb25nb2RiLnN2Yy5jbHVzdGVyLmxvY2FsOjI3MDE3L3phcmEtZGI="
+  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nby1ub2RlcG9ydC1zdmMubW9uZ29kYi5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNy9jYW1pbGEtZGI="
   #mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
 
 ---
@@ -77,7 +77,7 @@ data:
   LANG: "en_US.utf8"
   LANGUAGE: "en_US.utf8"
   LC_ALL: "en_US.utf8"
-  TIME_ZONE: UTC
+  TIME_ZONE: "UTC"
   JVM_OPTIONS: "-Xms512m -Xmx1024m"
   JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
 
@@ -164,7 +164,7 @@ spec:
           runAsGroup: 1000
         startupProbe:
           httpGet:
-            path: /product-int/api/actuator/health
+            path: /product-int/api/actuator/health/ping
             port: api-port
           initialDelaySeconds: 5
         readinessProbe:
@@ -181,7 +181,7 @@ spec:
         volumeMounts:
         - name: "camila-product-api-data-dir"
           mountPath: "/tmp"
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       volumes:
       - name: "camila-product-api-data-dir"
         persistentVolumeClaim:

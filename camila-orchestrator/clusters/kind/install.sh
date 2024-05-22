@@ -3,7 +3,6 @@
 set -e
 cd "$(dirname "$0")"
 
-
 echo -e "\ninstall kubectl\n#################"
 
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
@@ -19,8 +18,7 @@ echo -e "\ninstall helm\n#################"
 # https://helm.sh/docs/intro/install/#from-script
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 helm version
-helm repo list
-
+helm repo list || true
 
 echo -e "\ninstall kind\n#################"
 
@@ -28,9 +26,9 @@ echo -e "\ninstall kind\n#################"
 # https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries
 
 # For AMD64 / x86_64
-[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-linux-amd64
 # For ARM64
-[ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-arm64
+[ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-linux-arm64
 chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 

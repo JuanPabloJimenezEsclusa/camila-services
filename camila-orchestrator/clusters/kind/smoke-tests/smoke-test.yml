@@ -61,7 +61,7 @@ spec:
         volumeMounts:
         - name: volume
           mountPath: /pvc/
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       volumes:
       - name: volume
         persistentVolumeClaim:

@@ -14,12 +14,12 @@ import org.springframework.context.annotation.Configuration;
 public class OpenAPIConfig {
 
   /**
-   * Spring shop open api open api.
+   * Spring gateway open api.
    *
    * @return the open api
    */
   @Bean
-  OpenAPI springShopOpenAPI() {
+  OpenAPI springGatewayOpenAPI() {
     return new OpenAPI()
       .info(new Info().title("Camila Gateway API")
         .description("Gateway implementation to Camila Service project")

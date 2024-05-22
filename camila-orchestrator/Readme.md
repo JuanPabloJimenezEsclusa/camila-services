@@ -4,8 +4,8 @@ Contiene la configuración como código que permite desplegar el servicio en un 
 
 ## Pre-requisitos
 
-* docker-compose >= v2.12.2 (o embebido de docker)
-* kubernetes >= 1.27.6
+* docker-compose >= v2.27.0 (o embebido en docker)
+* kubernetes >= 1.30.0
 * linux
 
 ## Entornos

@@ -87,6 +87,12 @@ services:
         condition: service_healthy
       keycloak:
         condition: service_started
+    healthcheck:
+      test: ps aux | grep java || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     links:
       - discovery
       - keycloak
@@ -117,6 +123,12 @@ services:
         condition: service_healthy
     volumes:
       - camila_admin_tmp:/tmp
+    healthcheck:
+      test: ps aux | grep java || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     links:
       - discovery
       - config
@@ -143,6 +155,12 @@ services:
     volumes:
       - camila_product_mongodb_data:/data/db
       - ./data/mongodb/:/docker-entrypoint-initdb.d/:ro
+    healthcheck:
+      test: ps aux | mongod || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks: 
       camila_product_network:
   couchbase:
@@ -170,6 +188,12 @@ services:
     volumes:
       - camila_product_couchbase_data:/opt/couchbase/var
       - ./data/couchbase/:/opt/couchbase/init:rw
+    healthcheck:
+      test: ps aux | grep init-cbserver.sh || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
   backend-product:
@@ -222,6 +246,12 @@ services:
       - 9090
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    healthcheck:
+      test: ps aux | prometheus || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
   grafana:
@@ -245,6 +275,12 @@ services:
       - grafana_data:/var/lib/grafana
     links:
       - prometheus
+    healthcheck:
+      test: ps aux | grafana || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
   keycloak:
