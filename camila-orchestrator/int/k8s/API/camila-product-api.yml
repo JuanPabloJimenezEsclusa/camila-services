@@ -80,6 +80,7 @@ data:
   TIME_ZONE: "UTC"
   JVM_OPTIONS: "-Xms512m -Xmx1024m"
   JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+  REPOSITORY_TECHNOLOGY: "mongo"
 
 ---
 apiVersion: apps/v1

@@ -2,15 +2,15 @@
 
 Se plantean 7 tipos de pruebas
 
-| Tipo                            | Detalles                                                                                       |
-|---------------------------------|------------------------------------------------------------------------------------------------|
-| Pruebas unitarias               | Se utilizan `mocks` y el plugin: `surefire` [UT]                                               |
-| Pruebas de integración          | Se utiliza una base de datos embebida `de.flapdoodle.embed.mongo` y el plugin: `failsafe` [IT] |
-| Pruebas de arquitectura         | Se utiliza la librería: `ArchUnit` [AT]                                                        |
-| Pruebas de mutación             | Se utiliza el plugin: [Pitest](https://github.com/pitest/pitest-junit5-plugin.git)             |
-| Pruebas de comportamiento       | Se utiliza: [Cucumber](https://cucumber.io/docs/guides/)                                       |
-| Pruebas de rendimiento (jmh)    | Se utiliza: [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T]              |
-| Pruebas de rendimiento (jmeter) | Se utiliza: [Jmeter](https://jmeter.apache.org)                                                |
+| Tipo                            | Detalles                                                                                                                                                                                                                                                           |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Pruebas unitarias               | Se utilizan `mocks` y el plugin: `surefire` [UT]                                                                                                                                                                                                                   |
+| Pruebas de integración          | Para el adaptador `mongodb` se utiliza una base de datos embebida `de.flapdoodle.embed.mongo` y para el adaptador `couchbase` se utiliza [Test Containers](https://testcontainers.com/modules/couchbase/). En todos los casos se emplea el plugin: `failsafe` [IT] |
+| Pruebas de arquitectura         | Se utiliza la librería: `ArchUnit` [AT]                                                                                                                                                                                                                            |
+| Pruebas de mutación             | Se utiliza el plugin: [Pitest](https://github.com/pitest/pitest-junit5-plugin.git)                                                                                                                                                                                 |
+| Pruebas de comportamiento       | Se utiliza: [Cucumber](https://cucumber.io/docs/guides/)                                                                                                                                                                                                           |
+| Pruebas de rendimiento (jmh)    | Se utiliza: [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T]                                                                                                                                                                                  |
+| Pruebas de rendimiento (jmeter) | Se utiliza: [JMeter](https://jmeter.apache.org)                                                                                                                                                                                                                    |
 
 ## Arquitectura
 
@@ -26,7 +26,8 @@ Se plantean 7 tipos de pruebas
  ┃ ┗ 📂framework
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
- ┃     ┃ ┗ 📂rest (Integration tests)
+ ┃     ┃ ┣ 📂rest (Integration tests)
+ ┃     ┃ ┗ 📂graphql (Integration tests)
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo (Integration tests)
  ┃       ┗ 📂couchbase (Integration tests)
@@ -38,6 +39,7 @@ Se plantean 7 tipos de pruebas
 ### Pruebas unitarias y de arquitectura
 
 ```bash
+cd ../../
 mvn clean test 
 ```
 

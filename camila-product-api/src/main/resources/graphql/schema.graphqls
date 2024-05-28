@@ -1,0 +1,16 @@
+# scalars must be first of all
+scalar JSON
+
+type Product {
+    id: ID,
+    internalId: String!,
+    name: String!,
+    category: String!,
+    salesUnits: Int!,
+    stock: JSON!
+}
+
+type Query {
+    findById(internalId: ID = "1"): Product
+    sortProducts(salesUnits: Float = 0.999, stock: Float = 0.001, page: Int = 0, size: Int = 10): [Product!]
+}

@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  * The type Product rest adapter integration test.
  */
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("[IT][ProductRestAdapter] Product controller test")
+@DisplayName("[IT][ProductRestAdapter] Product rest adapter test")
 class ProductRestAdapterITCase {
 
   @Autowired
@@ -33,7 +33,7 @@ class ProductRestAdapterITCase {
   }
 
   /**
-   * Sort products with stock more weihght.
+   * Sort products with stock more weight.
    */
   @Test
   @DisplayName("[ProductRestAdapter] sort products with stock more weight")

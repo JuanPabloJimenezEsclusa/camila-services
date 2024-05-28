@@ -4,7 +4,6 @@ import com.camila.api.product.application.port.output.ProductOutputPort;
 import com.camila.api.product.domain.MetricWeight;
 import com.camila.api.product.domain.Product;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.stereotype.Repository;
@@ -20,7 +19,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.newA
  * The type Product mongo adapter.
  */
 @Repository
-@Primary
 @Qualifier(value = "productMongo")
 class ProductMongoAdapter implements ProductOutputPort {
 
