@@ -24,6 +24,10 @@ spring:
     password: admin1234
   webflux:
     base-path: /product-dev/api
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
 
 info:
   app:

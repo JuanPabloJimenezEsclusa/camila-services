@@ -16,8 +16,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableReactiveMethodSecurity
 @Profile("!default&!loc")
 class SecurityConfig {
-  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**" };
-  private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**" };
+  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**" };
+  private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;

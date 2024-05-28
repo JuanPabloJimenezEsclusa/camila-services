@@ -38,6 +38,7 @@ metadata:
   namespace: camila-product-api-serveless-ns
 data:
   SPRING_PROFILES_ACTIVE: "int"
+  REPOSITORY_TECHNOLOGY: "mongo"
 
 ---
 apiVersion: serving.knative.dev/v1
