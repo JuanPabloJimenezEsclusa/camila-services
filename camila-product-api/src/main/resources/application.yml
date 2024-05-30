@@ -198,6 +198,22 @@ spring:
         jwt:
           issuer-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}"
 
+springdoc:
+  enable-spring-security: true
+  show-oauth2-endpoints: true
+  swagger-ui:
+    oauth2-redirect-url: "{baseUrl}"
+    display-request-duration: true
+    display-operation-id: true
+    showExtensions: true
+    showCommonExtensions: true
+
+openapi:
+  oAuthFlow:
+    tokenUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+    authorizationUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
+    refreshUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+
 eureka:
   client:
     enabled: true

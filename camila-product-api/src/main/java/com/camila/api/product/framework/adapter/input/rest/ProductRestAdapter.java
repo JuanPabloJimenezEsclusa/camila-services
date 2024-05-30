@@ -1,8 +1,12 @@
 package com.camila.api.product.framework.adapter.input.rest;
 
-import com.camila.api.product.domain.Product;
 import com.camila.api.product.application.usercase.ProductUserCase;
+import com.camila.api.product.domain.Product;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -20,6 +24,7 @@ import java.util.Map;
 /**
  * The type Product rest adapter.
  */
+@Tag(name = "Products", description = "Products API")
 @RestController
 @RequestMapping(value = "/products")
 @Validated
@@ -50,6 +55,12 @@ class ProductRestAdapter {
    * @param internalId the internal id
    * @return the response entity
    */
+  @Operation(
+    summary = "Find product by internal identified",
+    description = "Consult product by ID")
+  @ApiResponse(responseCode="200", description ="Success", content = {@Content(mediaType = "application/json")})
+  @ApiResponse(responseCode = "401", description = "Unauthorized")
+  @ApiResponse(responseCode = "500", description = "Server Error")
   @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<Mono<Product>> findById(@PathVariable("id") String internalId) {
     return ResponseEntity.ok(productUserCase.findByInternalId(internalId));
@@ -61,6 +72,12 @@ class ProductRestAdapter {
    * @param requestParams the request params
    * @return the response entity
    */
+  @Operation(
+    summary = "Find products sort by weight",
+    description = "Consult products sorted by metric:weight rules")
+  @ApiResponse(responseCode="200", description ="Success", content = {@Content(mediaType = "application/json")})
+  @ApiResponse(responseCode = "401", description = "Unauthorized")
+  @ApiResponse(responseCode = "500", description = "Server Error")
   @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
   public ResponseEntity<Flux<Product>> sortProducts(
     @RequestParam

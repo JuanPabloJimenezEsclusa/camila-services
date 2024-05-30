@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * The type Product repository adapter factory.
  */
+@SuppressWarnings("java:S2637") // repositoryTechnology value is delegated to spring but has default value
 @Component
 @Primary
 class ProductRepositoryAdapterFactory implements ProductOutputPort {

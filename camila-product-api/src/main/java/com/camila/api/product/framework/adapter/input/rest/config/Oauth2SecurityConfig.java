@@ -11,17 +11,26 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerReactiveAuthenticationManagerResolver;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+/**
+ * The type Oauth 2 security config.
+ */
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 @Profile("!default&!loc")
-class SecurityConfig {
+class Oauth2SecurityConfig {
   private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**" };
   private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;
 
+  /**
+   * Security web filter chain security web filter chain.
+   *
+   * @param http the http
+   * @return the security web filter chain
+   */
   @Bean
   SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(trustedIssuers);

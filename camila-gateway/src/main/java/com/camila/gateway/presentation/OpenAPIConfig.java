@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * The type Open api config.
  */
 @Configuration
-public class OpenAPIConfig {
+class OpenAPIConfig {
 
   /**
    * Spring gateway open api.

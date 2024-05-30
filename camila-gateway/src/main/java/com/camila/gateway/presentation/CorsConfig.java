@@ -12,7 +12,7 @@ import java.util.List;
  * The type Cors config.
  */
 @Configuration
-public class CorsConfig extends CorsConfiguration {
+public class CorsConfig {
 
   /**
    * Cors filter cors web filter.
