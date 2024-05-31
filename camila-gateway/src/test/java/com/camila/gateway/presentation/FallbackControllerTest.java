@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
   properties = { "PRODUCT_SERVER_URL=http://localhost:9999/" })
 @DisplayName("[IT][FailBackController] FailBack controller test")
-class FailBackControllerTest {
+class FallbackControllerTest {
 
   @Autowired
   private WebTestClient webClient;
@@ -29,10 +29,10 @@ class FailBackControllerTest {
   }
 
   @ParameterizedTest(name = "fallbackAllProducts | code: {0}  | uri: {1} | result: {2}")
-  @CsvSource({
-    "502, /product-dev/api/products?salesUnits=0.5&stock=0.5, Service no available",
-    "502, /product-dev/api/products/1,                        Service no available"
-  })
+  @CsvSource(value = {
+    "502 | /product-dev/api/products?salesUnits=0.5&stock=0.5 | {\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}",
+    "502 | /product-dev/api/products/1                        | {\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}"
+  }, delimiter = '|')
   @DisplayName("[FailBackController] fallback all product")
   void fallbackAllProducts(int statusCode, String uri, String result) {
     webClient

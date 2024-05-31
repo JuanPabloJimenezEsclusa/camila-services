@@ -565,7 +565,7 @@
     "clientAuthenticatorType" : "client-secret",
     "secret" : "Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE",
     "redirectUris" : [ "http://keycloak:9191/callback", "http://gateway:8090/login/oauth2/code/gateway", "http://gateway:8090/authorized" ],
-    "webOrigins" : [ "http://gateway:8090" ],
+    "webOrigins" : [ "http://gateway:8090", "http://compose-backend-product-1:8080", "http://compose-backend-product-2:8081" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,

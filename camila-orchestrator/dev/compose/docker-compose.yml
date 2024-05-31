@@ -156,7 +156,7 @@ services:
       - camila_product_mongodb_data:/data/db
       - ./data/mongodb/:/docker-entrypoint-initdb.d/:ro
     healthcheck:
-      test: ps aux | mongod || exit 1
+      test: ps aux | grep mongod || exit 1
       interval: 5s
       timeout: 2s
       retries: 3
@@ -226,6 +226,12 @@ services:
       - couchbase
     volumes:
       - camila_product_backend_tmp:/tmp
+    healthcheck:
+      test: ps aux | grep java || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 10
+      start_period: 5s
     networks:
       camila_product_network:
   prometheus:
@@ -247,7 +253,7 @@ services:
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     healthcheck:
-      test: ps aux | prometheus || exit 1
+      test: ps aux | grep prometheus || exit 1
       interval: 5s
       timeout: 2s
       retries: 3
@@ -276,7 +282,7 @@ services:
     links:
       - prometheus
     healthcheck:
-      test: ps aux | grafana || exit 1
+      test: ps aux | grep grafana || exit 1
       interval: 5s
       timeout: 2s
       retries: 3

@@ -78,12 +78,12 @@ curl -X 'GET' \
 ![camila-product-api-graphql-example.gif](.docs/examples/camila-product-api-graphql-example.gif)
 
 ```bash
-curl --location 'http://gateway:8080/product-dev/api/graphql' \
+curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
   --data-raw '{"query":"query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {\n    sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {\n        id @include(if: $withDetails)\n        internalId @include(if: $withDetails)\n        category @include(if: $withDetails)\n        name\n        salesUnits\n        stock\n    }\n}\n","variables":{"salesUnits":0.001,"stock":0.999,"page":0,"size":2,"withDetails":false}}'
 
-curl --location 'http://gateway:8080/product-dev/api/graphql' \
+curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
   --data '{"query":"query findById($internalId: ID) {\n  findById(internalId: $internalId) {\n    id, internalId, category, name, salesUnits, stock\n  }\n}\n","variables":{"internalId":"1"}}'
