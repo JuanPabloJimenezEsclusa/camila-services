@@ -17,9 +17,9 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-@Profile("!default&!loc")
+@Profile("dev|int")
 class Oauth2SecurityConfig {
-  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**" };
+  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**", "/ws/**" };
   private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")

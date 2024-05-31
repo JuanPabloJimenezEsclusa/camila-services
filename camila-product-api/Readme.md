@@ -39,7 +39,8 @@ Implementa:
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
  ┃     ┃ ┣ 📂rest
- ┃     ┃ ┗ 📂graphql
+ ┃     ┃ ┣ 📂graphql
+ ┃     ┃ ┗ 📂websocket
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo
  ┃       ┗ 📂couchbase
@@ -66,12 +67,24 @@ Implementa:
 ```bash
 curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
-  -H 'accept: application/json'
+  -H 'Accept: application/json'
+
+# Server-sent Event (SSE)
+curl -X 'GET' \
+  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  -H 'Accept: text/event-stream'
+
+# NDJSON: https://github.com/ndjson/ndjson-spec
+curl -X 'GET' \
+  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  -H 'Accept: application/x-ndjson'
   
 curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products/1' \
-  -H 'accept: application/json'
+  -H 'Accept: application/json'
 ```
+
+> [3 techniques to stream JSON in Spring WebFlux](https://nurkiewicz.com/2021/08/error-handling-in-json-streaming-with-webflux.html)
 
 ### GRAPHQL API
 

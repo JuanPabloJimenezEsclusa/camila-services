@@ -145,11 +145,12 @@ chaos:
 
 logging:
   level:
-    org.springframework.boot: debug
-    org.springframework: debug
-    org.springframework.data: debug
-    org.springframework.security: debug
+    org.springframework.boot: DEBUG
+    org.springframework: DEBUG
+    org.springframework.data: DEBUG
+    org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
+    org.springframework.web.reactive.socket: DEBUG
 
 ---
 ###### Disable config|discovery feature by default ######
@@ -172,7 +173,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "!default&!loc"
+      on-profile: "dev"
     import: "optional:configserver:${CONFIG_SERVER_URI:}"
   cloud:
     discovery:
