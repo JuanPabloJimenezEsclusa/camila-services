@@ -54,5 +54,5 @@ import org.springframework.context.annotation.Profile;
       @OAuthScope(name = "camila.write", description = "write scope") })))
 
 @Configuration
-@Profile("!default&!loc")
+@Profile("dev|int")
 class Oauth2OpenAPIConfig { }

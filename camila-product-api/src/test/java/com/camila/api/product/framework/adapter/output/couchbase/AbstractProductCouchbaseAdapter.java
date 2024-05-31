@@ -55,7 +55,7 @@ abstract class AbstractProductCouchbaseAdapter {
   private static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer(COUCHBASE_IMAGE)
     .withCredentials(USERNAME, PASSWORD)
     .withBucket(BUCKET_DEFINITION)
-    .withStartupTimeout(Duration.ofSeconds(60))
+    .withStartupTimeout(Duration.ofSeconds(90))
     .waitingFor(Wait.forHealthcheck())
     .withCreateContainerCmdModifier(cmd ->
       Objects.requireNonNull(cmd

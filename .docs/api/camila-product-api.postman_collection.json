@@ -2104,7 +2104,7 @@
 									"mode": "graphql",
 									"graphql": {
 										"query": "query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {\n    sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {\n        id @include(if: $withDetails)\n        internalId @include(if: $withDetails)\n        category @include(if: $withDetails)\n        name\n        salesUnits\n        stock\n    }\n}\n",
-										"variables": "{\n  \"salesUnits\": 0.09,\n  \"stock\": 0.01,\n  \"page\": 0,\n  \"size\": 1,\n  \"withDetails\": false\n}"
+										"variables": "{\n  \"salesUnits\": 0.09,\n  \"stock\": 0.01,\n  \"page\": 0,\n  \"size\": 2,\n  \"withDetails\": false\n}"
 									}
 								},
 								"url": {
@@ -2161,13 +2161,183 @@
 					]
 				},
 				{
-					"name": "sort Products",
+					"name": "sort Products (event-stream)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/event-stream"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products?salesUnits=0.80&stock=0.20&page=0&size=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "salesUnits",
+									"value": "0.80"
+								},
+								{
+									"key": "stock",
+									"value": "0.20"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?nostrud_66=<string>&ut_d8=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "nostrud_66",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "ut_d8",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"estdc0\": \"<integer>\"\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"et_49\": \"<integer>\",\n      \"ad_6\": \"<integer>\",\n      \"Duis_9\": \"<integer>\",\n      \"eu_8\": \"<integer>\"\n    }\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "sort Products (json)",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Accept",
 								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/products?salesUnits=0.80&stock=0.20&page=0&size=1000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "salesUnits",
+									"value": "0.80"
+								},
+								{
+									"key": "stock",
+									"value": "0.20"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/products?nostrud_66=<string>&ut_d8=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "nostrud_66",
+											"value": "<string>",
+											"description": "(Required) "
+										},
+										{
+											"key": "ut_d8",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"estdc0\": \"<integer>\"\n    }\n  },\n  {\n    \"id\": \"<string>\",\n    \"internalId\": \"<string>\",\n    \"name\": \"<string>\",\n    \"category\": \"<string>\",\n    \"salesUnits\": \"<integer>\",\n    \"stock\": {\n      \"et_49\": \"<integer>\",\n      \"ad_6\": \"<integer>\",\n      \"Duis_9\": \"<integer>\",\n      \"eu_8\": \"<integer>\"\n    }\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "sort Products (ndjson)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/x-ndjson"
 							}
 						],
 						"url": {
