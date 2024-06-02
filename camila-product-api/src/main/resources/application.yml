@@ -28,6 +28,10 @@ spring:
     graphiql:
       enabled: true
       path: /graphiql
+  rsocket:
+    server:
+      mapping-path: /product-dev/api/rsocket
+      transport: websocket
 
 info:
   app:
@@ -114,6 +118,9 @@ spring:
   config:
     activate:
       on-profile: "loc|dev"
+  rsocket:
+    server:
+      port: 7000
 
 management:
   endpoint:

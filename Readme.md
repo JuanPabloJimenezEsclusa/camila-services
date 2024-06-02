@@ -16,13 +16,13 @@ Side project to practice **Java** `Ecosystem`
 
 ## Componentes
 
-| Componente                                  | Descripción                |
-|---------------------------------------------|----------------------------|
-| [camila-product-api](/camila-product-api)   | Contiene el API Rest que expone la consulta de productos |
-| [camila-discovery](/camila-discovery)       | Contiene un descubridor de servicios |
-| [camila-gateway](/camila-gateway)           | Contiene un gateway para servicios |
-| [camila-config](/camila-config)             | Contiene un configurador central de servicios |
-| [camila-admin](/camila-admin)               | Contiene un administrador de servicios (UI) |
+| Componente                                  | Descripción                                                                     |
+|---------------------------------------------|---------------------------------------------------------------------------------|
+| [camila-product-api](/camila-product-api)   | Contiene un microservicio que expone la consulta de productos                   |
+| [camila-discovery](/camila-discovery)       | Contiene un descubridor de servicios                                            |
+| [camila-gateway](/camila-gateway)           | Contiene un gateway para servicios                                              |
+| [camila-config](/camila-config)             | Contiene un configurador central de servicios                                   |
+| [camila-admin](/camila-admin)               | Contiene un administrador de servicios (UI)                                     |
 | [camila-orchestrator](/camila-orchestrator) | Contiene la configuración como código para orquestar el despliegue del proyecto |
 
 ## Diagrama de arquitectura

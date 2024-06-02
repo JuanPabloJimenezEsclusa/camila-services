@@ -1,0 +1,86 @@
+### Rest - findById (SSE)
+GET http://localhost:8080/product-dev/api/products/1 HTTP/2
+Accept: text/event-stream
+Content-Type: application/json
+
+### Rest - sortProducts (ndjson)
+http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
+Accept: application/x-ndjson
+Content-Type: application/json
+
+### Graphql - findById
+GRAPHQL http://localhost:8080/product-dev/api/graphql
+
+query findById($internalId: ID) {
+  findById(internalId: $internalId) {
+    id, internalId, category, name, salesUnits, stock
+  }
+}
+
+{
+"internalId": "2"
+}
+
+### Graphql - sortProducts
+GRAPHQL http://localhost:8080/product-dev/api/graphql
+
+query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+  sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+    id @include(if: $withDetails)
+    internalId @include(if: $withDetails)
+    category @include(if: $withDetails)
+    name
+    salesUnits
+    stock
+  }
+}
+
+{
+  "salesUnits": 0.001,
+  "stock": 0.999,
+  "page": 0,
+  "size": 2,
+  "withDetails": false
+}
+
+### Websockt
+WEBSOCKET ws://localhost:8080/product-dev/api/ws/products
+Content-Type: application/json
+
+===
+{
+  "method": "FIND_BY_INTERNAL_ID",
+  "internalId": "1"
+}
+=== wait-for-server
+{
+  "method": "SORT_PRODUCTS",
+  "salesUnits": "0.001",
+  "stock": "0.999",
+  "page": "0",
+  "size": "5"
+}
+=== wait-for-server
+
+### RSocket request rsponse with websocket - findByInternalId
+RSOCKET products.request-response-findByInternalId
+Host: ws://localhost:7000/rsocket
+Accept: application/json
+Content-Type: application/json
+
+{
+  "internalId": "5"
+}
+
+### RSocket request stream with websocket - SortProducts
+RSOCKET products.request-stream-sortByMetricsWeights
+Host: ws://localhost:7000/rsocket
+Accept: text/event-stream
+Content-Type: text/event-stream
+
+{
+  "salesUnits": "0.001",
+  "stock": "0.999",
+  "page": "0",
+  "size": "5"
+}

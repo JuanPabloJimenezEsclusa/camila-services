@@ -2,8 +2,8 @@ package com.camila.api.product.framework.adapter.input.rest;
 
 import com.camila.api.product.domain.Product;
 import com.camila.api.product.application.usercase.ProductUserCase;
-import com.camila.api.product.framework.adapter.input.rest.config.LocalSecurityConfig;
 import com.camila.api.product.framework.adapter.input.rest.exception.RestExceptionHandler;
+import com.camila.api.product.framework.adapter.input.security.LocalSecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

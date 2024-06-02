@@ -1,10 +1,11 @@
 # camila-product-api
 
-> API REST example
+> Microservice example
 
 Implementa:
-- El paradigma: [Reactivo](https://projectreactor.io/learn)
-- La arquitectura: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
+- Paradigma: [Reactivo](https://projectreactor.io/learn)
+- Arquitectura: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
+- Comunicación: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [Rsocket](https://rsocket.io/)
 
 ---
 
@@ -38,9 +39,11 @@ Implementa:
  ┃ ┗ 📂framework
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
+ ┃     ┃ ┣ 📂security
  ┃     ┃ ┣ 📂rest
  ┃     ┃ ┣ 📂graphql
- ┃     ┃ ┗ 📂websocket
+ ┃     ┃ ┣ 📂websocket
+ ┃     ┃ ┗ 📂rsocket
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo
  ┃       ┗ 📂couchbase
@@ -53,14 +56,14 @@ Implementa:
 
 ## Enlaces
 
-* REST API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
-* GRAPHQL API DOC: <http://localhost:8080/product-dev/api/graphiql>
+* Rest API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
+* Graphql API DOC: <http://localhost:8080/product-dev/api/graphiql>
 
 ---
 
 ## Ejemplos de petición API
 
-### REST API
+### Rest API
 
 ![camila-product-api-rest-example.gif](.docs/examples/camila-product-api-rest-example.gif)
 
@@ -86,7 +89,7 @@ curl -X 'GET' \
 
 > [3 techniques to stream JSON in Spring WebFlux](https://nurkiewicz.com/2021/08/error-handling-in-json-streaming-with-webflux.html)
 
-### GRAPHQL API
+### Graphql API
 
 ![camila-product-api-graphql-example.gif](.docs/examples/camila-product-api-graphql-example.gif)
 
@@ -101,6 +104,10 @@ curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Content-Type: application/json' \
   --data '{"query":"query findById($internalId: ID) {\n  findById(internalId: $internalId) {\n    id, internalId, category, name, salesUnits, stock\n  }\n}\n","variables":{"internalId":"1"}}'
 ```
+
+### Websocket
+
+![camila-product-api-websocket-example.gif](.docs/examples/camila-product-api-websocket-example.gif)
 
 ---
 

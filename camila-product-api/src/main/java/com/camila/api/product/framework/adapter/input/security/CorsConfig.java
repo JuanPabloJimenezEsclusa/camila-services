@@ -1,4 +1,4 @@
-package com.camila.api.product.framework.adapter.input.rest.config;
+package com.camila.api.product.framework.adapter.input.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

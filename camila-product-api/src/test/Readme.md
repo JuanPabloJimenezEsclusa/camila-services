@@ -26,9 +26,10 @@ Se plantean 7 tipos de pruebas
  ┃ ┗ 📂framework
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
- ┃     ┃ ┣ 📂rest (Integration tests)
+ ┃     ┃ ┣ 📂rest (Integration tests) (Unit tests)
  ┃     ┃ ┣ 📂graphql (Integration tests)
- ┃     ┃ ┗ 📂websocket (Integration tests)
+ ┃     ┃ ┣ 📂websocket (Integration tests)
+ ┃     ┃ ┗ 📂rsocket (Integration tests)
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo (Integration tests)
  ┃       ┗ 📂couchbase (Integration tests)

@@ -1,4 +1,4 @@
-package com.camila.api.product.framework.adapter.input.rest.config;
+package com.camila.api.product.framework.adapter.input.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,14 +19,14 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableReactiveMethodSecurity
 @Profile("dev|int")
 class Oauth2SecurityConfig {
-  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**", "/ws/**" };
-  private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**" };
+  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**" };
+  private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**", "/ws/**", "/rsocket/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;
 
   /**
-   * Security web filter chain security web filter chain.
+   * Security web filter chain.
    *
    * @param http the http
    * @return the security web filter chain
