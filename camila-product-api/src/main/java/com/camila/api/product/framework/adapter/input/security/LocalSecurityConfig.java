@@ -1,4 +1,4 @@
-package com.camila.api.product.framework.adapter.input.rest.config;
+package com.camila.api.product.framework.adapter.input.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +8,22 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+/**
+ * The type Local security config.
+ */
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 @Profile("default|loc")
+// It must be public to use in unit tests
 public class LocalSecurityConfig {
 
+  /**
+   * Security web filter chain.
+   *
+   * @param http the http
+   * @return the security web filter chain
+   */
   @Bean
   SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     return http

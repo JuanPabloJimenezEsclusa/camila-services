@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -14,7 +15,6 @@ import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClien
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -32,7 +32,7 @@ class ProductWebSocketHandlerITCase {
 
   private static WebSocketClient WEBSOCKET_CLIENT;
 
-  @Inject
+  @Autowired
   private ObjectMapper objectMapper;
 
   @LocalServerPort
