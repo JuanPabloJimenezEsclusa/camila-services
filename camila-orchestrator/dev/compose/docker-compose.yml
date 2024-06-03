@@ -1,6 +1,7 @@
 # dev services
 
 services:
+  ## Spring cloud
   config:
     image: docker.io/library/camila-config:1.0.0
     container_name: camila-config
@@ -29,6 +30,13 @@ services:
       timeout: 2s
       retries: 3
       start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
         ipv4_address: 172.18.0.254
@@ -62,6 +70,13 @@ services:
       timeout: 2s
       retries: 3
       start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
   gateway:
@@ -98,6 +113,13 @@ services:
       - keycloak
     volumes:
       - camila_gateway_tmp:/tmp
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
   admin:
@@ -132,8 +154,16 @@ services:
     links:
       - discovery
       - config
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
+  ## Databases
   mongodb:
     image: mongodb/mongodb-community-server:7.0.8-ubi8
     container_name: camila-product-db
@@ -161,6 +191,13 @@ services:
       timeout: 2s
       retries: 3
       start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks: 
       camila_product_network:
   couchbase:
@@ -194,8 +231,16 @@ services:
       timeout: 2s
       retries: 3
       start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
+  ## Microservices
   backend-product:
     image: docker.io/library/camila-product-api:1.0.0
     restart: "on-failure"
@@ -224,6 +269,7 @@ services:
       - discovery
       - mongodb
       - couchbase
+      - fluentd
     volumes:
       - camila_product_backend_tmp:/tmp
     healthcheck:
@@ -232,8 +278,48 @@ services:
       timeout: 2s
       retries: 10
       start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
     networks:
       camila_product_network:
+  ## Security (Authn/Authz)
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    command: |
+      start-dev --hostname keycloak --http-port 9191 --import-realm
+    container_name: keycloak
+    hostname: keycloak
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "2"
+    restart: "on-failure"
+    env_file:
+      - .env
+    ports:
+      - "9191:9191"
+    expose:
+      - 9191
+    volumes:
+      - ./authorization:/opt/keycloak/data/import
+      - keycloak_config:/opt/keycloak/config
+      - keycloak_data:/opt/keycloak/data
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
+    networks:
+      camila_product_network:
+  ## Monitorization
   prometheus:
     image: prom/prometheus:v2.52.0
     container_name: prometheus
@@ -289,30 +375,7 @@ services:
       start_period: 5s
     networks:
       camila_product_network:
-  keycloak:
-    image: quay.io/keycloak/keycloak:24.0
-    command: |
-      start-dev --hostname keycloak --http-port 9191 --import-realm
-    container_name: keycloak
-    hostname: keycloak
-    deploy:
-      resources:
-        limits:
-          memory: "1024m"
-          cpus: "2"
-    restart: "on-failure"
-    env_file:
-      - .env
-    ports:
-      - "9191:9191"
-    expose:
-      - 9191
-    volumes:
-      - ./authorization:/opt/keycloak/data/import
-      - keycloak_config:/opt/keycloak/config
-      - keycloak_data:/opt/keycloak/data
-    networks:
-      camila_product_network:
+  ## Tracing
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
     image: openzipkin/zipkin:3.3
@@ -334,6 +397,82 @@ services:
       - 9411
     networks:
       camila_product_network:
+  ## Observability (EFK)
+  elasticsearch:
+    image: elasticsearch:8.13.4
+    container_name: elasticsearch
+    hostname: elasticsearch
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "2048m"
+          cpus: "2"
+    environment:
+      # service failed if it use .env
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - cluster.name=elasticsearch
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1000m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    expose:
+      - 9200
+      - 9300
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      camila_product_network:
+  fluentd:
+    build: ./monitoring/fluentd/.
+    container_name: fluentd
+    hostname: fluentd
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "2048m"
+          cpus: "4"
+    env_file:
+      - .env
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    expose:
+      - 24224
+    links:
+      - elasticsearch
+    volumes:
+      - ./monitoring/fluentd:/fluentd
+      - fluentd_logs:/fluentd/log
+    depends_on:
+      - elasticsearch
+    networks:
+      camila_product_network:
+  kibana:
+    image: kibana:8.13.4
+    container_name: kibana
+    hostname: kibana
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "2048m"
+          cpus: "2"
+    env_file:
+      - .env
+    ports:
+      - "5601:5601"
+    expose:
+      - 5601
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    networks:
+      camila_product_network:
 
 volumes:
   camila_product_mongodb_data:
@@ -346,6 +485,8 @@ volumes:
   keycloak_config:
   keycloak_data:
   grafana_data:
+  elasticsearch_data:
+  fluentd_logs:
 
 networks:
   camila_product_network:

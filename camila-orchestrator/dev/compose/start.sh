@@ -33,7 +33,7 @@ __initServices() {
   cd "${workspace}"
 
   # iniciar los servicios
-  docker-compose up -d
+  docker-compose up -d --build --force-recreate
   # mostrar los servicios
   docker-compose ps	
 }
