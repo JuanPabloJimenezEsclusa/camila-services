@@ -75,3 +75,16 @@ Muestra de productos:
 | 4  | PLEATED T-SHIRT               | 3           | S: 25 / M:30 / L:10  |
 | 5  | CONTRASTING LACE T-SHIRT      | 650         | S: 0 / M:1 / L:0     |
 | 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     |
+
+## Empaquetar
+
+```bash
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+
+# jars
+mvn deploy \
+  -Dmaven.test.skip=true  -f ./pom.xml
+# images
+mvn spring-boot:build-image \
+  -Dmaven.test.skip=true  -f ./pom.xml
+```

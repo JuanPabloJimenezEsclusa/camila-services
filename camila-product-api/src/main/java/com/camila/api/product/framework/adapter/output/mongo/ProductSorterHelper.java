@@ -78,7 +78,7 @@ class ProductSorterHelper {
     }
 
     if (weightExpressions.size() == 1) {
-      return weightExpressions.get(0);
+      return weightExpressions.getFirst();
     }
 
     return ArithmeticOperators.valueOf(weightExpressions.get(0)).add(weightExpressions.get(1));

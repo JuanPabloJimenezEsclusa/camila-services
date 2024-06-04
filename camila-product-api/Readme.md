@@ -69,6 +69,10 @@ Implementa:
 
 ```bash
 curl -X 'GET' \
+  'http://localhost:8080/product-dev/api/products/1' \
+  -H 'Accept: application/json'
+  
+curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
   -H 'Accept: application/json'
 
@@ -81,10 +85,6 @@ curl -X 'GET' \
 curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
   -H 'Accept: application/x-ndjson'
-  
-curl -X 'GET' \
-  'http://localhost:8080/product-dev/api/products/1' \
-  -H 'Accept: application/json'
 ```
 
 > [3 techniques to stream JSON in Spring WebFlux](https://nurkiewicz.com/2021/08/error-handling-in-json-streaming-with-webflux.html)
@@ -108,6 +108,21 @@ curl --location 'http://localhost:8080/product-dev/api/graphql' \
 ### Websocket
 
 ![camila-product-api-websocket-example.gif](.docs/examples/camila-product-api-websocket-example.gif)
+
+```bash
+# https://github.com/vi/websocat
+echo '{ "method": "FIND_BY_INTERNAL_ID", "internalId": "1" }' \
+  | websocat -n1 ws://localhost:8080/product-dev/api/ws/products
+
+echo '{ "method": "SORT_PRODUCTS", "salesUnits": "0.001", "stock": "0.999", "page": "0", "size": "100" }' \
+  | websocat --no-close ws://localhost:8080/product-dev/api/ws/products
+
+docker run --rm -it \
+  --network=host \
+  ghcr.io/vi/websocat:nightly \
+  ws://localhost:8080/product-dev/api/ws/products 
+{ "method": "SORT_PRODUCTS", "salesUnits": "0.999", "stock": "0.001", "page": "0", "size": "100" }
+```
 
 ---
 

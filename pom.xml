@@ -53,6 +53,17 @@
     </dependencies>
   </dependencyManagement>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>camila-services</name>
+      <url>https://maven.pkg.github.com/JuanPabloJimenezEsclusa/camila-services</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <plugin>
