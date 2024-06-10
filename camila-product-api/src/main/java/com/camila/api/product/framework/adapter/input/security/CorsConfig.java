@@ -13,7 +13,7 @@ import java.util.Collections;
  * The type Cors config.
  */
 @Configuration
-@Profile("dev")
+@Profile("dev|int|pre|pro")
 class CorsConfig {
   /**
    * Cors web filter cors web filter.
@@ -21,7 +21,7 @@ class CorsConfig {
    * @return the cors web filter
    */
   @Bean
-  public CorsWebFilter corsWebFilter() {
+  CorsWebFilter corsWebFilter() {
     var corsConfig = new CorsConfiguration();
     corsConfig.setAllowedOrigins(Collections.singletonList("*"));
     corsConfig.setAllowedMethods(Collections.singletonList("*"));

@@ -10,15 +10,16 @@ Contiene la configuración como código que permite desplegar el servicio en un 
 
 ## Entornos
 
-| Entorno     | Descripción                |
-|-------------|----------------------------|
+| Entorno       | Descripción                                                                                                                                |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------|
 | [dev](./dev/) | Orquestación básica de contenedores con `docker-compose` que permite crear un entorno de despliegue con todos los componentes del servicio |
-| [int](./int/) | Orquestación en `k8s` utilizando ó deployments ó serveless `knative` |
+| [int](./int/) | Orquestación en `k8s` utilizando ó deployments ó serveless `knative`                                                                       |
+| [pre](./pre/) | Orquestación en `AWS` utilizando `AWS CloudFormation`                                                                                      |
 
 ## Infraestructura
 
-| Proveedor                           | Descripción                |
-|-------------------------------------|----------------------------|
+| Proveedor                           | Descripción                                                                                                 |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------------|
 | [clusters - kind](./clusters/kind/) | Configuración de un cluster `k8s` utilizando el proyecto: [kubernetes in docker](https://kind.sigs.k8s.io/) |
 
 ## Arquitectura
@@ -34,5 +35,7 @@ Contiene la configuración como código que permite desplegar el servicio en un 
  ┃   ┣ 📂API
  ┃   ┃ ┗ 📂serveless (apply-serveless.sh - delete-serveless.sh)
  ┃   ┗ 📂DDBB (apply.sh - delete.sh)
+ ┣ 📂pre
+ ┃ ┗ 📂aws (init-aws-stack.sh - delete-aws-stack.sh)
  ┗ 📜Readme.md
 ```

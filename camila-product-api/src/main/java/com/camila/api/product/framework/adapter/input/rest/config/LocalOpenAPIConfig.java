@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Profile;
  * The type Open api config.
  */
 @Configuration
-@Profile("default|loc")
+@Profile("default|loc|pre|pro")
 class LocalOpenAPIConfig {
   @Bean
   OpenAPI springOpenAPI() {

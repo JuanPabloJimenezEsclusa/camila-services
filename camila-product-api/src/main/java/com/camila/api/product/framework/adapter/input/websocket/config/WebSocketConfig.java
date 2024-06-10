@@ -25,7 +25,7 @@ public class WebSocketConfig {
    * @return the web socket handler adapter
    */
   @Bean
-  public WebSocketHandlerAdapter handlerAdapter() {
+  WebSocketHandlerAdapter handlerAdapter() {
     return new WebSocketHandlerAdapter(webSocketService());
   }
 
@@ -35,7 +35,7 @@ public class WebSocketConfig {
    * @return the web socket service
    */
   @Bean
-  public WebSocketService webSocketService() {
+  WebSocketService webSocketService() {
     return new HandshakeWebSocketService(
       new ReactorNettyRequestUpgradeStrategy(WebsocketServerSpec.builder()
         .maxFramePayloadLength(Integer.MAX_VALUE)));
@@ -48,7 +48,7 @@ public class WebSocketConfig {
    * @return the simple url handler mapping
    */
   @Bean
-  public SimpleUrlHandlerMapping webSocketMapping(WebSocketHandler productWebSocketHandler) {
+  SimpleUrlHandlerMapping webSocketMapping(WebSocketHandler productWebSocketHandler) {
     return new SimpleUrlHandlerMapping(Map.of("/ws/products", productWebSocketHandler), -1);
   }
 }

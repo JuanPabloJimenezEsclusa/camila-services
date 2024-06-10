@@ -14,7 +14,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-@Profile("default|loc")
+@Profile("default|loc|pre|pro")
 // It must be public to use in unit tests
 public class LocalSecurityConfig {
 

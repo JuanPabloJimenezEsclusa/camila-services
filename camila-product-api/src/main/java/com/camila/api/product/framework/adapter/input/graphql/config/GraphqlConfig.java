@@ -16,7 +16,7 @@ class GraphqlConfig {
    * @return the runtime wiring configurer
    */
   @Bean
-  public RuntimeWiringConfigurer runtimeWiringConfigurer() {
+  RuntimeWiringConfigurer runtimeWiringConfigurer() {
     return wiringBuilder -> wiringBuilder.scalar(ExtendedScalars.Json);
   }
 }
