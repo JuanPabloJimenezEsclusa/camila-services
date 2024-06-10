@@ -423,6 +423,8 @@ services:
       - 9300
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl","-s" ,"-f", "http://localhost:9200/_cat/health"]
     networks:
       camila_product_network:
   fluentd:
@@ -471,6 +473,9 @@ services:
       - elasticsearch
     links:
       - elasticsearch
+    healthcheck:
+      test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
+      retries: 5
     networks:
       camila_product_network:
 

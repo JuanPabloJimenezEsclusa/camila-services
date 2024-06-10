@@ -22,6 +22,9 @@ spring:
     connection-string: localhost
     username: admin
     password: admin1234
+    env:
+      ssl:
+        enabled: true
   webflux:
     base-path: /product-dev/api
   graphql:
@@ -94,6 +97,8 @@ management:
     git:
       enabled: true
       mode: full
+  tracing:
+    enabled: false
 
 logging:
   charset:
@@ -164,7 +169,7 @@ logging:
 spring:
   config:
     activate:
-      on-profile: "!dev&!int&!pro"
+      on-profile: "!dev"
   cloud:
     config:
       enabled: false
@@ -237,6 +242,8 @@ eureka:
     leaseRenewalIntervalInSeconds: 15
 
 management:
+  tracing:
+    enabled: true
   zipkin:
     tracing:
       endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
@@ -262,16 +269,22 @@ spring:
 # Spring base properties
 spring:
   main:
-    log-startup-info: false
+    log-startup-info: true
   config:
     activate:
-      on-profile: "pro"
+      on-profile: "pre|pro"
   webflux:
-    base-path: /product-pro/api
+    base-path: /product/api
   devtools:
     add-properties: false
     livereload:
       enabled: false
+  rsocket:
+    server:
+      port: 7000
+
+server:
+  forward-headers-strategy: framework
 
 # Turn off global debug
 debug: false

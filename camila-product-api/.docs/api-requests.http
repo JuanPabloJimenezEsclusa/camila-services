@@ -4,7 +4,7 @@ Accept: text/event-stream
 Content-Type: application/json
 
 ### Rest - sortProducts (ndjson)
-http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
+GET http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 

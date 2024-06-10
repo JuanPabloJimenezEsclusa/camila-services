@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductApiApplication<camila-product-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.camila.api.ProductApiApplication",
+            "projectName": "camila-product-api",
+            "args": "--spring.profiles.active=loc,chaos-monkey",
+            "vmArgs": "-Xms256m -Xmx1024m",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

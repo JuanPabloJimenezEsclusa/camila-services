@@ -20,7 +20,7 @@ public class RSocketConfig {
    * @return the rsocket message handler
    */
   @Bean
-  public RSocketMessageHandler messageHandler() {
+  RSocketMessageHandler messageHandler() {
     var handler = new RSocketMessageHandler();
     handler.setRSocketStrategies(rsocketStrategies());
     return handler;
@@ -32,7 +32,7 @@ public class RSocketConfig {
    * @return the rsocket strategies
    */
   @Bean
-  public RSocketStrategies rsocketStrategies() {
+  RSocketStrategies rsocketStrategies() {
     return RSocketStrategies.builder()
       .encoders(encoders -> encoders.add(new Jackson2CborEncoder()))
       .decoders(decoders -> decoders.add(new Jackson2CborDecoder()))

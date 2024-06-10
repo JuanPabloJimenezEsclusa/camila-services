@@ -2,14 +2,14 @@
 
 > Microservice example
 
-Implementa:
-- Paradigma: [Reactivo](https://projectreactor.io/learn)
-- Arquitectura: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
-- Comunicación: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [Rsocket](https://rsocket.io/)
+Implement:
+- Paradigm: [Reactive](https://projectreactor.io/learn)
+- Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
+- Communication: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [Rsocket](https://rsocket.io/)
 
 ---
 
-## Pre-condiciones
+## Pre-conditions
 
 * JDK >= 21
 * Docker >= 24.0.6
@@ -25,7 +25,7 @@ Implementa:
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```txt
 📦api
@@ -50,18 +50,18 @@ Implementa:
  ┗ 📜ProductApiApplication.java
 ```
 
-![Arquitectura-hexagonal](.docs/architecture/camila-product-api-architecture-v1.svg "Diagrama Hexagonal")
+![Hexagonal-architecture](.docs/architecture/camila-product-api-architecture-v1.svg "Hexagonal Diagram")
 
 ---
 
-## Enlaces
+## Links
 
 * Rest API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
 * Graphql API DOC: <http://localhost:8080/product-dev/api/graphiql>
 
 ---
 
-## Ejemplos de petición API
+## API request examples
 
 ### Rest API
 
@@ -126,21 +126,21 @@ docker run --rm -it \
 
 ---
 
-## Pruebas
+## Testing
 
-[Test - Readme](src/test/Readme.md)
-
----
-
-## Operaciones (build, deploy)
-
-[Operar - Readme](.operate/Readme.md)
+[Tests - Readme](src/test/Readme.md)
 
 ---
 
-## Notas:
+## Operations (build, deploy)
 
-### Ejemplo de agregación de `products` con filtro de `sales units` y `stock` ponderada en `mongodb`
+[Operations - Readme](.operate/Readme.md)
+
+---
+
+## Notes:
+
+### Example of aggregating `products` with `sales units` and weighted `stock` filter in `mongodb`
 
 ```bash
 db.products.aggregate([
