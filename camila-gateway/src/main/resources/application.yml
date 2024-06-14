@@ -1,22 +1,4 @@
 spring:
-  security:
-    oauth2:
-      client:
-        provider:
-          camila-keycloak:
-            token-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
-            authorization-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
-            userinfo-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/userinfo"
-            user-name-attribute: preferred_username
-        registration:
-          gateway:
-            provider: camila-keycloak
-            client-id: camila-client
-            client-secret: Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE
-            authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}"
-            scope: profile, openid, email, roles, web-origins, camila.read, camila.write
-
   application:
     name: "@project.name@"
   banner:
@@ -144,7 +126,7 @@ management:
   endpoint:
     env:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
       cache:
         time-to-live: 60s
     info:
@@ -157,11 +139,11 @@ management:
         time-to-live: 10s
     health:
       enabled: true
-      show-details: always
-      show-components: always
+      show-details: ALWAYS
+      show-components: ALWAYS
     configprops:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
     shutdown:
       enabled: true
     prometheus:
@@ -207,3 +189,29 @@ eureka:
     healthCheckUrlPath: actuator/health
     nonSecurePortEnabled: true
     leaseRenewalIntervalInSeconds: 15
+
+---
+###### Integration properties ######
+spring:
+  config:
+    activate:
+      on-profile: "!loc"
+  security:
+    oauth2:
+      client:
+        provider:
+          camila-keycloak:
+            issuer-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}"
+            token-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+            authorization-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
+            jwk-set-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/certs"
+            user-info-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/userinfo"
+            user-name-attribute: preferred_username
+        registration:
+          gateway:
+            provider: camila-keycloak
+            client-id: camila-client
+            client-secret: Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}"
+            scope: profile, openid, email, roles, web-origins, camila/read, camila/write

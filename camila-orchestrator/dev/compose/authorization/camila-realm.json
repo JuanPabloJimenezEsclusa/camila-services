@@ -564,8 +564,8 @@
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE",
-    "redirectUris" : [ "http://keycloak:9191/callback", "http://gateway:8090/login/oauth2/code/gateway", "http://gateway:8090/authorized" ],
-    "webOrigins" : [ "http://gateway:8090", "http://compose-backend-product-1:8080", "http://compose-backend-product-2:8081" ],
+    "redirectUris" : [ "http://keycloak:9191/callback", "http://gateway:8090/login/oauth2/code/gateway", "http://gateway:8090/authorized", "http://gateway:8090/product-dev/api/webjars/swagger-ui/oauth2-redirect.html", "http://localhost:8080/product-dev/api/webjars/swagger-ui/oauth2-redirect.html", "http://gateway:8090/webjars/swagger-ui/oauth2-redirect.html" ],
+    "webOrigins" : [ "http://gateway:8090", "http://gateway:8080", "http://localhost:8090", "http://localhost:8080", "http://compose-backend-product-1:8080", "http://compose-backend-product-2:8081" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,
@@ -629,7 +629,7 @@
         "jsonType.label" : "String"
       }
     } ],
-    "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "camila.read", "email", "camila.write" ],
+    "defaultClientScopes" : [ "web-origins", "acr", "profile", "roles", "camila/read", "email", "camila/write" ],
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ],
     "authorizationSettings" : {
       "allowRemoteResourceManagement" : true,
@@ -781,8 +781,8 @@
     } ]
   }, {
     "id" : "bee79448-4d40-4a99-a7a2-a7324bced425",
-    "name" : "camila.write",
-    "description" : "camila.write",
+    "name" : "camila/write",
+    "description" : "camila/write",
     "protocol" : "openid-connect",
     "attributes" : {
       "include.in.token.scope" : "true",
@@ -1167,8 +1167,8 @@
     } ]
   }, {
     "id" : "0758284e-4281-46dc-a4a3-7c38dab581ab",
-    "name" : "camila.read",
-    "description" : "camila.read",
+    "name" : "camila/read",
+    "description" : "camila/read",
     "protocol" : "openid-connect",
     "attributes" : {
       "include.in.token.scope" : "true",
@@ -1223,7 +1223,7 @@
       }
     } ]
   } ],
-  "defaultDefaultClientScopes" : [ "role_list", "profile", "email", "roles", "web-origins", "acr", "camila.read", "camila.write" ],
+  "defaultDefaultClientScopes" : [ "role_list", "profile", "email", "roles", "web-origins", "acr", "camila/read", "camila/write" ],
   "defaultOptionalClientScopes" : [ "offline_access", "address", "phone", "microprofile-jwt" ],
   "browserSecurityHeaders" : {
     "contentSecurityPolicyReportOnly" : "",

@@ -98,6 +98,8 @@ services:
       - 5015
       - 8090
     depends_on:
+      config:
+        condition: service_healthy
       discovery:
         condition: service_healthy
       keycloak:
@@ -259,6 +261,8 @@ services:
     expose:
       - 8080-8081
     depends_on:
+      config:
+        condition: service_healthy
       discovery:
         condition: service_healthy
       mongodb:
@@ -266,6 +270,7 @@ services:
       couchbase:
         condition: service_started
     links:
+      - config
       - discovery
       - mongodb
       - couchbase

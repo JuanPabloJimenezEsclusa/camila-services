@@ -6,6 +6,8 @@ info:
       - "loc"
       - "dev"
       - "int"
+      - "pre"
+      - "pro"
 
 gateway:
   fallback:

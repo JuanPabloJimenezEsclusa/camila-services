@@ -8,26 +8,21 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.*;
 import io.swagger.v3.oas.annotations.servers.Server;
-import io.swagger.v3.oas.annotations.servers.ServerVariable;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * The type Oauth 2 open api config.
+ * The type Oauth2 open api config.
  */
 @OpenAPIDefinition(
   servers = {
     @Server(
-      url = "http://gateway:8090/product-dev/api",
-      description = "Camila Product API (DEV)",
-      variables = {
-        @ServerVariable(name = "server.host", defaultValue = "gateway", description = "Server Host"),
-        @ServerVariable(name = "server.port", defaultValue = "8090", description = "Server Port")
-      })
+      url = "${openapi.oAuthFlow.url}${spring.webflux.base-path}", // not add path separator
+      description = "Camila Product API")
   },
   info = @Info(
-    title = "Camila Product API (DEV)",
-    description = "API Rest in Camila Product project (docker-compose)",
+    title = "Camila Product API",
+    description = "API Rest in Camila Product project",
     contact = @Contact(
       name = "Juan Pablo Jimenez Esclusa",
       email = "juan.pablo.jimenez,esclusa@gmail.com"),
@@ -44,15 +39,35 @@ import org.springframework.context.annotation.Profile;
 @SecurityScheme(
   name = "camila-client",
   type = SecuritySchemeType.OAUTH2,
-  flows = @OAuthFlows(clientCredentials = @OAuthFlow(
-    tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
-    authorizationUrl = "${openapi.oAuthFlow.authorizationUrl}",
-    refreshUrl = "${openapi.oAuthFlow.refreshUrl}",
-    scopes = {
-      @OAuthScope(name = "openid", description = "openid scope"),
-      @OAuthScope(name = "camila.read", description = "read scope"),
-      @OAuthScope(name = "camila.write", description = "write scope") })))
+  flows = @OAuthFlows(
+    // used into swagger-ui
+    clientCredentials = @OAuthFlow(
+      tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
+      authorizationUrl = "${openapi.oAuthFlow.authorizationUrl}",
+      refreshUrl = "${openapi.oAuthFlow.refreshUrl}",
+      scopes = {
+        @OAuthScope(name = "camila/read", description = "read scope"),
+        @OAuthScope(name = "camila/write", description = "write scope") }),
+    // used into postman, cli and swagger-ui
+    authorizationCode = @OAuthFlow(
+      tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
+      authorizationUrl = "${openapi.oAuthFlow.authorizationUrl}",
+      refreshUrl = "${openapi.oAuthFlow.refreshUrl}",
+      scopes = {
+        @OAuthScope(name = "openid", description = "openid scope"),
+        @OAuthScope(name = "camila/read", description = "read scope"),
+        @OAuthScope(name = "camila/write", description = "write scope") }),
+    // supported by Keycloak but not by AWS Cognito
+    password = @OAuthFlow(
+      tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
+      authorizationUrl = "${openapi.oAuthFlow.authorizationUrl}",
+      refreshUrl = "${openapi.oAuthFlow.refreshUrl}",
+      scopes = {
+        @OAuthScope(name = "openid", description = "openid scope"),
+        @OAuthScope(name = "camila/read", description = "read scope"),
+        @OAuthScope(name = "camila/write", description = "write scope") })
+  ))
 
 @Configuration
-@Profile("dev|int")
+@Profile("dev|pre")
 class Oauth2OpenAPIConfig { }

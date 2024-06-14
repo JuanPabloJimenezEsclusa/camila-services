@@ -3,7 +3,7 @@
 Para configurar `keycloak` se importa el archivo: [camila-realm.json](./camila-realm.json) el cual contiene:
 
 * **realm**: `camila-realm`
-* **scopes**: `camila.read`, `camila.write`
+* **scopes**: `camila/read`, `camila/write`
 * **client**: (id) `camila-client` (secret) `Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE`
 * **user**: `camila/camila`
 

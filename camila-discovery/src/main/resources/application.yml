@@ -21,7 +21,7 @@ management:
   endpoint:
     env:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
       cache:
         time-to-live: 60s
     info:
@@ -34,11 +34,11 @@ management:
         time-to-live: 10s
     health:
       enabled: true
-      show-details: always
-      show-components: always
+      show-details: ALWAYS
+      show-components: ALWAYS
     configprops:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
     shutdown:
       enabled: true
     prometheus:

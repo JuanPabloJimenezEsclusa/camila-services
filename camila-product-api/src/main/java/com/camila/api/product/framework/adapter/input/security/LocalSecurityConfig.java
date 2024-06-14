@@ -14,7 +14,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-@Profile("default|loc|pre|pro")
+@Profile("default|loc|int|pro")
 // It must be public to use in unit tests
 public class LocalSecurityConfig {
 
@@ -27,9 +27,9 @@ public class LocalSecurityConfig {
   @Bean
   SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     return http
-      .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
       .cors(ServerHttpSecurity.CorsSpec::disable)
       .csrf(ServerHttpSecurity.CsrfSpec::disable)
+      .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
       .build();
   }
 }

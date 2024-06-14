@@ -19,12 +19,12 @@ spring:
       auto-index-creation: true
       uuid-representation: JAVA_LEGACY
   couchbase:
-    connection-string: localhost
+    connection-string: couchbase://localhost:11207
     username: admin
     password: admin1234
     env:
       ssl:
-        enabled: true
+        enabled: false
   webflux:
     base-path: /product-dev/api
   graphql:
@@ -69,7 +69,7 @@ management:
   endpoint:
     env:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
       cache:
         time-to-live: 60s
     info:
@@ -82,11 +82,11 @@ management:
         time-to-live: 10s
     health:
       enabled: true
-      show-details: always
-      show-components: always
+      show-details: ALWAYS
+      show-components: ALWAYS
     configprops:
       enabled: true
-      show-values: always
+      show-values: ALWAYS
     shutdown:
       enabled: true
     prometheus:
@@ -201,7 +201,7 @@ spring:
         enabled: true
         service-id: "camila-config"
       label: main
-      profile: ${SPRING_PROFILES_ACTIVE}
+      profile: ${SPRING_PROFILES_ACTIVE:dev}
       name: ${spring.application.name}
       allow-override: true
   # Enable keycloak security
@@ -215,32 +215,44 @@ springdoc:
   enable-spring-security: true
   show-oauth2-endpoints: true
   swagger-ui:
-    oauth2-redirect-url: "{baseUrl}"
     display-request-duration: true
     display-operation-id: true
     showExtensions: true
     showCommonExtensions: true
 
+# Enable keycloak security
 openapi:
   oAuthFlow:
+    url: "${GATEWAY_SERVER_URL:http://localhost}:${server.port:8080}"
     tokenUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
     authorizationUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
     refreshUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
 
+# Enable Eureka client
 eureka:
   client:
     enabled: true
+    registryFetchIntervalSeconds: 5
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
     healthcheck:
       enabled: true
   instance:
     preferIpAddress: true
+    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}:${random.int(10,99)}
     statusPageUrlPath: ${spring.webflux.base-path}/actuator/info
     healthCheckUrlPath: ${spring.webflux.base-path}/actuator/health
+    async-client-initialization: true
     nonSecurePortEnabled: true
+    metadata-map:
+      weight:  ${random.int(1,10)}
+      startup: ${random.int}
+      # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/1.3.6.RELEASE/multi/multi__service_discovery_eureka_clients.html#_status_page_and_health_indicator
+      management.context-path: ${spring.webflux.base-path}/actuator
+    leaseExpirationDurationInSeconds: 30
     leaseRenewalIntervalInSeconds: 15
 
+# Enable all management endpoints
 management:
   tracing:
     enabled: true
@@ -263,6 +275,11 @@ spring:
       uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
       authentication-database: camila-db
 
+# Disable all management endpoints
+management:
+  tracing:
+    enabled: false
+
 ---
 ###### Production properties ######
 
@@ -283,12 +300,34 @@ spring:
     server:
       port: 7000
 
+  # Enable AWS Cognito Oauth2 security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${SECURITY_ISSUER_URI}"
+
+# Disable all management endpoints
+management:
+  tracing:
+    enabled: false
+
+# Turn off global forward headers
 server:
   forward-headers-strategy: framework
 
 # Turn off global debug
 debug: false
 
+# Enable OpenApi
+openapi:
+  oAuthFlow:
+    url: "${SERVER_URL:http://localhost:8080}"
+    tokenUrl: "${SECURITY_DOMAIN_URI}/oauth2/token"
+    authorizationUrl: "${SECURITY_DOMAIN_URI}/oauth2/authorize"
+    refreshUrl: "${SECURITY_DOMAIN_URI}/oauth2/token"
+
+# Enable logging for all levels
 logging:
   level:
     org.hibernate.validator: error

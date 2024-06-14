@@ -82,7 +82,7 @@ build_and_push_image
 # Create stack
 aws cloudformation create-stack \
   --stack-name "camila-product-stack" \
-  --template-body "file://camila-services-stack.yml" \
+  --template-body "file://templates/camila-services-stack.yml" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameters \
     "ParameterKey=CouchbaseConnection,ParameterValue=${COUCHBASE_CONNECTION}" \

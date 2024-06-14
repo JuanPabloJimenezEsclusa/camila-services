@@ -12,21 +12,28 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtIss
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 /**
- * The type Oauth 2 security config.
+ * The type Oauth2 security config.
  */
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-@Profile("dev|int")
+@Profile("dev|pre")
 class Oauth2SecurityConfig {
-  private static final String[] PERMITTED = { "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**", "/actuator/**", "/graphiql/**" };
-  private static final String[] PRODUCT_ENDPOINTS = { "/products", "/products/**", "/graphql/**", "/ws/**", "/rsocket/**" };
+  private static final String[] PERMITTED = {
+    "/",
+    "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**",
+    "/actuator/**",
+    "/graphiql/**" };
+  private static final String[] PRODUCT_ENDPOINTS = {
+    "/products", "/products/**",
+    "/graphql/**", "/ws/**", "/rsocket/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;
 
   /**
    * Security web filter chain.
+   *
    *
    * @param http the http
    * @return the security web filter chain
@@ -35,6 +42,8 @@ class Oauth2SecurityConfig {
   SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(trustedIssuers);
     return http
+      .cors(ServerHttpSecurity.CorsSpec::disable)
+      .csrf(ServerHttpSecurity.CsrfSpec::disable)
       // delegamos la autenticación al servicio SSO (keycloak)
       .oauth2ResourceServer(resourceServer -> resourceServer.authenticationManagerResolver(authenticationManagerResolver))
       // comprobamos la autorización
@@ -45,14 +54,12 @@ class Oauth2SecurityConfig {
         .pathMatchers(HttpMethod.PUT, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
         .pathMatchers(HttpMethod.DELETE, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
         .anyExchange().denyAll())
-      .cors(ServerHttpSecurity.CorsSpec::disable)
-      .csrf(ServerHttpSecurity.CsrfSpec::disable)
       .build();
   }
 
   private enum Authority {
-    READ("SCOPE_camila.read"),
-    WRITE("SCOPE_camila.write");
+    READ("SCOPE_camila/read"),
+    WRITE("SCOPE_camila/write");
     private final String scope;
 
     Authority(String scope) {

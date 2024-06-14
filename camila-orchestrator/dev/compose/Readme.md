@@ -51,6 +51,8 @@ docker-compose down
 
 ## Enlaces
 
+* Databases
+    * <http://localhost:8091/ui/index.html>
 * API
     * <http://localhost:8080/product-dev/api/swagger-ui.html>
 * Gateway
@@ -66,6 +68,7 @@ docker-compose down
   * <http://localhost:8888/camila-product-api/dev/main>
 * Keycloak
   * <http://keycloak:9191/admin/master/console> (admin/admin1234)
+  * <http://keycloak:9191/realms/camila-realm/.well-known/openid-configuration>
 * Prometheus
   * <http://localhost:9090>
 * Grafana
