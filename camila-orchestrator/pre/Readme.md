@@ -6,43 +6,65 @@ Basado en `AWS Provider`
 
 * Docker >= 24.0.6
 * AWS CLI >= 2.15.52
+* JQ >= 1.7
 
-## Operaciones
-
-| Archivo                                             | Descripción                                                                                                                              |
-|-----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| [init-aws-stack](/init-aws-stack.sh)                | Contiene un script para cargar las imágenes al registro (ECR) y crear la infraestructura a partir de una plantilla de AWS CloudFormation |
-| [delete-aws-stack.sh](/delete-aws-stack.sh)         | Contiene un script para eliminar la infraestructura utilizando AWS CLI                                                                   |
-| [camila-services-stack](/camila-services-stack.yml) | Plantilla con ejemplo de infraestructura de despliegue de contenedores en AWS                                                            |
-| [api-requests](/api-requests.http)                  | Archivo de pruebas de peticiones al API (REST, Graphql, Websocket y RSocket)                                                             |
-
+## Arquitectura
 
 <p style="text-align: center">
-  <img src="aws/images/template-designer-camila-product-stack.png" alt="template-designer">
+  <img src="aws/images/camila-services-aws-diagram.svg" alt="camila-services-aws-diagram">
   <img src="aws/images/application-composer-camila-product-stack.png" alt="application-composer">
 </p>
 
+## Operaciones
+
+| Archivo                                                                                | Descripción                                                                              |
+|----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| [templates/camila-cognito-oauth2-stack](aws/templates/camila-cognito-oauth2-stack.yml) | Plantilla de infraestructura de despliegue de Oauth2 service en AWS                      |
+| [templates/camila-services-stack](aws/templates/camila-services-stack.yml)             | Plantilla de infraestructura de despliegue de contenedores en AWS                        |
+| [init-cognito-aws-stack](./aws/init-cognito-aws-stack.sh)                              | Script para desplegar el servicio Oauth2 a partir de una plantilla de AWS CloudFormation |
+| [delete-cognito-aws-stack](./aws/delete-cognito-aws-stack.sh)                          | Script para eliminar el servicio Oauth2 utilizando AWS CLI                               |
+| [init-aws-stack](./aws/init-aws-stack.sh)                                              | Script para desplegar la infraestructura a partir de una plantilla de AWS CloudFormation |
+| [delete-aws-stack](./aws/delete-aws-stack.sh)                                          | Script para eliminar la infraestructura utilizando AWS CLI                               |
+| [tests/api-requests](aws/tests/api-requests.http)                                      | Pruebas de peticiones al API (REST, Graphql, Websocket y RSocket)                        |
+| [tests/http-client.env](aws/tests/http-client.env.json)                                | Configuraciones de seguridad para las pruebas                                            |
+| [tests/cli-curl-tests](aws/tests/cli-curl-tests.sh)                                    | Pruebas de Oauth2 via CLI                                                                |
+
+---
+
 ❗ Esta infraestructura conlleva gastos. Evitar mantenerla encendida si no se está utilizando
 
+> Las bases de datos se configuran como SaaS (Mongo Atlas y Couchbase Capella)
+
 ```bash
-# Init infrastructure
+# Init Oauth2 service
+./init-cognito-aws-stack.sh
+```
+
+> Luego de inicar el servicio de AUTHN/AUTHZ, es necesario actualizar la variable `SECURITY_ISSUER_URI` con el `AWS::Cognito::UserPool` en la plantilla: [camila-services-stack.yml](./templates/camila-services-stack.yml) antes de ejecutar el siguiente paso
+
+```bash
+# Init containers infrastructure
 export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
 export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
-
 ./init-aws-stack.sh
 ```
 
 ```bash
-# Delete infrastructure
-
+# Delete containers infrastructure
 ./delete-aws-stack.sh
 ```
 
 ```bash
-# Local image test
+# Delete Oauth2 service
+./delete-cognito-aws-stack.sh
+```
 
+> Es posible iniciar un contenedor locamente con la imagen del registro de imágenes de AWS para comprobar, entre otros, las variables de entorno y la comunicaión TLS con las BBDD
+
+```bash
+# Local image test
 docker run --rm -it \
   --name="camila-product-api" \
   --network=host \
@@ -61,7 +83,15 @@ docker run --rm -it \
   546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0
 ```
 
-![camila-product-api-pre-aws-example.gif](aws/images/camila-product-api-pre-aws-example.gif)
+---
+
+### Pruebas
+
+<p style="text-align: center">
+  <img src="aws/images/camila-product-api-pre-aws-postman-example.gif" alt="camila-product-api-pre-aws-postman-example">
+  <img src="aws/images/camila-product-api-pre-aws-http-example.gif" alt="camila-product-api-pre-aws-http-example">
+  <img src="aws/images/camila-product-api-pre-aws-swagger-example.gif" alt="camila-product-api-pre-aws-swagger-example">
+</p>
 
 ## Enlaces
 
@@ -69,6 +99,7 @@ docker run --rm -it \
   * [API Rest (Swagger-ui)](https://poc.jpje-kops.xyz/product/api/webjars/swagger-ui/index.html#/)
 
 * AWS UI
+  * [AWS Cognito (User Pool)](https://eu-west-1.console.aws.amazon.com/cognito/v2/idp/user-pools?region=eu-west-1) 💰
   * [AWS CloudFormation](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks?filteringText=&filteringStatus=active&viewNested=true)
   * [AWS ECS Cluster](https://eu-west-1.console.aws.amazon.com/ecs/v2/clusters/camila-product-cluster/services/camila-product-service/health?region=eu-west-1) 💰
   * [AWS Certificate Manager (ACM)](https://eu-west-1.console.aws.amazon.com/acm/home?region=eu-west-1#/certificates/list)
@@ -80,4 +111,4 @@ docker run --rm -it \
 
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview)
-  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) 💰 (only 30 days free tier)
+  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) 💰 (only 30+ days free tier)

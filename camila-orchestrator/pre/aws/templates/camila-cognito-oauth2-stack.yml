@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Cognito User Pool Stack'
+
+Resources:
+  # Cognito User Pool
+  CamilaServicesPool:
+    Type: "AWS::Cognito::UserPool"
+    Description: "Camila Services User Pool"
+    Properties:
+      UserPoolName: "camila-realm"
+      UsernameAttributes:
+        - "email"
+      Schema:
+        - Name: "email"
+          Required: true
+          Mutable: true
+      AutoVerifiedAttributes:
+        - "email"
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireLowercase: false
+          RequireUppercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+          TemporaryPasswordValidityDays: 10
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+
+  # Log group for Cognito logs
+  CamilaLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Description: Cloudwatch log group for Camila
+    Properties:
+      LogGroupName: /camila/services/cognito-logs
+      RetentionInDays: 1
+
+  # Log delivery config for Cognito
+  LogDeliveryConfig:
+    Type: "AWS::Cognito::LogDeliveryConfiguration"
+    Description: Cognito Log Delivery Config
+    Properties:
+      UserPoolId: !Ref CamilaServicesPool
+      LogConfigurations:
+        - LogLevel: ERROR
+          EventSource: "userNotification"
+          CloudWatchLogsConfiguration:
+            LogGroupArn: !Sub arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/camila/services/cognito-logs
+
+  # Cognito User Pool Resource Server
+  CamilaResourceServer:
+    Type: 'AWS::Cognito::UserPoolResourceServer'
+    Description: 'Cognito Resource Server'
+    Properties:
+      Identifier: 'camila'
+      Name: "camila-resource-server"
+      UserPoolId: !Ref CamilaServicesPool
+      Scopes:
+        - ScopeName: "read"
+          ScopeDescription: 'Read Camila Services access'
+        - ScopeName: "write"
+          ScopeDescription: 'Write Camila Services access'
+
+  # Cognito User Pool Client
+  CamilaClient:
+    Type: "AWS::Cognito::UserPoolClient"
+    Description: "Camila Services User Pool Client"
+    DependsOn:
+      - CamilaResourceServer
+    Properties:
+      ClientName: "camila-client"
+      UserPoolId: !Ref CamilaServicesPool
+      GenerateSecret: true
+      ExplicitAuthFlows:
+        - ALLOW_ADMIN_USER_PASSWORD_AUTH
+        - ALLOW_CUSTOM_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_USER_SRP_AUTH
+      SupportedIdentityProviders:
+        - "COGNITO"
+      AllowedOAuthFlows:
+        - "code"
+        - "implicit"
+      AllowedOAuthScopes:
+        - "email"
+        - "openid"
+        - "profile"
+        - "camila/read"
+        - "camila/write"
+      CallbackURLs:
+        - "https://poc.jpje-kops.xyz/callback"
+        - "https://oauth.pstmn.io/v1/callback"
+      LogoutURLs:
+        - "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"
+      AllowedOAuthFlowsUserPoolClient: true
+      PreventUserExistenceErrors: "ENABLED"
+      EnableTokenRevocation: true
+      EnablePropagateAdditionalUserContextData: true
+
+  # Cognito User Pool Client Credentials
+  CamilaClientCredentials:
+    Type: "AWS::Cognito::UserPoolClient"
+    Description: "Camila Services User Pool Client"
+    DependsOn:
+      - CamilaResourceServer
+    Properties:
+      ClientName: "camila-client-credentials"
+      UserPoolId: !Ref CamilaServicesPool
+      GenerateSecret: true
+      ExplicitAuthFlows:
+        - ALLOW_ADMIN_USER_PASSWORD_AUTH
+        - ALLOW_CUSTOM_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_USER_SRP_AUTH
+      SupportedIdentityProviders:
+        - "COGNITO"
+      AllowedOAuthFlows:
+        - "client_credentials"
+      AllowedOAuthScopes:
+        - "camila/read"
+        - "camila/write"
+      CallbackURLs:
+        - "https://poc.jpje-kops.xyz/callback"
+        - "https://oauth.pstmn.io/v1/callback"
+      LogoutURLs:
+        - "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"
+      AllowedOAuthFlowsUserPoolClient: true
+      PreventUserExistenceErrors: "ENABLED"
+      EnableTokenRevocation: true
+      EnablePropagateAdditionalUserContextData: true
+
+  # Cognito User Pool Domain
+  CamilaDomain:
+    Type: "AWS::Cognito::UserPoolDomain"
+    Description: "Camila Services User Pool Domain"
+    Properties:
+      Domain: "camila-realm"
+      UserPoolId: !Ref CamilaServicesPool
+
+  # Cognito User Pool User
+  CamilaUser:
+    Type: "AWS::Cognito::UserPoolUser"
+    Description: "Camila Services User Pool User"
+    Properties:
+      UserPoolId: !Ref CamilaServicesPool
+      Username: "olbapnuaj@gmail.com"
+      ClientMetadata:
+        email: "olbapnuaj@gmail.com"
+        email_verified: "true"
+        name: "Camila User"
+      DesiredDeliveryMediums:
+        - "EMAIL"
+      UserAttributes:
+        - Name: "email"
+          Value: "olbapnuaj@gmail.com"
+        - Name: 'email_verified'
+          Value: 'true'
+
+Outputs:
+  UserPoolId:
+    Description: "User Pool ID"
+    Value: !Ref CamilaServicesPool
+  UserPoolClientId:
+    Description: "User Pool Client ID"
+    Value: !Ref CamilaClient
+  UserPoolClientCredentialsId:
+    Description: "User Pool Client Credentials ID"
+    Value: !Ref CamilaClientCredentials
+  UserPoolDomain:
+    Description: "User Pool Domain"
+    Value: !Sub "https://${CamilaDomain}.auth.${AWS::Region}.amazoncognito.com"
+  CamilaUserId:
+    Description: "Camila User ID"
+    Value: !Ref CamilaUser

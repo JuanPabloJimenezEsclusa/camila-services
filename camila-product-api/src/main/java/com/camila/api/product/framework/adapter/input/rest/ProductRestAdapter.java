@@ -28,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/products")
 @Validated
+@CrossOrigin
 class ProductRestAdapter {
 
   private static final String SORTED_REQUEST_PARAMS = """
@@ -69,7 +70,7 @@ class ProductRestAdapter {
     MediaType.TEXT_EVENT_STREAM_VALUE,
     MediaType.APPLICATION_NDJSON_VALUE,
     MediaType.APPLICATION_JSON_VALUE })
-  public ResponseEntity<Mono<Product>> findById(@PathVariable("id") String internalId) {
+  ResponseEntity<Mono<Product>> findById(@PathVariable("id") String internalId) {
     return ResponseEntity.ok(productUserCase.findByInternalId(internalId));
   }
 
@@ -93,7 +94,7 @@ class ProductRestAdapter {
     MediaType.TEXT_EVENT_STREAM_VALUE,
     MediaType.APPLICATION_NDJSON_VALUE,
     MediaType.APPLICATION_JSON_VALUE })
-  public ResponseEntity<Flux<Product>> sortProducts(
+  ResponseEntity<Flux<Product>> sortProducts(
     @RequestParam
     @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
     @Valid Map<@NotBlank String, @NotBlank @Min(0L) @Max(1000L) @PositiveOrZero String> requestParams) {

@@ -88,10 +88,13 @@ Product data sample:
 ```bash
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 
-# jars
+# Jars
+# This can deploy packages into github repository,
+#   if there is a "github" server configuration in "settings.xml"  
 mvn deploy \
   -Dmaven.test.skip=true  -f ./pom.xml
-# images
+
+# Images
 mvn spring-boot:build-image \
   -Dmaven.test.skip=true  -f ./pom.xml
 ```
