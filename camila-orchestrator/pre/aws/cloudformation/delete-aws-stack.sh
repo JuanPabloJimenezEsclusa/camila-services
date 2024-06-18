@@ -7,14 +7,26 @@ set -o xtrace
 
 cd "$(dirname "$0")"
 
-# Delete stack
+# Delete ecs stack
 aws cloudformation delete-stack \
   --no-cli-auto-prompt \
   --no-cli-pager \
   --stack-name "camila-product-stack"
 
-# Wait for stack to be deleted
+# Wait for ecs stack to be deleted
 aws cloudformation wait stack-delete-complete \
   --stack-name "camila-product-stack"
 
-echo "Stack deleted"
+echo "ECS Stack deleted"
+
+# Delete secrets stack
+aws cloudformation delete-stack \
+  --no-cli-auto-prompt \
+  --no-cli-pager \
+  --stack-name "camila-secrets-stack"
+
+# Wait for secrets stack to be deleted
+aws cloudformation wait stack-delete-complete \
+  --stack-name "camila-secrets-stack"
+
+echo "Secrets Stack deleted"

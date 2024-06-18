@@ -1,21 +1,21 @@
 # camila-admin
 
-Contiene un administrador de servicios (UI)
+This project provides a user interface (UI) for managing services.
 
-## Pre-condiciones
+## Prerequisites
 
 * JDK >= 21
 * Docker >= 24.0.6
-* maven >= 3.8.8
+* Maven >= 3.8.8
 * Spring >= 6.x
 * Spring-boot >= 3.2.x
 
-## Enlaces
+## Links
 
-* UI (dev): <http://localhost:8100/>
-* Actuator:
-  * <http://localhost:8100/actuator/health>
+* **UI (dev):** <http://localhost:8100/> (Link to the admin UI in development environment)
+* **Actuator:**
+    * <http://localhost:8100/actuator/health> (Link to the health endpoint of the service)
 
-## Operaciones (build, deploy)
+## Operations (build, deploy)
 
-[Operar - Readme](.operate/Readme.md)
+For instructions on building and deploying this project, refer to the [Operate - Readme](.operate/Readme.md) file.

@@ -1,14 +1,14 @@
 # camila-services-api-docs
 
-Recursos para utilizar en [Postman](https://www.postman.com/)
+Resources for use in [Postman](https://www.postman.com/)
 
-## Índice
+## Index
 
-|Archivo|Descripción|
-|-------|-----------|
-|[camila-product-collection](./camila-product-api.postman_collection.json)| Contiene los endpoints del servicio|
-|[camila-product-environment](./camila-product-api-env.postman_environment.json)| Contiene las variables de entorno|
+| File                                                                            | Description                        |
+|---------------------------------------------------------------------------------|------------------------------------|
+| [camila-product-collection](./camila-product-api.postman_collection.json)       | Contains the service endpoints     |
+| [camila-product-environment](./camila-product-api-env.postman_environment.json) | Contains the environment variables |
 
-## Demostración
+## Demonstration
 
-![Ejemplo Postman](postman-collection-example-v1.gif "Postman Example")
+![Postman Example](postman-collection-example-v1.gif "Postman Example")

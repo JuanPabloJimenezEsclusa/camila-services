@@ -1,21 +1,21 @@
 # camila-discovery
 
-Contiene un descubridor de servicios
+This project provides a service discovery mechanism.
 
-## Pre-condiciones
+## Prerequisites
 
 * JDK >= 21
 * Docker >= 24.0.6
-* maven >= 3.8.8
+* Maven >= 3.8.8
 * Spring >= 6.x
 * Spring-boot >= 3.2.x
 
-## Enlaces
+## Links
 
 * UI (dev): <http://localhost:8761/>
 * Actuator:
   * <http://localhost:8761/actuator/health>
 
-## Operaciones (build, deploy)
+## Operations (build, deploy)
 
-[Operar - Readme](.operate/Readme.md)
+For instructions on building and deploying this project, refer to the [Operate - Readme](.operate/Readme.md) file.

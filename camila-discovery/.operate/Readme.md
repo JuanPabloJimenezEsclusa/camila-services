@@ -1,14 +1,14 @@
 # camila-discovery-operate
 
-Contiene información sobre como compilar, desplegar y ejecutar el proyecto localmente
+Contains information on how to compile, deploy, and run the project locally
 
 ## Scripts
 
-| Nombre     | Descripción                          |
-|------------|--------------------------------------|
-| [build-aot](./build-aot.sh) | Construye el proyecto con aot  |
-| [build-image](./build-image.sh) | Construye el proyecto y genera una imagen |
-| [build-image-native](./build-image-native.sh) | Construye el proyecto nativo y genera una imagen |
-| [run-spring-boot](./run-spring-boot.sh) | Ejecuta el proyecto a traves del plugin de `spring-boot` |
-| [run-aot](./run-aot.sh) | Ejecuta el proyecto con aot |
-| [run-image](./run-image.sh) | Ejecuta el proyecto en contenedor |
+| Command                                       | Description                                             |
+|-----------------------------------------------|---------------------------------------------------------|
+| [build-aot](./build-aot.sh)                   | Builds the project with AOT (Ahead-of-Time) compilation |
+| [build-image](./build-image.sh)               | Builds the project and generates an image               |
+| [build-image-native](./build-image-native.sh) | Builds the native project and generates an image        |
+| [run-spring-boot](./run-spring-boot.sh)       | Runs the project using the `Spring Boot` plugin         |
+| [run-aot](./run-aot.sh)                       | Runs the project with AOT (Ahead-of-Time) compilation   |
+| [run-image](./run-image.sh)                   | Runs the project in a container                         |

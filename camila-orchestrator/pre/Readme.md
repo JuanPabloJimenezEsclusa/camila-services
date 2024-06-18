@@ -1,67 +1,110 @@
 # camila-product-orchestrator-pre
 
-Basado en `AWS Provider`
+Based on `AWS Cloud Provider`
 
-## Pre-condiciones
+## Prerequisites
 
 * Docker >= 24.0.6
 * AWS CLI >= 2.15.52
 * JQ >= 1.7
+* Terraform >= 1.8.5
 
-## Arquitectura
+## Architecture
 
 <p style="text-align: center">
   <img src="aws/images/camila-services-aws-diagram.svg" alt="camila-services-aws-diagram">
   <img src="aws/images/application-composer-camila-product-stack.png" alt="application-composer">
 </p>
 
-## Operaciones
+## Operations
 
-| Archivo                                                                                | Descripción                                                                              |
-|----------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
-| [templates/camila-cognito-oauth2-stack](aws/templates/camila-cognito-oauth2-stack.yml) | Plantilla de infraestructura de despliegue de Oauth2 service en AWS                      |
-| [templates/camila-services-stack](aws/templates/camila-services-stack.yml)             | Plantilla de infraestructura de despliegue de contenedores en AWS                        |
-| [init-cognito-aws-stack](./aws/init-cognito-aws-stack.sh)                              | Script para desplegar el servicio Oauth2 a partir de una plantilla de AWS CloudFormation |
-| [delete-cognito-aws-stack](./aws/delete-cognito-aws-stack.sh)                          | Script para eliminar el servicio Oauth2 utilizando AWS CLI                               |
-| [init-aws-stack](./aws/init-aws-stack.sh)                                              | Script para desplegar la infraestructura a partir de una plantilla de AWS CloudFormation |
-| [delete-aws-stack](./aws/delete-aws-stack.sh)                                          | Script para eliminar la infraestructura utilizando AWS CLI                               |
-| [tests/api-requests](aws/tests/api-requests.http)                                      | Pruebas de peticiones al API (REST, Graphql, Websocket y RSocket)                        |
-| [tests/http-client.env](aws/tests/http-client.env.json)                                | Configuraciones de seguridad para las pruebas                                            |
-| [tests/cli-curl-tests](aws/tests/cli-curl-tests.sh)                                    | Pruebas de Oauth2 via CLI                                                                |
+### _AWS Cloud formation_
+
+| File                                                                                                      | Description                                                         |
+|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| [templates/camila-cognito-oauth2-stack.yml](aws/cloudformation/templates/camila-cognito-oauth2-stack.yml) | Infrastructure template for deploying Oauth2 service on AWS         |
+| [templates/camila-secrets-stack.yml](aws/cloudformation/templates/camila-secrets-stack.yml)               | Infrastructure template for deploying secrets on AWS                |
+| [templates/camila-services-stack.yml](aws/cloudformation/templates/camila-services-stack.yml)             | Infrastructure template for deploying containers on AWS             |
+| [init-cognito-aws-stack.sh](aws/cloudformation/init-cognito-aws-stack.sh)                                 | Script to deploy Oauth2 service from an AWS CloudFormation template |
+| [delete-cognito-aws-stack.sh](aws/cloudformation/delete-cognito-aws-stack.sh)                             | Script to delete Oauth2 service using AWS CLI                       |
+| [init-aws-stack.sh](aws/cloudformation/init-aws-stack.sh)                                                 | Script to deploy infrastructure from an AWS CloudFormation template |
+| [delete-aws-stack.sh](aws/cloudformation/delete-aws-stack.sh)                                             | Script to delete infrastructure using AWS CLI                       |
 
 ---
 
-❗ Esta infraestructura conlleva gastos. Evitar mantenerla encendida si no se está utilizando
+❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
-> Las bases de datos se configuran como SaaS (Mongo Atlas y Couchbase Capella)
+> The databases are configured as SaaS (Mongo Atlas and Couchbase Capella)
 
 ```bash
 # Init Oauth2 service
-./init-cognito-aws-stack.sh
-```
+./cloudformation/init-cognito-aws-stack.sh
 
-> Luego de inicar el servicio de AUTHN/AUTHZ, es necesario actualizar la variable `SECURITY_ISSUER_URI` con el `AWS::Cognito::UserPool` en la plantilla: [camila-services-stack.yml](./templates/camila-services-stack.yml) antes de ejecutar el siguiente paso
-
-```bash
 # Init containers infrastructure
 export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
 export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
-./init-aws-stack.sh
+./cloudformation/init-aws-plan.sh
 ```
 
 ```bash
 # Delete containers infrastructure
-./delete-aws-stack.sh
+./cloudformation/delete-aws-stack.sh
+
+# Delete Oauth2 service
+./cloudformation/delete-cognito-aws-stack.sh
+```
+
+---
+
+### _Terraform_
+
+| File                                                                                                                   | Description                                                         |
+|------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| [templates/main.tf](aws/terraform/templates/main.tf)                                                                   | Base Terraform template                                             |
+| [templates/modules/cognito/camila-cognito-oauth2.tf](aws/terraform/templates/modules/cognito/camila-cognito-oauth2.tf) | Infrastructure deployment template for an Oauth2 service in AWS     |
+| [templates/modules/ecs/camila-ecs-container.tf](aws/terraform/templates/modules/ecs/camila-ecs-container.tf)           | Infrastructure deployment template for container deployments in AWS |
+| [init-aws-plan.sh](aws/terraform/init-aws-plan.sh)                                                                     | Script to initialize Terraform and validate the templates           |
+| [apply-aws-plan.sh](aws/terraform/apply-aws-plan.sh)                                                                   | Script to deploy the infrastructure using Terraform                 |
+| [destroy-aws-plan.sh](aws/terraform/destroy-aws-plan.sh)                                                               | Script to destroy the infrastructure using Terraform CLI            |
+
+```bash
+# Init and validate plan
+export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
+export COUCHBASE_USERNAME="juanpablo****"
+export COUCHBASE_PASSWORD="*************"
+export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+./terraform/init-aws-plan.sh
+
+# Apply plan
+./terraform/apply-aws-plan.sh
 ```
 
 ```bash
-# Delete Oauth2 service
-./delete-cognito-aws-stack.sh
+# Destroy plan
+./terraform/destroy-aws-plan.sh
 ```
 
-> Es posible iniciar un contenedor locamente con la imagen del registro de imágenes de AWS para comprobar, entre otros, las variables de entorno y la comunicaión TLS con las BBDD
+---
+
+### Tests
+
+| File                                                         | Description                                               |
+|--------------------------------------------------------------|-----------------------------------------------------------|
+| [tests/api-requests.http](aws/tests/api-requests.http)       | API request tests (REST, GraphQL, Websocket, and RSocket) |
+| [tests/http-client.env.json](aws/tests/http-client.env.json) | Security configurations for the tests                     |
+| [tests/cli-curl-tests.sh](aws/tests/cli-curl-tests.sh)       | Oauth2 tests via command-line interface (CLI)             |
+
+! RSocket not working with `Application Load Balancer (AWS ALB)`
+
+<p style="text-align: center">
+  <img src="aws/images/camila-product-api-pre-aws-postman-example.gif" alt="camila-product-api-pre-aws-postman-example">
+  <img src="aws/images/camila-product-api-pre-aws-http-example.gif" alt="camila-product-api-pre-aws-http-example">
+  <img src="aws/images/camila-product-api-pre-aws-swagger-example.gif" alt="camila-product-api-pre-aws-swagger-example">
+</p>
+
+> Running a container locally using the image from the AWS ECR (Elastic Container Registry) is feasible for verifying environment variables, TLS communication with databases, and other aspects.
 
 ```bash
 # Local image test
@@ -73,7 +116,7 @@ docker run --rm -it \
   --env LANGUAGE=en_US.utf8 \
   --env LC_ALL=en_US.utf8 \
   --env spring.data.mongodb.uri="mongodb+srv://****:****@****.****.mongodb.net/camila-db" \
-  --env spring.data.mongodb.ssl.enabled="false" \
+  --env spring.data.mongodb.ssl.enabled="true" \
   --env spring.couchbase.connection-string="couchbases://cb.****.cloud.couchbase.com" \
   --env spring.couchbase.username="juanpablo****" \
   --env spring.couchbase.password="*************" \
@@ -83,17 +126,7 @@ docker run --rm -it \
   546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0
 ```
 
----
-
-### Pruebas
-
-<p style="text-align: center">
-  <img src="aws/images/camila-product-api-pre-aws-postman-example.gif" alt="camila-product-api-pre-aws-postman-example">
-  <img src="aws/images/camila-product-api-pre-aws-http-example.gif" alt="camila-product-api-pre-aws-http-example">
-  <img src="aws/images/camila-product-api-pre-aws-swagger-example.gif" alt="camila-product-api-pre-aws-swagger-example">
-</p>
-
-## Enlaces
+## Links
 
 * API
   * [API Rest (Swagger-ui)](https://poc.jpje-kops.xyz/product/api/webjars/swagger-ui/index.html#/)

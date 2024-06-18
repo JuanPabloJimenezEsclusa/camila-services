@@ -78,7 +78,6 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 ### RSocket request rsponse with websocket - findByInternalId
 RSOCKET products.request-response-findByInternalId
 Host: ws://poc.jpje-kops.xyz:7443/rsocket
-Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
@@ -89,7 +88,6 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 ### RSocket request stream with websocket - SortProducts
 RSOCKET products.request-stream-sortByMetricsWeights
 Host: ws://poc.jpje-kops.xyz:7443/rsocket
-Accept: text/event-stream
 Content-Type: text/event-stream
 Authorization: Bearer {{$auth.token("auth-id")}}
 
