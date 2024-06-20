@@ -90,11 +90,12 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 
 ### Tests
 
-| File                                                         | Description                                               |
-|--------------------------------------------------------------|-----------------------------------------------------------|
-| [tests/api-requests.http](aws/tests/api-requests.http)       | API request tests (REST, GraphQL, Websocket, and RSocket) |
-| [tests/http-client.env.json](aws/tests/http-client.env.json) | Security configurations for the tests                     |
-| [tests/cli-curl-tests.sh](aws/tests/cli-curl-tests.sh)       | Oauth2 tests via command-line interface (CLI)             |
+| File                                                                                         | Description                                               |
+|----------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| [tests/api-requests.http](aws/tests/api-requests.http)                                       | API request tests (REST, GraphQL, Websocket, and RSocket) |
+| [tests/http-client.env.json](aws/tests/http-client.env.json)                                 | Security configurations for the tests                     |
+| [tests/cli-curl-client-credentials-tests.sh](aws/tests/cli-curl-client-credentials-tests.sh) | Oauth2 (grant type: client credentials) tests via CLI     |
+| [tests/cli-curl-code_authorization-tests.sh](aws/tests/cli-curl-code_authorization-tests.sh) | Oauth2 (grant type: code authorization) tests via CLI     |
 
 ! RSocket not working with `Application Load Balancer (AWS ALB)`
 

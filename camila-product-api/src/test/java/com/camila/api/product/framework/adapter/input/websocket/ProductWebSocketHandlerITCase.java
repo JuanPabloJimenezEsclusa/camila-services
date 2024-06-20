@@ -3,10 +3,7 @@ package com.camila.api.product.framework.adapter.input.websocket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -28,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("[IT][ProductWebSocketHandler] Product websocket handler test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductWebSocketHandlerITCase {
 
   private static WebSocketClient WEBSOCKET_CLIENT;
@@ -64,6 +62,7 @@ class ProductWebSocketHandlerITCase {
    */
   @Test
   @DisplayName("[ProductWebSocketHandler] handle find by internal id - Ok")
+  @Order(3)
   void handleFindByInternalIdOk() throws URISyntaxException {
     String findByInternalIdRequest = """
       {
@@ -98,6 +97,7 @@ class ProductWebSocketHandlerITCase {
    */
   @Test
   @DisplayName("[ProductWebSocketHandler] handle sort products - Ok")
+  @Order(3)
   void testSortProductsOk() {
     String sortProductsRequest = """
       {

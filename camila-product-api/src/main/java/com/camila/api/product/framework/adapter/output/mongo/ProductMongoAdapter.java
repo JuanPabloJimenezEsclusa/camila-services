@@ -53,7 +53,8 @@ class ProductMongoAdapter implements ProductOutputPort {
         buildWeightedScoreField(metricsWeights),
         buildSortOperation(),
         buildSkipOperation(paging),
-        buildLimitOperation(paging)),
+        buildLimitOperation(paging))
+        .withOptions(buildOptions()),
       ProductEntity.DOCUMENT_NAME,
       ProductEntity.class).map(mapper::toProduct);
   }

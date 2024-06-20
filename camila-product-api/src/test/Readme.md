@@ -90,6 +90,11 @@ export THREADS=100
 export RAMP_UP=20 
 export LOOPS=5
 
+export BASE_URL_PROTOCOL="http"
+export BASE_URL="localhost"
+export BASE_URL_PORT="8080"
+export BASE_PATH="product-dev"
+
 # Run the test plan
 ./resources/scripts/jmeter/run.sh
 ```

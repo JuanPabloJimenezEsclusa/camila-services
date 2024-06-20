@@ -2,9 +2,7 @@ package com.camila.api.product.framework.adapter.input.rsocket;
 
 import com.camila.api.product.domain.Product;
 import jakarta.annotation.Nullable;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -23,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("[IT][ProductRSocketAdapter] Product rsocket adapter test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRSocketAdapterITCase {
 
   @Nullable
@@ -46,6 +45,7 @@ class ProductRSocketAdapterITCase {
    */
   @Test
   @DisplayName("[ProductRSocketAdapter] find by internal id - ok")
+  @Order(4)
   void findByInternalIdOk() {
     var message = """
       {
@@ -73,6 +73,7 @@ class ProductRSocketAdapterITCase {
    */
   @Test
   @DisplayName("[ProductRSocketAdapter] find by internal id - ko")
+  @Order(4)
   void findByInternalIdKo() {
     var message = """
       { }
@@ -93,6 +94,7 @@ class ProductRSocketAdapterITCase {
    */
   @Test
   @DisplayName("[ProductRSocketAdapter] sort by metrics - sales units more weight - ok")
+  @Order(4)
   void sortByMetricsSalesUnitsMoreWeightOk() {
     var message = """
       {
@@ -128,6 +130,7 @@ class ProductRSocketAdapterITCase {
    */
   @Test
   @DisplayName("[ProductRSocketAdapter] sort by metrics - ko")
+  @Order(4)
   void sortByMetricsKo() {
     var message = """
       { }

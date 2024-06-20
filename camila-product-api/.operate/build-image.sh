@@ -7,7 +7,7 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# compilar y crear imagen
+# Image variable
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 
 mvn clean spring-boot:build-image \

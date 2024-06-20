@@ -7,7 +7,7 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# ejecutar con aot
+# AOT execution
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 
 java -Dspring.aot.enabled=true \

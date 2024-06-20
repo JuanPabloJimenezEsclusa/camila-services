@@ -7,9 +7,9 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# copiar scripts en el contenedor
+# Copy scripts into container
 docker cp .operate/data/ mongodb7:/
 
-# ejecutar script
+# Execute script
 docker exec -it mongodb7 \
   bash -c "mongosh -u camila -p camila < /data/cleanup_data.script"

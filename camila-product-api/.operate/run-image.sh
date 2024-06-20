@@ -7,7 +7,7 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# iniciar contenedor
+# Init container
 docker run --rm -it \
   --name="camila-product-api" \
   --network=host \
