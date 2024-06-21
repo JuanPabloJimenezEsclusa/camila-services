@@ -16,8 +16,10 @@
 
   <properties>
     <java.version>21</java.version>
-    <spring-cloud.version>2023.0.1</spring-cloud.version>
+    <spring-cloud.version>2023.0.2</spring-cloud.version>
     <cucumber.version>7.17.0</cucumber.version>
+    <opentelemetry.version>1.38.0</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.38.0-alpha</opentelemetry-api-incubator.version>
   </properties>
 
   <dependencies>
@@ -38,6 +40,10 @@
       <artifactId>spring-boot-starter-graphql</artifactId>
       <exclusions>
         <exclusion>
+          <groupId>com.graphql-java</groupId>
+          <artifactId>graphql-java</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>io.micrometer</groupId>
           <artifactId>context-propagation</artifactId>
         </exclusion>
@@ -45,14 +51,13 @@
     </dependency>
     <dependency>
       <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>22.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java-extended-scalars</artifactId>
       <version>22.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.graphql-java</groupId>
-          <artifactId>graphql-java</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -75,6 +80,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-web</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -140,13 +151,13 @@
     <dependency>
       <groupId>de.flapdoodle.embed</groupId>
       <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
-      <version>4.13.0</version>
+      <version>4.14.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
-      <version>1.2.1</version>
+      <version>1.3.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -197,7 +208,7 @@
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-      <version>2.3.0</version>
+      <version>2.5.0</version>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
@@ -209,7 +220,7 @@
     <dependency>
       <groupId>com.google.cloud.tools</groupId>
       <artifactId>jib-maven-plugin</artifactId>
-      <version>3.4.0</version>
+      <version>3.4.3</version>
       <scope>compile</scope>
     </dependency>
 
@@ -218,24 +229,24 @@
       <artifactId>java-client</artifactId>
       <version>3.6.2</version>
     </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers</artifactId>
-        <version>1.19.8</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>junit-jupiter</artifactId>
-        <version>1.19.8</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>couchbase</artifactId>
-        <version>1.19.8</version>
-        <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <version>1.19.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>1.19.8</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>couchbase</artifactId>
+      <version>1.19.8</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -248,11 +259,56 @@
         <scope>import</scope>
       </dependency>
 
-        <!-- include to fix: "Failed while enforcing RequireUpperBoundDeps" - check in the future and remove -->
-        <dependency>
+       <!-- include to fix: "Failed while enforcing RequireUpperBoundDeps" - check in the future and remove -->
+      <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
         <version>1.9.22.1</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-api</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-context</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-logs</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-common</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-trace</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-metrics</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-extension-trace-propagators</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-api-incubator</artifactId>
+        <version>${opentelemetry-api-incubator.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -292,7 +348,7 @@
             <path>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.1.4</version>
+              <version>3.3.0</version>
             </path>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -302,7 +358,7 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.30</version>
+              <version>1.18.32</version>
             </path>
             <!-- Uses the index to improve runtime startup -->
             <path>
@@ -328,7 +384,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.2.3</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <goals>
@@ -341,7 +397,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
+        <version>0.8.12</version>
         <executions>
           <execution>
             <goals>
@@ -360,7 +416,7 @@
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
-        <version>7.0.0</version>
+        <version>9.0.0</version>
         <executions>
           <execution>
             <id>get-the-git-infos</id>
@@ -392,6 +448,23 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.bouncycastle</groupId>
+          <artifactId>bcpkix-jdk18on</artifactId>
+          <version>1.78.1</version>
+        </dependency>
+        <dependency>
+          <groupId>org.bouncycastle</groupId>
+          <artifactId>bcprov-jdk18on</artifactId>
+          <version>1.78.1</version>
+        </dependency>
+        <dependency>
+          <groupId>org.bouncycastle</groupId>
+          <artifactId>bctls-jdk18on</artifactId>
+          <version>1.78.1</version>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -409,11 +482,38 @@
             </executions>
             <configuration>
               <verbose>true</verbose>
+              <skipNativeTests>true</skipNativeTests>
+              <classesDirectory>${project.build.outputDirectory}</classesDirectory>
               <buildArgs>
                 <buildArg>--verbose</buildArg>
-                <buildArg>--enable-monitoring=jmxserver,jvmstat</buildArg>
                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                <buildArg>-H:ReflectionConfigurationResources=META-INF/native-image/reflect-config.json</buildArg>
+                <buildArg>-H:ResourceConfigurationResources=META-INF/native-image/resource-config.json</buildArg>z
+                <buildArg>-H:SerializationConfigurationResources=META-INF/native-image/serialization-config.json</buildArg>
+                <buildArg>-H:DynamicProxyConfigurationResources=META-INF/native-image/proxy-config.json</buildArg>
+                <buildArg>-H:JNIConfigurationResources=META-INF/native-image/jni-config.json</buildArg>
+                <buildArg>-H:PredefinedClassesConfigurationResources=META-INF/native-image/predefined-classes-config.json</buildArg>
+
+                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
+                <buildArg>--initialize-at-run-time=org.bouncycastle,java.net.InetAddress,java.net.Inet4Address,java.net.Inet6Address</buildArg>
+                <buildArg>--enable-http</buildArg>
+                <buildArg>--enable-https</buildArg>
+                <buildArg>--enable-preview</buildArg>
               </buildArgs>
+              <jvmArgs>
+                <arg>--add-opens=java.base/java.lang=ALL-UNNAMED</arg>
+                <arg>--add-opens=java.base/java.io=ALL-UNNAMED</arg>
+                <arg>--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED</arg>
+                <arg>-Dspring.profiles.active=pre</arg>
+                <arg>-Xmx16g</arg>
+              </jvmArgs>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <classifier>exec</classifier>
             </configuration>
           </plugin>
         </plugins>
@@ -430,7 +530,7 @@
           <plugin>
             <groupId>com.google.cloud.tools</groupId>
             <artifactId>jib-maven-plugin</artifactId>
-            <version>3.4.0</version>
+            <version>3.9.8</version>
             <configuration>
               <from>
                 <image>eclipse-temurin:21-jdk-alpine</image>
@@ -479,7 +579,7 @@
           <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>9.1.0</version>
+            <version>9.2.0</version>
             <configuration>
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
@@ -496,7 +596,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>4.0.0-M13</version>
+            <version>4.0.0-M15</version>
           </plugin>
         </plugins>
       </build>
@@ -531,7 +631,7 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.11</version>
+            <version>0.8.12</version>
             <reportSets>
               <reportSet>
                 <reports>
@@ -554,6 +654,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
             <configuration>
               <source>21</source>
               <target>21</target>
@@ -562,7 +663,7 @@
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.1.4</version>
+                  <version>3.3.0</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>
@@ -572,18 +673,18 @@
                 <path>
                   <groupId>org.projectlombok</groupId>
                   <artifactId>lombok</artifactId>
-                  <version>1.18.30</version>
+                  <version>1.18.32</version>
                 </path>
                 <!-- Uses the index to improve runtime startup -->
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.0.12</version>
+                  <version>6.1.9</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>
                   <artifactId>error_prone_core</artifactId>
-                  <version>2.24.0</version>
+                  <version>2.28.0</version>
                 </path>
                 <path>
                   <groupId>org.openjdk.jmh</groupId>
@@ -615,7 +716,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.11.0</version>
+              <version>3.13.0</version>
               <configuration>
                 <showWarnings>true</showWarnings>
               </configuration>
@@ -623,7 +724,7 @@
             <plugin>
               <groupId>org.pitest</groupId>
               <artifactId>pitest-maven</artifactId>
-              <version>1.15.8</version>
+              <version>1.16.1</version>
               <dependencies>
                 <dependency>
                   <groupId>org.pitest</groupId>
@@ -661,13 +762,18 @@
                 <targetClasses>
                   <param>com.camila.api.product.domain.*</param>
                   <param>com.camila.api.product.application.port.input.*</param>
+                  <param>com.camila.api.product.framework.adapter.input.security.*</param>
                   <param>com.camila.api.product.framework.adapter.input.rest.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.*</param>
                   <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.couchbase.*</param>
                 </targetClasses>
                 <targetTests>
+                  <!-- Only units testing -->
                   <param>com.camila.api.product.application.port.input.*</param>
                   <param>com.camila.api.product.framework.adapter.input.rest.*</param>
                   <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
+                  <param>com.camila.api.product.framework.adapter.output.couchbase.*</param>
                 </targetTests>
                 <avoidCallsTo>
                   <avoidCallsTo>org.slf4j</avoidCallsTo>
@@ -679,7 +785,7 @@
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>flatten-maven-plugin</artifactId>
-              <version>1.2.5</version>
+              <version>1.6.0</version>
               <configuration>
                 <updatePomFile>true</updatePomFile>
                 <flattenMode>resolveCiFriendliesOnly</flattenMode>

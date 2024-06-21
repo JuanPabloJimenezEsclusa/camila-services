@@ -1,8 +1,7 @@
 package com.camila.api.product.framework.adapter.input.graphql;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,9 +18,10 @@ import java.util.Map;
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureGraphQlTester
 @DisplayName("[IT][ProductGraphqlAdapter] Product graphql adapter test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductGraphqlAdapterITCase {
   private static final String ERROR_EXPECTED_VALUE = "Variable 'salesUnits' has an invalid value: " +
-    "Expected a value that can be converted to type 'Float' but it was a 'String'";
+    "Expected a Number input, but it was a 'String'";
 
   @Autowired
   private WebTestClient webClient;
@@ -33,6 +33,7 @@ class ProductGraphqlAdapterITCase {
    */
   @Test
   @DisplayName("[ProductGraphqlAdapter] findByInternalId ok")
+  @Order(2)
   void findById() throws JsonProcessingException {
     var query = """
       query findById($internalId: ID) {
@@ -41,7 +42,8 @@ class ProductGraphqlAdapterITCase {
         }
       }
       """;
-    var variables = Map.of("internalId", "1");
+
+    Map<String, Object> variables = Map.of("internalId", "1");
     var body = new QueryData(query, variables);
 
     webClient.post().uri("/graphql")
@@ -59,6 +61,7 @@ class ProductGraphqlAdapterITCase {
    */
   @Test
   @DisplayName("[ProductGraphqlAdapter] sort products with stock more weight")
+  @Order(2)
   void sortProductsWithStockMoreWeight() {
     var query = """
       query sortProducts($salesUnits: Float, $stock: Float, $withDetails: Boolean!) {
@@ -72,10 +75,11 @@ class ProductGraphqlAdapterITCase {
         }
       }
       """;
-    var variables = Map.of(
-      "salesUnits", "0.001",
-      "stock", "0.999",
-      "withDetails", "false");
+
+    Map<String, Object> variables = Map.of(
+      "salesUnits", 0.001,
+      "stock", 0.999,
+      "withDetails", false);
     var body = new QueryData(query, variables);
 
     webClient.post().uri("/graphql")
@@ -98,6 +102,7 @@ class ProductGraphqlAdapterITCase {
    */
   @Test
   @DisplayName("[ProductGraphqlAdapter] sortProducts with page filter")
+  @Order(2)
   void sortProductsWithPageFilter() {
     var query = """
       query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int!) {
@@ -108,11 +113,12 @@ class ProductGraphqlAdapterITCase {
         }
       }
       """;
-    var variables = Map.of(
-      "salesUnits", "0.001",
-      "stock", "0.999",
-      "page", "0",
-      "size", "2");
+
+    Map<String, Object> variables = Map.of(
+      "salesUnits", 0.001,
+      "stock", 0.999,
+      "page", 0,
+      "size", 2);
     var body = new QueryData(query, variables);
 
     webClient.post().uri("/graphql")
@@ -129,17 +135,19 @@ class ProductGraphqlAdapterITCase {
    */
   @Test
   @DisplayName("[ProductGraphqlAdapter] sortProducts with page out")
+  @Order(2)
   void sortProductsWithPageOut() {
     var query = """
       query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int) {
         sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) { id }
       }
       """;
-    var variables = Map.of(
-      "salesUnits", "0.001",
-      "stock", "0.999",
-      "page", "1",
-      "size", "10");
+
+    Map<String, Object> variables = Map.of(
+      "salesUnits", 0.001,
+      "stock", 0.999,
+      "page", 1,
+      "size", 10);
     var body = new QueryData(query, variables);
 
     webClient.post().uri("/graphql")
@@ -156,13 +164,15 @@ class ProductGraphqlAdapterITCase {
    */
   @Test
   @DisplayName("[ProductGraphqlAdapter] sortProducts with constraint violation")
+  @Order(2)
   void sortProductsWithConstraintViolation() {
     var query = """
       query sortProducts($salesUnits: Float, $stock: Float) {
         sortProducts(salesUnits: $salesUnits, stock: $stock) { id }
       }
       """;
-    var variables = Map.of(
+
+    Map<String, Object> variables = Map.of(
       "salesUnits", "X",
       "stock", "Y");
     var body = new QueryData(query, variables);
@@ -180,4 +190,4 @@ class ProductGraphqlAdapterITCase {
 /**
  * The type Query data.
  */
-record QueryData (String query, Map<String, String> variables) { }
+record QueryData (String query, Map<String, Object> variables) { }

@@ -1,18 +1,20 @@
 # camila-product-api-test
 
-Se plantean 7 tipos de pruebas
+This project implements a comprehensive test suite for the `camila-product-api` service, covering various aspects of its functionality and performance.
 
-| Tipo                            | Detalles                                                                                                                                                                                                                                                           |
-|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Pruebas unitarias               | Se utilizan `mocks` y el plugin: `surefire` [UT]                                                                                                                                                                                                                   |
-| Pruebas de integración          | Para el adaptador `mongodb` se utiliza una base de datos embebida `de.flapdoodle.embed.mongo` y para el adaptador `couchbase` se utiliza [Test Containers](https://testcontainers.com/modules/couchbase/). En todos los casos se emplea el plugin: `failsafe` [IT] |
-| Pruebas de arquitectura         | Se utiliza la librería: `ArchUnit` [AT]                                                                                                                                                                                                                            |
-| Pruebas de mutación             | Se utiliza el plugin: [Pitest](https://github.com/pitest/pitest-junit5-plugin.git)                                                                                                                                                                                 |
-| Pruebas de comportamiento       | Se utiliza: [Cucumber](https://cucumber.io/docs/guides/)                                                                                                                                                                                                           |
-| Pruebas de rendimiento (jmh)    | Se utiliza: [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T]                                                                                                                                                                                  |
-| Pruebas de rendimiento (jmeter) | Se utiliza: [JMeter](https://jmeter.apache.org)                                                                                                                                                                                                                    |
+## Types of Tests
 
-## Arquitectura
+| Test Type                  | Details                                                                                                                                                                                                                           |
+|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unit Tests                 | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                            |
+| Integration Tests          | Employ embedded databases (`de.flapdoodle.embed.mongo` for MongoDB and [Test Containers](https://testcontainers.com/modules/couchbase/) for Couchbase) and the `failsafe` plugin to validate interactions between components [IT] |
+| Architecture Tests         | Leverage the `ArchUnit` library to ensure adherence to architectural principles and best practices [AT]                                                                                                                           |
+| Mutation Tests             | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                 |
+| Behavioral Tests           | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                   |
+| Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                             |
+| Performance Tests (jmeter) | Employ [JMeter](https://jmeter.apache.org) to simulate heavy user load and assess performance under stress                                                                                                                        |
+
+## Architecture
 
 ```txt
 📦api
@@ -36,64 +38,69 @@ Se plantean 7 tipos de pruebas
  ┗ 📜ProductApiApplicationTests.java
 ```
 
-## Operar
+## Running Tests
 
-### Pruebas unitarias y de arquitectura
+### Unit and Architecture Tests
 
 ```bash
 cd ../../
-mvn clean test 
+mvn clean test
 ```
 
-### Pruebas unitarias con aot
+### Unit Tests with AOT
 
 ```bash
 export SPRING_PROFILES_ACTIVE=loc
 mvn clean spring-boot:process-test-aot
 ```
 
-### Pruebas de integración y benchmarking
+### Integration and Benchmark Tests
 
 ```bash
 mvn clean verify
 ```
 
-### Pruebas de mutación
+### Mutation Tests
 
 ```bash
 mvn clean test -P pitest
 ```
 
-> Reporte: [./target/pit-reports/index.html](./../../target/pit-reports/index.html)
+> Report: [./target/pit-reports/index.html](./../../target/pit-reports/index.html)
 
-### Análisis de código
+### Code Analysis
 
-* Chequeo de dependencias: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
-* Análisis de errores: [error-prone](https://github.com/google/error-prone)
+* Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
+* Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
 
 ```bash
 mvn clean verify site -P check-dependency,error-prone
 ```
 
-> Reporte: [./target/site/project-info.html](./../../site/project-info.html)
- 
-### Pruebas de rendimiento
+> Report: [./target/site/project-info.html](./../../site/project-info.html)
 
-* Configuración: [Readme](./resources/scripts/jmeter)
+### Performance Tests
+
+* Configuration: [Readme](./resources/scripts/jmeter)
 
 ```bash
-# opcional, para modificar valores por defecto
+# Optional: Set default values
 export JMETER_TEST_PATH="/tmp/results"
 export THREADS=100
 export RAMP_UP=20 
 export LOOPS=5
 
-# ejecutar plan de pruebas
+export BASE_URL_PROTOCOL="http"
+export BASE_URL="localhost"
+export BASE_URL_PORT="8080"
+export BASE_PATH="product-dev"
+
+# Run the test plan
 ./resources/scripts/jmeter/run.sh
 ```
 
-## Generador de datos
+## Data Generator
 
-Existe un generador de datos aleatorios que permite poblar la BBDD para pruebas de rendimiento
+A random data generator is available to populate the database for performance testing:
 
 [RandomDataGenerator](java/com/camila/api/product/framework/adapter/output/RandomDataGenerator.java)

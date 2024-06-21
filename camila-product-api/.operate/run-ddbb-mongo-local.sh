@@ -7,12 +7,12 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# preparar el espacio de trabajo
+# Prepare workspace
 docker stop mongodb7 || true && \
   docker rm mongodb7 || true && \
   docker volume create mongo-data7 || true
 
-# iniciar un servidor standalone
+# Init container
 docker run -it --rm \
   --network host \
   --name mongodb7 \

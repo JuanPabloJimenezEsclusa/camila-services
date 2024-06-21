@@ -162,6 +162,8 @@ Outputs:
   UserPoolId:
     Description: "User Pool ID"
     Value: !Ref CamilaServicesPool
+    Export:
+      Name: UserPoolARN
   UserPoolClientId:
     Description: "User Pool Client ID"
     Value: !Ref CamilaClient

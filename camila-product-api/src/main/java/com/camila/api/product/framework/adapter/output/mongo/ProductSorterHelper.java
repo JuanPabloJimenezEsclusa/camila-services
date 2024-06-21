@@ -66,6 +66,18 @@ class ProductSorterHelper {
       .build();
   }
 
+  /**
+   * Build options aggregation options.
+   *
+   * @return the aggregation options
+   */
+  static AggregationOptions buildOptions() {
+    return AggregationOptions
+      .builder()
+      .allowDiskUse(true)
+      .build();
+  }
+
   private static AggregationExpression getAggregationExpression(MetricWeight metricWeight) {
     return metricWeight.metric() == Metrics.STOCK ?
       getStockByWeights(metricWeight.weight()) :

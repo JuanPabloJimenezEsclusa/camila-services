@@ -7,7 +7,7 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-# compilar con aot
+# AOT compile
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 
 mvn clean compile spring-boot:process-aot package -f ./pom.xml

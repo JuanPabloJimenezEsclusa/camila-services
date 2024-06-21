@@ -79,13 +79,24 @@ create_ecr_repository
 login_to_ecr
 build_and_push_image
 
-# Create stack
+# Create secrets stack
+aws cloudformation create-stack \
+  --stack-name "camila-secrets-stack" \
+  --template-body "file://templates/camila-secrets-stack.yml" \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --parameters \
+    "ParameterKey=CouchbasePassword,ParameterValue=${COUCHBASE_PASSWORD}" \
+    "ParameterKey=MongoUri,ParameterValue=${MONGO_URI}"
+
+# Wait for stack to be created
+aws cloudformation wait stack-create-complete \
+  --stack-name "camila-secrets-stack"
+
+# Create ecs stack
 aws cloudformation create-stack \
   --stack-name "camila-product-stack" \
   --template-body "file://templates/camila-services-stack.yml" \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameters \
     "ParameterKey=CouchbaseConnection,ParameterValue=${COUCHBASE_CONNECTION}" \
-    "ParameterKey=CouchbaseUsername,ParameterValue=${COUCHBASE_USERNAME}" \
-    "ParameterKey=CouchbasePassword,ParameterValue=${COUCHBASE_PASSWORD}" \
-    "ParameterKey=MongoUri,ParameterValue=${MONGO_URI}"
+    "ParameterKey=CouchbaseUsername,ParameterValue=${COUCHBASE_USERNAME}"

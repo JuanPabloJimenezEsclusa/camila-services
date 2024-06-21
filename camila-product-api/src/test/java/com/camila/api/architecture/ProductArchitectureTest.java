@@ -59,5 +59,22 @@ class ProductArchitectureTest {
   static final ArchRule DOMAIN_ONLY_DEPEND_ON_STANDARD =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.DOMAIN.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(HEXAGONAL_LAYERS.DOMAIN.getValue(),
-        "java..", "reactor.core..", "org.springframework.lang..", "com.fasterxml.jackson.annotation..");
+        // Basis dependencies
+        "java..", "reactor.core..",
+        // Spring dependencies
+        "org.springframework.lang..", "com.fasterxml.jackson.annotation..");
+
+  @ArchTest
+  static final ArchRule APPLICATION_ONLY_DEPEND_ON_STANDARD_DOMAIN =
+    classes().that().resideInAPackage(HEXAGONAL_LAYERS.APPLICATION.getValue())
+      .should().onlyDependOnClassesThat().resideInAnyPackage(
+        HEXAGONAL_LAYERS.DOMAIN.getValue(), HEXAGONAL_LAYERS.APPLICATION.getValue(),
+        // Basis dependencies
+        "java..", "reactor.core..",
+        // Spring dependencies
+        "org.springframework.lang..", "org.springframework.data.domain..", "org.springframework.stereotype..",
+        // Testing dependencies
+        "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.springframework.test..",
+        // AOT
+        "org.springframework.aot.generate..", "org.springframework.beans.factory..");
 }

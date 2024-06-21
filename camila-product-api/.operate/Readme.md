@@ -1,20 +1,22 @@
 # camila-product-api-operate
 
-Contiene información sobre como compilar, desplegar y ejecutar el proyecto localmente
+This section provides information on how to build, deploy, and run the project locally.
 
-❗ Se puede activar el perfil `chaos-monkey` para probar localmente [Principles Of Chaos](https://principlesofchaos.org/)
+❗ The `chaos-monkey` profile can be activated to locally test [Principles Of Chaos](https://principlesofchaos.org/).
 
 ## Scripts
 
-| Nombre                                                    | Descripción                                              |
-|-----------------------------------------------------------|----------------------------------------------------------|
-| [build-aot](./build-aot.sh)                               | Construye el proyecto con aot                            |
-| [build-image](./build-image.sh)                           | Construye el proyecto y genera una imagen                |
-| [build-image-native](./build-image-native.sh)             | Construye el proyecto nativo y genera una imagen         |
-| [run-spring-boot](./run-spring-boot.sh)                   | Ejecuta el proyecto a traves del plugin de `spring-boot` |
-| [run-aot](./run-aot.sh)                                   | Ejecuta el proyecto con aot                              |
-| [run-image](./run-image.sh)                               | Ejecuta el proyecto en contenedor                        |
-| [run-ddbb-mongo-local](./run-ddbb-mongo-local.sh)         | Construye una BBDD (mongo) de prueba en contenedor       |
-| [init-ddbb-mongo-local](./init-ddbb-mongo-local.sh)       | Carga data de pruebas en la BBDD                         |
-| [cleanup-ddbb-mongo-local](./cleanup-ddbb-mongo-local.sh) | Eliminar usuario y base de datos                         |
-| [run-ddbb-couchbase-local](./run-ddbb-couchbase-local.sh) | Construye una BBDD (couchbase) de prueba en contenedor   |
+The following table summarizes the available scripts for building, running, and deploying the project:
+
+| Command                                                   | Description                                             |
+|-----------------------------------------------------------|---------------------------------------------------------|
+| [build-aot](./build-aot.sh)                               | Builds the project with AOT (Ahead-of-Time) compilation |
+| [build-image](./build-image.sh)                           | Builds the project and generates a Docker image         |
+| [build-image-native](./build-image-native.sh)             | Builds the native project and generates a Docker image  |
+| [run-spring-boot](./run-spring-boot.sh)                   | Runs the project using the Spring Boot plugin           |
+| [run-aot](./run-aot.sh)                                   | Runs the project with AOT (Ahead-of-Time) compilation   |
+| [run-image](./run-image.sh)                               | Runs the project in a Docker container                  |
+| [run-ddbb-mongo-local](./run-ddbb-mongo-local.sh)         | Sets up a local MongoDB test database in a container    |
+| [init-ddbb-mongo-local](./init-ddbb-mongo-local.sh)       | Loads test data into the MongoDB database               |
+| [cleanup-ddbb-mongo-local](./cleanup-ddbb-mongo-local.sh) | Removes the MongoDB user and database                   |
+| [run-ddbb-couchbase-local](./run-ddbb-couchbase-local.sh) | Sets up a local Couchbase test database in a container  |

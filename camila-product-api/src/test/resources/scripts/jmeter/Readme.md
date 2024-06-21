@@ -1,23 +1,21 @@
 # Jmeter
 
-Proyecto `Jmeter` con pruebas de rendimiento
+Performance testing project using JMeter
 
-## Pre-condiciones
+## Prerequisites
 
 * JDK >= 21
-* Jmeter >= 5.6.2
+* JMeter >= 5.6.2
 
-## Arquitectura
+## Project Structure
 
 ```txt
 📦 jmeter
  ┣ 📜 camila-product-api.jmx
- ┣ 📜 camila-product-api.csv
  ┗ 📜 run.sh
 ```
 
-| Archivo | Descripción |
-|---------|-------------|
-|camila-product-api.jmx | Plan de pruebas |
-|camila-product-api.csv | Credenciales |
-|run.sh| Script de ejecución via consola |
+| File                   | Description                         |
+|------------------------|-------------------------------------|
+| camila-product-api.jmx | Test plan file                      |
+| run.sh                 | Shell script for executing the test |

@@ -1,14 +1,16 @@
 # camila-gateway-operate
 
-Contiene información sobre como compilar, desplegar y ejecutar el proyecto localmente
+This section provides information on how to build, deploy, and run the project locally.
 
 ## Scripts
 
-| Nombre     | Descripción                          |
-|------------|--------------------------------------|
-| [build-aot](./build-aot.sh) | Construye el proyecto con aot  |
-| [build-image](./build-image.sh) | Construye el proyecto y genera una imagen |
-| [build-image-native](./build-image-native.sh) | Construye el proyecto nativo y genera una imagen |
-| [run-spring-boot](./run-spring-boot.sh) | Ejecuta el proyecto a traves del plugin de `spring-boot` |
-| [run-aot](./run-aot.sh) | Ejecuta el proyecto con aot |
-| [run-image](./run-image.sh) | Ejecuta el proyecto en contenedor |
+The following table summarizes the available scripts for building, running, and deploying the project:
+
+| Command                                       | Description                                             |
+|-----------------------------------------------|---------------------------------------------------------|
+| [build-aot](./build-aot.sh)                   | Builds the project with AOT (Ahead-of-Time) compilation |
+| [build-image](./build-image.sh)               | Builds the project and generates a Docker image         |
+| [build-image-native](./build-image-native.sh) | Builds the native project and generates a Docker image  |
+| [run-spring-boot](./run-spring-boot.sh)       | Runs the project using the Spring Boot plugin           |
+| [run-aot](./run-aot.sh)                       | Runs the project with AOT (Ahead-of-Time) compilation   |
+| [run-image](./run-image.sh)                   | Runs the project in a Docker container                  |

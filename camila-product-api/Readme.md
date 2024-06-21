@@ -15,7 +15,7 @@ Implement:
 * Docker >= 24.0.6
 * Maven >= 3.8.8
 * Spring >= 6.x
-* Spring-boot >= 3.2.x
+* Spring-boot >= 3.3.x
 * MongoDB >= 7.x
 * Couchbase >= 7.x
 * Native Image compilation

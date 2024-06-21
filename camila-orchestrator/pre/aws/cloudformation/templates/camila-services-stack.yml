@@ -29,48 +29,8 @@ Parameters:
     Type: String
     Description: The Couchbase username
     NoEcho: true
-  CouchbasePassword:
-    Type: String
-    Description: The Couchbase password
-    NoEcho: true
-  MongoUri:
-    Type: String
-    Description: The MongoDB URI
-    NoEcho: true
 
 Resources:
-
-  # Create a couchbase password secret
-  # https://aws.amazon.com/es/secrets-manager/pricing/
-  # 0.40 $/month
-  CouchbasePasswordSecret:
-    Type: "AWS::SecretsManager::Secret"
-    Description: "Couchbase password"
-    DeletionPolicy: Delete
-    Properties:
-      Name: "CouchbasePassword"
-      Description: "Couchbase password"
-      SecretString: !Sub '{"password":"${CouchbasePassword}"}'
-      Tags:
-        - Key: "Name"
-          Value: "CouchbasePassword"
-        - Key: "ENTORN"
-          Value: "PRE"
-
-  # Create a mongo uri secret
-  MongoUriSecret:
-    Type: "AWS::SecretsManager::Secret"
-    Description: "Mongo URI"
-    DeletionPolicy: Delete
-    Properties:
-      Name: "MongoUri"
-      Description: "Mongo URI"
-      SecretString: !Sub '{"uri":"${MongoUri}"}'
-      Tags:
-        - Key: "Name"
-          Value: "MongoUri"
-        - Key: "ENTORN"
-          Value: "PRE"
 
   # Create a VPC
   VPC:
@@ -259,6 +219,7 @@ Resources:
   TaskDefinition:
     Type: "AWS::ECS::TaskDefinition"
     Description: "Task Definition"
+    DeletionPolicy: Delete
     Properties:
       Family: "camila-product-definition"
       NetworkMode: "awsvpc"
@@ -292,6 +253,17 @@ Resources:
               awslogs-group: !Ref LogGroup
               awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: "ecs"
+          Secrets:
+            - Name: spring.couchbase.password
+              ValueFrom: !Join
+                - ":"
+                - - !ImportValue CouchbasePasswordSecretARN
+                  - "password::"
+            - Name: spring.data.mongodb.uri
+              ValueFrom: !Join
+                - ":"
+                - - !ImportValue MongoUriSecretARN
+                  - "uri::"
           Environment:
             - Name: LANGUAGE
               Value: "en_US.utf8"
@@ -308,7 +280,10 @@ Resources:
             - Name: SERVER_URL
               Value: "https://poc.jpje-kops.xyz"
             - Name: SECURITY_ISSUER_URI
-              Value: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_V9QO8HixP" # ID -> AWS::Cognito::UserPool
+              Value: !Join
+                - "/"
+                - - "https://cognito-idp.eu-west-1.amazonaws.com"
+                  - !ImportValue UserPoolARN # ID -> AWS::Cognito::UserPool
             - Name: SECURITY_DOMAIN_URI
               Value: "https://camila-realm.auth.eu-west-1.amazoncognito.com" # Domain -> AWS::Cognito::UserPoolDomain
             - Name: spring.application.repository.technology
@@ -317,12 +292,12 @@ Resources:
               Value: !Ref CouchbaseConnection
             - Name: spring.couchbase.username
               Value: !Ref CouchbaseUsername
-            - Name: spring.couchbase.password
-              Value: !Sub "{{resolve:secretsmanager:CouchbasePassword:SecretString:password}}"
             - Name: spring.couchbase.env.ssl.enabled
               Value: "true"
-            - Name: spring.data.mongodb.uri
-              Value: !Sub "{{resolve:secretsmanager:MongoUri:SecretString:uri}}"
+            - Name: spring.data.mongodb.ssl.enabled
+              Value: "true"
+            - Name: spring.rsocket.server.port
+              Value: "7000"
 
   # Create an ECS Service
   # https://aws.amazon.com/es/fargate/pricing/
@@ -336,7 +311,7 @@ Resources:
     Properties:
       ServiceName: "camila-product-service"
       Cluster: !Ref ECSCluster
-      DesiredCount: 1
+      DesiredCount: 2
       LaunchType: "FARGATE"
       TaskDefinition: !Ref TaskDefinition
       HealthCheckGracePeriodSeconds: 30
@@ -380,6 +355,11 @@ Resources:
           ToPort: 443
           CidrIp: "0.0.0.0/0"
           Description: "Allow 443 HTTPS traffic"
+        - IpProtocol: "tcp"
+          FromPort: 7443
+          ToPort: 7443
+          CidrIp: "0.0.0.0/0"
+          Description: "Allow 7443 HTTPS traffic"
       Tags:
         - Key: "ENTORN"
           Value: "PRE"
@@ -489,6 +469,9 @@ Resources:
       DomainValidationOptions:
         - DomainName: !Ref DomainName
           HostedZoneId: !Ref HostedZoneId
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
 
   # Create a Listener for the Load Balancer
   ListenerHTTP:
@@ -565,7 +548,7 @@ Resources:
     Description: "Scale the ECS Service"
     Properties:
       MaxCapacity: 2
-      MinCapacity: 1
+      MinCapacity: 0
       ResourceId: !Join
         - "/"
         - - service
@@ -574,22 +557,6 @@ Resources:
       RoleARN: !GetAtt AutoScalingRole.Arn
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
-
-  # Create a Scaling Policy
-  ScalingPolicy:
-    Type: "AWS::ApplicationAutoScaling::ScalingPolicy"
-    Description: "Scaling Policy"
-    Properties:
-      PolicyName: camila-product-scaling-policy
-      PolicyType: TargetTrackingScaling
-      ScalingTargetId: !Ref ScalableTarget
-      TargetTrackingScalingPolicyConfiguration:
-        TargetValue: 85.0
-        DisableScaleIn: true
-        PredefinedMetricSpecification:
-          PredefinedMetricType: ECSServiceAverageCPUUtilization
-        ScaleInCooldown: 60
-        ScaleOutCooldown: 60
 
   # Create an IAM Role for Auto Scaling
   AutoScalingRole:
@@ -611,12 +578,15 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - "application-autoscaling:*"
-                  - "cloudwatch:DescribeAlarms"
-                  - "cloudwatch:PutMetricAlarm"
-                  - "cloudwatch:GetMetricStatistics"
                   - "cloudwatch:ListMetrics"
+                  - "cloudwatch:DescribeAlarms"
+                  - "cloudwatch:GetMetricStatistics"
+                  - "cloudwatch:SetAlarmState"
+                  - "cloudwatch:DeleteAlarms"
+                  - "cloudwatch:PutMetricAlarm"
                   - "ecs:UpdateService"
                   - "ecs:DescribeServices"
+                  - "ecs:DescribeClusters"
                 Resource: "*"
 
   # Alarms for the Scaling Policy
@@ -631,9 +601,9 @@ Resources:
         AdjustmentType: ChangeInCapacity
         MetricAggregationType: Average
         StepAdjustments:
-          - MetricIntervalLowerBound: 0
+          - MetricIntervalLowerBound: 0.0
             ScalingAdjustment: 1
-        Cooldown: 60
+        Cooldown: 300
 
   ScaleInPolicy:
     Type: "AWS::ApplicationAutoScaling::ScalingPolicy"
@@ -646,9 +616,9 @@ Resources:
         AdjustmentType: ChangeInCapacity
         MetricAggregationType: Average
         StepAdjustments:
-          - MetricIntervalUpperBound: 0
+          - MetricIntervalUpperBound: 0.0
             ScalingAdjustment: -1
-        Cooldown: 60
+        Cooldown: 300
 
   # CloudWatch Alarm for CPU Utilization
   CPUAlarmHigh:
@@ -656,7 +626,7 @@ Resources:
     Description: "High CloudWatch Alarm for CPU Utilization"
     Properties:
       AlarmName: camila-product-cpu-alarm-high
-      AlarmDescription: "Alarm if CPU exceeds 85%"
+      AlarmDescription: "Alarm if CPU exceeds 50%"
       Namespace: "AWS/ECS"
       MetricName: "CPUUtilization"
       Dimensions:
@@ -665,10 +635,11 @@ Resources:
         - Name: "ServiceName"
           Value: !GetAtt ECSService.Name
       Statistic: "Average"
-      Period: 300
-      EvaluationPeriods: 2
-      Threshold: 85
-      ComparisonOperator: "GreaterThanThreshold"
+      Period: 60
+      EvaluationPeriods: 1
+      Threshold: 50
+      ComparisonOperator: "GreaterThanOrEqualToThreshold"
+      ActionsEnabled: true
       AlarmActions:
         - !Ref ScaleOutPolicy
 
@@ -677,7 +648,7 @@ Resources:
     Description: "Low CloudWatch Alarm for CPU Utilization"
     Properties:
       AlarmName: camila-product-cpu-alarm-low
-      AlarmDescription: "Alarm if CPU is below 20%"
+      AlarmDescription: "Alarm if CPU is below 10%"
       Namespace: "AWS/ECS"
       MetricName: "CPUUtilization"
       Dimensions:
@@ -686,12 +657,35 @@ Resources:
         - Name: "ServiceName"
           Value: !GetAtt ECSService.Name
       Statistic: "Average"
-      Period: 300
+      Period: 180
       EvaluationPeriods: 2
-      Threshold: 20
-      ComparisonOperator: "LessThanThreshold"
+      Threshold: 10
+      ComparisonOperator: "LessThanOrEqualToThreshold"
+      ActionsEnabled: true
       AlarmActions:
         - !Ref ScaleInPolicy
+
+  # CloudWatch Alarm for load balancer count
+  LoadBalancerRequestCountAlarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      AlarmName: camila-product-elb-request-count-alarm
+      AlarmDescription: "Alarm when request count exceeds 0"
+      Namespace: "AWS/ApplicationELB"
+      MetricName: "RequestCount"
+      Dimensions:
+        - Name: "LoadBalancer"
+          Value: !GetAtt LoadBalancer.LoadBalancerFullName
+      Statistic: "Sum"
+      Period: 30
+      EvaluationPeriods: 1
+      DatapointsToAlarm: 1
+      Threshold: 1
+      ComparisonOperator: "GreaterThanOrEqualToThreshold"
+      TreatMissingData: missing
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref ScaleOutPolicy
 
   # Create a Route 53 Alias Record to the Load Balancer
   RecordSet:

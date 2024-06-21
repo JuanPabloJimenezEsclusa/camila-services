@@ -1,16 +1,16 @@
 # camila-config
 
-Contiene un configurador central de servicios
+This project provides a central configuration service
 
-## Pre-condiciones
+## Prerequisites
 
 * JDK >= 21
 * Docker >= 24.0.6
-* maven >= 3.8.8
+* Maven >= 3.8.8
 * Spring >= 6.x
-* Spring-boot >= 3.2.x
+* Spring-boot >= 3.3.x
 
-## Enlaces
+## Links
 
 * Requests:
   * <http://localhost:8888/camila-admin/dev/main>
@@ -19,6 +19,6 @@ Contiene un configurador central de servicios
 * Actuator:
   * <http://localhost:8888/actuator/health>
 
-## Operaciones (build, deploy)
+## Operations (build, deploy)
 
-[Operar - Readme](.operate/Readme.md)
+For instructions on building and deploying this project, refer to the [Operate - Readme](.operate/Readme.md) file.

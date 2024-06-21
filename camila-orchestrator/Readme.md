@@ -1,28 +1,28 @@
 # camila-orchestrator
 
-Contiene la configuración como código que permite desplegar el servicio en un ambiente de contenedores y cloud
+This project provides Infrastructure as Code (IaC) configurations to deploy the service in containerized and cloud environments.
 
-## Pre-requisitos
+## Prerequisites
 
-* docker-compose >= v2.27.0 (o embebido en docker)
-* kubernetes >= 1.30.0
-* linux
+* docker-compose >= v2.27.0 (or embedded in Docker)
+* Kubernetes >= 1.30.0
+* Linux operating system
 
-## Entornos
+## Environments
 
-| Entorno       | Descripción                                                                                                                                |
-|---------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| [dev](./dev/) | Orquestación básica de contenedores con `docker-compose` que permite crear un entorno de despliegue con todos los componentes del servicio |
-| [int](./int/) | Orquestación en `k8s` utilizando ó deployments ó serveless `knative`                                                                       |
-| [pre](./pre/) | Orquestación en `AWS` utilizando `AWS CloudFormation`                                                                                      |
+| Environment           | Description                                                                                                        |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------|
+| [DEV](./dev/compose/) | Basic container orchestration with `docker-compose` to create a deployment environment with all service components |
+| [INT](./int/k8s/)     | Orchestration in `k8s` using either deployments or serverless `knative`                                            |
+| [PRE](./pre/aws/)     | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                                                   |
 
-## Infraestructura
+## Infrastructure
 
-| Proveedor                           | Descripción                                                                                                 |
-|-------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| [clusters - kind](./clusters/kind/) | Configuración de un cluster `k8s` utilizando el proyecto: [kubernetes in docker](https://kind.sigs.k8s.io/) |
+| Provider                            | Description                                                                                           |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------|
+| [clusters - kind](./clusters/kind/) | Configuration of a `k8s` cluster using the project: [kubernetes in docker](https://kind.sigs.k8s.io/) |
 
-## Arquitectura
+## Architecture
 
 ```txt
 📦camila-orchestrator
@@ -35,7 +35,8 @@ Contiene la configuración como código que permite desplegar el servicio en un 
  ┃   ┣ 📂API
  ┃   ┃ ┗ 📂serveless (apply-serveless.sh - delete-serveless.sh)
  ┃   ┗ 📂DDBB (apply.sh - delete.sh)
- ┣ 📂pre
- ┃ ┗ 📂aws (init-aws-stack.sh - delete-aws-stack.sh)
- ┗ 📜Readme.md
+ ┗ 📂pre
+   ┗ 📂aws
+     ┣ 📂cloudformation
+     ┗ 📂terraform
 ```
