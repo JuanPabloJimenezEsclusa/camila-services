@@ -8,7 +8,7 @@ This project provides a user interface (UI) for managing services.
 * Docker >= 24.0.6
 * Maven >= 3.8.8
 * Spring >= 6.x
-* Spring-boot >= 3.2.x
+* Spring-boot >= 3.3.x
 
 ## Links
 

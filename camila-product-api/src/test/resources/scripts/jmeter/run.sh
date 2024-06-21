@@ -6,9 +6,9 @@ set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an unde
 set -o xtrace
 
 JMETER_TEST_PATH="${JMETER_TEST_PATH:-"."}" # This variable defines the path to the JMeter test plan configuration
-THREADS="${THREADS:-100}" # This variable sets the number of concurrent users (threads) to simulate during the test
+THREADS="${THREADS:-200}" # This variable sets the number of concurrent users (threads) to simulate during the test
 RAMP_UP="${RAMP_UP:-20}" # This variable specifies the duration (in seconds) for gradually increasing the load from 0 to the specified number of users
-LOOPS="${LOOPS:-5}" # This variable defines the total number of times to iterate through the test
+LOOPS="${LOOPS:-10}" # This variable defines the total number of times to iterate through the test
 
 BASE_URL_PROTOCOL="${BASE_URL_PROTOCOL:-"https"}"
 BASE_URL="${BASE_URL:-"poc.jpje-kops.xyz"}"

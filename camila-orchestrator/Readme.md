@@ -10,11 +10,11 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
 
 ## Environments
 
-| Environment   | Description                                                                                                        |
-|---------------|--------------------------------------------------------------------------------------------------------------------|
-| [DEV](./dev/) | Basic container orchestration with `docker-compose` to create a deployment environment with all service components |
-| [INT](./int/) | Orchestration in `k8s` using either deployments or serverless `knative`                                            |
-| [PRE](./pre/) | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                                                   |
+| Environment           | Description                                                                                                        |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------|
+| [DEV](./dev/compose/) | Basic container orchestration with `docker-compose` to create a deployment environment with all service components |
+| [INT](./int/k8s/)     | Orchestration in `k8s` using either deployments or serverless `knative`                                            |
+| [PRE](./pre/aws/)     | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                                                   |
 
 ## Infrastructure
 

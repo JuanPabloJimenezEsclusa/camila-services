@@ -651,7 +651,7 @@ resource "aws_appautoscaling_policy" "scale_up" {
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
-    cooldown                = 60
+    cooldown                = 300
     metric_aggregation_type = "Average"
     step_adjustment {
       metric_interval_lower_bound = 0
@@ -669,7 +669,7 @@ resource "aws_appautoscaling_policy" "scale_down" {
 
   step_scaling_policy_configuration {
     adjustment_type         = "ChangeInCapacity"
-    cooldown                = 60
+    cooldown                = 300
     metric_aggregation_type = "Average"
     step_adjustment {
       metric_interval_lower_bound = 0
@@ -680,15 +680,16 @@ resource "aws_appautoscaling_policy" "scale_down" {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
-  alarm_name          = "cpu_high"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "2"
+  alarm_name          = "camila-product-cpu-alarm-high"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
   period              = "60"
   statistic           = "Average"
-  threshold           = "80"
-  alarm_description   = "This metric monitors ECS CPU utilization"
+  threshold           = "50"
+  alarm_description   = "Alarm if CPU exceeds 50%"
+  actions_enabled     = "true"
   dimensions = {
     ClusterName = aws_ecs_cluster.main.name
     ServiceName = aws_ecs_service.camila-product-backend.name
@@ -698,18 +699,39 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm
 resource "aws_cloudwatch_metric_alarm" "cpu_low" {
-  alarm_name          = "cpu_low"
-  comparison_operator = "LessThanThreshold"
+  alarm_name          = "camila-product-cpu-alarm-low"
+  comparison_operator = "LessThanOrEqualToThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/ECS"
-  period              = "60"
+  period              = "180"
   statistic           = "Average"
-  threshold           = "20"
-  alarm_description   = "This metric monitors ECS CPU utilization"
+  threshold           = "10"
+  alarm_description   = "Alarm if CPU is below 10%"
+  actions_enabled     = "true"
   dimensions = {
     ClusterName = aws_ecs_cluster.main.name
     ServiceName = aws_ecs_service.camila-product-backend.name
   }
   alarm_actions = [aws_appautoscaling_policy.scale_down.arn]
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm
+resource "aws_cloudwatch_metric_alarm" "request_count" {
+  alarm_name          = "camila-product-elb-request-count-alarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  datapoints_to_alarm = "1"
+  metric_name         = "RequestCount"
+  namespace           = "AWS/ApplicationELB"
+  period              = "30"
+  statistic           = "Sum"
+  threshold           = "1"
+  alarm_description   = "Alarm when request count exceeds 0"
+  actions_enabled     = "true"
+  treat_missing_data  = "missing"
+  dimensions = {
+    LoadBalancer = aws_lb.main.id
+  }
+  alarm_actions = [aws_appautoscaling_policy.scale_up.arn]
 }
