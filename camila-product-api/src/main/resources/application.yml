@@ -97,6 +97,14 @@ management:
     git:
       enabled: true
       mode: full
+    os:
+      enabled: true
+    process:
+      enabled: true
+    build:
+      enabled: true
+    java:
+      enabled: true
   tracing:
     enabled: false
 
@@ -114,6 +122,7 @@ de:
 
 server:
   port: ${PORT:8080}
+  shutdown: immediate
 
 ---
 ###### Local|Dev properties ######
@@ -298,6 +307,7 @@ spring:
       enabled: false
   rsocket:
     server:
+      mapping-path: /product/api/rsocket
       port: 7000
 
   # Enable AWS Cognito Oauth2 security

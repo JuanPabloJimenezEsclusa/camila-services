@@ -1,18 +1,18 @@
 ### Rest - Actuator
-# http://poc.jpje-kops.xyz/product/api/swagger-ui.html
+# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
 GET https://poc.jpje-kops.xyz/product/api/actuator/health HTTP/2
 Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
-# http://poc.jpje-kops.xyz/product/api/swagger-ui.html
+# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
 GET https://poc.jpje-kops.xyz/product/api/products/99999 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
-# http://poc.jpje-kops.xyz/product/api/swagger-ui.html
+# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
 GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
@@ -56,7 +56,7 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 ### Websockt
-WEBSOCKET ws://poc.jpje-kops.xyz/product/api/ws/products
+WEBSOCKET wss://poc.jpje-kops.xyz/product/api/ws/products
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
@@ -71,14 +71,13 @@ Authorization: Bearer {{$auth.token("auth-id")}}
   "salesUnits": "0.001",
   "stock": "0.999",
   "page": "0",
-  "size": "5"
+  "size": "10000"
 }
 === wait-for-server
 
 ### RSocket request rsponse with websocket - findByInternalId
 RSOCKET products.request-response-findByInternalId
-Host: ws://poc.jpje-kops.xyz:7443/rsocket
-Content-Type: application/json
+Host: wss://poc.jpje-kops.xyz:7443/product/api/rsocket
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
@@ -87,8 +86,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### RSocket request stream with websocket - SortProducts
 RSOCKET products.request-stream-sortByMetricsWeights
-Host: ws://poc.jpje-kops.xyz:7443/rsocket
-Content-Type: text/event-stream
+Host: wss://poc.jpje-kops.xyz:7443/product/api/rsocket
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 {

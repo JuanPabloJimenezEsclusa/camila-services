@@ -227,6 +227,7 @@ Resources:
       Cpu: "512"
       Memory: "1024"
       ExecutionRoleArn: !Ref TaskExecutionRole
+      TaskRoleArn: !GetAtt TaskExecutionRole.Arn
       Tags:
         - Key: "ENTORN"
           Value: "PRE"
@@ -245,8 +246,11 @@ Resources:
               ContainerPort: 7000
               HostPort: 7000
               Protocol: "tcp"
-              AppProtocol: "http2"
+              AppProtocol: "http"
           Essential: true
+          LinuxParameters:
+            # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html#ecs-exec-enabling-and-using
+            InitProcessEnabled: true
           LogConfiguration:
             LogDriver: "awslogs"
             Options:
@@ -315,6 +319,7 @@ Resources:
       LaunchType: "FARGATE"
       TaskDefinition: !Ref TaskDefinition
       HealthCheckGracePeriodSeconds: 30
+      EnableExecuteCommand: true
       NetworkConfiguration:
         AwsvpcConfiguration:
           # Although the service is on a private subnet, the public IP is necessary to have visibility of the image repository.
@@ -426,8 +431,8 @@ Resources:
       HealthCheckProtocol: "HTTP"
       HealthCheckPort: "8080"
       HealthCheckPath: "/product/api/actuator/health"
-      HealthCheckTimeoutSeconds: 5
-      HealthCheckIntervalSeconds: 60
+      HealthCheckTimeoutSeconds: 30
+      HealthCheckIntervalSeconds: 120
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 3
       TargetType: "ip"
@@ -448,8 +453,8 @@ Resources:
       HealthCheckProtocol: "HTTP"
       HealthCheckPort: "8080"
       HealthCheckPath: "/product/api/actuator/health"
-      HealthCheckTimeoutSeconds: 5
-      HealthCheckIntervalSeconds: 60
+      HealthCheckTimeoutSeconds: 60
+      HealthCheckIntervalSeconds: 300
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 2
       TargetType: "ip"
@@ -520,6 +525,8 @@ Resources:
     Type: "AWS::IAM::Role"
     Description: "IAM Role for ECS Task Execution"
     Properties:
+      RoleName: "camila-product-task-execution-role"
+      Description: "IAM Role for ECS Task Execution"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -534,13 +541,19 @@ Resources:
             Statement:
               - Effect: "Allow"
                 Action:
+                  - "ecs:ExecuteCommand"
+                  - "ecs:DescribeTasks"
                   - "ecr:GetDownloadUrlForLayer"
                   - "ecr:BatchGetImage"
                   - "ecr:GetAuthorizationToken"
                   - "logs:CreateLogStream"
+                  - "logs:DescribeLogStreams"
                   - "logs:PutLogEvents"
                   - "secretsmanager:GetSecretValue"
                 Resource: "*"
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
 
   # Scale the ECS Service
   ScalableTarget:
@@ -548,7 +561,7 @@ Resources:
     Description: "Scale the ECS Service"
     Properties:
       MaxCapacity: 2
-      MinCapacity: 0
+      MinCapacity: 1
       ResourceId: !Join
         - "/"
         - - service
@@ -563,6 +576,8 @@ Resources:
     Type: "AWS::IAM::Role"
     Description: "IAM Role for Auto Scaling"
     Properties:
+      RoleName: "camila-product-auto-scaling-role"
+      Description: "IAM Role for Auto Scaling"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -584,10 +599,14 @@ Resources:
                   - "cloudwatch:SetAlarmState"
                   - "cloudwatch:DeleteAlarms"
                   - "cloudwatch:PutMetricAlarm"
+                  - "ecs:CreateService"
                   - "ecs:UpdateService"
                   - "ecs:DescribeServices"
                   - "ecs:DescribeClusters"
                 Resource: "*"
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
 
   # Alarms for the Scaling Policy
   ScaleOutPolicy:
@@ -599,11 +618,12 @@ Resources:
       ScalingTargetId: !Ref ScalableTarget
       StepScalingPolicyConfiguration:
         AdjustmentType: ChangeInCapacity
-        MetricAggregationType: Average
+        # it is necessary to comment the  MetricAggregationType  to  avoid  an  error
+        #MetricAggregationType: Average
         StepAdjustments:
           - MetricIntervalLowerBound: 0.0
             ScalingAdjustment: 1
-        Cooldown: 300
+        Cooldown: 180
 
   ScaleInPolicy:
     Type: "AWS::ApplicationAutoScaling::ScalingPolicy"
@@ -614,11 +634,12 @@ Resources:
       ScalingTargetId: !Ref ScalableTarget
       StepScalingPolicyConfiguration:
         AdjustmentType: ChangeInCapacity
-        MetricAggregationType: Average
+        # it is necessary to comment the  MetricAggregationType  to  avoid  an  error
+        #MetricAggregationType: Average
         StepAdjustments:
           - MetricIntervalUpperBound: 0.0
             ScalingAdjustment: -1
-        Cooldown: 300
+        Cooldown: 180
 
   # CloudWatch Alarm for CPU Utilization
   CPUAlarmHigh:
@@ -639,6 +660,7 @@ Resources:
       EvaluationPeriods: 1
       Threshold: 50
       ComparisonOperator: "GreaterThanOrEqualToThreshold"
+      TreatMissingData: notBreaching
       ActionsEnabled: true
       AlarmActions:
         - !Ref ScaleOutPolicy
@@ -661,6 +683,7 @@ Resources:
       EvaluationPeriods: 2
       Threshold: 10
       ComparisonOperator: "LessThanOrEqualToThreshold"
+      TreatMissingData: notBreaching
       ActionsEnabled: true
       AlarmActions:
         - !Ref ScaleInPolicy
@@ -682,7 +705,7 @@ Resources:
       DatapointsToAlarm: 1
       Threshold: 1
       ComparisonOperator: "GreaterThanOrEqualToThreshold"
-      TreatMissingData: missing
+      TreatMissingData: notBreaching
       ActionsEnabled: true
       AlarmActions:
         - !Ref ScaleOutPolicy

@@ -5,6 +5,7 @@ import com.camila.api.product.domain.Product;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * The type Product rsocket adapter.
  */
+@Slf4j
 @Controller
 @MessageMapping("products")
 class ProductRSocketAdapter {
@@ -48,7 +50,10 @@ class ProductRSocketAdapter {
   @MessageMapping("request-response-findByInternalId")
   public Mono<Product> findByInternalId(String message) throws JsonProcessingException {
     var jsonNode = objectMapper.readTree(message);
-    return productUserCase.findByInternalId(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText("0"));
+    return productUserCase.findByInternalId(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText("0"))
+      .switchIfEmpty(Mono.error(new IllegalArgumentException("Product not found")))
+      .doOnNext(product -> log.info("findByInternalId.next: {}", product))
+      .doOnError(throwable -> log.error("findByInternalId.error: {}", throwable.getMessage()));
   }
 
   /**
@@ -65,8 +70,10 @@ class ProductRSocketAdapter {
       SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText("0.001"),
       STOCK, validate(jsonNode, STOCK).get(STOCK).asText("0.999"),
       PAGE, validate(jsonNode, PAGE).get(PAGE).asText("0"),
-      SIZE, validate(jsonNode, SIZE).get(SIZE).asText("25")
-    ));
+      SIZE, validate(jsonNode, SIZE).get(SIZE).asText("25")))
+      .switchIfEmpty(Mono.error(new IllegalArgumentException("Product collection empty")))
+      .doOnNext(product -> log.info("sortByMetricsWeights.next: {}", product))
+      .doOnError(throwable -> log.error("sortByMetricsWeights.error: {}", throwable.getMessage()));
   }
 
   private static JsonNode validate(JsonNode jsonNode, String fieldName) {

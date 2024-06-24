@@ -74,6 +74,22 @@ spring:
                 maxSize: 5000
       globalcors:
         add-to-simple-url-handler-mapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders:
+              - "Origin"
+              - "Content-Type"
+              - "Accept"
+              - "Authorization"
+              - "Referer"
+            allowedMethods:
+              - POST
+              - GET
+              - OPTIONS
+      httpclient:
+        ssl:
+          use-insecure-trust-manager: true
       filter:
         request-rate-limiter:
           enabled: true
@@ -83,6 +99,8 @@ spring:
           enabled: true
         fallback-headers:
           enabled: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
   main:
     web-application-type: reactive
     lazy-initialization: true
