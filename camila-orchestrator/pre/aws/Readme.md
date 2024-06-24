@@ -11,6 +11,17 @@ Based on `AWS Cloud Provider`
 
 ## Architecture
 
+
+This **Development** architecture is designed to test core functionalities in a cost-effective manner. However, for a production environment, several enhancements would be recommended.
+
+1. **API Gateway**: Implementing an [API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-basic-concept.html) would centralize security features, eliminating the need to configure security individually for each service. This approach streamlines security management and promotes consistency.
+
+2. **VPC Endpoints**: Currently, public IP addresses are used for Elastic Container Registry (ECR) and Secret Manager access visibility. These should be replaced with [VPC Endpoints](https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endpoints.html). VPC Endpoints provide a more secure connection by keeping traffic within the VPC network.
+
+3. **VPC Peering for Databases**: Public IP addresses are also required for database access. To resolve this, configure a [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html) connection to [MongoDB Atlas](https://www.mongodb.com/docs/atlas/security-vpc-peering/) and another to [Couchbase Capella](https://www.couchbase.com/blog/vpc-peering-capella-aws/). This ensures secure and efficient communication with your databases.
+
+4. **High Availability with Multiple Availability Zones**: To enhance high availability, consider configure the load balancer to distribute traffic across multiple Availability Zones. This will ensure that services can continue to serve traffic even if one AZ becomes unavailable.
+
 <p style="text-align: center">
   <img src="images/camila-services-aws-diagram.svg" alt="camila-services-aws-diagram">
   <img src="images/application-composer-camila-product-stack.png" alt="application-composer">
@@ -96,8 +107,6 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 | [tests/http-client.env.json](tests/http-client.env.json)                                 | Security configurations for the tests                     |
 | [tests/cli-curl-client-credentials-tests.sh](tests/cli-curl-client-credentials-tests.sh) | Oauth2 (grant type: client credentials) tests via CLI     |
 | [tests/cli-curl-code_authorization-tests.sh](tests/cli-curl-code_authorization-tests.sh) | Oauth2 (grant type: code authorization) tests via CLI     |
-
-! RSocket not working with `Application Load Balancer (AWS ALB)`
 
 <p style="text-align: center">
   <img src="images/camila-product-api-pre-aws-postman-example.gif" alt="camila-product-api-pre-aws-postman-example">

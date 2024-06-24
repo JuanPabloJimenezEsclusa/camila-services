@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Cognito User Pool Stack'
+Description: 'CloudFormation template to Cognito User Pool'
 
 Resources:
   # Cognito User Pool

@@ -1,5 +1,7 @@
 package com.camila.api.product.framework.adapter.input.rsocket.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.cbor.Jackson2CborDecoder;
@@ -33,9 +35,12 @@ public class RSocketConfig {
    */
   @Bean
   RSocketStrategies rsocketStrategies() {
+    // https://cbor.io/
+    // https://www.rfc-editor.org/info/rfc7049
+    var objectMapper = new ObjectMapper(new CBORFactory());
     return RSocketStrategies.builder()
-      .encoders(encoders -> encoders.add(new Jackson2CborEncoder()))
-      .decoders(decoders -> decoders.add(new Jackson2CborDecoder()))
+      .encoders(encoders -> encoders.add(new Jackson2CborEncoder(objectMapper)))
+      .decoders(decoders -> decoders.add(new Jackson2CborDecoder(objectMapper)))
       .routeMatcher(new PathPatternRouteMatcher())
       .build();
   }

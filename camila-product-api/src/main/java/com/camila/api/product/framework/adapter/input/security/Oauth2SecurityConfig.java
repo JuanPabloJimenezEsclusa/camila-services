@@ -23,10 +23,11 @@ class Oauth2SecurityConfig {
     "/",
     "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**",
     "/actuator/**",
-    "/graphiql/**" };
+    "/graphiql/**",
+    "/rsocket/**" };
   private static final String[] PRODUCT_ENDPOINTS = {
     "/products", "/products/**",
-    "/graphql/**", "/ws/**", "/rsocket/**" };
+    "/graphql/**", "/ws/**" };
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;

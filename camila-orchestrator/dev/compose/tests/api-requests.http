@@ -1,20 +1,23 @@
-# http://localhost:8080/product-dev/api/swagger-ui.html
-GET http://localhost:8080/product-dev/api/actuator/health HTTP/2
+# http://localhost:8090/product-dev/api/swagger-ui.html
+GET http://localhost:8090/product-dev/api/actuator/health HTTP/2
 Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
-GET http://localhost:8080/product-dev/api/products/1 HTTP/2
+GET http://localhost:8090/product-dev/api/products/1 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
-GET http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
+GET http://localhost:8090/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Graphql - findById
-GRAPHQL http://localhost:8080/product-dev/api/graphql
+GRAPHQL http://localhost:8090/product-dev/api/graphql
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 query findById($internalId: ID) {
   findById(internalId: $internalId) {
@@ -23,11 +26,12 @@ query findById($internalId: ID) {
 }
 
 {
-"internalId": "100"
+"internalId": "2"
 }
 
 ### Graphql - sortProducts
-GRAPHQL http://localhost:8080/product-dev/api/graphql
+GRAPHQL http://localhost:8090/product-dev/api/graphql
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
   sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
@@ -49,8 +53,9 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 ### Websockt
-WEBSOCKET ws://localhost:8080/product-dev/api/ws/products
+WEBSOCKET ws://localhost:8090/product-dev/api/ws/products
 Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 ===
 {
@@ -70,6 +75,9 @@ Content-Type: application/json
 ### RSocket request rsponse with websocket - findByInternalId
 RSOCKET products.request-response-findByInternalId
 Host: ws://localhost:7000/product-dev/api/rsocket
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
   "internalId": "5"
@@ -78,6 +86,9 @@ Host: ws://localhost:7000/product-dev/api/rsocket
 ### RSocket request stream with websocket - SortProducts
 RSOCKET products.request-stream-sortByMetricsWeights
 Host: ws://localhost:7000/product-dev/api/rsocket
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
   "salesUnits": "0.001",

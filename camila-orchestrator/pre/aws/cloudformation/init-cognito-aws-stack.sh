@@ -32,3 +32,4 @@ aws cognito-idp admin-set-user-password \
   --password camila \
   --user-pool-id "${USER_POOL_ID}" \
   --permanent
+echo "Password set"
