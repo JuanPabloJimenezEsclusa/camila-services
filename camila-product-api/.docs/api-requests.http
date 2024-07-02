@@ -85,3 +85,22 @@ Host: ws://localhost:7000/product-dev/api/rsocket
   "page": "0",
   "size": "5"
 }
+
+### GRPC - findByInternalId
+GRPC localhost:6565/product.ProductService/GetProductByInternalId
+
+{
+  "internalId": "1000"
+}
+
+### GRPC - SortProducts
+GRPC localhost:6565/product.ProductService/SortByMetricsWeights
+
+{
+  "requestParams": {
+    "salesUnits": "0.999",
+    "stock": "0.001",
+    "page": "0",
+    "size": "10000"
+  }
+}

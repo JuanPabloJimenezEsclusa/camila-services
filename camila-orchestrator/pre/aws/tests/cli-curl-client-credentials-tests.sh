@@ -5,8 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 
 # Parameters
-CLIENT_ID="itu8cr098dves16p27spovdsc"
-CLIENT_SECRET="1m10pbji6lktap7bg5b6eltgkknmr1iqpms8m0dlsbmma66lst2f"
+CLIENT_ID="4cj70retrim9fjj4kfld99t9hf"
+CLIENT_SECRET="1e4g22ue5f2dkmlv7r8hau7k5t5mbc3o0ut9m4b4tbb9vpdh8vn2"
 SCOPES="camila/read camila/write"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 

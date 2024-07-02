@@ -5,7 +5,12 @@
 Implement:
 - Paradigm: [Reactive](https://projectreactor.io/learn)
 - Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
-- Communication: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [Rsocket](https://rsocket.io/)
+- Communication: 
+  - [Rest](https://en.wikipedia.org/wiki/REST)
+  - [Graphql](https://graphql.org/)
+  - [Websocket](https://en.wikipedia.org/wiki/WebSocket)
+  - [RSocket](https://rsocket.io/)
+  - [GRPC](https://grpc.io/docs/what-is-grpc/core-concepts/)
 
 ---
 
@@ -43,7 +48,8 @@ Implement:
  ┃     ┃ ┣ 📂rest
  ┃     ┃ ┣ 📂graphql
  ┃     ┃ ┣ 📂websocket
- ┃     ┃ ┗ 📂rsocket
+ ┃     ┃ ┣ 📂rsocket
+ ┃     ┃ ┗ 📂grpc
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo
  ┃       ┗ 📂couchbase
@@ -122,6 +128,13 @@ docker run --rm -it \
   ghcr.io/vi/websocat:nightly \
   ws://localhost:8080/product-dev/api/ws/products 
 { "method": "SORT_PRODUCTS", "salesUnits": "0.999", "stock": "0.001", "page": "0", "size": "100" }
+```
+
+### RSocket
+
+```bash
+export RSOCKET_SERVER_URL="ws://localhost:7000/product-dev/api/rsocket"
+./.docs/api-rsocket-request.sh
 ```
 
 ---

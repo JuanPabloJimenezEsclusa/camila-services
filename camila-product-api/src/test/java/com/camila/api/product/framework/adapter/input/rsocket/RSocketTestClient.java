@@ -24,8 +24,8 @@ import java.util.function.Consumer;
 @Slf4j
 public class RSocketTestClient {
   // ws://localhost:7000/product-dev/api/socket
-  // wss://poc.jpje-kops.xyz:7443/product/api/rsocket
-  private static final String API_RSOCKET = "wss://poc.jpje-kops.xyz:7443/product/api/rsocket";
+  // wss://poc.jpje-kops.xyz:7001/product/api/rsocket
+  private static final String API_RSOCKET = "wss://poc.jpje-kops.xyz:7001/product/api/rsocket";
 
   /**
    * The entry point of application.
