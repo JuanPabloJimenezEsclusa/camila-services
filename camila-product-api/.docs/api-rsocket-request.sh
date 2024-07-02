@@ -10,7 +10,10 @@ cd "$(dirname "$0")"
 # Require install: https://github.com/making/rsc
 # Be careful, this is a not maintained project
 
-RSOCKET_SERVER_URL="wss://poc.jpje-kops.xyz:7443/product/api/rsocket" # "ws://localhost:7000/product-dev/api/rsocket"
+# "wss://poc.jpje-kops.xyz:7001/product/api/rsocket"
+# "ws://localhost:7000/product-dev/api/rsocket"
+
+RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"wss://poc.jpje-kops.xyz:7001/product/api/rsocket"}"
 RSOCKET_ENDPOINT="products.request-response-findByInternalId"
 REQUEST_DATA='{ "internalId": "63132" }'
 RESPONSE_FILE=$(mktemp)
@@ -29,12 +32,7 @@ rm "${RESPONSE_FILE}"
 ###################
 
 RSOCKET_ENDPOINT="products.request-stream-sortByMetricsWeights"
-REQUEST_DATA='{
-                "salesUnits": "0.001",
-                "stock": "0.999",
-                "page": "0",
-                "size": "5"
-              }'
+REQUEST_DATA='{ "salesUnits": "0.001", "stock": "0.999", "page": "0", "size": "10" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "######################## (sortByMetricsWeights)\n01-RESPONSE_FILE: ${RESPONSE_FILE}\n######################## (sortByMetricsWeights)\n"
 

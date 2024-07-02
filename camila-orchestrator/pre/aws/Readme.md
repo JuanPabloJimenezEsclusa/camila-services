@@ -101,12 +101,12 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 
 ### Tests
 
-| File                                                                                     | Description                                               |
-|------------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| [tests/api-requests.http](tests/api-requests.http)                                       | API request tests (REST, GraphQL, Websocket, and RSocket) |
-| [tests/http-client.env.json](tests/http-client.env.json)                                 | Security configurations for the tests                     |
-| [tests/cli-curl-client-credentials-tests.sh](tests/cli-curl-client-credentials-tests.sh) | Oauth2 (grant type: client credentials) tests via CLI     |
-| [tests/cli-curl-code_authorization-tests.sh](tests/cli-curl-code_authorization-tests.sh) | Oauth2 (grant type: code authorization) tests via CLI     |
+| File                                                                                     | Description                                                 |
+|------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| [tests/api-requests.http](tests/api-requests.http)                                       | API request tests (REST, GraphQL, Websocket, RSocket, GRPC) |
+| [tests/http-client.env.json](tests/http-client.env.json)                                 | Security configurations for the tests                       |
+| [tests/cli-curl-client-credentials-tests.sh](tests/cli-curl-client-credentials-tests.sh) | Oauth2 (grant type: client credentials) tests via CLI       |
+| [tests/cli-curl-code_authorization-tests.sh](tests/cli-curl-code_authorization-tests.sh) | Oauth2 (grant type: code authorization) tests via CLI       |
 
 <p style="text-align: center">
   <img src="images/camila-product-api-pre-aws-postman-example.gif" alt="camila-product-api-pre-aws-postman-example">
