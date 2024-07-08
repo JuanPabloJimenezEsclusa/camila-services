@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package product;
+
+option optimize_for = SPEED;
+option java_multiple_files = true;
+option java_package = "com.camila.api.product.framework.adapter.input.grpc";
+option java_outer_classname = "ProductServiceOuterClass";
+
+service ProductService {
+  rpc GetProductByInternalId(ProductInternalId) returns (Product);
+  rpc SortByMetricsWeights(SortByMetricsWeightsRequest) returns (stream Product);
+}
+
+message ProductInternalId {
+  string internalId = 1;
+}
+
+message SortByMetricsWeightsRequest {
+  map<string, string> requestParams = 1;
+}
+
+message Product {
+  string id = 1;
+  string internalId = 2;
+  string name = 3;
+  string category = 4;
+  int32 salesUnits = 5;
+  map<string, int32> stock = 6;
+}

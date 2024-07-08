@@ -193,6 +193,9 @@ Resources:
     Properties:
       ClusterName: "camila-product-cluster"
       CapacityProviders: ["FARGATE", "FARGATE_SPOT"]
+      ClusterSettings:
+        - Name: "containerInsights"
+          Value: "enabled"
       DefaultCapacityProviderStrategy:
         - CapacityProvider: "FARGATE_SPOT"
           Weight: 1
@@ -231,6 +234,7 @@ Resources:
       Tags:
         - Key: "ENTORN"
           Value: "PRE"
+      # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-taskdefinition-containerdefinition.html
       ContainerDefinitions:
         - Name: "camila-product-backend"
           Image: !Ref ImageName
@@ -247,6 +251,11 @@ Resources:
               HostPort: 7000
               Protocol: "tcp"
               AppProtocol: "http"
+            - Name: "grpc-6565"
+              ContainerPort: 6565
+              HostPort: 6565
+              Protocol: "tcp"
+              AppProtocol: "grpc"
           Essential: true
           LinuxParameters:
             # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-exec.html#ecs-exec-enabling-and-using
@@ -302,6 +311,8 @@ Resources:
               Value: "true"
             - Name: spring.rsocket.server.port
               Value: "7000"
+            - Name: grpc.server.port
+              Value: "6565"
 
   # Create an ECS Service
   # https://aws.amazon.com/es/fargate/pricing/
@@ -312,6 +323,7 @@ Resources:
     DependsOn:
       - ListenerHTTP
       - ListenerRSocket
+      - ListenerGrpc
     Properties:
       ServiceName: "camila-product-service"
       Cluster: !Ref ECSCluster
@@ -330,6 +342,7 @@ Resources:
             - !Ref PrivateSubnetB
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup
+            - !Ref AdminSecurityGroup
       LoadBalancers:
         - ContainerName: "camila-product-backend"
           ContainerPort: 8080
@@ -337,6 +350,9 @@ Resources:
         - ContainerName: "camila-product-backend"
           ContainerPort: 7000
           TargetGroupArn: !Ref RSocketTargetGroup
+        - ContainerName: "camila-product-backend"
+          ContainerPort: 6565
+          TargetGroupArn: !Ref GrpcTargetGroup
       Tags:
         - Key: "ENTORN"
           Value: "PRE"
@@ -361,11 +377,18 @@ Resources:
           CidrIp: "0.0.0.0/0"
           Description: "Allow 443 HTTPS traffic"
         - IpProtocol: "tcp"
-          FromPort: 7443
-          ToPort: 7443
+          FromPort: 7001
+          ToPort: 7001
           CidrIp: "0.0.0.0/0"
-          Description: "Allow 7443 HTTPS traffic"
+          Description: "Allow 7001 Rsocket traffic"
+        - IpProtocol: "tcp"
+          FromPort: 50051
+          ToPort: 50051
+          CidrIp: "0.0.0.0/0"
+          Description: "Allow 50051 Grpc traffic"
       Tags:
+        - Key: "Name"
+          Value: "camila-product-lb-sg"
         - Key: "ENTORN"
           Value: "PRE"
 
@@ -388,6 +411,11 @@ Resources:
           ToPort: 7000
           SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
           Description: "Allow rsocket traffic from the load balancer"
+        - IpProtocol: "tcp"
+          FromPort: 6565
+          ToPort: 6565
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+          Description: "Allow grpc traffic from the load balancer"
       SecurityGroupEgress:
         - IpProtocol: "-1"
           FromPort: -1
@@ -395,6 +423,34 @@ Resources:
           CidrIp: "0.0.0.0/0"
           Description: "Allow all outbound traffic"
       Tags:
+        - Key: "Name"
+          Value: "camila-product-ecs-sg"
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  # Security Group for Admin Tasks
+  AdminSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Description: "Security group for the Admin tasks"
+    Properties:
+      GroupDescription: "Allow traffic to Admin tasks"
+      VpcId: !Ref VPC
+      GroupName: "camila-product-admin-sg"
+      SecurityGroupIngress:
+        - IpProtocol: "icmp"
+          FromPort: 8
+          ToPort: -1
+          CidrIp: "0.0.0.0/32"
+          Description: "Allow ping traffic"
+      SecurityGroupEgress:
+        - IpProtocol: "-1"
+          FromPort: -1
+          ToPort: -1
+          CidrIp: "0.0.0.0/0"
+          Description: "Allow all outbound traffic"
+      Tags:
+        - Key: "Name"
+          Value: "camila-product-admin-sg"
         - Key: "ENTORN"
           Value: "PRE"
 
@@ -462,6 +518,31 @@ Resources:
         - Key: "ENTORN"
           Value: "PRE"
 
+  # Create a Target Group for GRPC traffic
+  GrpcTargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Description: "Target Group for GRPC traffic"
+    Properties:
+      Name: "camila-product-grpc"
+      VpcId: !Ref VPC
+      Protocol: "HTTP"
+      ProtocolVersion: "GRPC" # This is a key to make it work!
+      Port: 6565
+      HealthCheckEnabled: true
+      HealthCheckProtocol: "HTTP"
+      HealthCheckPort: "6565"
+      HealthCheckPath: "/"
+      HealthCheckTimeoutSeconds: 60
+      HealthCheckIntervalSeconds: 300
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 2
+      Matcher:
+        GrpcCode: "0-20"
+      TargetType: "ip"
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
   # Request a certificate from ACM
   # https://docs.aws.amazon.com/acm/latest/userguide/acm-services.html
   Certificate:
@@ -515,7 +596,21 @@ Resources:
         - Type: "forward"
           TargetGroupArn: !Ref RSocketTargetGroup
       LoadBalancerArn: !Ref LoadBalancer
-      Port: 7443
+      Port: 7001
+      Protocol: HTTPS
+      Certificates:
+        - CertificateArn: !Ref Certificate
+
+  # Create a Listener for the Load Balancer (Grpc)
+  ListenerGrpc:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Description: "Listener for the Load Balancer (Grpc)"
+    Properties:
+      DefaultActions:
+        - Type: "forward"
+          TargetGroupArn: !Ref GrpcTargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 50051
       Protocol: HTTPS
       Certificates:
         - CertificateArn: !Ref Certificate
@@ -549,6 +644,7 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:DescribeLogStreams"
                   - "logs:PutLogEvents"
+                  - "cloudwatch:PutMetricData"
                   - "secretsmanager:GetSecretValue"
                 Resource: "*"
       Tags:
@@ -599,6 +695,7 @@ Resources:
                   - "cloudwatch:SetAlarmState"
                   - "cloudwatch:DeleteAlarms"
                   - "cloudwatch:PutMetricAlarm"
+                  - "cloudwatch:PutMetricData"
                   - "ecs:CreateService"
                   - "ecs:UpdateService"
                   - "ecs:DescribeServices"

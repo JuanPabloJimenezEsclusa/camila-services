@@ -124,6 +124,19 @@ server:
   port: ${PORT:8080}
   shutdown: immediate
 
+grpc:
+  # this client only is util to testing
+  client:
+    product-service:
+      address: static://localhost:6565
+    GLOBAL:
+      negotiation-type: plaintext
+  server:
+    port: 0 # by default random port
+    shutdown-grace-period: 0
+    health-service-enabled: true
+    reflection-service-enabled: true
+
 ---
 ###### Local|Dev properties ######
 spring:
@@ -135,6 +148,10 @@ spring:
   rsocket:
     server:
       port: 7000
+
+grpc:
+  server:
+    port: 6565
 
 management:
   endpoint:
@@ -164,14 +181,21 @@ chaos:
       memory-active: true
       cpu-active: true
 
+debug: false
 logging:
   level:
-    org.springframework.boot: DEBUG
-    org.springframework: DEBUG
-    org.springframework.data: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.web.reactive.socket: DEBUG
+    org.hibernate.validator: ERROR
+    com.netflix.discovery: ERROR
+    org.springframework.boot: ERROR
+    org.springframework: ERROR
+    org.springframework.data: ERROR
+    org.springframework.security: ERROR
+    org.springframework.security.oauth2: ERROR
+    org.springframework.web.reactive.socket: ERROR
+    org.springframework.context: ERROR
+    com.couchbase.client: ERROR
+    net.devh.boot.grpc.server: ERROR
+    io.grpc.netty: ERROR
 
 ---
 ###### Disable config|discovery feature by default ######
@@ -248,11 +272,12 @@ eureka:
       enabled: true
   instance:
     preferIpAddress: true
-    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}:${random.int(10,99)}
+    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}:${random.int(0,9)}
     statusPageUrlPath: ${spring.webflux.base-path}/actuator/info
     healthCheckUrlPath: ${spring.webflux.base-path}/actuator/health
     async-client-initialization: true
     nonSecurePortEnabled: true
+    non-secure-port: ${server.port}
     metadata-map:
       weight:  ${random.int(1,10)}
       startup: ${random.int}
@@ -317,6 +342,11 @@ spring:
         jwt:
           issuer-uri: "${SECURITY_ISSUER_URI}"
 
+# Set GRPC port
+grpc:
+  server:
+    port: 6565
+
 # Disable all management endpoints
 management:
   tracing:
@@ -340,8 +370,14 @@ openapi:
 # Enable logging for all levels
 logging:
   level:
-    org.hibernate.validator: error
-    org.springframework: error
-    org.springframework.web: error
-    org.springframework.data: error
-    org.springframework.boot.web.embedded.netty: info
+    reactor: ERROR
+    org.hibernate.validator: ERROR
+    org.springframework: ERROR
+    org.springframework.web: ERROR
+    org.springframework.data: ERROR
+    org.springframework.context: ERROR
+    com.couchbase.client: ERROR
+    org.springframework.boot: ERROR
+    org.springframework.boot.web.embedded.netty: INFO
+    net.devh.boot.grpc.server: ERROR
+    io.grpc.netty: ERROR

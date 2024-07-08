@@ -372,10 +372,10 @@ resource "aws_security_group" "lb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 7443
-    to_port     = 7443
+    from_port   = 7001
+    to_port     = 7001
     protocol    = "tcp"
-    description = "Allow 7443 RSocket traffic"
+    description = "Allow 7001 RSocket traffic"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -548,7 +548,7 @@ resource "aws_lb_listener_certificate" "https_listener_certificate" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener
 resource "aws_lb_listener" "rsocket" {
   load_balancer_arn = aws_lb.main.arn
-  port              = 7443
+  port              = 7001
   protocol          = "HTTPS"
   certificate_arn   = aws_acm_certificate.main.arn
 

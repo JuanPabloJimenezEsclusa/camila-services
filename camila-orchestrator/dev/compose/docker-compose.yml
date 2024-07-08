@@ -258,8 +258,12 @@ services:
           cpus: "1"
     ports:
       - "8080-8081:8080"
+      - "7000-7001:7000"
+      - "6565-6566:6565"
     expose:
       - 8080-8081
+      - 7000-7001
+      - 6565-6566
     depends_on:
       config:
         condition: service_healthy
