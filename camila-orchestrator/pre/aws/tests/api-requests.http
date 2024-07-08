@@ -1,25 +1,29 @@
 ### Rest - Actuator
 # https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-GET https://poc.jpje-kops.xyz/product/api/actuator/health HTTP/2
+#GET https://poc.jpje-kops.xyz/product/api/actuator/health HTTP/2
+GET https://jpje.net/actuator/health
 Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
 # https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-GET https://poc.jpje-kops.xyz/product/api/products/99999 HTTP/2
+#GET https://poc.jpje-kops.xyz/product/api/products/99999 HTTP/2
+GET https://jpje.net/products/99999 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
 # https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+# GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Graphql - findById
-GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
+#GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
+GRAPHQL https://jpje.net/graphql
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 query findById($internalId: ID) {
@@ -33,7 +37,8 @@ query findById($internalId: ID) {
 }
 
 ### Graphql - sortProducts
-GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
+#GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
+GRAPHQL https://jpje.net/graphql
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
@@ -48,8 +53,8 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 {
-  "salesUnits": 0.999,
-  "stock": 0.001,
+  "salesUnits": 0.001,
+  "stock": 0.999,
   "page": 0,
   "size": 1000,
   "withDetails": false

@@ -24,6 +24,10 @@ resource "aws_cognito_user_pool" "camila_services_pool" {
   admin_create_user_config {
     allow_admin_create_user_only = false
   }
+
+  lifecycle {
+    ignore_changes = [schema]
+  }
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group
@@ -58,6 +62,7 @@ resource "aws_cognito_user_pool_client" "camila_client" {
   enable_token_revocation                       = true
   enable_propagate_additional_user_context_data = true
   supported_identity_providers                  = ["COGNITO"]
+  depends_on                                    = [aws_cognito_resource_server.main]
 
   explicit_auth_flows = [
     "ADMIN_NO_SRP_AUTH",
@@ -76,12 +81,12 @@ resource "aws_cognito_user_pool_client" "camila_client" {
   ]
 
   callback_urls = [
-    "https://poc.jpje-kops.xyz/callback",
+    "https://${var.domain_name}/callback",
     "https://oauth.pstmn.io/v1/callback"
   ]
 
   logout_urls = [
-    "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"
+    "https://${var.camila-realm}.auth.${data.aws_region.current.name}.amazoncognito.com/logout"
   ]
 }
 
@@ -96,6 +101,7 @@ resource "aws_cognito_user_pool_client" "camila_client_credentials" {
   prevent_user_existence_errors                 = "ENABLED"
   enable_token_revocation                       = true
   enable_propagate_additional_user_context_data = true
+  depends_on                                    = [aws_cognito_resource_server.main]
 
   explicit_auth_flows = [
     "ADMIN_NO_SRP_AUTH",
@@ -111,12 +117,12 @@ resource "aws_cognito_user_pool_client" "camila_client_credentials" {
   ]
 
   callback_urls = [
-    "https://poc.jpje-kops.xyz/callback",
+    "https://${var.domain_name}/callback",
     "https://oauth.pstmn.io/v1/callback"
   ]
 
   logout_urls = [
-    "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"
+    "https://${var.camila-realm}.auth.${data.aws_region.current.name}.amazoncognito.com/logout"
   ]
 }
 
@@ -131,6 +137,7 @@ resource "aws_cognito_user" "camila_user" {
   user_pool_id             = aws_cognito_user_pool.camila_services_pool.id
   username                 = var.camila_user
   desired_delivery_mediums = ["EMAIL"]
+  temporary_password       = "camila"
 
   attributes = {
     email          = var.camila_user

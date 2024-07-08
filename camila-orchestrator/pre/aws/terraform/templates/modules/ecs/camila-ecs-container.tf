@@ -1,13 +1,4 @@
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity
-data "aws_caller_identity" "current" {}
-
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones
-data "aws_availability_zones" "available" {}
-
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region
-data "aws_region" "current" {}
-
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret
 resource "aws_secretsmanager_secret" "couchbase_password" {
   name                           = "CouchbasePassword"
@@ -132,12 +123,36 @@ resource "aws_route_table" "public" {
   }
 }
 
+# It's necessary to communicate with databases
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip
+resource "aws_eip" "nat" {
+  domain     = "vpc"
+  depends_on = [aws_internet_gateway.main]
+
+  tags = {
+    Name   = "nat-eip"
+    ENTORN = "PRE"
+  }
+}
+
+# It's necessary to communicate with databases
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public_a.id
+
+  tags = {
+    Name   = "main-nat-gateway"
+    ENTORN = "PRE"
+  }
+}
+
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.main.id
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.main.id
   }
 
   tags = {
@@ -165,6 +180,35 @@ resource "aws_route_table_association" "private_a" {
 resource "aws_route_table_association" "private_b" {
   subnet_id      = aws_subnet.private_b.id
   route_table_id = aws_route_table.private.id
+}
+
+# it's necessary to see the image into the ECR private repository
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id             = aws_vpc.main.id
+  service_name       = "com.amazonaws.${data.aws_region.current.name}.ecr.api"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+  security_group_ids = [aws_security_group.ecs_service_sg.id, aws_security_group.lb_sg.id]
+
+  tags = {
+    Name   = "ecr-api-endpoint"
+    ENTORN = "PRE"
+  }
+}
+
+# it's necessary to see the image into the ECR private repository
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id             = aws_vpc.main.id
+  service_name       = "com.amazonaws.${data.aws_region.current.name}.ecr.dkr"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = [aws_subnet.private_a.id, aws_subnet.private_b.id]
+  security_group_ids = [aws_security_group.ecs_service_sg.id, aws_security_group.lb_sg.id]
+
+  tags = {
+    Name   = "ecr-dkr-endpoint"
+    ENTORN = "PRE"
+  }
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster
@@ -219,16 +263,30 @@ resource "aws_ecs_task_definition" "main" {
     cpu       = 512
     memory    = 1024
     essential = true
+    linuxParameters = {
+      initProcessEnabled : true
+    }
     portMappings = [
       {
+        name          = "http-8080"
         containerPort = 8080
         hostPort      = 8080
         protocol      = "tcp"
+        appProtocol   = "http"
       },
       {
+        name          = "rsocket-7000"
         containerPort = 7000
         hostPort      = 7000
         protocol      = "tcp"
+        appProtocol   = "http"
+      },
+      {
+        name          = "grpc-6565"
+        containerPort = 6565
+        hostPort      = 6565
+        protocol      = "tcp"
+        appProtocol   = "grpc"
       }
     ]
     logConfiguration = {
@@ -250,15 +308,16 @@ resource "aws_ecs_task_definition" "main" {
       { name = "TIME_ZONE", value = "UTC" },
       { name = "JVM_OPTIONS", value = "-Xms512m -Xmx1024m" },
       { name = "SPRING_PROFILES_ACTIVE", value = "pre" },
-      { name = "SERVER_URL", value = "https://poc.jpje-kops.xyz" },
-      { name = "SECURITY_ISSUER_URI", value = "https://cognito-idp.eu-west-1.amazonaws.com/${var.user_pool_id}" },
+      { name = "SERVER_URL", value = "https://${var.domain_name}" },
+      { name = "SECURITY_ISSUER_URI", value = "https://cognito-idp.${data.aws_region.current.name}.amazonaws.com/${var.user_pool_id}" },
       { name = "SECURITY_DOMAIN_URI", value = "https://camila-realm.auth.${data.aws_region.current.name}.amazoncognito.com" },
       { name = "spring.application.repository.technology", value = var.repository_technology },
       { name = "spring.couchbase.connection-string", value = var.couchbase_connection },
       { name = "spring.couchbase.username", value = var.couchbase_username },
       { name = "spring.couchbase.env.ssl.enabled", value = "true" },
       { name = "spring.data.mongodb.ssl.enabled", value = "true" },
-      { name = "spring.rsocket.server.port", value = "7000" }
+      { name = "spring.rsocket.server.port", value = "7000" },
+      { name = "grpc.server.port", value = "6565" }
     ]
   }])
 
@@ -296,11 +355,15 @@ resource "aws_iam_policy" "ecs_task_execution_policy" {
       {
         Effect = "Allow"
         Action = [
+          "ecs:ExecuteCommand",
+          "ecs:DescribeTasks",
           "ecr:GetDownloadUrlForLayer",
           "ecr:BatchGetImage",
           "ecr:GetAuthorizationToken",
           "logs:CreateLogStream",
+          "logs:DescribeLogStreams",
           "logs:PutLogEvents",
+          "cloudwatch:PutMetricData",
           "secretsmanager:GetSecretValue"
         ]
         Resource = "*"
@@ -316,7 +379,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy_attachment"
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service
-resource "aws_ecs_service" "camila-product-backend" {
+resource "aws_ecs_service" "camila_product_backend" {
   name                              = "camila-product-backend-service"
   cluster                           = aws_ecs_cluster.main.id
   task_definition                   = aws_ecs_task_definition.main.arn
@@ -327,18 +390,24 @@ resource "aws_ecs_service" "camila-product-backend" {
   network_configuration {
     subnets          = [aws_subnet.private_a.id, aws_subnet.private_b.id]
     security_groups  = [aws_security_group.ecs_service_sg.id]
-    assign_public_ip = true
+    # ECS service and its containers won't be available to internet
+    assign_public_ip = false
   }
 
   load_balancer {
     container_name   = "camila-product-backend"
     container_port   = 8080
-    target_group_arn = aws_lb_target_group.web-target-group.arn
+    target_group_arn = aws_lb_target_group.web_target_group.arn
   }
   load_balancer {
     container_name   = "camila-product-backend"
     container_port   = 7000
-    target_group_arn = aws_lb_target_group.rsocket-target-group.arn
+    target_group_arn = aws_lb_target_group.rsocket_target_group.arn
+  }
+  load_balancer {
+    container_name   = "camila-product-backend"
+    container_port   = 6565
+    target_group_arn = aws_lb_target_group.grpc_target_group.arn
   }
 
   tags = {
@@ -347,8 +416,13 @@ resource "aws_ecs_service" "camila-product-backend" {
 
   depends_on = [
     aws_lb_listener.http,
-    aws_lb_listener.rsocket
+    aws_lb_listener.rsocket,
+    aws_lb_listener.grpc
   ]
+
+  lifecycle {
+    ignore_changes = [desired_count]
+  }
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
@@ -378,15 +452,23 @@ resource "aws_security_group" "lb_sg" {
     description = "Allow 7001 RSocket traffic"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 50051
+    to_port     = 50051
+    protocol    = "tcp"
+    description = "Allow 50051 GRPC traffic"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
+    Name   = "camila-product-lb-sg"
     ENTORN = "PRE"
   }
 }
@@ -411,6 +493,13 @@ resource "aws_security_group" "ecs_service_sg" {
     security_groups = [aws_security_group.lb_sg.id]
     description     = "Allow rsocket traffic from the load balancer"
   }
+  ingress {
+    from_port       = 6565
+    to_port         = 6565
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lb_sg.id]
+    description     = "Allow grpc traffic from the load balancer"
+  }
 
   egress {
     from_port   = 0
@@ -421,6 +510,7 @@ resource "aws_security_group" "ecs_service_sg" {
   }
 
   tags = {
+    Name   = "camila-product-ecs-sg"
     ENTORN = "PRE"
   }
 }
@@ -441,7 +531,7 @@ resource "aws_lb" "main" {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group
-resource "aws_lb_target_group" "web-target-group" {
+resource "aws_lb_target_group" "web_target_group" {
   name        = "web-target-group"
   port        = 8080
   protocol    = "HTTP"
@@ -464,7 +554,7 @@ resource "aws_lb_target_group" "web-target-group" {
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group
-resource "aws_lb_target_group" "rsocket-target-group" {
+resource "aws_lb_target_group" "rsocket_target_group" {
   name        = "rsocket-target-group"
   port        = 7000
   protocol    = "HTTP"
@@ -486,6 +576,31 @@ resource "aws_lb_target_group" "rsocket-target-group" {
   }
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group
+resource "aws_lb_target_group" "grpc_target_group" {
+  name             = "grpc-target-group"
+  port             = 6565
+  protocol         = "HTTP"
+  protocol_version = "GRPC" # This is a key to make it work!
+  vpc_id           = aws_vpc.main.id
+  target_type      = "ip"
+  health_check {
+    path                = "/"
+    port                = 6565
+    protocol            = "HTTP"
+    interval            = 60
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 3
+    matcher             = "0-20"
+  }
+
+  tags = {
+    Name   = "camila-product-tg"
+    ENTORN = "PRE"
+  }
+}
+
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate
 resource "aws_acm_certificate" "main" {
   domain_name       = var.domain_name
@@ -498,6 +613,31 @@ resource "aws_acm_certificate" "main" {
   tags = {
     ENTORN = "PRE"
   }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record
+resource "aws_route53_record" "cert_validation" {
+  for_each = {
+    for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      type   = dvo.resource_record_type
+      record = dvo.resource_record_value
+    }
+  }
+
+  zone_id = var.hosted_zone_id
+  name    = each.value.name
+  type    = each.value.type
+  records = [each.value.record]
+  ttl     = 60
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation
+resource "aws_acm_certificate_validation" "cert_validation" {
+  certificate_arn = aws_acm_certificate.main.arn
+  validation_record_fqdns = [
+    for record in aws_route53_record.cert_validation : record.fqdn
+  ]
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener
@@ -530,7 +670,7 @@ resource "aws_lb_listener" "https" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.web-target-group.arn
+    target_group_arn = aws_lb_target_group.web_target_group.arn
   }
 
   tags = {
@@ -554,7 +694,7 @@ resource "aws_lb_listener" "rsocket" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.rsocket-target-group.arn
+    target_group_arn = aws_lb_target_group.rsocket_target_group.arn
   }
 
   tags = {
@@ -566,6 +706,30 @@ resource "aws_lb_listener" "rsocket" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_certificate
 resource "aws_lb_listener_certificate" "rsocket_listener_certificate" {
   listener_arn    = aws_lb_listener.rsocket.arn
+  certificate_arn = aws_acm_certificate.main.arn
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener
+resource "aws_lb_listener" "grpc" {
+  load_balancer_arn = aws_lb.main.arn
+  port              = 50051
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate.main.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.grpc_target_group.arn
+  }
+
+  tags = {
+    Name   = "camila-product-lb-grpc-listener"
+    ENTORN = "PRE"
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_certificate
+resource "aws_lb_listener_certificate" "grpc_listener_certificate" {
+  listener_arn    = aws_lb_listener.grpc.arn
   certificate_arn = aws_acm_certificate.main.arn
 }
 
@@ -612,12 +776,17 @@ resource "aws_iam_policy" "task_autoscaling_role_policy" {
         Effect = "Allow"
         Action = [
           "application-autoscaling:*",
-          "cloudwatch:DescribeAlarms",
-          "cloudwatch:PutMetricAlarm",
-          "cloudwatch:GetMetricStatistics",
           "cloudwatch:ListMetrics",
+          "cloudwatch:DescribeAlarms",
+          "cloudwatch:GetMetricStatistics",
+          "cloudwatch:SetAlarmState",
+          "cloudwatch:DeleteAlarms",
+          "cloudwatch:PutMetricAlarm",
+          "cloudwatch:PutMetricData",
+          "ecs:CreateService",
           "ecs:UpdateService",
-          "ecs:DescribeServices"
+          "ecs:DescribeServices",
+          "ecs:DescribeClusters"
         ]
         Resource = "*"
       }
@@ -635,10 +804,14 @@ resource "aws_iam_role_policy_attachment" "task_autoscaling_role_policy_attachme
 resource "aws_appautoscaling_target" "ecs_service" {
   max_capacity       = 2
   min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.camila-product-backend.name}"
+  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.camila_product_backend.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
   role_arn           = aws_iam_role.task_autoscaling_role.arn
+
+  lifecycle {
+    ignore_changes = [role_arn]
+  }
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appautoscaling_policy
@@ -692,7 +865,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   actions_enabled     = "true"
   dimensions = {
     ClusterName = aws_ecs_cluster.main.name
-    ServiceName = aws_ecs_service.camila-product-backend.name
+    ServiceName = aws_ecs_service.camila_product_backend.name
   }
   alarm_actions = [aws_appautoscaling_policy.scale_up.arn]
 }
@@ -711,7 +884,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_low" {
   actions_enabled     = "true"
   dimensions = {
     ClusterName = aws_ecs_cluster.main.name
-    ServiceName = aws_ecs_service.camila-product-backend.name
+    ServiceName = aws_ecs_service.camila_product_backend.name
   }
   alarm_actions = [aws_appautoscaling_policy.scale_down.arn]
 }
