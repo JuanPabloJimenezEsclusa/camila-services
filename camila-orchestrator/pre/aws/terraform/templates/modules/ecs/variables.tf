@@ -4,8 +4,8 @@ variable "hosted_zone_id" {
 }
 
 variable "domain_name" {
+  type        = string
   description = "The domain name for the Route 53 record set"
-  default     = "poc.jpje-kops.xyz"
 }
 
 variable "image_name" {

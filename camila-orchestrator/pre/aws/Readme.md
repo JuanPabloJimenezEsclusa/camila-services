@@ -2,32 +2,39 @@
 
 Based on `AWS Cloud Provider`
 
+> It is recommended to use dark mode UI to read this!
+
 ## Prerequisites
 
 * Docker >= 24.0.6
 * AWS CLI >= 2.15.52
 * JQ >= 1.7
-* Terraform >= 1.8.5
+* Terraform >= 1.9.1
 
 ## Architecture
 
-
-This **Development** architecture is designed to test core functionalities in a cost-effective manner. However, for a production environment, several enhancements would be recommended.
-
-1. **API Gateway**: Implementing an [API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-basic-concept.html) would centralize security features, eliminating the need to configure security individually for each service. This approach streamlines security management and promotes consistency.
-
-2. **VPC Endpoints**: Currently, public IP addresses are used for Elastic Container Registry (ECR) and Secret Manager access visibility. These should be replaced with [VPC Endpoints](https://docs.aws.amazon.com/whitepapers/latest/aws-privatelink/what-are-vpc-endpoints.html). VPC Endpoints provide a more secure connection by keeping traffic within the VPC network.
-
-3. **VPC Peering for Databases**: Public IP addresses are also required for database access. To resolve this, configure a [VPC Peering](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-peering.html) connection to [MongoDB Atlas](https://www.mongodb.com/docs/atlas/security-vpc-peering/) and another to [Couchbase Capella](https://www.couchbase.com/blog/vpc-peering-capella-aws/). This ensures secure and efficient communication with your databases.
-
-4. **High Availability with Multiple Availability Zones**: To enhance high availability, consider configure the load balancer to distribute traffic across multiple Availability Zones. This will ensure that services can continue to serve traffic even if one AZ becomes unavailable.
-
 <p style="text-align: center">
-  <img src="images/camila-services-aws-diagram.svg" alt="camila-services-aws-diagram">
-  <img src="images/application-composer-camila-product-stack.png" alt="application-composer">
+
+  <h4>With AWS Cloud Formation</h4>
+  Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
+
+  <img src="images/camila-services-aws-cf-diagram.svg" alt="camila-services-aws-cf-diagram" />
+  <img src="images/application-composer-camila-product-stack.png" alt="application-composer" />
+
+  <h4>With Terraform</h4>
+  Deployment covering some advanced architectural options. Contains AWS components that do not have a free tier. The following elements are incorporated:
+
+  1. VPC Endpoint, to enable communication between the container service (ECS) and the image registry (ECR) without requiring a public IP.
+  2. NAT Gateway, to allow outbound communication with databases located in another virtual network, while keeping containers in a private subnet without public IPs.
+  3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
+
+  <img src="images/camila-services-aws-tf-diagram.svg" alt="camila-services-aws-tf-diagram" />
+
 </p>
 
 ## Operations
+
+❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
 ### _AWS Cloud formation_
 
@@ -42,8 +49,6 @@ This **Development** architecture is designed to test core functionalities in a 
 | [delete-aws-stack.sh](cloudformation/delete-aws-stack.sh)                                             | Script to delete infrastructure using AWS CLI                       |
 
 ---
-
-❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
 > The databases are configured as SaaS (Mongo Atlas and Couchbase Capella)
 
@@ -71,14 +76,16 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 
 ### _Terraform_
 
-| File                                                                                                               | Description                                                         |
-|--------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
-| [templates/main.tf](terraform/templates/main.tf)                                                                   | Base Terraform template                                             |
-| [templates/modules/cognito/camila-cognito-oauth2.tf](terraform/templates/modules/cognito/camila-cognito-oauth2.tf) | Infrastructure deployment template for an Oauth2 service in AWS     |
-| [templates/modules/ecs/camila-ecs-container.tf](terraform/templates/modules/ecs/camila-ecs-container.tf)           | Infrastructure deployment template for container deployments in AWS |
-| [init-aws-plan.sh](terraform/init-aws-plan.sh)                                                                     | Script to initialize Terraform and validate the templates           |
-| [apply-aws-plan.sh](terraform/apply-aws-plan.sh)                                                                   | Script to deploy the infrastructure using Terraform                 |
-| [destroy-aws-plan.sh](terraform/destroy-aws-plan.sh)                                                               | Script to destroy the infrastructure using Terraform CLI            |
+| File                                                                                                               | Description                                                            |
+|--------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| [templates/main.tf](terraform/templates/main.tf)                                                                   | Base Terraform template                                                |
+| [templates/modules/cognito/camila-cognito-oauth2.tf](terraform/templates/modules/cognito/camila-cognito-oauth2.tf) | Infrastructure deployment template for an Oauth2 service in AWS        |
+| [templates/modules/ecs/camila-ecs-container.tf](terraform/templates/modules/ecs/camila-ecs-container.tf)           | Infrastructure deployment template for container deployments in AWS    |
+| [templates/modules/gateway/camila-gateway.tf](terraform/templates/modules/gateway/camila-gateway.tf)               | Infrastructure deployment template for gateway service in AWS          |
+| [templates/modules/gateway/camila-waf.tf](terraform/templates/modules/waf/camila-waf.tf)                           | Infrastructure deployment template for Web Application Firewall in AWS |
+| [init-aws-plan.sh](terraform/init-aws-plan.sh)                                                                     | Script to initialize Terraform and validate the templates              |
+| [apply-aws-plan.sh](terraform/apply-aws-plan.sh)                                                                   | Script to deploy the infrastructure using Terraform                    |
+| [destroy-aws-plan.sh](terraform/destroy-aws-plan.sh)                                                               | Script to destroy the infrastructure using Terraform CLI               |
 
 ```bash
 # Init and validate plan
@@ -146,12 +153,17 @@ docker run --rm -it \
   * [AWS CloudFormation](https://eu-west-1.console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks?filteringText=&filteringStatus=active&viewNested=true)
   * [AWS ECS Cluster](https://eu-west-1.console.aws.amazon.com/ecs/v2/clusters/camila-product-cluster/services/camila-product-service/health?region=eu-west-1) 💰
   * [AWS Certificate Manager (ACM)](https://eu-west-1.console.aws.amazon.com/acm/home?region=eu-west-1#/certificates/list)
-  * [AWS VPC](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#vpcs:)
+  * [AWS VPC](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#vpcs)
   * [AWS ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/546053716955/camila-product-api?region=eu-west-1)
-  * [AWS EC2 Load Balancer](https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#LoadBalancers:) 💰
+  * [AWS EC2 Load Balancer](https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#LoadBalancers) 💰
   * [AWS CloudWatch](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#logsV2:log-groups)
   * [AWS Secret Manager](https://eu-west-1.console.aws.amazon.com/secretsmanager/listsecrets?region=eu-west-1) 💰
+  * [AWS VPC Endpoint](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#Endpoints) 💰💰
+  * [Elastic IP](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#Addresses) 💰💰
+  * [AWS NAT Gateway](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#NatGateways) 💰💰💰
+  * [AWS API Gateway](https://eu-west-1.console.aws.amazon.com/apigateway/main/apis?region=eu-west-1) 💰💰💰
+  * [AWS WAF](https://us-east-1.console.aws.amazon.com/wafv2/homev2/web-acls?region=eu-west-1) 💰
 
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview)
-  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) 💰 (only 30+ days free tier)
+  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) 💰💰 (only 30+ days free tier)

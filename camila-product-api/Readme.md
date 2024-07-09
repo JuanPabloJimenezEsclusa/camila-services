@@ -2,6 +2,8 @@
 
 > Microservice example
 
+> It is recommended to use dark mode UI to read this!
+
 Implement:
 - Paradigm: [Reactive](https://projectreactor.io/learn)
 - Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)

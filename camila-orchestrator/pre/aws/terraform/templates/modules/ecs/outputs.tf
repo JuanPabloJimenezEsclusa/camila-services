@@ -20,12 +20,17 @@ output "ecs_cluster_id" {
 
 output "ecs_service_id" {
   description = "The ID of the ECS service"
-  value       = aws_ecs_service.camila-product-backend.id
+  value       = aws_ecs_service.camila_product_backend.id
 }
 
 output "load_balancer_dns" {
   description = "The DNS name of the load balancer"
   value       = aws_lb.main.dns_name
+}
+
+output "load_balancer_arn" {
+  description = "The ARN of the load balancer"
+  value       = aws_lb.main.arn
 }
 
 output "route53_record_name" {
