@@ -3,6 +3,11 @@ output "user_pool_id" {
   value       = aws_cognito_user_pool.camila_services_pool.id
 }
 
+output "user_pool_arn" {
+  description = "User Pool arn"
+  value       = aws_cognito_user_pool.camila_services_pool.arn
+}
+
 output "user_pool_client_id" {
   description = "User Pool Client ID"
   value       = aws_cognito_user_pool_client.camila_client.id

@@ -3,6 +3,11 @@ variable "domain_name" {
   description = "The domain name for the Route 53 record set"
 }
 
+variable "user_pool_arn" {
+  type        = string
+  description = "The ARN for the user pool"
+}
+
 variable "gateway_hosted_zone_id" {
   type        = string
   description = "The Route 53 hosted zone ID for the gateway domain name"

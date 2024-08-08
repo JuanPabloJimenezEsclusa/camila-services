@@ -65,11 +65,11 @@ resource "aws_cognito_user_pool_client" "camila_client" {
   depends_on                                    = [aws_cognito_resource_server.main]
 
   explicit_auth_flows = [
-    "ADMIN_NO_SRP_AUTH",
-    "CUSTOM_AUTH_FLOW_ONLY",
-    "USER_PASSWORD_AUTH"
-    # "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH"
-    #  are not supported by terraform
+    "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+    "ALLOW_CUSTOM_AUTH",
+    "ALLOW_USER_PASSWORD_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH"
   ]
 
   allowed_oauth_scopes = [
@@ -107,8 +107,6 @@ resource "aws_cognito_user_pool_client" "camila_client_credentials" {
     "ADMIN_NO_SRP_AUTH",
     "CUSTOM_AUTH_FLOW_ONLY",
     "USER_PASSWORD_AUTH"
-    # "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH"
-    #  are not supported by terraform
   ]
 
   allowed_oauth_scopes = [

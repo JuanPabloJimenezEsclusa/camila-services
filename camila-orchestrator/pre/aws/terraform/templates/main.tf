@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.9.1"
+  required_version = ">= 1.9.2"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.55.0"
+      version = "~> 5.59.0"
     }
   }
 }
@@ -59,11 +59,12 @@ module "camila_ecs_module" {
 }
 
 module "camila_gateway_module" {
-  source      = "./modules/gateway"
-  domain_name = var.domain_name
+  source        = "./modules/gateway"
+  domain_name   = var.domain_name
+  user_pool_arn = module.camila_cognito_module.user_pool_arn
 }
 
 module "camila-rds-module" {
-  source = "./modules/waf"
+  source                 = "./modules/waf"
   camila_api_gateway_arn = module.camila_gateway_module.camila_aws_api_gateway_stage_arn
 }

@@ -1,0 +1,318 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: camila-product-api-ns
+spec: {}
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: camila-product-api-ns-quota
+  namespace: camila-product-api-ns
+spec:
+  hard:
+    limits.cpu: "8"
+    limits.memory: 8192Mi
+    pods: "10"
+    requests.cpu: "8"
+    requests.memory: 8192Mi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: camila-product-api-creds
+  namespace: camila-product-api-ns
+data:
+  mongo_uri: "<mongo-uri>"
+  couchbase_password: "<couchbase-password>"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: camila-product-api-config
+  namespace: camila-product-api-ns
+data:
+  COUCHBASE_CONNECTION: "<couchbase-connection>"
+  COUCHBASE_USERNAME: "<couchbase-username>"
+  COUCHBASE_SSL: "true"
+  SPRING_PROFILES_ACTIVE: "int"
+  LANG: "en_US.utf8"
+  LANGUAGE: "en_US.utf8"
+  LC_ALL: "en_US.utf8"
+  TIME_ZONE: "UTC"
+  JVM_OPTIONS: "-Xms512m -Xmx1024m"
+  JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+  REPOSITORY_TECHNOLOGY: "mongo"
+  SERVER_URL: "https://poc.jpje-kops.xyz"
+  MONGO_SSL: "true"
+  RSOCKET_PORT: "7000"
+  GRPC_PORT: "6565"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: camila-product-api
+  name: camila-product-api
+  namespace: camila-product-api-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: camila-product-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  minReadySeconds: 0
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: camila-product-api
+    spec:
+      containers:
+      - image: "546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0"
+        name: camila-product-api
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1024Mi
+            ephemeral-storage: "1Gi"
+          requests:
+            cpu: "1"
+            memory: 1024Mi
+        imagePullPolicy: IfNotPresent # change to Always if you need to update the image
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        env:
+        - name: spring.data.mongodb.uri
+          valueFrom:
+            secretKeyRef:
+              name: camila-product-api-creds
+              key: mongo_uri
+        - name: spring.couchbase.password
+          valueFrom:
+            secretKeyRef:
+              name: camila-product-api-creds
+              key: couchbase_password
+        - name: spring.couchbase.connection-string
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: COUCHBASE_CONNECTION
+        - name: spring.couchbase.username
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: COUCHBASE_USERNAME
+        - name: spring.couchbase.env.ssl.enabled
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: COUCHBASE_SSL
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: SPRING_PROFILES_ACTIVE
+        - name: LANG
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LANG
+        - name: LANGUAGE
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LANGUAGE
+        - name: LC_ALL
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LC_ALL
+        - name: TIME_ZONE
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: TIME_ZONE
+        - name: JVM_OPTIONS
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: JVM_OPTIONS
+        - name: spring.application.repository.technology
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: REPOSITORY_TECHNOLOGY
+        - name: SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: SERVER_URL
+        - name: spring.data.mongodb.ssl.enabled
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: MONGO_SSL
+        - name: spring.rsocket.server.port
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: RSOCKET_PORT
+        - name: grpc.server.port
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: GRPC_PORT
+        ports:
+        - name: api-port
+          containerPort: 8080
+          protocol: TCP
+        - name: rsocket-port
+          containerPort: 7000
+          protocol: TCP
+        - name: grpc-port
+          containerPort: 6565
+          protocol: TCP
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        startupProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/ping
+            port: api-port
+          initialDelaySeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/readiness
+            port: api-port
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/liveness
+            port: api-port
+          initialDelaySeconds: 10
+          periodSeconds: 30
+      automountServiceAccountToken: true
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: camila-product-api
+  name: camila-product-api-nodeport-svc
+  namespace: camila-product-api-ns
+spec:
+  ports:
+  - name: rsocket-port
+    port: 7000
+    protocol: TCP
+    targetPort: 7000
+    nodePort: 30070
+  - name: api-port
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30080
+  - name: grpc-port
+    port: 6565
+    protocol: TCP
+    targetPort: 6565
+    nodePort: 30065
+  selector:
+    app: camila-product-api
+  type: NodePort
+
+---
+# https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/
+# https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/guide/ingress/annotations/
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: camila-product-api-ingress
+  namespace: camila-product-api-ns
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: "<certificate-arn>"
+    alb.ingress.kubernetes.io/subnets: camila-eks-cluster-public-subnet1,camila-eks-cluster-public-subnet2
+    alb.ingress.kubernetes.io/load-balancer-name: camila-eks-cluster-lb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/tags: ENTORN=INT
+    alb.ingress.kubernetes.io/ip-address-type: ipv4
+    alb.ingress.kubernetes.io/group.name: camila-product-api
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/target-type: instance
+
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: '30080'
+    alb.ingress.kubernetes.io/healthcheck-path: '/product-int/api/actuator/health/ping'
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '120'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '30'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '3'
+
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /product-int/api/rsocket
+        backend:
+          service:
+            name: camila-product-api-nodeport-svc
+            port:
+              number: 7000
+      - pathType: Prefix
+        path: /product-int/api/
+        backend:
+          service:
+            name: camila-product-api-nodeport-svc
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: /product.ProductService
+        backend:
+          service:
+            name: camila-product-api-nodeport-svc
+            port:
+              number: 6565
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: camila-product-api-hpa
+  namespace: camila-product-api-ns
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: camila-product-api
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: http_requests_per_second
+      target:
+        type: AverageValue
+        averageValue: 1m
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
