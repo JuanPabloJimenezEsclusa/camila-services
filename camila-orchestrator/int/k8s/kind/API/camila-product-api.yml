@@ -1,0 +1,262 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: camila-product-api-ns
+spec: {}
+status: {}
+
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: camila-product-api-ns-quota
+  namespace: camila-product-api-ns
+spec:
+  hard: 
+    limits.cpu: "8"
+    limits.memory: 8192Mi
+    pods: "10"
+    requests.cpu: "8"
+    requests.memory: 8192Mi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: camila-product-api-data-pv
+  namespace: camila-product-api-ns
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: camila-product-api-data
+    namespace: camila-product-api-ns
+  hostPath:
+    path: /tmp/hostpath-provisioner/camila-product-api
+    type: ""
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  volumeMode: Filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: camila-product-api-data
+  namespace: camila-product-api-ns
+spec:
+  accessModes:
+    - ReadWriteMany 
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: camila-product-api-creds
+  namespace: camila-product-api-ns
+data:
+  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nby1ub2RlcG9ydC1zdmMubW9uZ29kYi5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNy9jYW1pbGEtZGI="
+  #mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: camila-product-api-config
+  namespace: camila-product-api-ns
+data:
+  SPRING_PROFILES_ACTIVE: "int"
+  LANG: "en_US.utf8"
+  LANGUAGE: "en_US.utf8"
+  LC_ALL: "en_US.utf8"
+  TIME_ZONE: "UTC"
+  JVM_OPTIONS: "-Xms512m -Xmx1024m"
+  JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+  REPOSITORY_TECHNOLOGY: "mongo"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: camila-product-api
+  name: camila-product-api
+  namespace: camila-product-api-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: camila-product-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  minReadySeconds: 0
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        app: camila-product-api
+    spec:
+      containers:
+      - image: docker.io/library/camila-product-api:1.0.0
+        name: camila-product-api
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1024Mi
+            ephemeral-storage: "1Gi"
+          requests:
+            cpu: "1"
+            memory: 1024Mi
+        imagePullPolicy: Never
+        env:
+        - name: spring.data.mongodb.uri
+          valueFrom:
+            secretKeyRef:
+              name: camila-product-api-creds
+              key: uri
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom: 
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: SPRING_PROFILES_ACTIVE
+        - name: LANG
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LANG
+        - name: LANGUAGE
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LANGUAGE
+        - name: LC_ALL
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: LC_ALL
+        - name: TIME_ZONE
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: TIME_ZONE
+        - name: JVM_OPTIONS
+          valueFrom:
+            configMapKeyRef:
+              name: camila-product-api-config
+              key: JVM_OPTIONS
+        ports:
+        - name: api-port
+          containerPort: 8080
+          protocol: TCP
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        startupProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/ping
+            port: api-port
+          initialDelaySeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/readiness
+            port: api-port
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /product-int/api/actuator/health/liveness
+            port: api-port
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        volumeMounts:
+        - name: "camila-product-api-data-dir"
+          mountPath: "/tmp"
+      automountServiceAccountToken: true
+      volumes:
+      - name: "camila-product-api-data-dir"
+        persistentVolumeClaim:
+          claimName: "camila-product-api-data"
+          readOnly: false
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: camila-product-api
+  name: camila-product-api-nodeport-svc
+  namespace: camila-product-api-ns
+spec:
+  ports:
+  - name: api-port
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+    nodePort: 30080
+  - name: jmx-port
+    port: 5005
+    protocol: TCP
+    targetPort: 5005
+    nodePort: 30005
+  selector:
+    app: camila-product-api
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: camila-product-api-ingress
+  namespace: camila-product-api-ns
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /product-int/api/
+        backend:
+          service:
+            name: camila-product-api-nodeport-svc
+            port:
+              number: 30080
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: camila-product-api-hpa
+  namespace: camila-product-api-ns
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: camila-product-api
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Pods
+    pods:
+      metric:
+        name: http_requests_per_second
+      target:
+        type: AverageValue
+        averageValue: 1m
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50

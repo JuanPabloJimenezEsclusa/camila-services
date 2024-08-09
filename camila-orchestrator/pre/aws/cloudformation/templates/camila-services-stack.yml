@@ -36,7 +36,7 @@ Resources:
   VPC:
     Type: "AWS::EC2::VPC"
     Properties:
-      CidrBlock: "11.0.0.0/16"
+      CidrBlock: "10.10.0.0/16" # /16 maximum /28 minimum
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
@@ -51,7 +51,7 @@ Resources:
     Description:  "Public Subnet A"
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: "11.0.1.0/24"
+      CidrBlock: "10.10.1.0/24"
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
       Tags:
@@ -65,7 +65,7 @@ Resources:
     Description:  "Public Subnet B"
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: "11.0.2.0/24"
+      CidrBlock: "10.10.2.0/24"
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 1, !GetAZs '' ]
       Tags:
@@ -79,7 +79,7 @@ Resources:
     Description:  "Private Subnet A"
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: "11.0.16.0/20"
+      CidrBlock: "10.10.16.0/20"
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
       Tags:
@@ -93,7 +93,7 @@ Resources:
     Description:  "Private Subnet B"
     Properties:
       VpcId: !Ref VPC
-      CidrBlock: "11.0.32.0/20"
+      CidrBlock: "10.10.32.0/20"
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 1, !GetAZs '' ]
       Tags:
@@ -151,7 +151,7 @@ Resources:
 
   PrivateRoute:
     Type: "AWS::EC2::Route"
-    Description: "Private Route to NAT Gateway"
+    Description: "Private Route to Internet Gateway"
     Properties:
       RouteTableId: !Ref PrivateRouteTable
       DestinationCidrBlock: "0.0.0.0/0"
@@ -186,6 +186,138 @@ Resources:
       SubnetId: !Ref PrivateSubnetB
       RouteTableId: !Ref PrivateRouteTable
 
+  # Create deny NACL rules
+  NetworkACL:
+    Type: AWS::EC2::NetworkAcl
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: "Name"
+          Value: "camila-product-network-acl"
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  # Deny all inbound traffic to the NACL
+  SSHDenyInboundNACLEntry:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref NetworkACL
+      RuleNumber: 100
+      Protocol: 6 # TCP
+      RuleAction: deny
+      Egress: false # Inbound rule
+      CidrBlock: 0.0.0.0/0
+      PortRange:
+        From: 22
+        To: 22
+
+  # Deny all outbound traffic to the NACL
+  SSHDenyOutboundNACLEntry:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref NetworkACL
+      RuleNumber: 200
+      Protocol: 6 # TCP
+      RuleAction: deny
+      Egress: true # Outbound rule
+      CidrBlock: 0.0.0.0/0
+      PortRange:
+        From: 22
+        To: 22
+
+  # Allow all other inbound traffic
+  AllowAllInboundNACLEntry:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref NetworkACL
+      RuleNumber: 300
+      Protocol: -1 # All protocols
+      RuleAction: allow
+      Egress: false # Inbound rule
+      CidrBlock: 0.0.0.0/0
+      PortRange:
+        From: 0
+        To: 65535
+
+  # Allow all other outbound traffic
+  AllowAllOutboundNACLEntry:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      NetworkAclId: !Ref NetworkACL
+      RuleNumber: 400
+      Protocol: -1 # All protocols
+      RuleAction: allow
+      Egress: true # Outbound rule
+      CidrBlock: 0.0.0.0/0
+      PortRange:
+        From: 0
+        To: 65535
+
+  # Associate the NACL with the private subnets
+  PrivateSubnetANACLAssociation:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnetA
+      NetworkAclId: !Ref NetworkACL
+
+  PrivateSubnetBNACLAssociation:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnetB
+      NetworkAclId: !Ref NetworkACL
+
+  # Add Flow logs
+  VPCLogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Description: "VPC Flow Logs Group"
+    Properties:
+      LogGroupName: !Sub '/vpc/${AWS::StackName}'
+      RetentionInDays: 1
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  VPCFlowLog:
+    Type: AWS::EC2::FlowLog
+    Properties:
+      ResourceId: !Ref VPC
+      ResourceType: VPC
+      TrafficType: ALL
+      LogDestinationType: cloud-watch-logs
+      LogDestination: !GetAtt VPCLogGroup.Arn
+      DeliverLogsPermissionArn: !GetAtt VPCFlowLogRole.Arn
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  VPCFlowLogRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: vpc-flow-logs.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - !Ref VPCFlowLogPolicy
+
+  VPCFlowLogPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'logs:CreateLogGroup'
+              - 'logs:CreateLogStream'
+              - 'logs:PutLogEvents'
+              - 'logs:DescribeLogGroups'
+              - 'logs:DescribeLogStreams'
+            Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/vpc/${AWS::StackName}:*'
+
   # Create an ECS Cluster
   ECSCluster:
     Type: "AWS::ECS::Cluster"
@@ -207,10 +339,10 @@ Resources:
         - Key: "ENTORN"
           Value: "PRE"
 
-  # Create a CloudWatch Logs log group
+  # Create a CloudWatch Logs group
   LogGroup:
     Type: "AWS::Logs::LogGroup"
-    Description: "CloudWatch Logs log group"
+    Description: "CloudWatch Logs group"
     Properties:
       LogGroupName: "/ecs/camila-product-backend"
       RetentionInDays: 1
@@ -461,6 +593,7 @@ Resources:
     Description: "Application Load Balancer"
     Properties:
       Name: "camila-product-lb"
+      Type: "application"
       Subnets:
         - !Ref PublicSubnetA
         - !Ref PublicSubnetB
@@ -470,7 +603,21 @@ Resources:
       LoadBalancerAttributes:
         - Key: "deletion_protection.enabled"
           Value: "false"
+          # If true, deletion protection is enabled. Default is false.
+        - Key: "routing.http.drop_invalid_header_fields.enabled"
+          Value: "true"
+          # If true, the HTTP listener will reject requests with invalid headers.
+          # The default is false, which sends a 400 response to the client.
+        - Key: "routing.http2.enabled"
+          Value: "true"
+          # If true, the load balancer supports HTTP/2.
+        - Key: "idle_timeout.timeout_seconds"
+          Value: "120"
+          # The number of seconds before the connection is considered idle.
+      IpAddressType: "ipv4"
       Tags:
+        - Key: "Name"
+          Value: "camila-product-lb"
         - Key: "ENTORN"
           Value: "PRE"
 
@@ -486,12 +633,22 @@ Resources:
       HealthCheckEnabled: true
       HealthCheckProtocol: "HTTP"
       HealthCheckPort: "8080"
-      HealthCheckPath: "/product/api/actuator/health"
+      HealthCheckPath: "/product/api/actuator/health/ping"
       HealthCheckTimeoutSeconds: 30
       HealthCheckIntervalSeconds: 120
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 3
       TargetType: "ip"
+      TargetGroupAttributes:
+        - Key: load_balancing.algorithm.type
+          Value: "round_robin"
+          # The load balancing algorithm to use. Required if load_balancing.algorithm.preserve_host_header is set.
+        - Key: stickiness.enabled
+          Value: "true"
+          # If true, the load balancer will send the same session cookie to the client if it fails to establish a connection with a target.
+        - Key: stickiness.type
+          Value: "lb_cookie"
+          # The type of stickiness to use. Required if stickiness.enabled is set.
       Tags:
         - Key: "ENTORN"
           Value: "PRE"
@@ -508,7 +665,7 @@ Resources:
       HealthCheckEnabled: true
       HealthCheckProtocol: "HTTP"
       HealthCheckPort: "8080"
-      HealthCheckPath: "/product/api/actuator/health"
+      HealthCheckPath: "/product/api/actuator/health/ping"
       HealthCheckTimeoutSeconds: 60
       HealthCheckIntervalSeconds: 300
       HealthyThresholdCount: 2

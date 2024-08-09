@@ -1,0 +1,17 @@
+{
+  "Comment": "Hosted zone record created by bash",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "poc.jpje-kops.xyz",
+        "Type": "A",
+        "AliasTarget": {
+          "HostedZoneId": "Z32O12XQLNTSW2",
+          "DNSName": "dualstack.<ALB_DNS_NAME>",
+          "EvaluateTargetHealth": false
+        }
+      }
+    }
+  ]
+}

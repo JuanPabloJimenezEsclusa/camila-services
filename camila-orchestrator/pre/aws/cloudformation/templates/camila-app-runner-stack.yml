@@ -1,0 +1,160 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template for App Runner service with Route 53 record'
+
+Parameters:
+  ImageName:
+    Type: String
+    Description: The name of the Docker image
+    Default: "546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0"
+  RepositoryTechnology:
+    Type: String
+    Description: The repository technology
+    Default: "mongo"
+  CouchbaseConnection:
+    Type: String
+    Description: The Couchbase connection string
+    NoEcho: true
+  CouchbaseUsername:
+    Type: String
+    Description: The Couchbase username
+    NoEcho: true
+
+Resources:
+  AppRunnerServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: build.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  AppRunnerInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: tasks.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+      Policies:
+        - PolicyName: SecretsManagerAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: "*"
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  ObservabilityConfiguration:
+    Type: AWS::AppRunner::ObservabilityConfiguration
+    Properties:
+      ObservabilityConfigurationName: camila-app-observability-config
+      TraceConfiguration:
+        Vendor: AWSXRAY
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+  AppRunnerService:
+    Type: AWS::AppRunner::Service
+    Description: "App runner example"
+    Properties:
+      ServiceName: camila-product-api
+      SourceConfiguration:
+        AuthenticationConfiguration:
+          AccessRoleArn: !GetAtt AppRunnerServiceRole.Arn
+        AutoDeploymentsEnabled: false
+        ImageRepository:
+          ImageIdentifier: !Ref ImageName
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: '8080'
+            RuntimeEnvironmentSecrets:
+              - Name: spring.couchbase.password
+                Value: !Join
+                  - ":"
+                  - - !ImportValue CouchbasePasswordSecretARN
+                    - "password::"
+              - Name: spring.data.mongodb.uri
+                Value: !Join
+                  - ":"
+                  - - !ImportValue MongoUriSecretARN
+                    - "uri::"
+            RuntimeEnvironmentVariables:
+              - Name: LANGUAGE
+                Value: "en_US.utf8"
+              - Name: LANG
+                Value: "en_US.utf8"
+              - Name: LC_ALL
+                Value: "en_US.utf8"
+              - Name: TIME_ZONE
+                Value: "UTC"
+              - Name: JVM_OPTIONS
+                Value: "-Xms512m -Xmx1024m"
+              - Name: SPRING_PROFILES_ACTIVE
+                Value: "pre"
+              - Name: SERVER_URL
+                Value: "https://poc.jpje-kops.xyz"
+              - Name: SECURITY_ISSUER_URI
+                Value: !Join
+                  - "/"
+                  - - "https://cognito-idp.eu-west-1.amazonaws.com"
+                    - !ImportValue UserPoolARN # ID -> AWS::Cognito::UserPool
+              - Name: SECURITY_DOMAIN_URI
+                Value: "https://camila-realm.auth.eu-west-1.amazoncognito.com" # Domain -> AWS::Cognito::UserPoolDomain
+              - Name: spring.application.repository.technology
+                Value: !Ref RepositoryTechnology
+              - Name: spring.couchbase.connection-string
+                Value: !Ref CouchbaseConnection
+              - Name: spring.couchbase.username
+                Value: !Ref CouchbaseUsername
+              - Name: spring.couchbase.env.ssl.enabled
+                Value: "true"
+              - Name: spring.data.mongodb.ssl.enabled
+                Value: "true"
+              - Name: spring.rsocket.server.port
+                Value: "7000"
+              - Name: grpc.server.port
+                Value: "6565"
+      HealthCheckConfiguration:
+        HealthyThreshold: 1
+        Interval: 5
+        Path: /product/api/actuator/health/ping
+        Protocol: HTTP
+        Timeout: 10
+        UnhealthyThreshold: 3
+      NetworkConfiguration:
+        IpAddressType:  IPV4
+        IngressConfiguration:
+          IsPubliclyAccessible: true
+      InstanceConfiguration:
+        Cpu: 0.5 vCPU
+        Memory: 1 GB
+        InstanceRoleArn: !GetAtt AppRunnerInstanceRole.Arn
+      ObservabilityConfiguration:
+        ObservabilityEnabled: true
+        ObservabilityConfigurationArn: !GetAtt ObservabilityConfiguration.ObservabilityConfigurationArn
+      Tags:
+        - Key: "ENTORN"
+          Value: "PRE"
+
+Outputs:
+  AppRunnerServiceUrl:
+    Description: URL of the App Runner Service
+    Value: !GetAtt AppRunnerService.ServiceUrl

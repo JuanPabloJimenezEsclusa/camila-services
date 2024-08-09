@@ -10,31 +10,27 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
 
 ## Environments
 
-| Environment           | Description                                                                                                        |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------|
-| [DEV](./dev/compose/) | Basic container orchestration with `docker-compose` to create a deployment environment with all service components |
-| [INT](./int/k8s/)     | Orchestration in `k8s` using either deployments or serverless `knative`                                            |
-| [PRE](./pre/aws/)     | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                                                   |
-
-## Infrastructure
-
-| Provider                            | Description                                                                                           |
-|-------------------------------------|-------------------------------------------------------------------------------------------------------|
-| [clusters - kind](./clusters/kind/) | Configuration of a `k8s` cluster using the project: [kubernetes in docker](https://kind.sigs.k8s.io/) |
+| Environment                         | Description                                                                        |
+|-------------------------------------|------------------------------------------------------------------------------------|
+| [DEV (Compose)](./dev/compose/)     | Basic container orchestration with `docker-compose` with all service components    |
+| [INT (K8s - Kind)](./int/k8s/kind/) | Orchestration in `k8s` and `Kind` using either deployments or serverless `knative` |
+| [INT (K8s - AWS)](./int/k8s/aws/)   | Orchestration in `k8s` and `AWS EKS`                                               |
+| [PRE (AWS)](./pre/aws/)             | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                   |
 
 ## Architecture
 
 ```txt
 📦camila-orchestrator
- ┣ 📂clusters
- ┃ ┗ 📂kind (install.sh - start-cluster.sh - stop-cluster.sh)
  ┣ 📂dev
- ┃ ┗ 📂compose (start.sh - stop.sh)
+ ┃ ┗ 📂compose
  ┣ 📂int
  ┃ ┗ 📂k8s
- ┃   ┣ 📂API
- ┃   ┃ ┗ 📂serveless (apply-serveless.sh - delete-serveless.sh)
- ┃   ┗ 📂DDBB (apply.sh - delete.sh)
+ ┃   ┣ 📂Kind
+ ┃   ┃ ┣ 📂clusters
+ ┃   ┃ ┣ 📂API
+ ┃   ┃ ┗ 📂DDBB
+ ┃   ┗ 📂AWS
+ ┃     ┗ 📂cloudformation
  ┗ 📂pre
    ┗ 📂aws
      ┣ 📂cloudformation

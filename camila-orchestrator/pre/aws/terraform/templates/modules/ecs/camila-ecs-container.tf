@@ -39,7 +39,7 @@ resource "aws_secretsmanager_secret_version" "mongo_uri_version" {
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc
 resource "aws_vpc" "main" {
-  cidr_block           = "11.0.0.0/16"
+  cidr_block           = "10.10.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
 
@@ -52,7 +52,7 @@ resource "aws_vpc" "main" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "11.0.1.0/24"
+  cidr_block              = "10.10.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[0]
 
@@ -64,7 +64,7 @@ resource "aws_subnet" "public_a" {
 
 resource "aws_subnet" "public_b" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "11.0.2.0/24"
+  cidr_block              = "10.10.2.0/24"
   map_public_ip_on_launch = true
   availability_zone       = data.aws_availability_zones.available.names[1]
 
@@ -76,7 +76,7 @@ resource "aws_subnet" "public_b" {
 
 resource "aws_subnet" "private_a" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "11.0.16.0/20"
+  cidr_block              = "10.10.16.0/20"
   map_public_ip_on_launch = false
   availability_zone       = data.aws_availability_zones.available.names[0]
 
@@ -88,7 +88,7 @@ resource "aws_subnet" "private_a" {
 
 resource "aws_subnet" "private_b" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "11.0.32.0/20"
+  cidr_block              = "10.10.32.0/20"
   map_public_ip_on_launch = false
   availability_zone       = data.aws_availability_zones.available.names[1]
 
@@ -208,6 +208,77 @@ resource "aws_vpc_endpoint" "ecr_dkr" {
   tags = {
     Name   = "ecr-dkr-endpoint"
     ENTORN = "PRE"
+  }
+}
+
+# Add VPC logs
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group
+resource "aws_cloudwatch_log_group" "vpc_log_group" {
+  name              = "/vpc/camila-product-vpc"
+  retention_in_days = 1
+
+  tags = {
+    "ENTORN" = "PRE"
+  }
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
+resource "aws_iam_policy" "vpc_flow_log_policy" {
+  name        = "vpc-flow-log-policy"
+  description = "Policy for VPC Flow Logs"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams"
+        ]
+        Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/vpc/camila-product-vpc:*"
+      }
+    ]
+  })
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+resource "aws_iam_role" "vpc_flow_log_role" {
+  name = "vpc-flow-log-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "vpc-flow-logs.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+resource "aws_iam_role_policy_attachment" "vpc_flow_log_policy_attachment" {
+  role       = aws_iam_role.vpc_flow_log_role.name
+  policy_arn = aws_iam_policy.vpc_flow_log_policy.arn
+}
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/flow_log
+resource "aws_flow_log" "vpc_flow_log" {
+  log_destination      = aws_cloudwatch_log_group.vpc_log_group.arn
+  log_destination_type = "cloud-watch-logs"
+  traffic_type         = "ALL"
+  iam_role_arn         = aws_iam_role.vpc_flow_log_role.arn
+  vpc_id               = aws_vpc.main.id
+
+  tags = {
+    "ENTORN" = "PRE"
   }
 }
 
@@ -538,7 +609,7 @@ resource "aws_lb_target_group" "web_target_group" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
   health_check {
-    path                = "/product/api/actuator/health"
+    path                = "/product/api/actuator/health/ping"
     port                = 8080
     protocol            = "HTTP"
     interval            = 60
@@ -561,7 +632,7 @@ resource "aws_lb_target_group" "rsocket_target_group" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
   health_check {
-    path                = "/product/api/actuator/health"
+    path                = "/product/api/actuator/health/ping"
     port                = 8080
     protocol            = "HTTP"
     interval            = 60

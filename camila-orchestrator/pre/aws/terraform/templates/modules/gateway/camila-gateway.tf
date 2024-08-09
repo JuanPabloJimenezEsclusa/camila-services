@@ -72,12 +72,23 @@ resource "aws_api_gateway_resource" "proxy" {
   path_part   = "{proxy+}"
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_authorizer
+resource "aws_api_gateway_authorizer" "cognito" {
+  name          = "cognito-authorizer"
+  type          = "COGNITO_USER_POOLS"
+  rest_api_id   = aws_api_gateway_rest_api.camila_api_gateway.id
+  provider_arns = [var.user_pool_arn]
+}
+
 # https://registry.terraform.io/providers/aaronfeng/aws/latest/docs/resources/api_gateway_method
 resource "aws_api_gateway_method" "any" {
   rest_api_id   = aws_api_gateway_rest_api.camila_api_gateway.id
   resource_id   = aws_api_gateway_resource.proxy.id
   http_method   = "ANY"
-  authorization = "NONE"
+  #authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = aws_api_gateway_authorizer.cognito.id
+  authorization_scopes = ["camila/read","camila/write"]
 
   request_parameters = {
     "method.request.path.proxy"           = true
