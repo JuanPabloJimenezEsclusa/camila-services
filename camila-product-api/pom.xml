@@ -16,10 +16,10 @@
 
   <properties>
     <java.version>21</java.version>
-    <spring-cloud.version>2023.0.2</spring-cloud.version>
-    <cucumber.version>7.17.0</cucumber.version>
-    <opentelemetry.version>1.38.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.38.0-alpha</opentelemetry-api-incubator.version>
+    <spring-cloud.version>2023.0.3</spring-cloud.version>
+    <cucumber.version>7.18.1</cucumber.version>
+    <opentelemetry.version>1.40.0</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.40.0-alpha</opentelemetry-api-incubator.version>
   </properties>
 
   <dependencies>
@@ -52,7 +52,7 @@
     <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
-      <version>22.0</version>
+      <version>22.1</version>
     </dependency>
     <dependency>
       <groupId>com.graphql-java</groupId>
@@ -236,7 +236,7 @@
     </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
+      <artifactId>cucumber-junit-platform-engine</artifactId>
       <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
@@ -244,6 +244,12 @@
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-spring</artifactId>
       <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite</artifactId>
+      <version>1.11.0</version>
       <scope>test</scope>
     </dependency>
 
@@ -455,16 +461,47 @@
         <version>0.8.12</version>
         <executions>
           <execution>
+            <id>default-prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
+            <id>default-prepare-agent-integration</id>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>merge-results</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>merge</goal>
+            </goals>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <directory>${project.build.directory}</directory>
+                  <includes>
+                    <include>*.exec</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+              <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+            </configuration>
+          </execution>
+          <execution>
             <id>report</id>
-            <phase>test</phase>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+              <excludes>
+                <exclude>com/camila/api/product/framework/adapter/input/grpc/**</exclude>
+              </excludes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -613,7 +650,7 @@
           <plugin>
             <groupId>com.google.cloud.tools</groupId>
             <artifactId>jib-maven-plugin</artifactId>
-            <version>3.9.8</version>
+            <version>3.4.3</version>
             <configuration>
               <from>
                 <image>eclipse-temurin:21-jdk-alpine</image>
@@ -662,7 +699,7 @@
           <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>9.2.0</version>
+            <version>10.0.3</version>
             <configuration>
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
@@ -702,7 +739,7 @@
           <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>9.0.7</version>
+            <version>10.0.3</version>
             <reportSets>
               <reportSet>
                 <reports>

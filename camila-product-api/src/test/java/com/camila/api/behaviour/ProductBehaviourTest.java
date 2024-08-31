@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +26,7 @@ public class ProductBehaviourTest {
   private WebTestClient webClient;
 
   @Given("^some metrics weights and page config$")
-  public void someMetricsWeightsAndPageConfig(DataTable table) {
+  public void someMetricsWeightsAndPageConfig(@NotNull DataTable table) {
     parameters = List.of(
       table.cell(1,0),
       table.cell(1,1),
@@ -41,12 +42,12 @@ public class ProductBehaviourTest {
   }
 
   @Then("^receive status$")
-  public void receiveStatus(DataTable table) {
+  public void receiveStatus(@NotNull DataTable table) {
     exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1,0)));
   }
 
   @And("^get sorted data$")
-  public void getSortedData(DataTable table) {
+  public void getSortedData(@NotNull DataTable table) {
     var body = exchange.expectBody();
 
     table.asMaps().forEach(element -> {
