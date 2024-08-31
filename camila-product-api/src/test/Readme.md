@@ -57,8 +57,11 @@ mvn clean spring-boot:process-test-aot
 ### Integration and Benchmark Tests
 
 ```bash
+unset SPRING_PROFILES_ACTIVE
 mvn clean verify
 ```
+
+> Report: [./target/site/jacoco/index.html](./../../target/site/jacoco/index.html)
 
 ### Mutation Tests
 
@@ -68,16 +71,25 @@ mvn clean test -P pitest
 
 > Report: [./target/pit-reports/index.html](./../../target/pit-reports/index.html)
 
+### Behaviour test
+
+```bash
+mvn clean test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner
+```
+
+> Report: [./target/cucumber-reports/Cucumber.html](./../../target/cucumber-reports/Cucumber.html)
+
 ### Code Analysis
 
 * Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
 * Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
 
 ```bash
+unset SPRING_PROFILES_ACTIVE
 mvn clean verify site -P check-dependency,error-prone
 ```
 
-> Report: [./target/site/project-info.html](./../../site/project-info.html)
+> Report: [./target/site/project-info.html](./../../target/site/project-info.html)
 
 ### Performance Tests
 

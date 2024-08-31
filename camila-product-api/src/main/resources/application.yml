@@ -140,11 +140,11 @@ grpc:
 ---
 ###### Local|Dev properties ######
 spring:
-  jmx:
-    enabled: false
   config:
     activate:
       on-profile: "loc|dev"
+  jmx:
+    enabled: false
   rsocket:
     server:
       port: 7000
@@ -193,7 +193,7 @@ logging:
     org.springframework.security.oauth2: ERROR
     org.springframework.web.reactive.socket: ERROR
     org.springframework.context: ERROR
-    com.couchbase.client: ERROR
+    com.couchbase: ERROR
     net.devh.boot.grpc.server: ERROR
     io.grpc.netty: ERROR
 
@@ -376,7 +376,7 @@ logging:
     org.springframework.web: ERROR
     org.springframework.data: ERROR
     org.springframework.context: ERROR
-    com.couchbase.client: ERROR
+    com.couchbase: ERROR
     org.springframework.boot: ERROR
     org.springframework.boot.web.embedded.netty: INFO
     net.devh.boot.grpc.server: ERROR

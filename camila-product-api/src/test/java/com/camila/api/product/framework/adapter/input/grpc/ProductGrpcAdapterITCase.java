@@ -105,7 +105,6 @@ class ProductGrpcAdapterITCase {
     assertThat(productIterator.hasNext()).isTrue();
     productIterator.forEachRemaining(product -> {
       assertThat(product).isNotNull();
-      assertThat(product.getInternalId()).isNotNull();
       assertThat(product.getInternalId()).isNotEqualTo("");
     });
   }

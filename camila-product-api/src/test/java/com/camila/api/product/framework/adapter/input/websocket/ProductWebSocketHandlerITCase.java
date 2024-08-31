@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductWebSocketHandlerITCase {
 
-  private static WebSocketClient WEBSOCKET_CLIENT;
+  private static WebSocketClient webSocketClient;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -43,7 +43,7 @@ class ProductWebSocketHandlerITCase {
    */
   @BeforeAll
   static void beforeAll() {
-    WEBSOCKET_CLIENT = new ReactorNettyWebSocketClient();
+    webSocketClient = new ReactorNettyWebSocketClient();
   }
 
   /**
@@ -71,7 +71,7 @@ class ProductWebSocketHandlerITCase {
       }
       """;
 
-    WEBSOCKET_CLIENT.execute(uri,
+    webSocketClient.execute(uri,
         session -> session.send(
           Mono.just(session.textMessage(findByInternalIdRequest))
         ).thenMany(session.receive()
@@ -109,7 +109,7 @@ class ProductWebSocketHandlerITCase {
       }
       """;
 
-    WEBSOCKET_CLIENT.execute(uri,
+    webSocketClient.execute(uri,
         session -> session.send(
           Mono.just(session.textMessage(sortProductsRequest))
         ).thenMany(session.receive()

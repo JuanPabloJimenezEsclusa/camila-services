@@ -44,7 +44,7 @@ abstract class AbstractProductCouchbaseAdapter {
   private static final DockerImageName COUCHBASE_IMAGE = DockerImageName
     .parse("couchbase")
     .asCompatibleSubstituteFor("couchbase/server")
-    .withTag("7.6.1");
+    .withTag("7.6.2");
 
   @AfterAll
   public static void tearDown() {
@@ -55,7 +55,7 @@ abstract class AbstractProductCouchbaseAdapter {
   private static final CouchbaseContainer couchbaseContainer = new CouchbaseContainer(COUCHBASE_IMAGE)
     .withCredentials(USERNAME, PASSWORD)
     .withBucket(BUCKET_DEFINITION)
-    .withStartupTimeout(Duration.ofSeconds(90))
+    .withStartupTimeout(Duration.ofSeconds(180))
     .waitingFor(Wait.forHealthcheck())
     .withCreateContainerCmdModifier(cmd ->
       Objects.requireNonNull(cmd

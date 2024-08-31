@@ -16,6 +16,6 @@ public class ProductApiApplication {
    * @param args the input arguments
    */
   public static void main(String[] args) {
-		SpringApplication.run(ProductApiApplication.class, args);
-	}
+    SpringApplication.run(ProductApiApplication.class, args);
+  }
 }
