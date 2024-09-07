@@ -183,6 +183,11 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-docker-compose</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
@@ -384,9 +389,9 @@
           <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
           <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
           <loaderImplementation>CLASSIC</loaderImplementation>
-          <jvmArguments>
-            -agentlib:native-image-agent=config-output-dir=target/native-image
-          </jvmArguments>
+
+          <!-- commented to avoid run fail without native vm -->
+          <!-- <jvmArguments>-agentlib:native-image-agent=config-output-dir=target/native-image</jvmArguments> -->
           <layers>
             <enabled>true</enabled>
           </layers>
@@ -928,13 +933,13 @@
               </executions>
             </plugin>
           </plugins>
-          </pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.pitest</groupId>
-              <artifactId>pitest-maven</artifactId>
-              <executions>
-                <execution>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <executions>
+              <execution>
                 <id>pitest</id>
                 <phase>test-compile</phase>
                 <goals>
@@ -946,6 +951,7 @@
         </plugins>
       </build>
     </profile>
+
   </profiles>
 
 </project>

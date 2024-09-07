@@ -98,6 +98,7 @@ spec:
             requests:
               cpu: "0.5"
               memory: 256Mi
+              ephemeral-storage: "256Mi"
           env:
             - name: NODE_NAME
               valueFrom:

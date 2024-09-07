@@ -45,12 +45,14 @@ springdoc:
   enable-spring-security: false
   swagger-ui:
     filter: true
+    show-extensions: true
     show-common-extensions: true
     doc-expansion: none
     operations-sorter: method
     persist-authorization: true
     deep-linking: true
     display-request-duration: true
+    display-operation-id: true
     defaultModelsExpandDepth: 1
     tagsSorter: alpha
   show-actuator: true
@@ -247,11 +249,6 @@ spring:
 springdoc:
   enable-spring-security: true
   show-oauth2-endpoints: true
-  swagger-ui:
-    display-request-duration: true
-    display-operation-id: true
-    showExtensions: true
-    showCommonExtensions: true
 
 # Enable keycloak security
 openapi:
@@ -381,3 +378,60 @@ logging:
     org.springframework.boot.web.embedded.netty: INFO
     net.devh.boot.grpc.server: ERROR
     io.grpc.netty: ERROR
+
+---
+###### Local docker compose properties ######
+
+spring:
+  config:
+    activate:
+      on-profile: "local-compose"
+  jmx:
+    enabled: false
+  rsocket:
+    server:
+      port: 7000
+  # https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose
+  docker:
+    compose:
+      enabled: true
+      skip:
+        in-tests: true
+      start:
+        command: up
+        skip: if_running
+        log-level: debug
+      stop:
+        command: down
+        timeout: 15s
+      readiness:
+        timeout: 2m
+        wait: only_if_started
+      profiles:
+        active: "docker-compose"
+      file: "${user.dir}/../camila-orchestrator/dev/compose/docker-compose-spring-boot.yml"
+      lifecycle-management: start_and_stop
+  data:
+    mongodb:
+      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+  couchbase:
+    connection-string: couchbase
+
+grpc:
+  server:
+    port: 6565
+
+debug: false
+logging:
+  level:
+    org.hibernate.validator: ERROR
+    org.springframework: ERROR
+    org.springframework.boot: ERROR
+    org.springframework.data: ERROR
+    org.springframework.security: ERROR
+    org.springframework.web.reactive.socket: ERROR
+    org.springframework.context: ERROR
+    com.couchbase: ERROR
+    net.devh.boot.grpc.server: ERROR
+    io.grpc.netty: ERROR
+    reactor: ERROR

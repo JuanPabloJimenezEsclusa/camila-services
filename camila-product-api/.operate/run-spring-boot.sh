@@ -7,6 +7,6 @@ set -o xtrace
 
 cd "$(dirname "$0")/.."
 
-export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"local-compose"}"
 
 mvn clean spring-boot:run

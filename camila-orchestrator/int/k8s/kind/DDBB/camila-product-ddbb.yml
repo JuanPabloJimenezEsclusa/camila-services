@@ -1,4 +1,4 @@
-# sources: 
+# sources:
 # - https://devopscube.com/deploy-mongodb-kubernetes/
 # - https://github.com/scriptcamp/kubernetes-mongodb
 
@@ -16,7 +16,7 @@ metadata:
   name: mongodb-quota
   namespace: mongodb
 spec:
-  hard: 
+  hard:
     limits.cpu: "4"
     limits.memory: 8192Mi
     pods: "10"
@@ -54,7 +54,7 @@ metadata:
   namespace: mongodb
 spec:
   accessModes:
-    - ReadWriteOnce 
+    - ReadWriteOnce
   resources:
     requests:
       storage: 5Gi
@@ -99,6 +99,7 @@ spec:
           requests:
             cpu: "1"
             memory: 1024Mi
+            ephemeral-storage: "1Gi"
         env:
         - name: MONGODB_INITDB_ROOT_USERNAME
           valueFrom:
