@@ -13,7 +13,7 @@ metadata:
   name: camila-product-api-ns-quota
   namespace: camila-product-api-ns
 spec:
-  hard: 
+  hard:
     limits.cpu: "8"
     limits.memory: 8192Mi
     pods: "10"
@@ -51,7 +51,7 @@ metadata:
   namespace: camila-product-api-ns
 spec:
   accessModes:
-    - ReadWriteMany 
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
@@ -118,6 +118,7 @@ spec:
           requests:
             cpu: "1"
             memory: 1024Mi
+            ephemeral-storage: "1Gi"
         imagePullPolicy: Never
         env:
         - name: spring.data.mongodb.uri
@@ -126,7 +127,7 @@ spec:
               name: camila-product-api-creds
               key: uri
         - name: SPRING_PROFILES_ACTIVE
-          valueFrom: 
+          valueFrom:
             configMapKeyRef:
               name: camila-product-api-config
               key: SPRING_PROFILES_ACTIVE

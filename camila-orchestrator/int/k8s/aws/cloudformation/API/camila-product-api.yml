@@ -88,6 +88,7 @@ spec:
           requests:
             cpu: "1"
             memory: 1024Mi
+            ephemeral-storage: "1Gi"
         imagePullPolicy: IfNotPresent # change to Always if you need to update the image
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

@@ -178,7 +178,7 @@ services:
           cpus: "2"
     env_file:
       - .env
-    ports: 
+    ports:
       - "27017-27019:27017-27019"
     expose:
       - 27017
@@ -200,7 +200,7 @@ services:
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
         tag: docker.app
-    networks: 
+    networks:
       camila_product_network:
   couchbase:
     image: couchbase/server:community-7.6.2

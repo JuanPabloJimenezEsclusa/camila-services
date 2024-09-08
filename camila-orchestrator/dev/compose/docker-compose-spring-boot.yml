@@ -1,0 +1,97 @@
+# local docker compose services
+
+services:
+  ## Databases
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0.9-ubi8
+    container_name: camila-product-db
+    hostname: mongodb
+    restart: "on-failure"
+    deploy:
+      resources:
+        limits:
+          memory: "3072m"
+          cpus: "2"
+    env_file:
+      - .env
+    ports:
+      - "27017-27019:27017-27019"
+    expose:
+      - 27017
+      - 27018
+      - 27019
+    volumes:
+      - camila_product_mongodb_data:/data/db
+      - ./data/mongodb/:/docker-entrypoint-initdb.d/:ro
+    healthcheck:
+      test: ps aux | grep mongod || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
+    labels:
+      org.springframework.boot.readiness-check.tcp.disable: true
+    networks:
+      camila_product_network:
+  couchbase:
+    image: couchbase/server:community-7.6.2
+    container_name: camila-couchbase-db
+    hostname: couchbase
+    restart: "on-failure"
+    stdin_open: true
+    tty: true
+    entrypoint: [""]
+    command: sh -c "/opt/couchbase/init/init-cbserver.sh"
+    deploy:
+      resources:
+        limits:
+          memory: "4096m"
+          cpus: "4"
+    env_file:
+      - .env
+    ports:
+      - "8091-8096:8091-8096"
+      - "11210-11211:11210-11211"
+    expose:
+      - 8091
+      - 11210
+    volumes:
+      - camila_product_couchbase_data:/opt/couchbase/var
+      - ./data/couchbase/:/opt/couchbase/init:rw
+    healthcheck:
+      test: ps aux | grep init-cbserver.sh || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
+    labels:
+      org.springframework.boot.readiness-check.tcp.disable: true
+    networks:
+      camila_product_network:
+
+volumes:
+  camila_product_mongodb_data:
+  camila_product_couchbase_data:
+
+networks:
+  camila_product_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1
