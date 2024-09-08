@@ -15,13 +15,13 @@ import java.util.Map;
 /**
  * The type Product graphql adapter it case.
  */
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureGraphQlTester
 @DisplayName("[IT][ProductGraphqlAdapter] Product graphql adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductGraphqlAdapterITCase {
-  private static final String ERROR_EXPECTED_VALUE = "Variable 'salesUnits' has an invalid value: " +
-    "Expected a Number input, but it was a 'String'";
+  private static final String ERROR_EXPECTED_VALUE = "Variable 'salesUnits' has an invalid value: "
+    + "Expected a Number input, but it was a 'String'";
 
   @Autowired
   private WebTestClient webClient;
@@ -190,4 +190,4 @@ class ProductGraphqlAdapterITCase {
 /**
  * The type Query data.
  */
-record QueryData (String query, Map<String, Object> variables) { }
+record QueryData (String query, Map<String, Object> variables) {}

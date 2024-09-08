@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = { "PRODUCT_SERVER_URL=http://localhost:9999/" })
+  properties = {"PRODUCT_SERVER_URL=http://localhost:9999/"})
 @DisplayName("[IT][FailBackController] FailBack controller test")
 class FallbackControllerTest {
 

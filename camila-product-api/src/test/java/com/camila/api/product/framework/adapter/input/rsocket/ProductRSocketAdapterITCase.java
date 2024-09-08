@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * The type Product r socket adapter it case.
  */
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("[IT][ProductRSocketAdapter] Product rsocket adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRSocketAdapterITCase {

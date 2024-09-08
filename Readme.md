@@ -86,6 +86,14 @@ Product data sample:
 | 5  | CONTRASTING LACE T-SHIRT      | 650         | S: 0 / M:1 / L:0     |
 | 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     |
 
+## Automated source code refactoring
+
+> Using [OpenRewrite](https://docs.openrewrite.org/) to automatize some common refactoring to reduce technical debts
+
+```bash
+mvn rewrite:runNoFork -Popen-rewrite
+```
+
 ## Package
 
 ```bash

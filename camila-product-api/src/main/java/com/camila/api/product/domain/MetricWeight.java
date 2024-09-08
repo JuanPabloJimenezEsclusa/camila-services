@@ -11,4 +11,4 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record MetricWeight (
   Metrics metric,
   double weight
-) { }
+) {}

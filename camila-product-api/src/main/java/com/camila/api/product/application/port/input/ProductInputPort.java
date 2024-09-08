@@ -37,7 +37,7 @@ class ProductInputPort implements ProductUserCase {
   public Mono<Product> findByInternalId(String internalId) {
     try {
       return productOutputPort.findByInternalId(internalId);
-    } catch (Exception e){
+    } catch (Exception e) {
       return Mono.error(new ProductException(e));
     }
   }
@@ -66,4 +66,3 @@ class ProductInputPort implements ProductUserCase {
     return PageRequest.of(page, size);
   }
 }
-

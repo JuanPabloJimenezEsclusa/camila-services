@@ -94,9 +94,9 @@ abstract class AbstractProductCouchbaseAdapter {
 
   // https://docs.couchbase.com/server/current/rest-api/scopes-and-collections-api.html#apis-in-this-section
   private static String buildBasePath(String bucketName) {
-    return "http://" + couchbaseContainer.getHost() + ":" +
-      couchbaseContainer.getBootstrapHttpDirectPort() +
-      "/pools/default/buckets/" + bucketName + "/scopes/" ;
+    return "http://" + couchbaseContainer.getHost() + ":"
+      + couchbaseContainer.getBootstrapHttpDirectPort()
+      + "/pools/default/buckets/" + bucketName + "/scopes/";
   }
 
   private static void createBucketContent(String path, String body) throws IOException {

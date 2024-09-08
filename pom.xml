@@ -12,15 +12,9 @@
   <groupId>com.camila.core</groupId>
   <artifactId>camila-services</artifactId>
   <version>1.0.0</version>
+  <packaging>pom</packaging>
   <name>camila-services</name>
   <description>camila-services</description>
-  <packaging>pom</packaging>
-
-  <properties>
-    <java.version>21</java.version>
-    <spring-cloud-version>2023.0.3</spring-cloud-version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
 
   <modules>
     <module>camila-product-api</module>
@@ -42,6 +36,23 @@
     <url>https://github.com/JuanPabloJimenezEsclusa/camila-services/issues</url>
   </issueManagement>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>camila-services</name>
+      <url>https://maven.pkg.github.com/JuanPabloJimenezEsclusa/camila-services</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </distributionManagement>
+
+  <properties>
+    <java.version>21</java.version>
+    <spring-cloud-version>2023.0.3</spring-cloud-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -54,19 +65,21 @@
     </dependencies>
   </dependencyManagement>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>camila-services</name>
-      <url>https://maven.pkg.github.com/JuanPabloJimenezEsclusa/camila-services</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </distributionManagement>
-
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>4.0.0-M15</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -114,5 +127,58 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>open-rewrite</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.openrewrite.maven</groupId>
+            <artifactId>rewrite-maven-plugin</artifactId>
+            <version>5.39.2</version>
+            <configuration>
+              <activeRecipes>
+                <recipe>org.openrewrite.maven.BestPractices</recipe>
+                <recipe>org.openrewrite.maven.ModernizeObsoletePoms</recipe>
+                <recipe>org.openrewrite.maven.OrderPomElements</recipe>
+
+                <recipe>org.openrewrite.yaml.format.Indents</recipe>
+
+                <recipe>org.openrewrite.hcl.format.BlankLines</recipe>
+                <recipe>org.openrewrite.hcl.format.NormalizeFormat</recipe>
+                <recipe>org.openrewrite.hcl.format.RemoveTrailingWhitespace</recipe>
+                <recipe>org.openrewrite.hcl.format.Spaces</recipe>
+
+                <recipe>org.openrewrite.java.format.EmptyNewlineAtEndOfFile</recipe>
+                <recipe>org.openrewrite.java.format.MethodParamPad</recipe>
+                <recipe>org.openrewrite.java.format.NormalizeFormat</recipe>
+                <recipe>org.openrewrite.java.format.NoWhitespaceAfter</recipe>
+                <recipe>org.openrewrite.java.format.NoWhitespaceBefore</recipe>
+                <recipe>org.openrewrite.java.format.OperatorWrap</recipe>
+                <recipe>org.openrewrite.java.format.PadEmptyForLoopComponents</recipe>
+                <recipe>org.openrewrite.java.format.RemoveTrailingWhitespace</recipe>
+                <recipe>org.openrewrite.java.format.Spaces</recipe>
+                <recipe>org.openrewrite.java.OrderImports</recipe>
+                <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+              </activeRecipes>
+              <activeStyles>
+                <style>org.openrewrite.java.IntelliJ</style>
+                <style>org.openrewrite.java.SpringFormat</style>
+              </activeStyles>
+              <failOnDryRunResults>false</failOnDryRunResults>
+              <sizeThresholdMb>20</sizeThresholdMb>
+              <plainTextMasks>
+                <plainTextMask>**/.txt</plainTextMask>
+              </plainTextMasks>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

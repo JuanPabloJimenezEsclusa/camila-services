@@ -1,7 +1,7 @@
 package com.camila.api.product.framework.adapter.input.rest;
 
-import com.camila.api.product.domain.Product;
 import com.camila.api.product.application.usercase.ProductUserCase;
+import com.camila.api.product.domain.Product;
 import com.camila.api.product.framework.adapter.input.rest.exception.RestExceptionHandler;
 import com.camila.api.product.framework.adapter.input.security.LocalSecurityConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +30,8 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
  * The type Product rest adapter unit test.
  */
 @ExtendWith(SpringExtension.class)
-@WebFluxTest(controllers = { ProductRestAdapter.class })
-@Import({ RestExceptionHandler.class, LocalSecurityConfig.class })
+@WebFluxTest(controllers = {ProductRestAdapter.class})
+@Import({RestExceptionHandler.class, LocalSecurityConfig.class})
 @DisplayName("[UT][ProductRestAdapter] Product controller test")
 class ProductRestAdapterUnitTest {
 

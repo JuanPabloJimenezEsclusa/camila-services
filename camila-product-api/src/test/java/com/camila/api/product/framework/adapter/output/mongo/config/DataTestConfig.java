@@ -43,9 +43,9 @@ public class DataTestConfig {
    * @throws IOException the io exception
    */
   @PostConstruct
-  public void init() throws IOException  {
+  public void init() throws IOException {
     File file = resourceFile.getFile();
-    var jsonQuery  = Files.readString(file.toPath());
+    var jsonQuery = Files.readString(file.toPath());
     var documentMono = mongoOperations.executeCommand(jsonQuery);
     log.info(Objects.requireNonNull(documentMono.block(Duration.ofSeconds(10L))).toJson());
   }

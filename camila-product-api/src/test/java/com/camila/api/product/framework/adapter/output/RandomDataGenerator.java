@@ -68,7 +68,7 @@ public class RandomDataGenerator {
 
   @NotNull
   private static Stream<String> getReader(int numItems, Random random) {
-    return Stream.iterate(7, n -> n+1).parallel().limit(numItems).map(internalId -> {
+    return Stream.iterate(7, n -> n + 1).parallel().limit(numItems).map(internalId -> {
       String name = generateRandomName(internalId);
       String category = CATEGORY_WORDS[0];
       int salesUnits = random.nextInt(5000);

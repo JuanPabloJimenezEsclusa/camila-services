@@ -59,17 +59,17 @@ class ProductRestAdapter {
   @Operation(
     summary = "Find product by internal identified",
     description = "Consult product by ID")
-  @ApiResponse(responseCode="200", description ="Success",
+  @ApiResponse(responseCode = "200", description = "Success",
     content = {
       @Content(mediaType = MediaType.TEXT_EVENT_STREAM_VALUE),
       @Content(mediaType = MediaType.APPLICATION_NDJSON_VALUE),
-      @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) })
+      @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
   @ApiResponse(responseCode = "401", description = "Unauthorized")
   @ApiResponse(responseCode = "500", description = "Server Error")
   @GetMapping(value = "/{id}", produces = {
     MediaType.TEXT_EVENT_STREAM_VALUE,
     MediaType.APPLICATION_NDJSON_VALUE,
-    MediaType.APPLICATION_JSON_VALUE })
+    MediaType.APPLICATION_JSON_VALUE})
   ResponseEntity<Mono<Product>> findById(@PathVariable("id") String internalId) {
     return ResponseEntity.ok(productUserCase.findByInternalId(internalId));
   }
@@ -83,17 +83,17 @@ class ProductRestAdapter {
   @Operation(
     summary = "Find products sort by weight",
     description = "Consult products sorted by metric:weight rules")
-  @ApiResponse(responseCode="200", description ="Success",
+  @ApiResponse(responseCode = "200", description = "Success",
     content = {
       @Content(mediaType = MediaType.TEXT_EVENT_STREAM_VALUE),
       @Content(mediaType = MediaType.APPLICATION_NDJSON_VALUE),
-      @Content(mediaType = MediaType.APPLICATION_JSON_VALUE) })
+      @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)})
   @ApiResponse(responseCode = "401", description = "Unauthorized")
   @ApiResponse(responseCode = "500", description = "Server Error")
   @GetMapping(produces = {
     MediaType.TEXT_EVENT_STREAM_VALUE,
     MediaType.APPLICATION_NDJSON_VALUE,
-    MediaType.APPLICATION_JSON_VALUE })
+    MediaType.APPLICATION_JSON_VALUE})
   ResponseEntity<Flux<Product>> sortProducts(
     @RequestParam
     @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)

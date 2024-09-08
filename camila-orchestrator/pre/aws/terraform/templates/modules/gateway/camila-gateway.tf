@@ -82,12 +82,12 @@ resource "aws_api_gateway_authorizer" "cognito" {
 
 # https://registry.terraform.io/providers/aaronfeng/aws/latest/docs/resources/api_gateway_method
 resource "aws_api_gateway_method" "any" {
-  rest_api_id   = aws_api_gateway_rest_api.camila_api_gateway.id
-  resource_id   = aws_api_gateway_resource.proxy.id
-  http_method   = "ANY"
+  rest_api_id          = aws_api_gateway_rest_api.camila_api_gateway.id
+  resource_id          = aws_api_gateway_resource.proxy.id
+  http_method          = "ANY"
   #authorization = "NONE"
-  authorization = "COGNITO_USER_POOLS"
-  authorizer_id = aws_api_gateway_authorizer.cognito.id
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.cognito.id
   authorization_scopes = ["camila/read","camila/write"]
 
   request_parameters = {
@@ -129,7 +129,7 @@ resource "aws_api_gateway_deployment" "camila_api_gateway_deploy" {
     redeployment = sha1(jsonencode([
       aws_api_gateway_resource.proxy.id,
       aws_api_gateway_method.any.id,
-      aws_api_gateway_integration.alb.id,
+      aws_api_gateway_integration.alb.id
     ]))
   }
 

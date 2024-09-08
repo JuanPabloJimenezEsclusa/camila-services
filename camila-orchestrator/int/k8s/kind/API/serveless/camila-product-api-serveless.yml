@@ -54,26 +54,26 @@ spec:
         serving.knative.dev/progress-deadline: "10s"
     spec:
       containers:
-      - image: docker.io/library/camila-product-api-serveless:1.0.0
-        name: camila-product-api-serveless
-        imagePullPolicy: Never
-        ports:
-        - containerPort: 31080
-        resources:
-          limits:
-            cpu: "2"
-            memory: 1024Mi
-          requests:
-            cpu: "1"
-            memory: 512Mi
-        env:
-        - name: spring.data.mongodb.uri
-          valueFrom:
-            secretKeyRef:
-              name: camila-product-api-serveless-creds
-              key: uri
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom: 
-            configMapKeyRef:
-              name: camila-product-api-serveless-config
-              key: SPRING_PROFILES_ACTIVE
+        - image: docker.io/library/camila-product-api-serveless:1.0.0
+          name: camila-product-api-serveless
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 31080
+          resources:
+            limits:
+              cpu: "2"
+              memory: 1024Mi
+            requests:
+              cpu: "1"
+              memory: 512Mi
+          env:
+            - name: spring.data.mongodb.uri
+              valueFrom:
+                secretKeyRef:
+                  name: camila-product-api-serveless-creds
+                  key: uri
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom: 
+                configMapKeyRef:
+                  name: camila-product-api-serveless-config
+                  key: SPRING_PROFILES_ACTIVE

@@ -39,4 +39,4 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: mvn -B deploy -Dmaven.test.skip=true --file pom.xml || true
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

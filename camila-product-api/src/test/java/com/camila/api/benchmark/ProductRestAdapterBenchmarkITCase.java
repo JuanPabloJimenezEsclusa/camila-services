@@ -25,7 +25,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import({ ProductApiApplication.class })
+@Import({ProductApiApplication.class})
 @State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @DisplayName("[JMH-T][ProductRestAdapter] Java benchmark tests")
