@@ -25,11 +25,11 @@ class Oauth2SecurityConfig {
     "/actuator/**",
     "/graphiql/**",
     "/rsocket/**",
-    "/ProductService/**" };
+    "/ProductService/**"};
   private static final String[] PRODUCT_ENDPOINTS = {
     "/products", "/products/**",
     "/graphql/**",
-    "/ws/**" };
+    "/ws/**"};
 
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
   private String trustedIssuers;

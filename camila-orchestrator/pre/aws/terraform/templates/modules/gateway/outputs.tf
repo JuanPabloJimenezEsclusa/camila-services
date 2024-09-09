@@ -30,5 +30,5 @@ output "api_gateway_route53_record_name" {
 
 output "camila_aws_api_gateway_stage_arn" {
   description = "The ARN of the API Gateway"
-  value = aws_api_gateway_stage.camila_api_gateway_stage.arn
+  value       = aws_api_gateway_stage.camila_api_gateway_stage.arn
 }

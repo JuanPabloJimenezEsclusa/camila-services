@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 /**
  * The type Product rest adapter integration test.
  */
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRestAdapterITCase {

@@ -19,7 +19,7 @@ resource "aws_wafv2_web_acl" "camila_gateway_acl" {
 
     statement {
       byte_match_statement {
-        search_string = "bad-bot"
+        search_string         = "bad-bot"
         field_to_match {
           single_header {
             name = "user-agent"

@@ -81,9 +81,9 @@ class ProductWebSocketHandlerITCase {
           log.info("Received findByInternalI: {}", message);
           try {
             var jsonNode = objectMapper.readTree(message);
-            assertEquals( 1, jsonNode.get("internalId").asInt());
-            assertEquals( "SHIRT", jsonNode.get("category").asText());
-            assertEquals( "V-NECH BASIC SHIRT", jsonNode.get("name").asText());
+            assertEquals(1, jsonNode.get("internalId").asInt());
+            assertEquals("SHIRT", jsonNode.get("category").asText());
+            assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asText());
           } catch (JsonProcessingException e) {
             log.error("Error parsing json", e);
           }
@@ -119,9 +119,9 @@ class ProductWebSocketHandlerITCase {
           log.info("Received sortProducts: {}", message);
           try {
             var jsonNode = objectMapper.readTree(message);
-            assertEquals( 5, jsonNode.get("internalId").asInt());
-            assertEquals( "SHIRT", jsonNode.get("category").asText());
-            assertEquals( "CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
+            assertEquals(5, jsonNode.get("internalId").asInt());
+            assertEquals("SHIRT", jsonNode.get("category").asText());
+            assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
           } catch (JsonProcessingException e) {
             log.error("Error parsing json", e);
           }

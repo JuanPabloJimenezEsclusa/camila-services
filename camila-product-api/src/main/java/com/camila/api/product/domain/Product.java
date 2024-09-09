@@ -17,4 +17,4 @@ public record Product(
   String category,
   int salesUnits,
   Map<String, Integer> stock
-) { }
+) {}

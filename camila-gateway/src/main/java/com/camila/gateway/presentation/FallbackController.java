@@ -24,7 +24,7 @@ class FallbackController {
   @GetMapping("/fallback")
   ResponseEntity<Mono<FallbackResponse>> fallback() {
     return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Mono.just(
-      new FallbackResponse("Service Unavailable",  fallbackMessage)));
+      new FallbackResponse("Service Unavailable", fallbackMessage)));
   }
 }
 

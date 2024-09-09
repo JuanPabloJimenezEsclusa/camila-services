@@ -28,10 +28,10 @@ public class ProductBehaviourTest {
   @Given("^some metrics weights and page config$")
   public void someMetricsWeightsAndPageConfig(@NotNull DataTable table) {
     parameters = List.of(
-      table.cell(1,0),
-      table.cell(1,1),
-      table.cell(1,2),
-      table.cell(1,3));
+      table.cell(1, 0),
+      table.cell(1, 1),
+      table.cell(1, 2),
+      table.cell(1, 3));
   }
 
   @When("^consult products sort and paginated$")
@@ -43,7 +43,7 @@ public class ProductBehaviourTest {
 
   @Then("^receive status$")
   public void receiveStatus(@NotNull DataTable table) {
-    exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1,0)));
+    exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1, 0)));
   }
 
   @And("^get sorted data$")

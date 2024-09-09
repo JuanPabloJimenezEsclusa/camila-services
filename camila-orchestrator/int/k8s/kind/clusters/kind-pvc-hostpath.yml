@@ -75,7 +75,7 @@ metadata:
   name: hostpath-provisioner
   namespace: local-storage
   labels:
-        app: hostpath-provisioner
+    app: hostpath-provisioner
 spec:
   replicas: 3
   selector:
@@ -110,9 +110,9 @@ spec:
       automountServiceAccountToken: true
       serviceAccountName: hostpath-provisioner
       volumes:
-      - name: pv-volume
-        hostPath:
-          path: /tmp/hostpath-provisioner
+        - name: pv-volume
+          hostPath:
+            path: /tmp/hostpath-provisioner
 ---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1

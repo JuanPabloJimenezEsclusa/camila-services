@@ -47,7 +47,7 @@ import org.springframework.context.annotation.Profile;
       refreshUrl = "${openapi.oAuthFlow.refreshUrl}",
       scopes = {
         @OAuthScope(name = "camila/read", description = "read scope"),
-        @OAuthScope(name = "camila/write", description = "write scope") }),
+        @OAuthScope(name = "camila/write", description = "write scope")}),
     // used into postman, cli and swagger-ui
     authorizationCode = @OAuthFlow(
       tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
@@ -56,7 +56,7 @@ import org.springframework.context.annotation.Profile;
       scopes = {
         @OAuthScope(name = "openid", description = "openid scope"),
         @OAuthScope(name = "camila/read", description = "read scope"),
-        @OAuthScope(name = "camila/write", description = "write scope") }),
+        @OAuthScope(name = "camila/write", description = "write scope")}),
     // supported by Keycloak but not by AWS Cognito
     password = @OAuthFlow(
       tokenUrl = "${openapi.oAuthFlow.tokenUrl}",
@@ -65,9 +65,9 @@ import org.springframework.context.annotation.Profile;
       scopes = {
         @OAuthScope(name = "openid", description = "openid scope"),
         @OAuthScope(name = "camila/read", description = "read scope"),
-        @OAuthScope(name = "camila/write", description = "write scope") })
+        @OAuthScope(name = "camila/write", description = "write scope")})
   ))
 
 @Configuration
 @Profile("dev|pre")
-class Oauth2OpenAPIConfig { }
+class Oauth2OpenAPIConfig {}

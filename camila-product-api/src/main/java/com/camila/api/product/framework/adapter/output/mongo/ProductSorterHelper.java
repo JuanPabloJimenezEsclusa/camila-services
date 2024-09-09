@@ -16,7 +16,7 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
  */
 @Slf4j
 class ProductSorterHelper {
-  private ProductSorterHelper(){
+  private ProductSorterHelper() {
     throw new AssertionError("not allowed!");
   }
 
@@ -79,9 +79,9 @@ class ProductSorterHelper {
   }
 
   private static AggregationExpression getAggregationExpression(MetricWeight metricWeight) {
-    return metricWeight.metric() == Metrics.STOCK ?
-      getStockByWeights(metricWeight.weight()) :
-      getSalesUnitsByWeights(metricWeight.weight());
+    return metricWeight.metric() == Metrics.STOCK
+      ? getStockByWeights(metricWeight.weight())
+      : getSalesUnitsByWeights(metricWeight.weight());
   }
 
   private static AggregationExpression joinWeightExpressions(List<AggregationExpression> weightExpressions) {

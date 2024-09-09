@@ -6,4 +6,4 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
  * The type Reactive config.
  */
 @EnableReactiveMongoRepositories
-class ReactiveConfig { }
+class ReactiveConfig {}
