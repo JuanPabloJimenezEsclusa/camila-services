@@ -15,7 +15,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
 # https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-# GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+#GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
 GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json

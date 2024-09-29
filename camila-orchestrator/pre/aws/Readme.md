@@ -62,7 +62,7 @@ export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
 export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
-./cloudformation/init-aws-plan.sh
+./cloudformation/init-aws-stack.sh
 ```
 
 ```bash
@@ -166,5 +166,5 @@ docker run --rm -it \
   * [AWS WAF](https://us-east-1.console.aws.amazon.com/wafv2/homev2/web-acls?region=eu-west-1) 💰
 
 * Databases
-  * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview)
-  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) 💰💰 (only 30+ days free tier)
+  * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview) (free tier)
+  * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) (free tier)

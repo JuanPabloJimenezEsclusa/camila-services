@@ -20,7 +20,7 @@ Parameters:
   RepositoryTechnology:
     Type: String
     Description: The repository technology
-    Default: "mongo"
+    Default: "couchbase"
   CouchbaseConnection:
     Type: String
     Description: The Couchbase connection string

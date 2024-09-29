@@ -44,7 +44,7 @@ abstract class AbstractProductCouchbaseAdapter {
   private static final DockerImageName COUCHBASE_IMAGE = DockerImageName
     .parse("couchbase")
     .asCompatibleSubstituteFor("couchbase/server")
-    .withTag("7.6.2");
+    .withTag("7.6.3");
 
   @AfterAll
   public static void tearDown() {
