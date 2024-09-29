@@ -203,7 +203,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:community-7.6.2
+    image: couchbase/server:community-7.6.3
     container_name: camila-couchbase-db
     hostname: couchbase
     restart: "on-failure"
