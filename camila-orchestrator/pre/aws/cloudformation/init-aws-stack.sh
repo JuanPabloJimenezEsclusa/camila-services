@@ -3,7 +3,7 @@
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
-set -o xtrace
+if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 cd "$(dirname "$0")"
 
@@ -32,6 +32,7 @@ validate_env_var() {
 # Function to validate URL format (basic check)
 validate_url_format() {
   local url="$1"
+
   if ! [[ "$url" =~ ^(couchbases|mongodb\+srv):// ]]; then
     echo "Error: Invalid URL format for $url."
     exit 1
@@ -64,39 +65,67 @@ build_and_push_image() {
   docker push "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
 }
 
-# Validate required environment variables
-validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
-validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
-validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
-validate_env_var "MONGO_URI" "${MONGO_URI}"
-
-# Validate URL formats
-validate_url_format "${COUCHBASE_CONNECTION}"
-validate_url_format "${MONGO_URI}"
-
-# Main script
-create_ecr_repository
-login_to_ecr
-build_and_push_image
-
 # Create secrets stack
-aws cloudformation create-stack \
-  --stack-name "camila-secrets-stack" \
-  --template-body "file://templates/camila-secrets-stack.yml" \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --parameters \
-    "ParameterKey=CouchbasePassword,ParameterValue=${COUCHBASE_PASSWORD}" \
-    "ParameterKey=MongoUri,ParameterValue=${MONGO_URI}"
+create_secret_stack() {
+  echo "Init ${FUNCNAME:-} ..."
 
-# Wait for stack to be created
-aws cloudformation wait stack-create-complete \
-  --stack-name "camila-secrets-stack"
+  aws cloudformation create-stack \
+    --stack-name "camila-secrets-stack" \
+    --template-body "file://templates/camila-secrets-stack.yml" \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameters \
+      "ParameterKey=CouchbasePassword,ParameterValue=${COUCHBASE_PASSWORD}" \
+      "ParameterKey=MongoUri,ParameterValue=${MONGO_URI}"
+
+  # Wait for stack to be created
+  echo "Waiting ${FUNCNAME:-} ..."
+  aws cloudformation wait stack-create-complete \
+    --stack-name "camila-secrets-stack"
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
 
 # Create ecs stack
-aws cloudformation create-stack \
-  --stack-name "camila-product-stack" \
-  --template-body "file://templates/camila-services-stack.yml" \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --parameters \
-    "ParameterKey=CouchbaseConnection,ParameterValue=${COUCHBASE_CONNECTION}" \
-    "ParameterKey=CouchbaseUsername,ParameterValue=${COUCHBASE_USERNAME}"
+create_ecs_stack() {
+  echo "Init ${FUNCNAME:-} ..."
+
+  aws cloudformation create-stack \
+    --stack-name "camila-product-stack" \
+    --template-body "file://templates/camila-services-stack.yml" \
+    --capabilities CAPABILITY_NAMED_IAM \
+    --parameters \
+      "ParameterKey=CouchbaseConnection,ParameterValue=${COUCHBASE_CONNECTION}" \
+      "ParameterKey=CouchbaseUsername,ParameterValue=${COUCHBASE_USERNAME}"
+
+  # Wait for stack to be created
+  echo "Waiting ${FUNCNAME:-} ..."
+  aws cloudformation wait stack-create-complete \
+    --stack-name "camila-product-stack"
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
+
+# Main script
+main() {
+  echo "Init ${0##*/} (${FUNCNAME:-})"
+
+  # Validate required environment variables
+  validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
+  validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
+  validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
+  validate_env_var "MONGO_URI" "${MONGO_URI}"
+
+  # Validate URL formats
+  validate_url_format "${COUCHBASE_CONNECTION}"
+  validate_url_format "${MONGO_URI}"
+
+  create_ecr_repository
+  login_to_ecr
+  build_and_push_image
+  create_secret_stack
+  create_ecs_stack
+
+  echo "Done ${0##*/} (${FUNCNAME:-})"
+}
+
+time main

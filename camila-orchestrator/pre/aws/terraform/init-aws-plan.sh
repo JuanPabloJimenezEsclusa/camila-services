@@ -3,6 +3,7 @@
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 cd "$(dirname "$0")"
 
@@ -22,23 +23,32 @@ validate_env_var() {
   fi
 }
 
-# Set log level to DEBUG
-export TF_LOG="INFO"
+# Main script
+main() {
+  echo "Init ${0##*/} (${FUNCNAME:-})"
 
-# Init Terraform and install providers
-terraform -chdir=templates init
+  # Set log level to DEBUG
+  export TF_LOG="INFO"
 
-# Validate required environment variables
-terraform -chdir=templates validate
+  # Init Terraform and install providers
+  terraform -chdir=templates init -upgrade
 
-# Run Terraform plan
-validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
-validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
-validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
-validate_env_var "MONGO_URI" "${MONGO_URI}"
+  # Validate required environment variables
+  terraform -chdir=templates validate
 
-terraform -chdir=templates plan -compact-warnings -out=tfplan \
-  -var "couchbase_connection=${COUCHBASE_CONNECTION}" \
-  -var "couchbase_username=${COUCHBASE_USERNAME}" \
-  -var "couchbase_password=${COUCHBASE_PASSWORD}" \
-  -var "mongo_uri=${MONGO_URI}"
+  # Run Terraform plan
+  validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
+  validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
+  validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
+  validate_env_var "MONGO_URI" "${MONGO_URI}"
+
+  terraform -chdir=templates plan -compact-warnings -out=tfplan \
+    -var "couchbase_connection=${COUCHBASE_CONNECTION}" \
+    -var "couchbase_username=${COUCHBASE_USERNAME}" \
+    -var "couchbase_password=${COUCHBASE_PASSWORD}" \
+    -var "mongo_uri=${MONGO_URI}"
+
+  echo "Done ${0##*/} (${FUNCNAME:-})"
+}
+
+time main
