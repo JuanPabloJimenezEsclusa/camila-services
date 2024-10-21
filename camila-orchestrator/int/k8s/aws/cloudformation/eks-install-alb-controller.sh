@@ -11,7 +11,7 @@
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
-set -o xtrace
+if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 cd "$(dirname "$0")"
 
@@ -27,9 +27,9 @@ OIDC_URL="$(aws eks describe-cluster \
 echo "OIDC_URL: ${OIDC_URL}"
 
 # Fetch the certificate chain from the OIDC provider
-echo "Fetching the certificate chain from: ${OIDC_URL}"
-CERTIFICATE="$(echo | openssl s_client -connect "${OIDC_URL}":443 2>/dev/null | openssl x509 -fingerprint -noout)" # CAUTION!!
-#CERTIFICATE="$(< API/_.eks.eu-west-1.amazonaws.com openssl x509 -fingerprint -noout)"
+OIDC_HOST="${OIDC_URL%/id/*}"
+echo "Fetching the certificate chain from: ${OIDC_HOST}"
+CERTIFICATE="$(echo | openssl s_client -connect "${OIDC_HOST}":443 2>/dev/null | openssl x509 -fingerprint -noout)"
 echo "Certificate: ${CERTIFICATE}"
 
 # Extract the SHA1 fingerprint and format it

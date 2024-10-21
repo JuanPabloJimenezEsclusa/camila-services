@@ -19,7 +19,7 @@ Implement:
 ## Pre-conditions
 
 * JDK >= 21
-* Docker >= 24.0.6
+* Docker ~= 27.3.0
 * Maven >= 3.8.8
 * Spring >= 6.x
 * Spring-boot >= 3.3.x

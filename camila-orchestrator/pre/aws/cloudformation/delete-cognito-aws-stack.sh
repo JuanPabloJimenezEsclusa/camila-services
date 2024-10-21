@@ -3,18 +3,32 @@
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
-set -o xtrace
+if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 cd "$(dirname "$0")"
 
-# Delete stack
-aws cloudformation delete-stack \
-  --no-cli-auto-prompt \
-  --no-cli-pager \
-  --stack-name "camila-cognito-oauth2-stack"
+# Delete cognito oauth2 stack
+delete_cognito_stack() {
+  echo "Init ${FUNCNAME:-} ..."
 
-# Wait for stack to be deleted
-aws cloudformation wait stack-delete-complete \
-  --stack-name "camila-cognito-oauth2-stack"
+  aws cloudformation delete-stack \
+    --no-cli-auto-prompt \
+    --no-cli-pager \
+    --stack-name "camila-cognito-oauth2-stack"
 
-echo "Stack deleted"
+  # Wait for stack to be deleted
+  echo "Waiting ${FUNCNAME:-} ..."
+  aws cloudformation wait stack-delete-complete \
+    --stack-name "camila-cognito-oauth2-stack"
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
+
+# Main script
+main() {
+  echo "Init ${0##*/} (${FUNCNAME:-})"
+  delete_cognito_stack
+  echo "Done ${0##*/} (${FUNCNAME:-})"
+}
+
+time main

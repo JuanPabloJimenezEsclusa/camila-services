@@ -3,30 +3,49 @@
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
-set -o xtrace
+if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 cd "$(dirname "$0")"
 
 # Delete app runner stack
-aws cloudformation delete-stack \
-  --no-cli-auto-prompt \
-  --no-cli-pager \
-  --stack-name "camila-app-runner-stack"
+delete_app_runner_stack() {
+  echo "Init ${FUNCNAME:-} ..."
 
-# Wait for app runner stack to be deleted
-aws cloudformation wait stack-delete-complete \
-  --stack-name "camila-app-runner-stack"
+  aws cloudformation delete-stack \
+    --no-cli-auto-prompt \
+    --no-cli-pager \
+    --stack-name "camila-app-runner-stack"
 
-echo "App Runner Stack deleted"
+  # Wait for app runner stack to be deleted
+  aws cloudformation wait stack-delete-complete \
+    --stack-name "camila-app-runner-stack"
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
 
 # Delete secrets stack
-aws cloudformation delete-stack \
-  --no-cli-auto-prompt \
-  --no-cli-pager \
-  --stack-name "camila-secrets-stack"
+delete_secrets_stack() {
+  echo "Init ${FUNCNAME:-} ..."
 
-# Wait for secrets stack to be deleted
-aws cloudformation wait stack-delete-complete \
-  --stack-name "camila-secrets-stack"
+  aws cloudformation delete-stack \
+    --no-cli-auto-prompt \
+    --no-cli-pager \
+    --stack-name "camila-secrets-stack"
 
-echo "Secrets Stack deleted"
+  # Wait for secrets stack to be deleted
+  echo "Waiting ${FUNCNAME:-} ..."
+  aws cloudformation wait stack-delete-complete \
+    --stack-name "camila-secrets-stack"
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
+
+# Main script
+main() {
+  echo "Init ${0##*/} (${FUNCNAME:-})"
+  delete_app_runner_stack
+  delete_secrets_stack
+  echo "Done ${0##*/} (${FUNCNAME:-})"
+}
+
+time main
