@@ -37,7 +37,7 @@ The Docker images for the services need to be built beforehand:
 cd dev/compose
 
 # Start the services in detached mode
-docker-compose up -d
+docker-compose up -d --build --force-recreate
 
 # List running services
 docker-compose ps
