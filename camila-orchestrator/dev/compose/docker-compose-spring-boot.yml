@@ -3,8 +3,8 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:7.0.9-ubi8
-    container_name: camila-product-db
+    image: mongodb/mongodb-community-server:8.0.3-ubi9
+    container_name: camila-mongo-product-db
     hostname: mongodb
     restart: "on-failure"
     deploy:
@@ -41,8 +41,8 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:community-7.6.3
-    container_name: camila-couchbase-db
+    image: couchbase/server:7.6.3
+    container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: "on-failure"
     stdin_open: true

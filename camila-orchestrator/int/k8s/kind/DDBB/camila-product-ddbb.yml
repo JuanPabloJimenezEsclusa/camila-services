@@ -89,8 +89,8 @@ spec:
         app: mongo
     spec:
       containers:
-        - image: mongodb/mongodb-community-server:7.0.8-ubi8
-          name: camila-product-db
+        - image: mongodb/mongodb-community-server:8.0.3-ubi9
+          name: camila-mongo-product-db
           resources:
             limits:
               cpu: "2"
