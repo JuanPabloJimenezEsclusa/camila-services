@@ -1,49 +1,80 @@
 # camila-product-api
 
-> Microservice example
-
-> It is recommended to use dark mode UI to read this!
-
-Implement:
+Microservice example. Implements a product API with the following features:
+- Development: [API-First Approach](https://www.postman.com/api-first/)
 - Paradigm: [Reactive](https://projectreactor.io/learn)
 - Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
-- Communication: 
-  - [Rest](https://en.wikipedia.org/wiki/REST)
-  - [Graphql](https://graphql.org/)
-  - [Websocket](https://en.wikipedia.org/wiki/WebSocket)
-  - [RSocket](https://rsocket.io/)
-  - [GRPC](https://grpc.io/docs/what-is-grpc/core-concepts/)
+- Communication: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [RSocket](https://rsocket.io/), [GRPC](https://grpc.io/docs/what-is-grpc/core-concepts/)
+
+## Table of Contents
 
 ---
 
+- [Pre-conditions](#pre-conditions)
+- [API-First Approach](#api-first-approach)
+- [Architecture](#architecture)
+- [Links](#links)
+- [API Request Examples](#api-request-examples)
+  - [Rest API](#rest-api)
+  - [Graphql API](#graphql-api)
+  - [Websocket](#websocket)
+  - [RSocket](#rsocket)
+- [Testing](#testing)
+- [Operations (build, deploy)](#operations-build-deploy)
+- [Notes](#notes)
+
 ## Pre-conditions
+
+---
 
 * JDK >= 21
 * Docker ~= 27.3.0
-* Maven >= 3.8.8
+* Maven >= 3.9.4
 * Spring >= 6.x
-* Spring-boot >= 3.3.x
-* MongoDB >= 7.x
+* Spring-boot >= 3.4.x
+* MongoDB >= 8.x
 * Couchbase >= 7.x
 * Native Image compilation
   * GraalVM >= 21.0.1+12.1
   * GCC >= (linux, x86_64, 11.4.0)
     * `zlib1g-dev`
 
+## API-First Approach
+
 ---
 
+This project follows the API-first approach, where APIs are designed and documented before implementation:
+
+1. **API Specification**: Using [OpenAPI](https://www.openapis.org/) for REST APIs and [GraphQL Schema](https://graphql.org/learn/schema/) for GraphQL APIs
+2. **Contract Testing**: Ensuring implementations meet API contracts
+3. **Versioning**: Clear versioning strategy for API evolution
+4. **Documentation**: Auto-generated from specifications
+
+API definitions are stored in the `src/main/resources/` directory:
+- REST API: [product.yml](src/main/resources/api/product.yml)
+- GraphQL: [schema.graphqls](src/main/resources/graphql/schema.graphqls)
+
+The API-first approach enables:
+- Better developer experience with consistent interfaces
+- Parallel development of frontend and backend
+- Improved API quality and maintainability
+- Early detection of design issues
+
 ## Architecture
+
+---
 
 ```txt
 📦api
  ┣ 📂product
  ┃ ┣ 📂domain
+ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┣ 📂model
+ ┃ ┃ ┣ 📂port
+ ┃ ┃ ┗ 📂usecase
  ┃ ┣ 📂application
- ┃ ┃ ┣ 📂usercase
- ┃ ┃ ┗ 📂port
- ┃ ┃   ┣ 📂input
- ┃ ┃   ┗ 📂output
- ┃ ┗ 📂framework
+ ┃ ┃ ┗ 📂usecase
+ ┃ ┗ 📂infrastructure
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
  ┃     ┃ ┣ 📂security
@@ -60,16 +91,16 @@ Implement:
 
 ![Hexagonal-architecture](.docs/architecture/camila-product-api-architecture-v1.svg "Hexagonal Diagram")
 
----
-
 ## Links
+
+---
 
 * Rest API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
 * Graphql API DOC: <http://localhost:8080/product-dev/api/graphiql>
 
----
-
 ## API request examples
+
+---
 
 ### Rest API
 
@@ -139,21 +170,21 @@ export RSOCKET_SERVER_URL="ws://localhost:7000/product-dev/api/rsocket"
 ./.docs/api-rsocket-request.sh
 ```
 
----
-
 ## Testing
+
+---
 
 [Tests - Readme](src/test/Readme.md)
 
----
-
 ## Operations (build, deploy)
+
+---
 
 [Operations - Readme](.operate/Readme.md)
 
----
-
 ## Notes:
+
+---
 
 ### Example of aggregating `products` with `sales units` and weighted `stock` filter in `mongodb`
 

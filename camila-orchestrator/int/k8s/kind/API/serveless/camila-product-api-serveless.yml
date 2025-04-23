@@ -13,7 +13,7 @@ metadata:
   name: camila-product-api-serveless-ns-quota
   namespace: camila-product-api-serveless-ns
 spec:
-  hard: 
+  hard:
     limits.cpu: "8"
     limits.memory: 8192Mi
     pods: "10"
@@ -73,7 +73,7 @@ spec:
                   name: camila-product-api-serveless-creds
                   key: uri
             - name: SPRING_PROFILES_ACTIVE
-              valueFrom: 
+              valueFrom:
                 configMapKeyRef:
                   name: camila-product-api-serveless-config
                   key: SPRING_PROFILES_ACTIVE

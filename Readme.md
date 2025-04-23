@@ -18,30 +18,26 @@
 
 > It is recommended to use dark mode UI to read this!
 
-## Technologies
+## Table of Contents
 
-| Development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Testing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Deployment                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D21-005571.svg)](https://adoptium.net/es/temurin/releases/) <br> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D21.0.1-005571.svg)](https://www.graalvm.org/downloads/) <br> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.8.8-005571.svg)](https://maven.apache.org/) <br> [![Spring](https://img.shields.io/badge/Spring-%3E%3D6.x-brightgreen.svg)](https://spring.io/) <br> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D3.2.x-brightgreen.svg)](https://spring.io/boot) <br> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2023.0.x-brightgreen.svg)](https://spring.io/cloud) <br> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D7.x-cyan.svg)](https://www.mongodb.com/) <br> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D5.10.2-orange.svg)](https://junit.org/junit5/) <br> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.17.0-orange.svg)](https://cucumber.io/) <br> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.21.1-orange.svg)](https://pitest.org/) <br> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D3.1.0-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.2.1-orange.svg)](https://www.archunit.org/) <br> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.2-orange.svg)](https://jmeter.apache.org/) <br> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D1.19.8-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D26.1.3-brown.svg)](https://www.docker.com/) <br> [![Docker-compose](https://img.shields.io/badge/Docker%20Compose-%3E%3D2.27.0-brown.svg)](https://docs.docker.com/compose/install/) <br> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.30.1-brown.svg)](https://kubernetes.io/releases/) <br> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.10.2-brown.svg)](https://github.com/knative/serving/releases/) <br> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.15.52-brown.svg)](https://aws.amazon.com/es/cli/) |
+---
 
-## Components
-
-| Component                                   | Description                                                      |
-|---------------------------------------------|------------------------------------------------------------------|
-| [camila-product-api](/camila-product-api)   | Contains a microservice that exposes the product query           |
-| [camila-discovery](/camila-discovery)       | Contains a service discoverer                                    |
-| [camila-gateway](/camila-gateway)           | Contains a gateway for services                                  |
-| [camila-config](/camila-config)             | Contains a central service configurator                          |
-| [camila-admin](/camila-admin)               | Contains a service manager (UI)                                  |
-| [camila-orchestrator](/camila-orchestrator) | Contains configuration as code to orchestrate project deployment |
-
-## Architecture diagrams
-
-![Architecture-C1](.docs/architecture/camila-service-da-v1-C1.svg "Diagram C1")
-
-![Architecture-C2](.docs/architecture/camila-service-da-v1-C2.svg "Diagram C2")
+- [Domain Storytelling](#domain-storytelling)
+- [Architecture](#architecture)
+  - [Technologies](#technologies)
+  - [Components](#components)
+  - [Diagrams](#diagrams)
+- [Build and Packing](#build-and-packing)
+  - [Refactoring](#refactoring)
+  - [Packing](#packing)
+- [Changelog](#changelog)
+- [Code of Conduct](#code-of-conduct)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Domain Storytelling
+
+---
 
 At **camila.shopping**, the need to improve the organization and presentation of products has been recognized. To address this challenge, the development of a classification algorithm that optimizes the user experience when searching for such products has been proposed.
 
@@ -86,7 +82,39 @@ Product data sample:
 | 5  | CONTRASTING LACE T-SHIRT      | 650         | S: 0 / M:1 / L:0     |
 | 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     |
 
-## Automated source code refactoring
+
+## Architecture
+
+---
+
+### Technologies
+
+| Development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Testing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Deployment                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D21-005571.svg)](https://adoptium.net/es/temurin/releases/) <br> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D21.3-005571.svg)](https://www.graalvm.org/downloads/) <br> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.9.4-005571.svg)](https://maven.apache.org/) <br> [![Spring](https://img.shields.io/badge/Spring-%3E%3D6.x-brightgreen.svg)](https://spring.io/) <br> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D3.4.x-brightgreen.svg)](https://spring.io/boot) <br> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2024.0.x-brightgreen.svg)](https://spring.io/cloud) <br> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D8.x-cyan.svg)](https://www.mongodb.com/) <br> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D5.11.4-orange.svg)](https://junit.org/junit5/) <br> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.22.0-orange.svg)](https://cucumber.io/) <br> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.19.1-orange.svg)](https://pitest.org/) <br> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D3.2.0-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.4.0-orange.svg)](https://www.archunit.org/) <br> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.2-orange.svg)](https://jmeter.apache.org/) <br> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D1.20.6-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D26.1.3-brown.svg)](https://www.docker.com/) <br> [![Docker-compose](https://img.shields.io/badge/Docker%20Compose-%3E%3D2.27.0-brown.svg)](https://docs.docker.com/compose/install/) <br> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.30.1-brown.svg)](https://kubernetes.io/releases/) <br> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.10.2-brown.svg)](https://github.com/knative/serving/releases/) <br> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.15.52-brown.svg)](https://aws.amazon.com/es/cli/) |
+
+### Components
+
+| Component                                   | Description                                                      |
+|---------------------------------------------|------------------------------------------------------------------|
+| [camila-product-api](/camila-product-api)   | Contains a microservice that exposes the product query           |
+| [camila-discovery](/camila-discovery)       | Contains a services discoverer                                   |
+| [camila-gateway](/camila-gateway)           | Contains a gateway for services                                  |
+| [camila-config](/camila-config)             | Contains a central services configurator                         |
+| [camila-admin](/camila-admin)               | Contains a services manager (UI)                                 |
+| [camila-orchestrator](/camila-orchestrator) | Contains configuration as code to orchestrate project deployment |
+
+### Diagrams
+
+![Architecture-C1](.docs/architecture/camila-service-da-v1-C1.svg "Diagram C1")
+
+![Architecture-C2](.docs/architecture/camila-service-da-v1-C2.svg "Diagram C2")
+
+## Build and Packing
+
+---
+
+### Refactoring
 
 > Using [OpenRewrite](https://docs.openrewrite.org/) to automatize some common refactoring to reduce technical debts
 
@@ -94,7 +122,7 @@ Product data sample:
 mvn rewrite:runNoFork -Popen-rewrite
 ```
 
-## Package
+### Packing
 
 ```bash
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
@@ -103,9 +131,35 @@ export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 # This can deploy packages into github repository,
 #   if there is a "github" server configuration in "settings.xml"  
 mvn deploy \
+  -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml
 
 # Images
 mvn spring-boot:build-image \
+  -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml
 ```
+
+## Changelog
+
+---
+
+See [CHANGELOG.md](CHANGELOG.md) for details on version history and changes.
+
+## Code of Conduct
+
+---
+
+This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md) Code of Conduct. By participating, you are expected to uphold this code.
+
+## Contributing
+
+---
+
+We welcome contributions of all kinds! See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to get started and our development process.
+
+## License
+
+---
+
+This project is licensed under the [GNU General Public License](LICENSE.md) - see the file for details.

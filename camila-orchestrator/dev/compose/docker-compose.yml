@@ -167,7 +167,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.0.3-ubi9
+    image: mongodb/mongodb-community-server:8.0.8-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: "on-failure"
@@ -203,7 +203,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:7.6.3
+    image: couchbase/server:7.6.5
     container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: "on-failure"
@@ -298,7 +298,7 @@ services:
       camila_product_network:
   ## Security (Authn/Authz)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
+    image: quay.io/keycloak/keycloak:26.2
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
@@ -330,7 +330,7 @@ services:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v2.55.1
+    image: prom/prometheus:v3.3.0
     container_name: prometheus
     hostname: prometheus
     restart: "on-failure"
@@ -356,7 +356,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:11.3.1
+    image: grafana/grafana:11.6.0
     container_name: grafana
     hostname: grafana
     restart: "on-failure"
@@ -387,7 +387,7 @@ services:
   ## Tracing
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
-    image: openzipkin/zipkin:3.4
+    image: openzipkin/zipkin:3.5.0
     container_name: zipkin
     hostname: zipkin
     restart: "on-failure"
@@ -408,7 +408,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:8.16.1
+    image: elasticsearch:8.18.0
     container_name: elasticsearch
     hostname: elasticsearch
     restart: "no"
@@ -463,7 +463,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:8.16.1
+    image: kibana:8.18.0
     container_name: kibana
     hostname: kibana
     restart: "no"

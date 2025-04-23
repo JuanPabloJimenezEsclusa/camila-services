@@ -148,7 +148,7 @@ spec:
                 configMapKeyRef:
                   name: camila-product-api-config
                   key: JVM_OPTIONS
-            - name: spring.application.repository.technology
+            - name: repository.technology
               valueFrom:
                 configMapKeyRef:
                   name: camila-product-api-config

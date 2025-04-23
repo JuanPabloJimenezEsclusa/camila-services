@@ -431,7 +431,7 @@ Resources:
                   - !ImportValue UserPoolARN # ID -> AWS::Cognito::UserPool
             - Name: SECURITY_DOMAIN_URI
               Value: "https://camila-realm.auth.eu-west-1.amazoncognito.com" # Domain -> AWS::Cognito::UserPoolDomain
-            - Name: spring.application.repository.technology
+            - Name: repository.technology
               Value: !Ref RepositoryTechnology
             - Name: spring.couchbase.connection-string
               Value: !Ref CouchbaseConnection

@@ -16,10 +16,37 @@
 
   <properties>
     <java.version>21</java.version>
-    <spring-cloud.version>2023.0.3</spring-cloud.version>
-    <cucumber.version>7.18.1</cucumber.version>
-    <opentelemetry.version>1.40.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.40.0-alpha</opentelemetry-api-incubator.version>
+    <spring-cloud.version>2024.0.1</spring-cloud.version>
+    <cucumber.version>7.22.0</cucumber.version>
+    <opentelemetry.version>1.49.0</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.49.0-alpha</opentelemetry-api-incubator.version>
+    <graphql-java.version>23.1</graphql-java.version>
+    <graphql-java-extended-scalars.version>22.0</graphql-java-extended-scalars.version>
+    <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
+    <protobuf-java.version>4.30.2</protobuf-java.version>
+    <io-grpc.version>1.63.0</io-grpc.version>
+    <jspecify.version>1.0.0</jspecify.version>
+    <awaitility.version>4.2.2</awaitility.version>
+    <de.flapdoodle.embed.mongo.spring3x.version>4.20.0</de.flapdoodle.embed.mongo.spring3x.version>
+    <archunit-junit5.version>1.4.0</archunit-junit5.version>
+    <instancio-junit.version>5.4.0</instancio-junit.version>
+    <jmh.version>1.37</jmh.version>
+    <junit-platform-suite.version>1.12.2</junit-platform-suite.version>
+    <chaos-monkey-spring-boot.version>3.2.0</chaos-monkey-spring-boot.version>
+    <springdoc-openapi-starter-webflux-ui.version>2.8.6</springdoc-openapi-starter-webflux-ui.version>
+    <mapstruct.version>1.6.3</mapstruct.version>
+    <jib-maven-plugin.version>3.4.5</jib-maven-plugin.version>
+    <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
+    <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
+    <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
+    <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <pitest-maven.version>1.19.1</pitest-maven.version>
+    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
+    <java-client.version>3.8.0</java-client.version>
+    <testcontainers.version>1.20.6</testcontainers.version>
+    <git-commit-id-maven-plugin.version>9.0.1</git-commit-id-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.12.0</openapi-generator-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -92,6 +119,26 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-couchbase</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.couchbase.client</groupId>
+          <artifactId>java-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-couchbase-reactive</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.couchbase.client</groupId>
+          <artifactId>java-client</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
     <dependency>
@@ -111,12 +158,12 @@
     <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
-      <version>22.1</version>
+      <version>${graphql-java.version}</version>
     </dependency>
     <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java-extended-scalars</artifactId>
-      <version>22.0</version>
+      <version>${graphql-java-extended-scalars.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -161,6 +208,17 @@
     <dependency>
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-exporter-zipkin</artifactId>
+      <exclusions>
+        <!-- include to fix: "Failed while enforcing RequireUpperBoundDeps" - check in the future and remove -->
+        <exclusion>
+          <groupId>io.zipkin.reporter2</groupId>
+          <artifactId>zipkin-sender-okhttp3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.zipkin.reporter2</groupId>
+          <artifactId>zipkin-reporter</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -189,7 +247,7 @@
     <dependency>
       <groupId>net.devh</groupId>
       <artifactId>grpc-server-spring-boot-starter</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${grpc-server-spring-boot-starter.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
@@ -200,7 +258,7 @@
     <dependency>
       <groupId>net.devh</groupId>
       <artifactId>grpc-client-spring-boot-starter</artifactId>
-      <version>3.1.0.RELEASE</version>
+      <version>${grpc-server-spring-boot-starter.version}</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -212,24 +270,29 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
-      <version>4.27.5</version>
+      <version>${protobuf-java.version}</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty</artifactId>
-      <version>1.63.0</version>
+      <version>${io-grpc.version}</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
-      <version>1.63.0</version>
+      <version>${io-grpc.version}</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-      <version>1.63.0</version>
+      <version>${io-grpc.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <version>${jspecify.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -262,27 +325,45 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>${awaitility.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>de.flapdoodle.embed</groupId>
       <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
-      <version>4.14.0</version>
+      <version>${de.flapdoodle.embed.mongo.spring3x.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
-      <version>1.3.0</version>
+      <version>${archunit-junit5.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.instancio</groupId>
+      <artifactId>instancio-junit</artifactId>
+      <version>${instancio-junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
-      <version>1.37</version>
+      <version>${jmh.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-generator-annprocess</artifactId>
-      <version>1.37</version>
+      <version>${jmh.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.graphql</groupId>
+      <artifactId>spring-graphql-test</artifactId>
+      <version>1.3.5</version>
       <scope>test</scope>
     </dependency>
 
@@ -313,33 +394,33 @@
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-suite</artifactId>
-      <version>1.11.0</version>
+      <version>${junit-platform-suite.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>de.codecentric</groupId>
       <artifactId>chaos-monkey-spring-boot</artifactId>
-      <version>3.1.0</version>
+      <version>${chaos-monkey-spring-boot.version}</version>
       <scope>runtime</scope>
     </dependency>
 
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-      <version>2.5.0</version>
+      <version>${springdoc-openapi-starter-webflux-ui.version}</version>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
-      <version>1.5.5.Final</version>
+      <version>${mapstruct.version}</version>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.google.cloud.tools</groupId>
       <artifactId>jib-maven-plugin</artifactId>
-      <version>3.4.3</version>
+      <version>${jib-maven-plugin.version}</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -352,206 +433,296 @@
     <dependency>
       <groupId>com.couchbase.client</groupId>
       <artifactId>java-client</artifactId>
-      <version>3.6.2</version>
+      <version>${java-client.version}</version>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
-      <version>1.19.8</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>1.19.8</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>couchbase</artifactId>
-      <version>1.19.8</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>3.2.1</version>
+          <configuration>
+            <createBackupFile>false</createBackupFile>
+            <expandEmptyElements>false</expandEmptyElements>
+            <keepBlankLines>true</keepBlankLines>
+            <nrOfIndentSpace>2</nrOfIndentSpace>
+            <sortPlugins>groupId,artifactId</sortPlugins>
+            <verifyFail>stop</verifyFail>
+          </configuration>
+          <executions>
+            <execution>
+              <id>sort-pom-files</id>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+              <phase>validate</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>io.github.git-commit-id</groupId>
+          <artifactId>git-commit-id-maven-plugin</artifactId>
+          <version>${git-commit-id-maven-plugin.version}</version>
+          <configuration>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+            <includeOnlyProperties>
+              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.message.(short|full)$</includeOnlyProperty>
+            </includeOnlyProperties>
+            <commitIdGenerationMode>full</commitIdGenerationMode>
+            <failOnNoGitDirectory>false</failOnNoGitDirectory>
+          </configuration>
+          <executions>
+            <execution>
+              <id>get-the-git-infos</id>
+              <goals>
+                <goal>revision</goal>
+              </goals>
+              <phase>initialize</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <source>21</source>
+            <target>21</target>
+            <encoding>UTF-8</encoding>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>3.4.4</version>
+              </path>
+              <path>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>1.6.3</version>
+              </path>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.38</version>
+              </path>
+              <!-- Uses the index to improve runtime startup -->
+              <path>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-indexer</artifactId>
+                <version>6.2.5</version>
+              </path>
+              <path>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>${jmh.version}</version>
+              </path>
+              <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>0.2.0</version>
+              </dependency>
+            </annotationProcessorPaths>
+            <compilerArgs>
+              <arg>-Amapstruct.defaultComponentModel=spring</arg>
+            </compilerArgs>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.3.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>default-prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>default-prepare-agent-integration</id>
+              <goals>
+                <goal>prepare-agent-integration</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>merge-results</id>
+              <goals>
+                <goal>merge</goal>
+              </goals>
+              <phase>verify</phase>
+              <configuration>
+                <fileSets>
+                  <fileSet>
+                    <directory>${project.build.directory}</directory>
+                    <includes>
+                      <include>*.exec</include>
+                    </includes>
+                  </fileSet>
+                </fileSets>
+                <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+              </configuration>
+            </execution>
+            <execution>
+              <id>report</id>
+              <goals>
+                <goal>report</goal>
+              </goals>
+              <phase>verify</phase>
+              <configuration>
+                <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+                <excludes>
+                  <exclude>com/camila/api/product/infrastructure/adapter/input/grpc/**</exclude>
+                </excludes>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.openapitools</groupId>
+          <artifactId>openapi-generator-maven-plugin</artifactId>
+          <version>${openapi-generator-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>generate-api-docs</id>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+              <configuration>
+                <inputSpec>${project.basedir}/src/main/resources/api/product.yml</inputSpec>
+                <generatorName>spring</generatorName>
+                <configOptions>
+                  <reactive>true</reactive>
+                  <useTags>true</useTags>
+                  <openApiNullable>false</openApiNullable>
+                  <interfaceOnly>true</interfaceOnly>
+                  <useSpringBoot3>true</useSpringBoot3>
+                  <skipDefaultInterface>true</skipDefaultInterface>
+                  <useResponseEntity>false</useResponseEntity>
+                  <responseWrapper>ResponseEntity</responseWrapper>
+                  <library>spring-boot</library>
+                  <basePackage>${project.groupId}.product.infrastructure.adapter.input.rest</basePackage>
+                  <apiPackage>${project.groupId}.product.infrastructure.adapter.input.rest.api</apiPackage>
+                  <modelPackage>${project.groupId}.product.infrastructure.adapter.input.rest.dto</modelPackage>
+                </configOptions>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <!-- https://github.com/spring-projects/spring-boot/issues/38532#issuecomment-1825427641 -->
+            <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
+            <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
+            <loaderImplementation>CLASSIC</loaderImplementation>
+
+            <!-- commented to avoid run fail without native vm -->
+            <!-- <jvmArguments> -agentlib:native-image-agent=config-output-dir=target/native-image -->
+            <layers>
+              <enabled>true</enabled>
+            </layers>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.xolstice.maven.plugins</groupId>
+          <artifactId>protobuf-maven-plugin</artifactId>
+          <version>0.6.1</version>
+          <configuration>
+            <protocArtifact>com.google.protobuf:protoc:4.27.2:exe:${os.detected.classifier}</protocArtifact>
+            <pluginId>grpc-java</pluginId>
+            <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.63.0:exe:${os.detected.classifier}</pluginArtifact>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+                <goal>compile-custom</goal>
+              </goals>
+              <configuration>
+                <pluginParameter>jakarta_omit</pluginParameter>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <!-- https://github.com/spring-projects/spring-boot/issues/38532#issuecomment-1825427641 -->
-          <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
-          <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
-          <loaderImplementation>CLASSIC</loaderImplementation>
-
-          <!-- commented to avoid run fail without native vm -->
-          <!-- <jvmArguments>-agentlib:native-image-agent=config-output-dir=target/native-image</jvmArguments> -->
-          <layers>
-            <enabled>true</enabled>
-          </layers>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>21</source>
-          <target>21</target>
-          <encoding>UTF-8</encoding>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.3.0</version>
-            </path>
-            <path>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>1.5.5.Final</version>
-            </path>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>1.18.32</version>
-            </path>
-            <!-- Uses the index to improve runtime startup -->
-            <path>
-              <groupId>org.springframework</groupId>
-              <artifactId>spring-context-indexer</artifactId>
-              <version>6.1.2</version>
-            </path>
-            <path>
-              <groupId>org.openjdk.jmh</groupId>
-              <artifactId>jmh-generator-annprocess</artifactId>
-              <version>1.37</version>
-            </path>
-            <dependency>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok-mapstruct-binding</artifactId>
-              <version>0.2.0</version>
-            </dependency>
-          </annotationProcessorPaths>
-          <compilerArgs>
-            <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>>
-          </compilerArgs>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.12</version>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-prepare-agent-integration</id>
-            <goals>
-              <goal>prepare-agent-integration</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>merge-results</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>merge</goal>
-            </goals>
-            <configuration>
-              <fileSets>
-                <fileSet>
-                  <directory>${project.build.directory}</directory>
-                  <includes>
-                    <include>*.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
-            </configuration>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <configuration>
-              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
-              <excludes>
-                <exclude>com/camila/api/product/framework/adapter/input/grpc/**</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
-        <version>9.0.0</version>
-        <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-            <phase>initialize</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-          <includeOnlyProperties>
-            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.message.(short|full)$</includeOnlyProperty>
-          </includeOnlyProperties>
-          <commitIdGenerationMode>full</commitIdGenerationMode>
-          <failOnNoGitDirectory>false</failOnNoGitDirectory>
-        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
-        <version>0.6.1</version>
-        <configuration>
-          <protocArtifact>com.google.protobuf:protoc:4.27.2:exe:${os.detected.classifier}</protocArtifact>
-          <pluginId>grpc-java</pluginId>
-          <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.63.0:exe:${os.detected.classifier}</pluginArtifact>
-        </configuration>
-        <executions>
-          <execution>
-            <configuration>
-              <pluginParameter>jakarta_omit</pluginParameter>
-            </configuration>
-            <goals>
-              <goal>compile</goal>
-              <goal>compile-custom</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
     <extensions>
@@ -592,15 +763,6 @@
             <groupId>org.graalvm.buildtools</groupId>
             <artifactId>native-maven-plugin</artifactId>
             <extensions>true</extensions>
-            <executions>
-              <execution>
-                <id>build-native</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>compile-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
             <configuration>
               <verbose>true</verbose>
               <skipNativeTests>true</skipNativeTests>
@@ -629,6 +791,15 @@
                 <arg>-Xmx16g</arg>
               </jvmArgs>
             </configuration>
+            <executions>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
             <groupId>org.springframework.boot</groupId>
@@ -651,7 +822,7 @@
           <plugin>
             <groupId>com.google.cloud.tools</groupId>
             <artifactId>jib-maven-plugin</artifactId>
-            <version>3.4.3</version>
+            <version>${jib-maven-plugin.version}</version>
             <configuration>
               <from>
                 <image>eclipse-temurin:21-jdk-alpine</image>
@@ -698,9 +869,14 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>${maven-site-plugin.version}</version>
+          </plugin>
+          <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
-            <version>10.0.3</version>
+            <version>${dependency-check-maven.version}</version>
             <configuration>
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
@@ -714,11 +890,6 @@
               </execution>
             </executions>
           </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-site-plugin</artifactId>
-            <version>4.0.0-M15</version>
-          </plugin>
         </plugins>
       </build>
       <reporting>
@@ -726,7 +897,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>${maven-project-info-reports-plugin.version}</version>
             <reportSets>
               <reportSet>
                 <reports>
@@ -738,25 +909,25 @@
             </reportSets>
           </plugin>
           <plugin>
-            <groupId>org.owasp</groupId>
-            <artifactId>dependency-check-maven</artifactId>
-            <version>10.0.3</version>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-maven-plugin.version}</version>
             <reportSets>
               <reportSet>
                 <reports>
-                  <report>aggregate</report>
+                  <report>report</report>
                 </reports>
               </reportSet>
             </reportSets>
           </plugin>
           <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.12</version>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>${dependency-check-maven.version}</version>
             <reportSets>
               <reportSet>
                 <reports>
-                  <report>report</report>
+                  <report>aggregate</report>
                 </reports>
               </reportSet>
             </reportSets>
@@ -775,7 +946,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.13.0</version>
+            <version>${maven-compiler-plugin.version}</version>
             <configuration>
               <source>21</source>
               <target>21</target>
@@ -784,33 +955,33 @@
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.3.0</version>
+                  <version>3.4.4</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>
                   <artifactId>mapstruct-processor</artifactId>
-                  <version>1.5.5.Final</version>
+                  <version>1.6.3</version>
                 </path>
                 <path>
                   <groupId>org.projectlombok</groupId>
                   <artifactId>lombok</artifactId>
-                  <version>1.18.32</version>
+                  <version>1.18.38</version>
                 </path>
                 <!-- Uses the index to improve runtime startup -->
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.1.9</version>
+                  <version>6.2.5</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>
                   <artifactId>error_prone_core</artifactId>
-                  <version>2.28.0</version>
+                  <version>2.38.0</version>
                 </path>
                 <path>
                   <groupId>org.openjdk.jmh</groupId>
                   <artifactId>jmh-generator-annprocess</artifactId>
-                  <version>1.37</version>
+                  <version>${jmh.version}</version>
                 </path>
                 <dependency>
                   <groupId>org.projectlombok</groupId>
@@ -818,12 +989,22 @@
                   <version>0.2.0</version>
                 </dependency>
               </annotationProcessorPaths>
+              <showWarnings>true</showWarnings>
               <compilerArgs>
-                <compilerArg>-Amapstruct.defaultComponentModel=spring</compilerArg>
+                <arg>-Amapstruct.defaultComponentModel=spring</arg>
                 <arg>-XDcompilePolicy=simple</arg>
+                <arg>--should-stop=ifError=FLOW</arg>
                 <arg>-Xplugin:ErrorProne -XepExcludedPaths:.*/com/camila/api/benchmark/jmh_generated/.*</arg>
               </compilerArgs>
             </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
@@ -837,25 +1018,43 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.13.0</version>
+              <version>${maven-compiler-plugin.version}</version>
               <configuration>
                 <showWarnings>true</showWarnings>
               </configuration>
             </plugin>
             <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>flatten-maven-plugin</artifactId>
+              <version>${flatten-maven-plugin.version}</version>
+              <configuration>
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+              </configuration>
+              <executions>
+                <execution>
+                  <id>flatten</id>
+                  <goals>
+                    <goal>flatten</goal>
+                  </goals>
+                  <phase>package</phase>
+                </execution>
+                <execution>
+                  <id>flatten.clean</id>
+                  <goals>
+                    <goal>clean</goal>
+                  </goals>
+                  <phase>clean</phase>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
               <groupId>org.pitest</groupId>
               <artifactId>pitest-maven</artifactId>
-              <version>1.16.3</version>
-              <dependencies>
-                <dependency>
-                  <groupId>org.pitest</groupId>
-                  <artifactId>pitest-junit5-plugin</artifactId>
-                  <version>1.2.1</version>
-                </dependency>
-              </dependencies>
+              <version>${pitest-maven.version}</version>
               <configuration>
                 <verbose>true</verbose>
-                <threads>8</threads>
+                <threads>6</threads>
                 <timeoutFactor>1.50</timeoutFactor>
                 <timeoutConstant>5000</timeoutConstant>
                 <failWhenNoMutations>false</failWhenNoMutations>
@@ -880,53 +1079,34 @@
                   <mutator>EMPTY_RETURNS</mutator>
                   <mutator>CONDITIONALS_BOUNDARY</mutator>
                 </mutators>
-                <targetClasses>
-                  <param>com.camila.api.product.domain.*</param>
-                  <param>com.camila.api.product.application.port.input.*</param>
-                  <param>com.camila.api.product.framework.adapter.input.security.*</param>
-                  <param>com.camila.api.product.framework.adapter.input.rest.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.couchbase.*</param>
-                </targetClasses>
-                <targetTests>
-                  <!-- Only units testing -->
-                  <param>com.camila.api.product.application.port.input.*</param>
-                  <param>com.camila.api.product.framework.adapter.input.rest.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.mongo.*</param>
-                  <param>com.camila.api.product.framework.adapter.output.couchbase.*</param>
-                </targetTests>
+                <excludedClasses>
+                  <param>**.*Mapper*</param>
+                  <param>**.grpc.*</param>
+                  <param>**.config.*</param>
+                  <param>**.*Config</param>
+                  <param>**.rest.api.*</param>
+                  <param>**.rest.dto.*</param>
+                </excludedClasses>
+                <excludedTestClasses>
+                  <param>**.architecture.*</param>
+                  <param>**.behaviour.*</param>
+                  <param>**.benchmark.*</param>
+                  <param>**.grpc.*</param>
+                  <param>**.ProductCouchbaseContainerConfig</param>
+                </excludedTestClasses>
                 <avoidCallsTo>
                   <avoidCallsTo>org.slf4j</avoidCallsTo>
                   <avoidCallsTo>java.util.logging</avoidCallsTo>
                   <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
                 </avoidCallsTo>
               </configuration>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>flatten-maven-plugin</artifactId>
-              <version>1.6.0</version>
-              <configuration>
-                <updatePomFile>true</updatePomFile>
-                <flattenMode>resolveCiFriendliesOnly</flattenMode>
-              </configuration>
-              <executions>
-                <execution>
-                  <id>flatten</id>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>flatten</goal>
-                  </goals>
-                </execution>
-                <execution>
-                  <id>flatten.clean</id>
-                  <phase>clean</phase>
-                  <goals>
-                    <goal>clean</goal>
-                  </goals>
-                </execution>
-              </executions>
+              <dependencies>
+                <dependency>
+                  <groupId>org.pitest</groupId>
+                  <artifactId>pitest-junit5-plugin</artifactId>
+                  <version>1.2.2</version>
+                </dependency>
+              </dependencies>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -934,16 +1114,16 @@
           <plugin>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-maven</artifactId>
+            <version>${pitest-maven.version}</version>
             <executions>
               <execution>
                 <id>pitest</id>
-                <phase>test-compile</phase>
                 <goals>
                   <goal>mutationCoverage</goal>
                 </goals>
+                <phase>test-compile</phase>
               </execution>
             </executions>
-            <version>1.16.3</version>
           </plugin>
         </plugins>
       </build>

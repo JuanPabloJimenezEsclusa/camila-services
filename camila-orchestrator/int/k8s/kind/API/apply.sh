@@ -13,6 +13,7 @@ cd "$(dirname "$0")"
 # compilar imagen
 export SPRING_PROFILES_ACTIVE=int
 mvn clean spring-boot:build-image \
+  -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true \
   -f ./../../../../camila-product-api/pom.xml
 

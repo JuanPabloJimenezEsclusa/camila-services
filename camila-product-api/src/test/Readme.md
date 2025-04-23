@@ -2,9 +2,27 @@
 
 This project implements a comprehensive test suite for the `camila-product-api` service, covering various aspects of its functionality and performance.
 
-## Types of Tests
+## Table of Contents
 
-| Test Type                  | Details                                                                                                                                                                                                                           |
+---
+
+- [Test Types](#test-types)
+- [Architecture](#architecture)
+- [Running Tests](#running-tests)
+  - [Unit and Architecture Tests](#unit-and-architecture-tests)
+  - [Unit Tests with AOT](#unit-tests-with-aot)
+  - [Integration and Benchmark Tests](#integration-and-benchmark-tests)
+  - [Mutation Tests](#mutation-tests)
+  - [Behaviour Test](#behaviour-test)
+  - [Code Analysis](#code-analysis)
+  - [Performance Tests](#performance-tests)
+- [Data Generator](#data-generator)
+
+## Test types
+
+---
+
+| Type                       | Details                                                                                                                                                                                                                           |
 |----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Unit Tests                 | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                            |
 | Integration Tests          | Employ embedded databases (`de.flapdoodle.embed.mongo` for MongoDB and [Test Containers](https://testcontainers.com/modules/couchbase/) for Couchbase) and the `failsafe` plugin to validate interactions between components [IT] |
@@ -16,6 +34,8 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 
 ## Architecture
 
+---
+
 ```txt
 📦api
  ┣ 📂architecture (Architecture tests)
@@ -23,15 +43,15 @@ This project implements a comprehensive test suite for the `camila-product-api` 
  ┣ 📂behaviour (Behaviuor tests)
  ┣ 📂product
  ┃ ┣ 📂application
- ┃ ┃ ┗ 📂port
- ┃ ┃   ┗ 📂input (Unit tests)
- ┃ ┗ 📂framework
+ ┃ ┃ ┗ 📂usecase (Unit tests)
+ ┃ ┗ 📂infrastructure
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
  ┃     ┃ ┣ 📂rest (Integration tests) (Unit tests)
- ┃     ┃ ┣ 📂graphql (Integration tests)
- ┃     ┃ ┣ 📂websocket (Integration tests)
- ┃     ┃ ┗ 📂rsocket (Integration tests)
+ ┃     ┃ ┣ 📂graphql (Integration tests) (Unit tests)
+ ┃     ┃ ┣ 📂grpc (Integration tests) (Unit tests)
+ ┃     ┃ ┣ 📂websocket (Integration tests) (Unit tests)
+ ┃     ┃ ┗ 📂rsocket (Integration tests) (Unit tests)
  ┃     ┗ 📂output
  ┃       ┣ 📂mongo (Integration tests)
  ┃       ┗ 📂couchbase (Integration tests)
@@ -39,6 +59,8 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 ```
 
 ## Running Tests
+
+---
 
 ### Unit and Architecture Tests
 
@@ -97,7 +119,7 @@ mvn clean verify site -P check-dependency,error-prone
 
 ```bash
 # Optional: Set default values
-export JMETER_TEST_PATH="/tmp/results"
+export JMETER_TEST_PATH="./resources/scripts/jmeter/"
 export THREADS=100
 export RAMP_UP=20 
 export LOOPS=5
@@ -113,6 +135,8 @@ export BASE_PATH="product-dev"
 
 ## Data Generator
 
+---
+
 A random data generator is available to populate the database for performance testing:
 
-[RandomDataGenerator](java/com/camila/api/product/framework/adapter/output/RandomDataGenerator.java)
+[RandomDataGenerator](java/com/camila/api/product/infrastructure/adapter/output/RandomDataGenerator.java)

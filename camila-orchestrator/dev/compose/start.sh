@@ -19,7 +19,7 @@ __buildProjects() {
   cd "${workspace}/${baseProjectPath}"
 
   # compilar y empaquetar en imágenes todos los módulos del proyecto
-  mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./pom.xml
+  mvn clean spring-boot:build-image -Dmaven.test.skip=true -Dmaven.build.cache.enabled=false -f ./pom.xml
 
   # compilar y empaquetar en imágenes cada módulos, comentar para saltar
   #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-admin/pom.xml

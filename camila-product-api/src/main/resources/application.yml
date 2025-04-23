@@ -12,19 +12,24 @@ spring:
   data:
     mongodb:
       # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
-      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=60000&socketTimeoutMS=120000"
       authentication-database: camila-db
       ssl:
         enabled: false
       auto-index-creation: true
       uuid-representation: JAVA_LEGACY
+    couchbase:
+      bucket-name: camila-product-bucket
+      scope-name: product
   couchbase:
     connection-string: couchbase://localhost:11207
-    username: admin
-    password: admin1234
+    username: Administrator
+    password: password
     env:
       ssl:
         enabled: false
+  main:
+    web-application-type: reactive
   webflux:
     base-path: /product-dev/api
   graphql:
@@ -35,6 +40,9 @@ spring:
     server:
       mapping-path: /product-dev/api/rsocket
       transport: websocket
+  docker:
+    compose:
+      enabled: false
 
 info:
   app:
@@ -70,29 +78,29 @@ management:
         include: "*"
   endpoint:
     env:
-      enabled: true
       show-values: ALWAYS
       cache:
         time-to-live: 60s
+      access: unrestricted
     info:
-      enabled: true
       cache:
         time-to-live: 3600s
+      access: unrestricted
     beans:
-      enabled: true
       cache:
         time-to-live: 10s
+      access: unrestricted
     health:
-      enabled: true
       show-details: ALWAYS
       show-components: ALWAYS
+      access: unrestricted
     configprops:
-      enabled: true
       show-values: ALWAYS
+      access: unrestricted
     shutdown:
-      enabled: true
+      access: unrestricted
     prometheus:
-      enabled: true
+      access: unrestricted
   info:
     env:
       enabled: true
@@ -120,7 +128,7 @@ de:
   flapdoodle:
     mongodb:
       embedded:
-        version: 7.0.4
+        version: 8.0.5
 
 server:
   port: ${PORT:8080}
@@ -138,6 +146,9 @@ grpc:
     shutdown-grace-period: 0
     health-service-enabled: true
     reflection-service-enabled: true
+
+repository:
+  technology: ${REPOSITORY_TECHNOLOGY:mongo}
 
 ---
 ###### Local|Dev properties ######
@@ -158,9 +169,9 @@ grpc:
 management:
   endpoint:
     chaosmonkey:
-      enabled: true
+      access: unrestricted
     chaosmonkeyjmx:
-      enabled: false
+      access: unrestricted
 
 # https://github.com/codecentric/chaos-monkey-spring-boot/tree/main/chaos-monkey-docs/src/main/asciidoc
 chaos:
@@ -186,6 +197,7 @@ chaos:
 debug: false
 logging:
   level:
+    root: WARN
     org.hibernate.validator: ERROR
     com.netflix.discovery: ERROR
     org.springframework.boot: ERROR
@@ -195,6 +207,8 @@ logging:
     org.springframework.security.oauth2: ERROR
     org.springframework.web.reactive.socket: ERROR
     org.springframework.context: ERROR
+    org.mongodb: ERROR
+    com.mongodb: ERROR
     com.couchbase: ERROR
     net.devh.boot.grpc.server: ERROR
     io.grpc.netty: ERROR
@@ -371,7 +385,7 @@ logging:
     org.hibernate.validator: ERROR
     org.springframework: ERROR
     org.springframework.web: ERROR
-    org.springframework.data: ERROR
+    org.springframework.data: DEBUG
     org.springframework.context: ERROR
     com.couchbase: ERROR
     org.springframework.boot: ERROR
@@ -387,7 +401,7 @@ spring:
     activate:
       on-profile: "local-compose"
   jmx:
-    enabled: false
+    enabled: true
   rsocket:
     server:
       port: 7000
@@ -413,9 +427,11 @@ spring:
       lifecycle-management: start_and_stop
   data:
     mongodb:
-      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=60000&socketTimeoutMS=120000"
   couchbase:
-    connection-string: couchbase
+    connection-string: couchbase://couchbase
+    username: Administrator
+    password: password
 
 grpc:
   server:
@@ -424,14 +440,19 @@ grpc:
 debug: false
 logging:
   level:
+    root: WARN
     org.hibernate.validator: ERROR
-    org.springframework: ERROR
+    com.netflix.discovery: ERROR
     org.springframework.boot: ERROR
     org.springframework.data: ERROR
     org.springframework.security: ERROR
-    org.springframework.web.reactive.socket: ERROR
+    org.springframework.dao: ERROR
+    org.springframework.web: ERROR
     org.springframework.context: ERROR
+    org.springframework.cache: DEBUG
+    org.mongodb: ERROR
+    com.mongodb: ERROR
     com.couchbase: ERROR
-    net.devh.boot.grpc.server: ERROR
+    net.devh.boot.grpc.server: INFO
     io.grpc.netty: ERROR
-    reactor: ERROR
+    io.netty: INFO

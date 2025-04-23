@@ -9,4 +9,6 @@ cd "$(dirname "$0")/.."
 
 # compilar con aot
 export SPRING_PROFILES_ACTIVE=loc
-mvn clean compile spring-boot:process-aot package -f ./pom.xml
+mvn clean compile spring-boot:process-aot package \
+  -Dmaven.build.cache.enabled=false \
+  -f ./pom.xml

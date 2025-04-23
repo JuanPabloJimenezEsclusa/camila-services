@@ -139,7 +139,7 @@ docker run --rm -it \
   --env spring.couchbase.username="juanpablo****" \
   --env spring.couchbase.password="*************" \
   --env spring.couchbase.env.ssl.enabled=true \
-  --env spring.application.repository.technology="mongo" \
+  --env repository.technology="mongo" \
   --memory="1024m" --memory-reservation="1024m" --memory-swap="1024m" --cpu-shares=500 \
   546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0
 ```
