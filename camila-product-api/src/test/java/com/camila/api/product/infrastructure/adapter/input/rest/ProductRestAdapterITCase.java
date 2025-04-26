@@ -4,16 +4,19 @@ import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.config.LocalOpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.rest.config.Oauth2OpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
-import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseEnabledConfig;
 import de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongoAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
@@ -96,10 +99,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   ProductCouchbaseAdapter.class,
   ProductCouchbaseMapperImpl.class
 })
-@ExtendWith(ProductCouchbaseContainerConfig.class)
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductRestAdapterITCase {
+class ProductRestAdapterITCase extends CouchbaseContainerConfig {
 
   @Autowired
   private WebTestClient webClient;

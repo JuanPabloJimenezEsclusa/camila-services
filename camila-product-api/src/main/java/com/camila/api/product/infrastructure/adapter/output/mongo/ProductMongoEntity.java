@@ -1,11 +1,11 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo;
 
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * The type Product mongo entity.

@@ -1,11 +1,11 @@
 package com.camila.api.product.domain.port;
 
+import java.util.List;
+
 import com.camila.api.product.domain.model.MetricWeight;
 import com.camila.api.product.domain.model.Product;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 /**
  * The interface Product repository.

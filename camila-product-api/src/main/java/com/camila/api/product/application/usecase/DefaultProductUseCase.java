@@ -1,5 +1,9 @@
 package com.camila.api.product.application.usecase;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import com.camila.api.product.domain.exception.ProductException;
 import com.camila.api.product.domain.model.MetricWeight;
 import com.camila.api.product.domain.model.Metrics;
@@ -8,10 +12,6 @@ import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * The type Default product use case.
@@ -30,6 +30,23 @@ public class DefaultProductUseCase implements ProductUseCase {
    */
   public DefaultProductUseCase(final ProductRepository productRepository) {
     this.productRepository = productRepository;
+  }
+
+  private static List<MetricWeight> getMetricWeights(final Map<String, String> requestParams) {
+    return requestParams.entrySet().stream()
+      .filter(param -> Metrics.getMetrics(param.getKey()) != Metrics.UNKNOWN)
+      .map(param -> new MetricWeight(Metrics.getMetrics(param.getKey()), Double.parseDouble(param.getValue())))
+      .toList();
+  }
+
+  private static long getOffset(final Map<String, String> requestParams) {
+    long page = Long.parseLong(Optional.ofNullable(requestParams.get("page")).orElse(DEFAULT_PAGE_NUMBER));
+    long size = Long.parseLong(Optional.ofNullable(requestParams.get("size")).orElse(DEFAULT_PAGE_SIZE));
+    return page * size;
+  }
+
+  private static long getLimit(final Map<String, String> requestParams) {
+    return Long.parseLong(Optional.ofNullable(requestParams.get("size")).orElse(DEFAULT_PAGE_SIZE));
   }
 
   @Override
@@ -51,22 +68,5 @@ public class DefaultProductUseCase implements ProductUseCase {
     } catch (Exception e) {
       return Flux.error(new ProductException(e));
     }
-  }
-
-  private static List<MetricWeight> getMetricWeights(final Map<String, String> requestParams) {
-    return requestParams.entrySet().stream()
-      .filter(param -> Metrics.getMetrics(param.getKey()) != Metrics.UNKNOWN)
-      .map(param -> new MetricWeight(Metrics.getMetrics(param.getKey()), Double.parseDouble(param.getValue())))
-      .toList();
-  }
-
-  private static long getOffset(final Map<String, String> requestParams) {
-    long page = Long.parseLong(Optional.ofNullable(requestParams.get("page")).orElse(DEFAULT_PAGE_NUMBER));
-    long size = Long.parseLong(Optional.ofNullable(requestParams.get("size")).orElse(DEFAULT_PAGE_SIZE));
-    return page * size;
-  }
-
-  private static long getLimit(final Map<String, String> requestParams) {
-    return Long.parseLong(Optional.ofNullable(requestParams.get("size")).orElse(DEFAULT_PAGE_SIZE));
   }
 }

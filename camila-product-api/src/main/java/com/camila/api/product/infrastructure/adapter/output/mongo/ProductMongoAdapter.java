@@ -56,16 +56,16 @@ public class ProductMongoAdapter implements ProductRepository {
   public Flux<Product> sortByMetricsWeights(final List<MetricWeight> metricsWeights, final long offset, final long limit) {
     log.info("Sorting products by metrics weights: {}", metricsWeights);
     return mongoOperations.aggregate(
-      newAggregation(
-        buildWeightedScoreField(metricsWeights),
-        buildSortOperation(),
-        buildSkipOperation(offset),
-        buildLimitOperation(limit))
-        .withOptions(buildOptions()),
-      ProductMongoEntity.DOCUMENT_NAME,
-      ProductMongoEntity.class)
-      .doOnNext(productEntity -> log.trace("Product sorted by metrics weights: {}", productEntity))
-      .doOnError(throwable -> log.error("Error sorting products by metrics weights: {}", throwable.getMessage()))
+        newAggregation(
+          buildWeightedScoreField(metricsWeights),
+          buildSortOperation(),
+          buildSkipOperation(offset),
+          buildLimitOperation(limit))
+          .withOptions(buildOptions()),
+        ProductMongoEntity.DOCUMENT_NAME,
+        ProductMongoEntity.class)
+      .doOnNext(productEntity -> log.debug("Product sorted by metrics weights: {}", productEntity))
+      .doOnError(throwable -> log.debug("Throwable sorting products by metrics weights: {}", throwable.getMessage()))
       .map(mapper::toProduct);
   }
 }

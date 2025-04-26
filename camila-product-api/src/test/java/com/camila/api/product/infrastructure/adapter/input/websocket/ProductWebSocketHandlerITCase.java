@@ -1,10 +1,22 @@
 package com.camila.api.product.infrastructure.adapter.input.websocket;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.net.URI;
+import java.time.Duration;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -13,16 +25,10 @@ import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClien
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.time.Duration;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 @Slf4j
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = { "repository.technology=mongo" }
+  properties = {"repository.technology=mongo"}
 )
 @DisplayName("[IT][ProductWebSocketHandler] Product websocket handler test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -76,11 +82,11 @@ class ProductWebSocketHandlerITCase {
             assertEquals("SHIRT", jsonNode.get("category").asText());
             assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asText());
           } catch (JsonProcessingException e) {
-            log.error("Error parsing json", e);
+            log.trace("Error parsing json", e);
           }
           return Mono.empty();
         }).then())
-      .block(Duration.ofMillis(5_000L));
+      .block(Duration.ofSeconds(5L));
   }
 
   @Test
@@ -112,10 +118,10 @@ class ProductWebSocketHandlerITCase {
             assertEquals("SHIRT", jsonNode.get("category").asText());
             assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
           } catch (JsonProcessingException e) {
-            log.error("Error parsing json", e);
+            log.trace("Error parsing json", e);
           }
           return Mono.empty();
         }).then())
-      .block(Duration.ofMillis(5_000L));
+      .block(Duration.ofSeconds(5L));
   }
 }

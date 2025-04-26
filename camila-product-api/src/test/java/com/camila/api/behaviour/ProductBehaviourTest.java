@@ -1,19 +1,18 @@
 package com.camila.api.behaviour;
 
+import java.util.List;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import java.util.List;
 
 @SuppressWarnings("java:S2187")
 @CucumberContextConfiguration
@@ -26,7 +25,7 @@ public class ProductBehaviourTest {
   private WebTestClient webClient;
 
   @Given("^some metrics weights and page config$")
-  public void someMetricsWeightsAndPageConfig(@NotNull DataTable table) {
+  public void someMetricsWeightsAndPageConfig(final DataTable table) {
     parameters = List.of(
       table.cell(1, 0),
       table.cell(1, 1),
@@ -42,12 +41,12 @@ public class ProductBehaviourTest {
   }
 
   @Then("^receive status$")
-  public void receiveStatus(@NotNull DataTable table) {
+  public void receiveStatus(final DataTable table) {
     exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1, 0)));
   }
 
   @And("^get sorted data$")
-  public void getSortedData(@NotNull DataTable table) {
+  public void getSortedData(final DataTable table) {
     var body = exchange.expectBody();
 
     table.asMaps().forEach(element -> {

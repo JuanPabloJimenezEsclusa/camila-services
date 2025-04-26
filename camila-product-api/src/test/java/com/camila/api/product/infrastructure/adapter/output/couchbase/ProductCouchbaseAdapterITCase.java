@@ -11,7 +11,6 @@ import com.camila.api.product.domain.model.Metrics;
 import com.camila.api.product.domain.port.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,13 +21,12 @@ import org.springframework.context.annotation.ComponentScan;
 import reactor.test.StepVerifier;
 
 @EnableAutoConfiguration
-@ExtendWith(ProductCouchbaseContainerConfig.class)
 @ComponentScan(basePackages = "com.camila.api.product.infrastructure.adapter.output.couchbase")
 @DataCouchbaseTest(properties = {
   "repository.technology=couchbase"
 })
 @DisplayName("[IT][ProductCouchbaseAdapter] Product Couchbase Adapter Integration Test")
-class ProductCouchbaseAdapterITCase {
+class ProductCouchbaseAdapterITCase extends CouchbaseContainerConfig {
 
   @Autowired
   private ProductRepository productRepository;

@@ -6,9 +6,9 @@ end_of_line = lf
 indent_size = 4
 indent_style = space
 insert_final_newline = false
-max_line_length = 120
+max_line_length = 100
 tab_width = 4
 
-[{*.java,*.json,*.yaml,*.yml,*.xml,*.md}]
+[{*.java,*.json,*.yaml,*.yml,*.xml,*.md,*.sh,*.http}]
 indent_size = 2
 tab_width = 2

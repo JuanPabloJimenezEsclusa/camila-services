@@ -5,10 +5,6 @@
 </p>
 
 <p align="center" style="text-align: center">
-  <bold>Java</bold> Side Project
-</p>
-
-<p align="center" style="text-align: center">
   <a href="https://alistair.cockburn.us/hexagonal-architecture/"><img src="https://img.shields.io/badge/Architecture-Hexagonal-brightgreen.svg?style=for-the-badge" alt="Hexagonal Architecture" /></a>
   <a href="https://www.reactivemanifesto.org/"><img src="https://img.shields.io/badge/Programming%20Paradigm-Reactive-blue.svg?style=for-the-badge" alt="Reactive Paradigm" /></a>
   <a href="https://microservices.io/"><img src="https://img.shields.io/badge/Architectural%20Style-Microservices-purple.svg?style=for-the-badge" alt="Microservices Style" /></a>
@@ -16,26 +12,26 @@
   <a href="https://martinfowler.com/articles/serverless.html"><img src="https://img.shields.io/badge/Deploy%20Approach-Serveless-black.svg?style=for-the-badge" alt="Serveless Standard" /></a>
 </p>
 
-> It is recommended to use dark mode UI to read this!
+> [Summary](#-summary) 
+  • [Domain Storytelling](#-domain-storytelling) 
+  • [Architecture](#-architecture) 
+  • [Build and Packing](#-build-and-packing) 
+  • [Changelog](#-changelog) 
+  • [Code of Conduct](#-code-of-conduct) 
+  • [Contributing](#-contributing) 
+  • [License](#-license)
 
-## Table of Contents
+## 📜 Summary
 
 ---
 
-- [Domain Storytelling](#domain-storytelling)
-- [Architecture](#architecture)
-  - [Technologies](#technologies)
-  - [Components](#components)
-  - [Diagrams](#diagrams)
-- [Build and Packing](#build-and-packing)
-  - [Refactoring](#refactoring)
-  - [Packing](#packing)
-- [Changelog](#changelog)
-- [Code of Conduct](#code-of-conduct)
-- [Contributing](#contributing)
-- [License](#license)
+The **Camila Services** project is a comprehensive solution that implements a product classification and ranking system for camila.shopping. Using a weighted algorithm that considers metrics like units sold and stock ratio, it optimizes product presentation to enhance customer search experience.
 
-## Domain Storytelling
+Built with modern technologies, follows best practices for testing and deployment. The project emphasizes code quality through comprehensive testing strategies and automated refactoring to minimize technical debt.
+
+This solution addresses the challenge of effectively organizing diverse product catalogs while providing an improved shopping experience through smarter product presentation.
+
+## 🏛️ Domain Storytelling
 
 ---
 
@@ -83,7 +79,7 @@ Product data sample:
 | 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     |
 
 
-## Architecture
+## 🏗️ Architecture
 
 ---
 
@@ -110,7 +106,7 @@ Product data sample:
 
 ![Architecture-C2](.docs/architecture/camila-service-da-v1-C2.svg "Diagram C2")
 
-## Build and Packing
+## 📦 Build and Packing
 
 ---
 
@@ -140,25 +136,25 @@ mvn spring-boot:build-image \
   -Dmaven.test.skip=true  -f ./pom.xml
 ```
 
-## Changelog
+## 📋 Changelog
 
 ---
 
 See [CHANGELOG.md](CHANGELOG.md) for details on version history and changes.
 
-## Code of Conduct
+## 🤝 Code of Conduct
 
 ---
 
 This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md) Code of Conduct. By participating, you are expected to uphold this code.
 
-## Contributing
+## 👥 Contributing
 
 ---
 
 We welcome contributions of all kinds! See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to get started and our development process.
 
-## License
+## ⚖️ License
 
 ---
 

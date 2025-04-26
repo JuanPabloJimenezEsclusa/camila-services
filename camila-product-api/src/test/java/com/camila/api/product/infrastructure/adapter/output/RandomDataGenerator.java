@@ -1,7 +1,5 @@
 package com.camila.api.product.infrastructure.adapter.output;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +11,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * The type Random data generator.
  */
@@ -23,8 +23,8 @@ public class RandomDataGenerator {
   private static final String DATA_GENERATED_JSON = "./camila-product-api/.operate/data/couchbase/sample-data.script";
 
   private static final String LINE_TEMPLATE = """
-    {"internalId":"%s", "name":"%s", "category":"%s", "salesUnits":%d, "stock":%s}
-  """;
+      {"internalId":"%s", "name":"%s", "category":"%s", "salesUnits":%d, "stock":%s}
+    """;
 
   private static final String[] CATEGORY_WORDS = new String[]{"SHIRT"};
 
@@ -47,7 +47,7 @@ public class RandomDataGenerator {
       reader.forEach(line -> writeLine(writer, line));
       writer.flush();
     } catch (IOException e) {
-      log.error(e.getMessage());
+      log.trace(e.getMessage());
     }
   }
 
@@ -55,7 +55,7 @@ public class RandomDataGenerator {
     try {
       writer.write(line);
     } catch (IOException e) {
-      log.error(e.getMessage());
+      log.trace(e.getMessage());
     }
   }
 
@@ -88,7 +88,7 @@ public class RandomDataGenerator {
       "M", random.nextInt(1_000),
       "L", random.nextInt(5_000));
 
-    return  "{" + stock.entrySet().stream().map(entry -> "\"" + entry.getKey() + "\":" + entry.getValue())
+    return "{" + stock.entrySet().stream().map(entry -> "\"" + entry.getKey() + "\":" + entry.getValue())
       .collect(Collectors.joining(",")) + "}";
   }
 }

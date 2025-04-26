@@ -1,5 +1,10 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo.config;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.time.Duration;
+import java.util.Objects;
+
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,11 +13,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.time.Duration;
-import java.util.Objects;
 
 /**
  * The type Data test config.

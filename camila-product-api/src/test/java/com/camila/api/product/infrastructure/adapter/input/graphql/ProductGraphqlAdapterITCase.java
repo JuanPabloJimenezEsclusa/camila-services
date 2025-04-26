@@ -1,5 +1,9 @@
 package com.camila.api.product.infrastructure.adapter.input.graphql;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Objects;
+
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.infrastructure.adapter.input.graphql.config.GraphqlConfig;
@@ -13,7 +17,11 @@ import de.flapdoodle.embed.mongo.spring.autoconfigure.ReactiveClientServerFactor
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
@@ -21,10 +29,6 @@ import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureG
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.graphql.test.tester.GraphQlTester;
-
-import java.util.Objects;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @GraphQlTest(
   properties = "repository.technology=mongo",

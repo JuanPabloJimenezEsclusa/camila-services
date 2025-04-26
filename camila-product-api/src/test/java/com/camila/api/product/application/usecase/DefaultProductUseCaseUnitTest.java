@@ -1,5 +1,17 @@
 package com.camila.api.product.application.usecase;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.exception.ProductException;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
@@ -16,12 +28,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][DefaultProductUseCase] Default Product Use Case Unit Test")

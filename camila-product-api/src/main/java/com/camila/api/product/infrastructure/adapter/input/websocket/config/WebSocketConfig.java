@@ -1,5 +1,7 @@
 package com.camila.api.product.infrastructure.adapter.input.websocket.config;
 
+import java.util.Map;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.EnableWebFlux;
@@ -10,8 +12,6 @@ import org.springframework.web.reactive.socket.server.support.HandshakeWebSocket
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
 import org.springframework.web.reactive.socket.server.upgrade.ReactorNettyRequestUpgradeStrategy;
 import reactor.netty.http.server.WebsocketServerSpec;
-
-import java.util.Map;
 
 /**
  * The type Web socket config.

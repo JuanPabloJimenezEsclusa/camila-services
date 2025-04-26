@@ -1,9 +1,9 @@
 package com.camila.api.product.domain.model;
 
+import java.util.Map;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.Map;
 
 /**
  * The type Product.
@@ -17,4 +17,5 @@ public record Product(
   String category,
   int salesUnits,
   Map<String, Integer> stock
-) {}
+) {
+}

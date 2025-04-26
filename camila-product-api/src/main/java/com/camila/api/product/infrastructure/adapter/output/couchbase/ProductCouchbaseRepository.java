@@ -37,7 +37,8 @@ public interface ProductCouchbaseRepository extends ReactiveCouchbaseRepository<
   @Query("""
     SELECT
       meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock,
-      ((p.salesUnits * $1) + ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) / ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * $2)) AS weightedScore
+      ((p.salesUnits * $1) + ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) /
+        ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * $2)) AS weightedScore
     FROM #{#n1ql.bucket}.`product`.`products` AS p
     GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock
     ORDER BY weightedScore DESC

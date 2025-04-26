@@ -1,7 +1,10 @@
 package com.camila.api.product.infrastructure.adapter.input.websocket;
 
-import com.camila.api.product.domain.usecase.ProductUseCase;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
 import com.camila.api.product.domain.model.Product;
+import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +13,6 @@ import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 /**
  * The type Product web socket handler.
@@ -81,9 +81,9 @@ public class ProductWebSocketHandler implements WebSocketHandler {
       return Flux.just("Error converting product to string: " + e.getMessage());
     }
   }
-}
 
-enum SocketMethod {
-  FIND_BY_INTERNAL_ID,
-  SORT_PRODUCTS;
+  enum SocketMethod {
+    FIND_BY_INTERNAL_ID,
+    SORT_PRODUCTS;
+  }
 }

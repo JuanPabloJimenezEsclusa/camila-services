@@ -1,5 +1,21 @@
 package com.camila.api.product.infrastructure.adapter.input.websocket;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,19 +36,6 @@ import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Stream;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductWebSocketHandler] Product WebSocket Handler Unit Tests")
 class ProductWebSocketHandlerUnitTest {
@@ -50,6 +53,15 @@ class ProductWebSocketHandlerUnitTest {
   private WebSocketMessage inputMessage;
   private List<String> capturedResponses;
   private AtomicBoolean completed;
+
+  private static Stream<Arguments> sortProductsParams() {
+    return Stream.of(
+      Arguments.of("0.0", "1.0", "0", "10"),
+      Arguments.of("0.5", "0.5", "1", "20"),
+      Arguments.of("0.8", "0.2", "2", "50"),
+      Arguments.of("0.3", "0.7", "5", "15")
+    );
+  }
 
   @BeforeEach
   void setUp() {
@@ -235,15 +247,6 @@ class ProductWebSocketHandlerUnitTest {
     verify(productUseCase).sortByMetricsWeights(expectedParams);
     assertThat(capturedResponses).hasSize(1);
     assertThat(capturedResponses.getFirst()).isEqualTo("No products found");
-  }
-
-  private static Stream<Arguments> sortProductsParams() {
-    return Stream.of(
-      Arguments.of("0.0", "1.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "2", "50"),
-      Arguments.of("0.3", "0.7", "5", "15")
-    );
   }
 
   private void setupInputMessage(final String payload) {

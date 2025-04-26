@@ -1,15 +1,30 @@
 # camila-product-orchestrator-int (k8s) (AWS)
 
+> [Summary](#-summary)
+  • [Dependencies](#-dependencies)
+  • [Architecture](#-architecture)
+  • [Usage](#-usage)
+  • [Testing](#-testing)
+  • [Links](#-links)
+
+## 📜 Summary
+
+---
+
 Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/)
 
 > It is recommended to use dark mode UI to read this!
 
-## Prerequisites
+## ⚙️ Dependencies
+
+---
 
 * Docker ~= 27.3.0
 * AWS CLI >= 2.15.52
 
-## Architecture
+## 🏗️ Architecture
+
+---
 
 <p style="text-align: center">
 
@@ -21,7 +36,9 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 
 </p>
 
-## Operations
+## 🌐 Usage
+
+---
 
 ❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
@@ -66,7 +83,9 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 
 ---
 
-### Tests
+## 🧪 Testing
+
+---
 
 | File                                               | Description                                                 |
 |----------------------------------------------------|-------------------------------------------------------------|
@@ -77,7 +96,9 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
   <img src="images/camila-product-api-int-aws-swagger-example.gif" alt="camila-product-api-int-aws-swagger-example">
 </p>
 
-## Links
+## 🔗 Links
+
+---
 
 * API
   * [API Rest (Swagger-ui)](https://poc.jpje-kops.xyz/product-int/api/webjars/swagger-ui/index.html#/)

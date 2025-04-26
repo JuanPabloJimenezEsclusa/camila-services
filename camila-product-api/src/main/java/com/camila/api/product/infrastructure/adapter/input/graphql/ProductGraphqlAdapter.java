@@ -1,7 +1,9 @@
 package com.camila.api.product.infrastructure.adapter.input.graphql;
 
-import com.camila.api.product.domain.usecase.ProductUseCase;
+import java.util.Map;
+
 import com.camila.api.product.domain.model.Product;
+import com.camila.api.product.domain.usecase.ProductUseCase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 /**
  * The type Product graphql adapter.

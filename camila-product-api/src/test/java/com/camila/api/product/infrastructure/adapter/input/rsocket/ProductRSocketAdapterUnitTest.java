@@ -1,5 +1,14 @@
 package com.camila.api.product.infrastructure.adapter.input.rsocket;
 
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -18,13 +27,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductRSocketAdapter] Product RSocket Adapter Unit Tests")
 class ProductRSocketAdapterUnitTest {
@@ -40,6 +42,15 @@ class ProductRSocketAdapterUnitTest {
 
   @InjectMocks
   private ProductRSocketAdapter productRSocketAdapter;
+
+  private static Stream<Arguments> sortProductsParams() {
+    return Stream.of(
+      Arguments.of("0.0", "1.0", "0", "10"),
+      Arguments.of("0.5", "0.5", "1", "20"),
+      Arguments.of("0.8", "0.2", "2", "50"),
+      Arguments.of("0.3", "0.7", "5", "15")
+    );
+  }
 
   @Test
   @DisplayName("Should find product by internal ID")
@@ -219,14 +230,5 @@ class ProductRSocketAdapterUnitTest {
     verify(objectMapper).readTree(message);
     verify(productUseCase).sortByMetricsWeights(anyMap());
     verifyNoMoreInteractions(productUseCase);
-  }
-
-  private static Stream<Arguments> sortProductsParams() {
-    return Stream.of(
-      Arguments.of("0.0", "1.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "2", "50"),
-      Arguments.of("0.3", "0.7", "5", "15")
-    );
   }
 }

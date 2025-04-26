@@ -6,7 +6,8 @@ import java.io.Serial;
  * The type Product exception.
  */
 public class ProductException extends RuntimeException {
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   /**
    * Instantiates a new Product exception.

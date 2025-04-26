@@ -40,7 +40,7 @@ public class ProductCouchbaseAdapter implements ProductRepository {
   public Mono<Product> findByInternalId(final String internalId) {
     return productCouchbaseRepository.findByInternalId(internalId)
       .doOnNext(result -> log.debug("couchbase.adapter.findByInternalId: {}", result))
-      .doOnError(throwable -> log.error("couchbase.adapter.findByInternalId: {}", throwable.getMessage()))
+      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.findByInternalId: {}", throwable.getMessage()))
       .map(mapper::toProduct);
   }
 
@@ -57,7 +57,7 @@ public class ProductCouchbaseAdapter implements ProductRepository {
 
     return productCouchbaseRepository.sortByMetricsWeights(saleUnitsWeight, stockWeight, limit, offset)
       .doOnNext(result -> log.debug("couchbase.adapter.sortByMetricsWeights: {}", result))
-      .doOnError(throwable -> log.error("couchbase.adapter.sortByMetricsWeights: {}", throwable.getMessage()))
+      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.sortByMetricsWeights: {}", throwable.getMessage()))
       .map(mapper::toProduct);
   }
 }

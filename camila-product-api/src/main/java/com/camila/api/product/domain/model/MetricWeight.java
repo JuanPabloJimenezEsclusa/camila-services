@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record MetricWeight (
+public record MetricWeight(
   Metrics metric,
   double weight
-) {}
+) {
+}

@@ -26,18 +26,18 @@ public class LocalConfig {
   @Bean
   BeanPostProcessor customizeMongod() {
     return TypedBeanPostProcessor.applyBeforeInitialization(Mongod.class, src -> Mongod.builder()
-      .from(src)
-      .mongodArguments(Start.to(MongodArguments.class)
-        .initializedWith(MongodArguments.defaults()
-          .withAuth(false)
-          .withSyncDelay(10) // seconds
-          .withUseNoPrealloc(false)
-          .withUseSmallFiles(false)
-          .withUseNoJournal(false)
-          .withEnableTextSearch(true)
-          .withStorageEngine("wiredTiger")))
-      .processOutput(Start.to(ProcessOutput.class)
-        .initializedWith(ProcessOutput.namedConsole("custom")))
-      .build());
+        .from(src)
+        .mongodArguments(Start.to(MongodArguments.class)
+          .initializedWith(MongodArguments.defaults()
+            .withAuth(false)
+            .withSyncDelay(1)
+            .withUseNoPrealloc(false)
+            .withUseSmallFiles(false)
+            .withUseNoJournal(true)
+            .withEnableTextSearch(true)
+            .withStorageEngine("wiredTiger")))
+        .processOutput(Start.to(ProcessOutput.class)
+          .initializedWith(ProcessOutput.namedConsole("custom")))
+        .build());
   }
 }

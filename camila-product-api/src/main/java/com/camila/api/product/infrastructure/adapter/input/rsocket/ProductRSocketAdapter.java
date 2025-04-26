@@ -1,17 +1,18 @@
 package com.camila.api.product.infrastructure.adapter.input.rsocket;
 
+import java.util.Map;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 /**
  * The type Product rsocket adapter.
@@ -40,11 +41,18 @@ class ProductRSocketAdapter {
     this.objectMapper = objectMapper;
   }
 
+  private static JsonNode validate(final JsonNode jsonNode, final String fieldName) {
+    if (!jsonNode.hasNonNull(fieldName)) {
+      throw new IllegalArgumentException("%s is required".formatted(fieldName));
+    }
+    return jsonNode;
+  }
+
   /**
-   * Find by internal id mono.
+   * Find by internal id.
    *
    * @param message the message
-   * @return the mono
+   * @return the product
    * @throws JsonProcessingException the json processing exception
    */
   @MessageMapping("request-response-findByInternalId")
@@ -53,14 +61,14 @@ class ProductRSocketAdapter {
       productUseCase.findByInternalId(internalId)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product not found")))
         .doOnNext(product -> log.info("findByInternalId.next: {}", product))
-        .doOnError(throwable -> log.error("findByInternalId.error: {}", throwable.getMessage())));
+        .doOnError(throwable -> log.debug("findByInternalId.error: {}", throwable.getMessage())));
   }
 
   /**
    * Sort by metrics weights flux.
    *
    * @param message the message
-   * @return the flux
+   * @return the product flux
    * @throws JsonProcessingException the json processing exception
    */
   @MessageMapping("request-stream-sortByMetricsWeights")
@@ -69,14 +77,18 @@ class ProductRSocketAdapter {
       .flatMap(requestParams -> productUseCase.sortByMetricsWeights(requestParams)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product collection empty")))
         .doOnNext(product -> log.info("sortByMetricsWeights.next: {}", product))
-        .doOnError(throwable -> log.error("sortByMetricsWeights.error: {}", throwable.getMessage())));
+        .doOnError(throwable -> log.debug("sortByMetricsWeights.error: {}", throwable.getMessage())));
   }
 
-  private static JsonNode validate(final JsonNode jsonNode, final String fieldName) {
-    if (!jsonNode.hasNonNull(fieldName)) {
-      throw new IllegalArgumentException("%s is required".formatted(fieldName));
-    }
-    return jsonNode;
+  /**
+   * Handle exception.
+   *
+   * @param exception the exception
+   * @return Void
+   */
+  @MessageExceptionHandler
+  public Mono<Void> handleException(final Exception exception) {
+    return Mono.error(exception);
   }
 
   private Mono<String> validateAndBuildFindRequest(final String message) {

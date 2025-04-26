@@ -1,15 +1,20 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
-import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatException;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Iterator;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatException;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,

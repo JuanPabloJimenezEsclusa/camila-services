@@ -1,5 +1,7 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
+import java.util.Map;
+
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.api.ProductsApi;
 import com.camila.api.product.infrastructure.adapter.input.rest.dto.ProductDTO;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 /**
  * The type Product rest adapter.

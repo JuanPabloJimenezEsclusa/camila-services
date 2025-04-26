@@ -1,5 +1,16 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
@@ -17,14 +28,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductGrpcAdapter] Product gRPC Adapter Unit Tests")
 class ProductGrpcAdapterUnitTest {
@@ -40,6 +43,24 @@ class ProductGrpcAdapterUnitTest {
 
   @Captor
   private ArgumentCaptor<com.camila.api.product.infrastructure.adapter.input.grpc.Product> productCaptor;
+
+  private static Stream<Arguments> sortProductsParams() {
+    return Stream.of(
+      Arguments.of(1, 1, 0, 10),
+      Arguments.of(10, 5, 0, 20),
+      Arguments.of(100, 100, 5, 15),
+      Arguments.of(50, 75, 2, 25)
+    );
+  }
+
+  private static Product createDomainProduct(final String internalId, final String name,
+                                             final String category, final int salesUnits) {
+    final var stock = new HashMap<String, Integer>();
+    stock.put("warehouse1", 10);
+    stock.put("warehouse2", 20);
+
+    return new Product("id_" + internalId, internalId, name, category, salesUnits, stock);
+  }
 
   @Test
   @DisplayName("Should return product by internal ID")
@@ -161,23 +182,5 @@ class ProductGrpcAdapterUnitTest {
     // Then
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verifyNoMoreInteractions(productUseCase);
-  }
-
-  private static Stream<Arguments> sortProductsParams() {
-    return Stream.of(
-      Arguments.of(1, 1, 0, 10),
-      Arguments.of(10, 5, 0, 20),
-      Arguments.of(100, 100, 5, 15),
-      Arguments.of(50, 75, 2, 25)
-    );
-  }
-
-  private static Product createDomainProduct(final String internalId, final String name,
-                                             final String category, final int salesUnits) {
-    final var stock = new HashMap<String, Integer>();
-    stock.put("warehouse1", 10);
-    stock.put("warehouse2", 20);
-
-    return new Product("id_" + internalId, internalId, name, category, salesUnits, stock);
   }
 }

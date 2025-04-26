@@ -1,29 +1,28 @@
 # camila-product-api
 
+> [Summary](#-summary)
+  • [Dependencies](#-dependencies)
+  • [API-First Approach](#-api-first-approach)
+  • [Architecture](#-architecture)
+  • [Links](#-links)
+  • [Usage](#-usage)
+  • [Testing](#-testing)
+  • [Operations](#-operations)
+  • [Notes](#-notes)
+
+## 📜 Summary
+
+---
+
 Microservice example. Implements a product API with the following features:
-- Development: [API-First Approach](https://www.postman.com/api-first/)
+
+- Design: [API First](https://www.postman.com/api-first/)
 - Paradigm: [Reactive](https://projectreactor.io/learn)
 - Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
 - Communication: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [RSocket](https://rsocket.io/), [GRPC](https://grpc.io/docs/what-is-grpc/core-concepts/)
 
-## Table of Contents
 
----
-
-- [Pre-conditions](#pre-conditions)
-- [API-First Approach](#api-first-approach)
-- [Architecture](#architecture)
-- [Links](#links)
-- [API Request Examples](#api-request-examples)
-  - [Rest API](#rest-api)
-  - [Graphql API](#graphql-api)
-  - [Websocket](#websocket)
-  - [RSocket](#rsocket)
-- [Testing](#testing)
-- [Operations (build, deploy)](#operations-build-deploy)
-- [Notes](#notes)
-
-## Pre-conditions
+## ⚙️ Dependencies
 
 ---
 
@@ -39,28 +38,32 @@ Microservice example. Implements a product API with the following features:
   * GCC >= (linux, x86_64, 11.4.0)
     * `zlib1g-dev`
 
-## API-First Approach
+## 📚 API-First Approach
 
 ---
 
-This project follows the API-first approach, where APIs are designed and documented before implementation:
+This project follows the API-first approach, where APIs are designed and documented before
+implementation:
 
-1. **API Specification**: Using [OpenAPI](https://www.openapis.org/) for REST APIs and [GraphQL Schema](https://graphql.org/learn/schema/) for GraphQL APIs
+1. **API Specification**: Using [OpenAPI](https://www.openapis.org/) for REST APIs
+   and [GraphQL Schema](https://graphql.org/learn/schema/) for GraphQL APIs
 2. **Contract Testing**: Ensuring implementations meet API contracts
 3. **Versioning**: Clear versioning strategy for API evolution
 4. **Documentation**: Auto-generated from specifications
 
 API definitions are stored in the `src/main/resources/` directory:
+
 - REST API: [product.yml](src/main/resources/api/product.yml)
 - GraphQL: [schema.graphqls](src/main/resources/graphql/schema.graphqls)
 
 The API-first approach enables:
+
 - Better developer experience with consistent interfaces
 - Parallel development of frontend and backend
 - Improved API quality and maintainability
 - Early detection of design issues
 
-## Architecture
+## 🏗️ Architecture
 
 ---
 
@@ -91,14 +94,14 @@ The API-first approach enables:
 
 ![Hexagonal-architecture](.docs/architecture/camila-product-api-architecture-v1.svg "Hexagonal Diagram")
 
-## Links
+## 🔗 Links
 
 ---
 
 * Rest API DOC: <http://localhost:8080/product-dev/api/swagger-ui.html>
 * Graphql API DOC: <http://localhost:8080/product-dev/api/graphiql>
 
-## API request examples
+## 🌐 Usage
 
 ---
 
@@ -126,7 +129,7 @@ curl -X 'GET' \
   -H 'Accept: application/x-ndjson'
 ```
 
-> [3 techniques to stream JSON in Spring WebFlux](https://nurkiewicz.com/2021/08/error-handling-in-json-streaming-with-webflux.html)
+> 💡 [3 techniques to stream JSON in Spring WebFlux](https://nurkiewicz.com/2021/08/error-handling-in-json-streaming-with-webflux.html)
 
 ### Graphql API
 
@@ -170,25 +173,25 @@ export RSOCKET_SERVER_URL="ws://localhost:7000/product-dev/api/rsocket"
 ./.docs/api-rsocket-request.sh
 ```
 
-## Testing
+## 🧪 Testing
 
 ---
 
 [Tests - Readme](src/test/Readme.md)
 
-## Operations (build, deploy)
+## 🛠️ Operations
 
 ---
 
 [Operations - Readme](.operate/Readme.md)
 
-## Notes:
+## 📝 Notes
 
 ---
 
-### Example of aggregating `products` with `sales units` and weighted `stock` filter in `mongodb`
+### Weighted search example in `MongoDB`
 
-```bash
+```mongodb-json
 db.products.aggregate([
   {
     $addFields: {
@@ -222,4 +225,16 @@ db.products.aggregate([
       weightedScore: -1
     }}
 ]);
+```
+
+### Weighted search example in `Couchbase`
+
+```couchbasequery
+SELECT
+  meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock,
+  ((p.salesUnits * 0.80) + ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) /
+                           ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * 0.20)) AS weightedScore
+FROM `camila-product-bucket`.`product`.`products` AS p
+GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock
+ORDER BY weightedScore DESC
 ```

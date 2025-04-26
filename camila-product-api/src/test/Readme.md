@@ -1,26 +1,22 @@
 # camila-product-api-test
 
+> [Summary](#-summary)
+  • [Context](#-context)
+  • [Architecture](#-architecture)
+  • [Usage](#-usage)
+  • [Notes](#-notes)
+
+## 📜 Summary
+
+---
+
 This project implements a comprehensive test suite for the `camila-product-api` service, covering various aspects of its functionality and performance.
 
-## Table of Contents
+## 📚 Context
 
 ---
 
-- [Test Types](#test-types)
-- [Architecture](#architecture)
-- [Running Tests](#running-tests)
-  - [Unit and Architecture Tests](#unit-and-architecture-tests)
-  - [Unit Tests with AOT](#unit-tests-with-aot)
-  - [Integration and Benchmark Tests](#integration-and-benchmark-tests)
-  - [Mutation Tests](#mutation-tests)
-  - [Behaviour Test](#behaviour-test)
-  - [Code Analysis](#code-analysis)
-  - [Performance Tests](#performance-tests)
-- [Data Generator](#data-generator)
-
-## Test types
-
----
+### Test Types
 
 | Type                       | Details                                                                                                                                                                                                                           |
 |----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -32,7 +28,7 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 | Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                             |
 | Performance Tests (jmeter) | Employ [JMeter](https://jmeter.apache.org) to simulate heavy user load and assess performance under stress                                                                                                                        |
 
-## Architecture
+## 🏗️ Architecture
 
 ---
 
@@ -58,9 +54,17 @@ This project implements a comprehensive test suite for the `camila-product-api` 
  ┗ 📜ProductApiApplicationTests.java
 ```
 
-## Running Tests
+## 🛠️ Usage
 
 ---
+
+> [Unit and Architecture Tests](#unit-and-architecture-tests)
+  • [Unit Tests with AOT](#unit-tests-with-aot)
+  • [Integration and Benchmark Tests](#integration-and-benchmark-tests)
+  • [Mutation Tests](#mutation-tests)
+  • [Behaviour Test](#behaviour-test)
+  • [Code Analysis](#code-analysis)
+  • [Performance Tests](#performance-tests)
 
 ### Unit and Architecture Tests
 
@@ -83,7 +87,7 @@ unset SPRING_PROFILES_ACTIVE
 mvn clean verify
 ```
 
-> Report: [./target/site/jacoco/index.html](./../../target/site/jacoco/index.html)
+> Report: [jacoco](./../../target/site/jacoco/index.html)
 
 ### Mutation Tests
 
@@ -91,7 +95,7 @@ mvn clean verify
 mvn clean test -P pitest
 ```
 
-> Report: [./target/pit-reports/index.html](./../../target/pit-reports/index.html)
+> Report: [pit-reports](./../../target/pit-reports/index.html)
 
 ### Behaviour test
 
@@ -99,19 +103,21 @@ mvn clean test -P pitest
 mvn clean test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner
 ```
 
-> Report: [./target/cucumber-reports/Cucumber.html](./../../target/cucumber-reports/Cucumber.html)
+> Report: [cucumber-reports](./../../target/cucumber-reports/Cucumber.html)
 
 ### Code Analysis
 
+* Checkstyle: [maven-checkstyle-plugin](https://checkstyle.sourceforge.io/)
 * Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
 * Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
+* SpotBugs: [spotbugs-maven-plugin](https://spotbugs.github.io/)
 
 ```bash
 unset SPRING_PROFILES_ACTIVE
-mvn clean verify site -P check-dependency,error-prone
+mvn clean verify site -P error-prone,quality-check | tee code-analysis.log
 ```
 
-> Report: [./target/site/project-info.html](./../../target/site/project-info.html)
+> Report: [site-project-info](./../../target/site/project-info.html)
 
 ### Performance Tests
 
@@ -133,9 +139,11 @@ export BASE_PATH="product-dev"
 ./resources/scripts/jmeter/run.sh
 ```
 
-## Data Generator
+## 📝 Notes
 
 ---
+
+### Data Generator
 
 A random data generator is available to populate the database for performance testing:
 

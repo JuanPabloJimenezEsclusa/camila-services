@@ -24,7 +24,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler({ConstraintViolationException.class, IllegalArgumentException.class})
   protected ResponseEntity<String> handleConstraintViolation(final RuntimeException exception) {
-    log.error(exception.getMessage());
+    log.debug(exception.getMessage());
     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
   }
 
@@ -36,7 +36,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(ProductException.class)
   protected ResponseEntity<String> handleProductServiceException(final ProductException exception) {
-    log.error(exception.getMessage());
+    log.debug(exception.getMessage());
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 }

@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @DisplayName("[IT][ProductApiApplication] Spring boot smoke test")
-class ProductApiApplicationTests {
+class ProductApiApplicationITCase {
 
   @Test
   @DisplayName("[ProductApiApplication] context loaded")
-	void contextLoads() {
+  void contextLoads() {
     Assertions.assertTrue(true);
-	}
+  }
 }

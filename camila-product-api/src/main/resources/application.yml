@@ -290,7 +290,7 @@ eureka:
     nonSecurePortEnabled: true
     non-secure-port: ${server.port}
     metadata-map:
-      weight:  ${random.int(1,10)}
+      weight: ${random.int(1,10)}
       startup: ${random.int}
       # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/1.3.6.RELEASE/multi/multi__service_discovery_eureka_clients.html#_status_page_and_health_indicator
       management.context-path: ${spring.webflux.base-path}/actuator
@@ -385,7 +385,7 @@ logging:
     org.hibernate.validator: ERROR
     org.springframework: ERROR
     org.springframework.web: ERROR
-    org.springframework.data: DEBUG
+    org.springframework.data: ERROR
     org.springframework.context: ERROR
     com.couchbase: ERROR
     org.springframework.boot: ERROR

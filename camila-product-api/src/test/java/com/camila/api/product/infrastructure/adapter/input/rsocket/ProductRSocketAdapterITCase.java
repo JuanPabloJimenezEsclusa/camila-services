@@ -1,22 +1,27 @@
 package com.camila.api.product.infrastructure.adapter.input.rsocket;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.camila.api.product.domain.model.Product;
 import org.jspecify.annotations.Nullable;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import reactor.test.StepVerifier;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = { "repository.technology=mongo" }
+  properties = {"repository.technology=mongo"}
 )
 @DisplayName("[IT][ProductRSocketAdapter] Product rsocket adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

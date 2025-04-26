@@ -1,12 +1,12 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
+import java.time.Duration;
+import java.util.Map;
+
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import reactor.core.scheduler.Schedulers;
-
-import java.time.Duration;
-import java.util.Map;
 
 /**
  * The type Product grpc adapter.

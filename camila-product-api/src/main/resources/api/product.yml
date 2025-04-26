@@ -61,15 +61,15 @@ paths:
         '401':
           description: Unauthorized
           content:
-            text/event-stream: {}
-            application/x-ndjson: {}
-            application/json: {}
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
         '500':
           description: Server Error
           content:
-            text/event-stream: {}
-            application/x-ndjson: {}
-            application/json: {}
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
   /products:
     get:
       tags:
@@ -116,15 +116,15 @@ paths:
         '401':
           description: Unauthorized
           content:
-            text/event-stream: {}
-            application/x-ndjson: {}
-            application/json: {}
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
         '500':
           description: Server Error
           content:
-            text/event-stream: {}
-            application/x-ndjson: {}
-            application/json: {}
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
 
 components:
   parameters:

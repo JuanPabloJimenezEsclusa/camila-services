@@ -1,5 +1,7 @@
 package com.camila.gateway.presentation;
 
+import java.util.Collections;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -7,14 +9,26 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-import java.util.Collections;
-
 /**
  * The type Cors config.
  */
 @Configuration
 // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
 class CorsConfig {
+  private static UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
+    var corsConfig = new CorsConfiguration();
+    corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+    corsConfig.setAllowedMethods(Collections.singletonList("*"));
+    corsConfig.setAllowedHeaders(Collections.singletonList("*"));
+    corsConfig.setAllowCredentials(true);
+    corsConfig.setAllowPrivateNetwork(true);
+    corsConfig.setMaxAge(3600L);
+
+    var source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", corsConfig);
+    return source;
+  }
+
   /**
    * Cors web filter cors web filter.
    *
@@ -33,19 +47,5 @@ class CorsConfig {
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     return urlBasedCorsConfigurationSource();
-  }
-
-  private static UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
-    var corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedOrigins(Collections.singletonList("*"));
-    corsConfig.setAllowedMethods(Collections.singletonList("*"));
-    corsConfig.setAllowedHeaders(Collections.singletonList("*"));
-    corsConfig.setAllowCredentials(true);
-    corsConfig.setAllowPrivateNetwork(true);
-    corsConfig.setMaxAge(3600L);
-
-    var source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", corsConfig);
-    return source;
   }
 }

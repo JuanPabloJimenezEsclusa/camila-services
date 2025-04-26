@@ -1,5 +1,14 @@
 package com.camila.api.product.infrastructure.adapter.input.graphql;
 
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import org.instancio.Instancio;
@@ -16,14 +25,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductGraphqlAdapter] Product GraphQL Adapter Unit Tests")
 class ProductGraphqlAdapterUnitTest {
@@ -33,6 +34,15 @@ class ProductGraphqlAdapterUnitTest {
 
   @InjectMocks
   private ProductGraphqlAdapter productGraphqlAdapter;
+
+  private static Stream<Arguments> sortProductsParams() {
+    return Stream.of(
+      Arguments.of(0.0f, 0.0f, 0, 10),
+      Arguments.of(10.0f, 5.0f, 0, 20),
+      Arguments.of(100.0f, 100.0f, 5, 15),
+      Arguments.of(50.0f, 75.0f, 2, 25)
+    );
+  }
 
   @Test
   @DisplayName("Should find product by internal ID")
@@ -97,14 +107,5 @@ class ProductGraphqlAdapterUnitTest {
 
     verify(productUseCase).sortByMetricsWeights(anyMap());
     verifyNoMoreInteractions(productUseCase);
-  }
-
-  private static Stream<Arguments> sortProductsParams() {
-    return Stream.of(
-      Arguments.of(0.0f, 0.0f, 0, 10),
-      Arguments.of(10.0f, 5.0f, 0, 20),
-      Arguments.of(100.0f, 100.0f, 5, 15),
-      Arguments.of(50.0f, 75.0f, 2, 25)
-    );
   }
 }

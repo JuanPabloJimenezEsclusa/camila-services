@@ -37,7 +37,6 @@ class Oauth2SecurityConfig {
   /**
    * Security web filter chain.
    *
-   *
    * @param http the http
    * @return the security web filter chain
    */

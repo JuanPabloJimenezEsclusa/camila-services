@@ -12,6 +12,10 @@ public enum Metrics {
 
   private final String description;
 
+  Metrics(String description) {
+    this.description = description;
+  }
+
   /**
    * Gets metrics.
    *
@@ -23,10 +27,6 @@ public enum Metrics {
       .filter(metrics -> metrics.description.equalsIgnoreCase(description))
       .findFirst()
       .orElse(UNKNOWN);
-  }
-
-  Metrics(String description) {
-    this.description = description;
   }
 
   /**

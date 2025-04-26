@@ -1,5 +1,15 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
+import static org.instancio.Select.field;
+import static org.mockito.Mockito.anyMap;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
@@ -22,19 +32,16 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.instancio.Select.field;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = {ProductRestAdapter.class})
 @Import({
-  RestExceptionHandler.class, LocalSecurityConfig.class, QueryParametersValidator.class, ProductDTOMapperImpl.class
+  RestExceptionHandler.class,
+  LocalSecurityConfig.class,
+  QueryParametersValidator.class,
+  ProductDTOMapperImpl.class
 })
-@DisplayName("[UT][ProductRestAdapter] Product Rest Adapter Component Tests")
-class ProductRestAdapterComponentTest {
+@DisplayName("[IT][ProductRestAdapter] Product rest adapter [component] test")
+class ProductRestAdapterComponentITCase {
 
   @Autowired
   private WebTestClient webClient;
@@ -47,6 +54,37 @@ class ProductRestAdapterComponentTest {
 
   @MockitoSpyBean
   private ProductDTOMapper productDTOMapper;
+
+  private static Stream<Arguments> sortProductsWeightParams() {
+    return Stream.of(
+      Arguments.of("0.001", "0.999"),
+      Arguments.of("0.5", "0.5"),
+      Arguments.of("0.9", "0.1"),
+      Arguments.of("0.0", "1.0")
+    );
+  }
+
+  private static Stream<Arguments> paginationParams() {
+    return Stream.of(
+      Arguments.of("0", "10"),
+      Arguments.of("1", "20"),
+      Arguments.of("5", "5"),
+      Arguments.of("10", "50")
+    );
+  }
+
+  private static Stream<Arguments> invalidTestParams() {
+    return Stream.of(
+      Arguments.of(Map.of("salesUnits", "12345678")),
+      Arguments.of(Map.of("salesUnits", "a.5")),
+      Arguments.of(Map.of("salesUnits", "0.1", "stock", "invalid")),
+      Arguments.of(Map.of("empty", "")),
+      Arguments.of(Map.of("test", "1x")),
+      Arguments.of(Map.of("test", ".5")),
+      Arguments.of(Map.of("test", "-1")),
+      Arguments.of(Map.of("test", "1.2.3"))
+    );
+  }
 
   @Test
   @DisplayName("Should find product by internal ID")
@@ -180,36 +218,5 @@ class ProductRestAdapterComponentTest {
     verify(queryParametersValidator).validate(anyMap());
     verifyNoMoreInteractions(queryParametersValidator);
     verifyNoInteractions(productUseCase, productDTOMapper);
-  }
-
-  private static Stream<Arguments> sortProductsWeightParams() {
-    return Stream.of(
-      Arguments.of("0.001", "0.999"),
-      Arguments.of("0.5", "0.5"),
-      Arguments.of("0.9", "0.1"),
-      Arguments.of("0.0", "1.0")
-    );
-  }
-
-  private static Stream<Arguments> paginationParams() {
-    return Stream.of(
-      Arguments.of("0", "10"),
-      Arguments.of("1", "20"),
-      Arguments.of("5", "5"),
-      Arguments.of("10", "50")
-    );
-  }
-
-  private static Stream<Arguments> invalidTestParams() {
-    return Stream.of(
-      Arguments.of(Map.of("salesUnits", "12345678")),
-      Arguments.of(Map.of("salesUnits", "a.5")),
-      Arguments.of(Map.of("salesUnits", "0.1", "stock", "invalid")),
-      Arguments.of(Map.of("empty", "")),
-      Arguments.of(Map.of("test", "1x")),
-      Arguments.of(Map.of("test", ".5")),
-      Arguments.of(Map.of("test", "-1")),
-      Arguments.of(Map.of("test", "1.2.3"))
-    );
   }
 }

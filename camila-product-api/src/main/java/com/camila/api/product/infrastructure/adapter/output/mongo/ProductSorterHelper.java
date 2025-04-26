@@ -1,14 +1,28 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.addFields;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.limit;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.skip;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+
+import java.util.List;
+
 import com.camila.api.product.domain.model.MetricWeight;
 import com.camila.api.product.domain.model.Metrics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.aggregation.*;
-
-import java.util.List;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators;
+import org.springframework.data.mongodb.core.aggregation.AddFieldsOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
+import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
+import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
+import org.springframework.data.mongodb.core.aggregation.LimitOperation;
+import org.springframework.data.mongodb.core.aggregation.ObjectOperators;
+import org.springframework.data.mongodb.core.aggregation.SkipOperation;
+import org.springframework.data.mongodb.core.aggregation.SortOperation;
+import org.springframework.data.mongodb.core.aggregation.VariableOperators;
 
 /**
  * The type Product sorter helper.
@@ -16,7 +30,6 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 @Slf4j
 class ProductSorterHelper {
   private ProductSorterHelper() {
-    throw new AssertionError("not allowed!");
   }
 
   /**

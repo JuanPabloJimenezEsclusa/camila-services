@@ -1,5 +1,16 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
+import static org.instancio.Select.field;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
+
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.dto.ProductDTO;
@@ -17,13 +28,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
-
-import static org.instancio.Select.field;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductRestAdapter] Product REST Adapter Unit Tests")
 class ProductRestAdapterUnitTest {
@@ -39,6 +43,15 @@ class ProductRestAdapterUnitTest {
 
   @InjectMocks
   private ProductRestAdapter productRestAdapter;
+
+  private static Stream<Arguments> sortProductsParams() {
+    return Stream.of(
+      Arguments.of("0.0", "1.0", "0", "10"),
+      Arguments.of("0.5", "0.5", "1", "20"),
+      Arguments.of("0.8", "0.2", "2", "50"),
+      Arguments.of("0.3", "0.7", "5", "15")
+    );
+  }
 
   @Test
   @DisplayName("Should find product by internal ID")
@@ -138,14 +151,5 @@ class ProductRestAdapterUnitTest {
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verifyNoMoreInteractions(queryParametersValidator, productUseCase);
     verifyNoInteractions(productDTOMapper);
-  }
-
-  private static Stream<Arguments> sortProductsParams() {
-    return Stream.of(
-      Arguments.of("0.0", "1.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "2", "50"),
-      Arguments.of("0.3", "0.7", "5", "15")
-    );
   }
 }

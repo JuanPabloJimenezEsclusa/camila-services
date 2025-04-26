@@ -1,5 +1,11 @@
 package com.camila.api.product.infrastructure.adapter.input.rsocket;
 
+import java.net.URI;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
 import com.camila.api.product.domain.model.Product;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
@@ -11,12 +17,6 @@ import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.util.pattern.PathPatternRouteMatcher;
-
-import java.net.URI;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 /**
  * The type R socket test client.
@@ -60,13 +60,13 @@ public class RSocketTestClient {
     logWithElapsedTime(requester, rSocketRequester -> {
       var future = new CompletableFuture<>();
       var message = """
-      {
-        "salesUnits": "0.9",
-        "stock": "0.1",
-        "page": "0",
-        "size": "10000"
-      }
-      """;
+        {
+          "salesUnits": "0.9",
+          "stock": "0.1",
+          "page": "0",
+          "size": "10000"
+        }
+        """;
 
       log.info("Started (getProductsSortByWeights)");
       requester.route("products.request-stream-sortByMetricsWeights")
@@ -74,7 +74,7 @@ public class RSocketTestClient {
         .retrieveFlux(Product.class)
         .take(2_000) // no matter if it's 2 or 100, it will only take 2
         .doOnError(throwable -> {
-          log.error("Error (sortByMetricsWeights): {}", throwable.getMessage());
+          log.debug("Error (sortByMetricsWeights): {}", throwable.getMessage());
           future.completeExceptionally(throwable);
         })
         .doOnNext(product -> log.info("{} - {}", product.internalId(), product.name()))
@@ -84,7 +84,7 @@ public class RSocketTestClient {
       try {
         future.join();
       } catch (Exception e) {
-        log.error("Main thread interrupted", e);
+        log.debug("Main thread interrupted", e);
       }
     });
   }
@@ -93,17 +93,18 @@ public class RSocketTestClient {
     logWithElapsedTime(requester, rSocketRequester -> {
       var future = new CompletableFuture<>();
       var message = """
-      {
-        "internalId": "63132"
-      }
-      """;
+        {
+          "internalId": "63132"
+        }
+        """;
 
       log.info("Started (getProductByInternalId)");
       requester.route("products.request-response-findByInternalId")
         .data(message)
-        .retrieveMono(new ParameterizedTypeReference<Product>() {})
+        .retrieveMono(new ParameterizedTypeReference<Product>() {
+        })
         .doOnError(throwable -> {
-          log.error("Error (findByInternalId): {}", throwable.getMessage());
+          log.debug("Error (findByInternalId): {}", throwable.getMessage());
           future.completeExceptionally(throwable);
         })
         .doOnNext(product -> log.info("{}", product))
@@ -113,7 +114,7 @@ public class RSocketTestClient {
       try {
         future.join();
       } catch (Exception e) {
-        log.error("Main thread interrupted", e);
+        log.debug("Main thread interrupted", e);
       }
     });
   }

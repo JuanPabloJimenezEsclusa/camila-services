@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -37,7 +38,6 @@
     <mapstruct.version>1.6.3</mapstruct.version>
     <jib-maven-plugin.version>3.4.5</jib-maven-plugin.version>
     <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
-    <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -47,6 +47,7 @@
     <testcontainers.version>1.20.6</testcontainers.version>
     <git-commit-id-maven-plugin.version>9.0.1</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.12.0</openapi-generator-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -609,7 +610,11 @@
               <configuration>
                 <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
                 <excludes>
-                  <exclude>com/camila/api/product/infrastructure/adapter/input/grpc/**</exclude>
+                  <exclude>**/input/grpc/**</exclude>
+                  <exclude>*/input/rest/api/**</exclude>
+                  <exclude>**/input/rest/dto/**</exclude>
+                  <exclude>**/input/security/*Config**</exclude>
+                  <exclude>**/*MapperImpl**</exclude>
                 </excludes>
               </configuration>
             </execution>
@@ -770,15 +775,28 @@
               <buildArgs>
                 <buildArg>--verbose</buildArg>
                 <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-                <buildArg>-H:ReflectionConfigurationResources=META-INF/native-image/reflect-config.json</buildArg>
-                <buildArg>-H:ResourceConfigurationResources=META-INF/native-image/resource-config.json</buildArg>
-                <buildArg>-H:SerializationConfigurationResources=META-INF/native-image/serialization-config.json</buildArg>
-                <buildArg>-H:DynamicProxyConfigurationResources=META-INF/native-image/proxy-config.json</buildArg>
-                <buildArg>-H:JNIConfigurationResources=META-INF/native-image/jni-config.json</buildArg>
-                <buildArg>-H:PredefinedClassesConfigurationResources=META-INF/native-image/predefined-classes-config.json</buildArg>
+                <buildArg>
+                  -H:ReflectionConfigurationResources=META-INF/native-image/reflect-config.json
+                </buildArg>
+                <buildArg>
+                  -H:ResourceConfigurationResources=META-INF/native-image/resource-config.json
+                </buildArg>
+                <buildArg>
+                  -H:SerializationConfigurationResources=META-INF/native-image/serialization-config.json
+                </buildArg>
+                <buildArg>
+                  -H:DynamicProxyConfigurationResources=META-INF/native-image/proxy-config.json
+                </buildArg>
+                <buildArg>-H:JNIConfigurationResources=META-INF/native-image/jni-config.json
+                </buildArg>
+                <buildArg>
+                  -H:PredefinedClassesConfigurationResources=META-INF/native-image/predefined-classes-config.json
+                </buildArg>
 
                 <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                <buildArg>--initialize-at-run-time=org.bouncycastle,java.net.InetAddress,java.net.Inet4Address,java.net.Inet6Address</buildArg>
+                <buildArg>
+                  --initialize-at-run-time=org.bouncycastle,java.net.InetAddress,java.net.Inet4Address,java.net.Inet6Address
+                </buildArg>
                 <buildArg>--enable-http</buildArg>
                 <buildArg>--enable-https</buildArg>
                 <buildArg>--enable-preview</buildArg>
@@ -862,16 +880,116 @@
     </profile>
 
     <profile>
-      <id>check-dependency</id>
+      <id>quality-check</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <build>
         <plugins>
           <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>${spotbugs-maven-plugin.version}</version>
+            <configuration>
+              <includeFilterFile>../src/main/resources/spotbugs-security-include.xml</includeFilterFile>
+              <excludeFilterFile>../src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
+              <effort>Medium</effort>
+              <htmlOutput>true</htmlOutput>
+              <plugins>
+                <plugin>
+                  <groupId>com.h3xstream.findsecbugs</groupId>
+                  <artifactId>findsecbugs-plugin</artifactId>
+                  <version>1.13.0</version>
+                </plugin>
+              </plugins>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${maven-checkstyle-plugin.version}</version>
+            <dependencies>
+              <dependency>
+                <groupId>com.puppycrawl.tools</groupId>
+                <artifactId>checkstyle</artifactId>
+                <version>${checkstyle.version}</version>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>validate</id>
+                <goals>
+                  <goal>checkstyle</goal>
+                </goals>
+                <phase>validate</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
             <version>${maven-site-plugin.version}</version>
+          </plugin>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>default-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>default-prepare-agent-integration</id>
+                <goals>
+                  <goal>prepare-agent-integration</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>merge-results</id>
+                <goals>
+                  <goal>merge</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <fileSets>
+                    <fileSet>
+                      <directory>${project.build.directory}</directory>
+                      <includes>
+                        <include>*.exec</include>
+                      </includes>
+                    </fileSet>
+                  </fileSets>
+                  <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+                </configuration>
+              </execution>
+              <execution>
+                <id>report</id>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+                <phase>verify</phase>
+                <configuration>
+                  <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+                  <excludes>
+                    <exclude>**/input/grpc/**</exclude>
+                    <exclude>**/input/rest/api/**</exclude>
+                    <exclude>**/input/rest/dto/**</exclude>
+                    <exclude>**/input/security/*Config**</exclude>
+                    <exclude>**/*MapperImpl**</exclude>
+                  </excludes>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
             <groupId>org.owasp</groupId>
@@ -895,6 +1013,29 @@
       <reporting>
         <plugins>
           <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>${spotbugs-maven-plugin.version}</version>
+            <configuration>
+              <includeFilterFile>../src/main/resources/spotbugs-security-include.xml</includeFilterFile>
+              <excludeFilterFile>../src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
+              <effort>Medium</effort>
+              <htmlOutput>true</htmlOutput>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${maven-checkstyle-plugin.version}</version>
+            <configuration>
+              <configLocation>../src/main/resources/checkstyle.xml</configLocation>
+              <linkXRef>false</linkXRef>
+              <excludes>
+                **/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**
+              </excludes>
+            </configuration>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <version>${maven-project-info-reports-plugin.version}</version>
@@ -912,6 +1053,16 @@
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <version>${jacoco-maven-plugin.version}</version>
+            <configuration>
+              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+              <excludes>
+                <exclude>**/input/grpc/**</exclude>
+                <exclude>*/input/rest/api/**</exclude>
+                <exclude>**/input/rest/dto/**</exclude>
+                <exclude>**/input/security/*Config**</exclude>
+                <exclude>**/*MapperImpl**</exclude>
+              </excludes>
+            </configuration>
             <reportSets>
               <reportSet>
                 <reports>
@@ -994,17 +1145,11 @@
                 <arg>-Amapstruct.defaultComponentModel=spring</arg>
                 <arg>-XDcompilePolicy=simple</arg>
                 <arg>--should-stop=ifError=FLOW</arg>
-                <arg>-Xplugin:ErrorProne -XepExcludedPaths:.*/com/camila/api/benchmark/jmh_generated/.*</arg>
+                <arg>-Xplugin:ErrorProne
+                  -XepExcludedPaths:.*/jmh_generated/.*|.*/input/grpc/.*|.*/rest/api/.*|.*/rest/dto/.*|.*/generated-sources/.*
+                </arg>
               </compilerArgs>
             </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-failsafe-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
