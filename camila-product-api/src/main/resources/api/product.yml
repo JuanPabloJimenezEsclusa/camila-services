@@ -35,16 +35,12 @@ paths:
       description: Consult product by ID
       operationId: findById
       parameters:
+        - name: acceptLanguage
+          $ref: '#/components/parameters/AcceptLanguage'
+        - name: apiVersion
+          $ref: '#/components/parameters/ApiVersion'
         - name: internalId
-          in: path
-          required: true
-          description: Internal product identifier
-          schema:
-            type: string
-            minLength: 1
-            maxLength: 50
-            pattern: '^\d+$'
-            example: "1"
+          $ref: '#/components/parameters/InternalId'
       responses:
         '200':
           description: Success
@@ -60,6 +56,12 @@ paths:
                 $ref: '#/components/schemas/ProductDTO'
         '401':
           description: Unauthorized
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '406':
+          description: Not Acceptable
           content:
             text/event-stream: { }
             application/x-ndjson: { }
@@ -78,22 +80,12 @@ paths:
       description: 'Consult products sorted by metric:weight rules'
       operationId: sortProducts
       parameters:
+        - name: acceptLanguage
+          $ref: '#/components/parameters/AcceptLanguage'
+        - name: apiVersion
+          $ref: '#/components/parameters/ApiVersion'
         - name: requestParams
-          in: query
-          description: Parameters map
-          required: true
-          allowEmptyValue: false
-          style: form
-          schema:
-            type: object
-            additionalProperties:
-              type: string
-              minLength: 0
-              maxLength: 50
-              pattern: '^\d+(?:\.\d*)?$'
-            minProperties: 1
-            maxProperties: 4
-            example: { "salesUnits": "0.8", "stock": "0.2", "page": "0", "size": "50" }
+          $ref: '#/components/parameters/RequestParams'
       responses:
         '200':
           description: Success
@@ -115,6 +107,12 @@ paths:
                   $ref: '#/components/schemas/ProductDTO'
         '401':
           description: Unauthorized
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '406':
+          description: Not Acceptable
           content:
             text/event-stream: { }
             application/x-ndjson: { }
@@ -134,13 +132,43 @@ components:
       schema:
         type: string
         default: en-US
+        example: en-US
       description: Preferred language for response
-    TraceId:
-      name: X-Trace-Id
+    ApiVersion:
+      name: X-Api-version
       in: header
+      required: false
       schema:
         type: string
-      description: Trace ID for request tracking
+        default: "1.0.0"
+        example: "1.0.0"
+      description: API version to use for the request
+    InternalId:
+      name: internalId
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        pattern: '^\d+$'
+        example: "1"
+      description: Internal product identifier
+    RequestParams:
+      name: requestParams
+      in: query
+      required: true
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+          minLength: 0
+          maxLength: 50
+          pattern: '^\d+(?:\.\d*)?$'
+        minProperties: 1
+        maxProperties: 4
+        example: { "salesUnits": "0.8", "stock": "0.2", "page": "0", "size": "50" }
+      description: Parameters map
   schemas:
     ProductDTO:
       type: object

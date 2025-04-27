@@ -7,5 +7,5 @@ if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
 cd "$(dirname "$0")"
 
-# detener servicios
-docker-compose down
+# stop services
+docker-compose --file docker-compose.yml down --remove-orphans --volumes

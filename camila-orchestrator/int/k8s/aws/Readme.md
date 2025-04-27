@@ -69,7 +69,7 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
 export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
-export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&timeoutMS=120000"
 ./eks-api-apply.sh
 ```
 

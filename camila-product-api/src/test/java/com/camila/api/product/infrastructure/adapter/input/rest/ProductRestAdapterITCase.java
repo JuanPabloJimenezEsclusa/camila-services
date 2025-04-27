@@ -1,5 +1,9 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
+import java.security.SecureRandom;
+import java.util.Locale;
+import java.util.stream.Collectors;
+
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.config.LocalOpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.rest.config.Oauth2OpenAPIConfig;
@@ -7,7 +11,7 @@ import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurit
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
-import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseEnabledConfig;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
 import de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongoAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
@@ -95,13 +99,15 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // Application layer
   DefaultProductUseCase.class,
   // Framework adapter output layer
-  CouchbaseEnabledConfig.class,
+  CouchbaseConfig.class,
   ProductCouchbaseAdapter.class,
   ProductCouchbaseMapperImpl.class
 })
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRestAdapterITCase extends CouchbaseContainerConfig {
+
+  private static final SecureRandom random = new SecureRandom();
 
   @Autowired
   private WebTestClient webClient;
@@ -112,6 +118,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void findByInternalId() {
     webClient.get().uri("/products/{id}", 4)
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -124,6 +132,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithStockMoreWeight() {
     webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.001", "0.999")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -141,6 +151,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithSalesUnitsMoreWeight() {
     webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.9", "0.1")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -157,6 +169,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithPageFilter() {
     webClient.get().uri("/products?page={page}&size={size}", "5", "1")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -169,6 +183,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithPageOut() {
     webClient.get().uri("/products?page={page}&size={size}", "1", "10")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -181,9 +197,18 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithConstraintViolation() {
     webClient.get().uri("/products?page={page}&size={size}", "X", "Y")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("traceId", generateRandomString())
+      .header("apiVersion", "1.0.0")
       .exchange()
       .expectStatus().is4xxClientError()
       .expectBody()
       .isEmpty();
+  }
+
+  private static String generateRandomString() {
+    return random.ints(10, 0, 36)
+      .mapToObj(i -> Integer.toString(i, 36))
+      .collect(Collectors.joining())
+      .toUpperCase(Locale.ROOT);
   }
 }

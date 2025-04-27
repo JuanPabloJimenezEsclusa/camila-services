@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@ConditionalOnMissingBean(MongoEnabledConfig.class)
+@ConditionalOnMissingBean(MongoConfig.class)
 @EnableAutoConfiguration
 public class DataTestConfig {
   private static final String EMBEDDED_DDL_XML = "classpath:/scripts/mongo/products.json";

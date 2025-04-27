@@ -3,8 +3,13 @@ GET http://localhost:8090/product-dev/api/actuator/health HTTP/2
 Accept: application/json
 Content-Type: application/json
 
+### Caches
+GET http://gateway:8090/product-dev/api/actuator/caches HTTP/2
+Accept: application/json
+Content-Type: application/json
+
 ### Rest - findById (SSE)
-GET http://localhost:8090/product-dev/api/products/1 HTTP/2
+GET http://localhost:8090/product-dev/api/products/10 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
@@ -26,7 +31,7 @@ query findById($internalId: ID) {
 }
 
 {
-"internalId": "2"
+"internalId": "100"
 }
 
 ### Graphql - sortProducts
@@ -60,7 +65,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 ===
 {
   "method": "FIND_BY_INTERNAL_ID",
-  "internalId": "1"
+  "internalId": "10"
 }
 === wait-for-server
 {
@@ -105,7 +110,7 @@ GRPC localhost:6565/product.ProductService/GetProductByInternalId
 }
 
 ### GRPC - SortProducts
-GRPC localhost:6565/product.ProductService/SortByMetricsWeights
+GRPC localhost:6566/product.ProductService/SortByMetricsWeights
 
 {
   "requestParams": {

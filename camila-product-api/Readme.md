@@ -81,6 +81,7 @@ The API-first approach enables:
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
  ┃     ┃ ┣ 📂security
+ ┃     ┃ ┣ 📂cache
  ┃     ┃ ┣ 📂rest
  ┃     ┃ ┣ 📂graphql
  ┃     ┃ ┣ 📂websocket

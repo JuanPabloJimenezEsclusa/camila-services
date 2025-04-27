@@ -10,14 +10,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @Configuration
 @Profile("default|test")
-@ConditionalOnMissingBean(MongoEnabledConfig.class)
+@ConditionalOnMissingBean(MongoConfig.class)
 @EnableAutoConfiguration
 @AutoConfigureDataMongo
 @EnableReactiveMongoRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")

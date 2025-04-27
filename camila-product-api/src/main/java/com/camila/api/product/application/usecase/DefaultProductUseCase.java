@@ -10,6 +10,8 @@ import com.camila.api.product.domain.model.Metrics;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.domain.usecase.ProductUseCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -18,6 +20,7 @@ import reactor.core.publisher.Mono;
  */
 public class DefaultProductUseCase implements ProductUseCase {
 
+  private static final Logger log = LoggerFactory.getLogger(DefaultProductUseCase.class);
   private static final String DEFAULT_PAGE_NUMBER = "0";
   private static final String DEFAULT_PAGE_SIZE = "10";
 
@@ -52,7 +55,8 @@ public class DefaultProductUseCase implements ProductUseCase {
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
     try {
-      return productRepository.findByInternalId(internalId);
+      return productRepository.findByInternalId(internalId)
+        .doOnNext(product -> log.debug("find By Id: {}", product));
     } catch (Exception e) {
       return Mono.error(new ProductException(e));
     }
@@ -64,7 +68,8 @@ public class DefaultProductUseCase implements ProductUseCase {
       return productRepository.sortByMetricsWeights(
         getMetricWeights(requestParams),
         getOffset(requestParams),
-        getLimit(requestParams));
+        getLimit(requestParams))
+        .doOnNext(product -> log.debug("find sort by: {}", product));
     } catch (Exception e) {
       return Flux.error(new ProductException(e));
     }

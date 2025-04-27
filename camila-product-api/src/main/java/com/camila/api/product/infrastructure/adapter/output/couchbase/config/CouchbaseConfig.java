@@ -1,7 +1,5 @@
 package com.camila.api.product.infrastructure.adapter.output.couchbase.config;
 
-import java.time.Duration;
-
 import com.couchbase.client.java.env.ClusterEnvironment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.metrics.mongo.MongoMetricsAutoConfiguration;
@@ -17,12 +15,13 @@ import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.repository.config.EnableReactiveCouchbaseRepositories;
 
 /**
- * The type Couchbase enabled config.
+ * The type Couchbase config.
  */
 @Configuration
 @Conditional(CouchbaseCondition.class)
 @EnableReactiveCouchbaseRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.couchbase")
 @EnableAutoConfiguration(exclude = {
+  // MongoDB autoconfiguration must be excluded to avoid conflicts
   MongoAutoConfiguration.class,
   MongoMetricsAutoConfiguration.class,
   MongoReactiveAutoConfiguration.class,
@@ -30,7 +29,7 @@ import org.springframework.data.couchbase.repository.config.EnableReactiveCouchb
   MongoDataAutoConfiguration.class,
   MongoReactiveDataAutoConfiguration.class
 })
-public class CouchbaseEnabledConfig extends AbstractCouchbaseConfiguration {
+public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
 
   @Value("#{systemEnvironment['DB_CONN_STR'] ?: environment.getProperty('spring.couchbase.connection-string', 'couchbase')}")
   private String connectionString;
@@ -69,17 +68,8 @@ public class CouchbaseEnabledConfig extends AbstractCouchbaseConfiguration {
 
   @Override
   protected void configureEnvironment(final ClusterEnvironment.Builder builder) {
-    // Enable TLS if configured
     builder.securityConfig(securityBuilder ->
       securityBuilder.enableTls(Boolean.parseBoolean(sslEnabled))
-        .build());
-
-    // Add timeout settings
-    builder.timeoutConfig(timeoutConfig ->
-      timeoutConfig
-        .connectTimeout(Duration.ofSeconds(30))
-        .kvTimeout(Duration.ofSeconds(10))
-        .queryTimeout(Duration.ofSeconds(15))
         .build());
   }
 }

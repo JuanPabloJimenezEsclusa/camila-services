@@ -48,7 +48,7 @@ class ProductArchitectureTest {
       .should().onlyDependOnClassesThat().resideInAnyPackage(
         HEXAGONAL_LAYERS.DOMAIN.getValue(), HEXAGONAL_LAYERS.APPLICATION.getValue(),
         // Basis dependencies
-        "java..", "reactor.core..", "org.jspecify..",
+        "java..", "reactor.core..", "org.jspecify..", "org.slf4j..",
         // Testing dependencies
         "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..");
   @ArchTest
@@ -58,13 +58,18 @@ class ProductArchitectureTest {
         HEXAGONAL_LAYERS.DOMAIN.getValue(), HEXAGONAL_LAYERS.APPLICATION.getValue(),
         HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue(), HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.getValue(),
         // Basis dependencies
-        "java..", "reactor.core..", "org.jspecify..", "com.fasterxml.jackson..", "org.slf4j..",
-        "org.mapstruct..", "lombok..", "jakarta.validation..",
+        "java..", "org.jspecify..", "com.fasterxml.jackson..", "org.slf4j..",
+        "org.mapstruct..", "lombok..", "jakarta.validation..", "jakarta.annotation..",
+        // Reactive dependencies
+        "reactor.core..", "reactor.util.context..", "org.reactivestreams..",
         // Spring dependencies
         "org.springframework.web..", "org.springframework.stereotype..", "org.springframework.context..",
         "org.springframework.dao..", "org.springframework.graphql..", "org.springframework.core..",
         "org.springframework.lang..", "org.springframework.messaging..", "org.springframework.http..",
         "org.springframework.data.domain..", "org.springframework.validation.annotation..",
+        "org.springframework.cache..",
+        // Cache
+        "com.github.benmanes.caffeine..",
         // GRAPHQL
         "graphql.schema..", "graphql.scalars..",
         // GRPC

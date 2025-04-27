@@ -4,6 +4,7 @@ package com.camila.api.product.infrastructure.adapter.input;
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.domain.usecase.ProductUseCase;
+import com.camila.api.product.infrastructure.adapter.input.cache.CachedProductDecorator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,12 +15,13 @@ import org.springframework.context.annotation.Configuration;
  * By placing Spring's DI annotations (@Configuration, @Bean) here in the adapter layer,
  * we keep the application layer (DefaultProductUseCase) free from framework dependencies.</p>
  *
- * This approach:
+ * <p>This approach:
  * - Maintains a clean separation between layers
  * - Avoids contaminating the application layer with Spring annotations
  * - Ensures the architecture is properly layered according to hexagonal principles
  * - Makes the application layer more testable and framework-agnostic
  * - Allows the architecture tests to pass by keeping Spring dependencies in framework layers only
+ * - Allows the architecture tests to pass by keeping Spring dependencies in framework layers only</p>
  */
 @Configuration
 class UseCaseConfig {
@@ -31,6 +33,6 @@ class UseCaseConfig {
    */
   @Bean
   public ProductUseCase productUseCase(final ProductRepository productRepository) {
-    return new DefaultProductUseCase(productRepository);
+    return new CachedProductDecorator(new DefaultProductUseCase(productRepository));
   }
 }

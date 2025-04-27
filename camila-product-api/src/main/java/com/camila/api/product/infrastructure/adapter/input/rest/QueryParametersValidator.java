@@ -1,13 +1,14 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+
 /**
  * Validates query parameters for product API requests.
+ *
  * <p>This validator provides defensive validation that ensures parameter values meet requirements
  * specified in the OpenAPI definition (product.yml), particularly pattern and length constraints.</p>
  *
@@ -16,9 +17,9 @@ import java.util.regex.Pattern;
  * serves as an additional validation layer to ensure consistency with API documentation.</p>
  *
  * <p>Current validation rules:
- * - Values must be numeric and start with at least one digit
- * - Values can have at most one decimal point
- * - Values must be 7 characters or fewer length</p>
+ *   - Values must be numeric and start with at least one digit
+ *   - Values can have at most one decimal point
+ *   - Values must be 7 characters or fewer length</p>
  */
 @Component
 public class QueryParametersValidator {

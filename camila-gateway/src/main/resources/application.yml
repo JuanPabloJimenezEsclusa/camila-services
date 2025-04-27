@@ -143,29 +143,29 @@ management:
         include: "*"
   endpoint:
     env:
-      enabled: true
       show-values: ALWAYS
       cache:
         time-to-live: 60s
+      access: unrestricted
     info:
-      enabled: true
       cache:
         time-to-live: 3600s
+      access: unrestricted
     beans:
-      enabled: true
       cache:
         time-to-live: 10s
+      access: unrestricted
     health:
-      enabled: true
       show-details: ALWAYS
       show-components: ALWAYS
+      access: unrestricted
     configprops:
-      enabled: true
       show-values: ALWAYS
+      access: unrestricted
     shutdown:
-      enabled: true
+      access: unrestricted
     prometheus:
-      enabled: true
+      access: unrestricted
   info:
     env:
       enabled: true
@@ -185,9 +185,9 @@ server:
 # traces
 logging:
   level:
-    org.springframework: debug
-    org.springframework.boot: debug
-    org.springframework.security: debug
+    org.springframework: DEBUG
+    org.springframework.boot: DEBUG
+    org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
     org.springframework.cloud.gateway: DEBUG
   pattern:

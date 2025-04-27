@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.4</version>
+    <version>3.4.5</version>
   </parent>
 
   <groupId>com.camila.core</groupId>
@@ -78,6 +78,45 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>${maven-site-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <!-- https://github.com/spring-projects/spring-boot/issues/38532#issuecomment-1825427641 -->
+            <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
+            <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
+            <loaderImplementation>CLASSIC</loaderImplementation>
+            <layers>
+              <enabled>true</enabled>
+            </layers>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+            <image>
+              <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes#paketo-tiny-builder-for-building-oci-images -->
+              <builder>paketobuildpacks/builder-jammy-base</builder>
+              <env>
+                <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                <BP_HEALTH_CHECKER>curl</BP_HEALTH_CHECKER>
+                <BP_JVM_TYPE>JRE</BP_JVM_TYPE>
+                <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
+                <BP_JVM_HEAD_ROOM>5</BP_JVM_HEAD_ROOM>
+                <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
+                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8</BP_JVM_JAVA_OPTS>
+                <BP_OCI_SOURCE>true</BP_OCI_SOURCE>
+                <BP_MAVEN_BUILT_ARTIFACT>target/*.jar</BP_MAVEN_BUILT_ARTIFACT>
+                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true</BP_MAVEN_BUILD_ARGUMENTS>
+                <BPL_JMX_ENABLED>true</BPL_JMX_ENABLED>
+                <BPL_SPRING_AOT_ENABLED>true</BPL_SPRING_AOT_ENABLED>
+                <BP_OCI_AUTHORS>Juan Pablo Jimenez Esclusa</BP_OCI_AUTHORS>
+                <BP_OCI_CREATED>2025</BP_OCI_CREATED>
+              </env>
+            </image>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -128,6 +167,8 @@
                     <exclude>com.google.j2objc:j2objc-annotations</exclude>
                     <exlucde>org.glassfish.hk2:hk2-api</exlucde>
                     <exlucde>com.google.errorprone:error_prone_annotations</exlucde>
+                    <exlucde>io.zipkin.reporter2:zipkin-sender-okhttp3</exlucde>
+                    <exlucde>io.zipkin.reporter2:zipkin-reporter</exlucde>
                   </excludes>
                 </requireUpperBoundDeps>
                 <requireMavenVersion>

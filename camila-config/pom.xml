@@ -117,17 +117,6 @@
     <dependency>
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-exporter-zipkin</artifactId>
-      <exclusions>
-        <!-- include to fix: "Failed while enforcing RequireUpperBoundDeps" - check in the future and remove -->
-        <exclusion>
-          <groupId>io.zipkin.reporter2</groupId>
-          <artifactId>zipkin-sender-okhttp3</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.zipkin.reporter2</groupId>
-          <artifactId>zipkin-reporter</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

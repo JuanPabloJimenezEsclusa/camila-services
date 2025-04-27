@@ -13,7 +13,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 /**
  * The type Cors config.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Profile("dev|pre")
 // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
 class CorsConfig {

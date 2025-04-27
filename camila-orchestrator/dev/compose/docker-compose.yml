@@ -251,19 +251,19 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 3
       resources:
         limits:
           memory: "1024m"
           cpus: "1"
     ports:
-      - "8080-8081:8080"
-      - "7000-7001:7000"
-      - "6565-6566:6565"
+      - "8080-8082:8080"
+      - "7000-7002:7000"
+      - "6565-6567:6565"
     expose:
-      - 8080-8081
-      - 7000-7001
-      - 6565-6566
+      - 8080-8082
+      - 7000-7002
+      - 6565-6567
     depends_on:
       config:
         condition: service_healthy
@@ -373,6 +373,7 @@ services:
       - 3000
     volumes:
       - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
       - grafana_data:/var/lib/grafana
     links:
       - prometheus
@@ -490,17 +491,65 @@ services:
 
 volumes:
   camila_product_mongodb_data:
+    name: camila_product_mongodb_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_product_couchbase_data:
+    name: camila_product_couchbase_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_product_backend_tmp:
+    name: camila_product_backend_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_gateway_tmp:
+    name: camila_gateway_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_discovery_tmp:
+    name: camila_discovery_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_admin_tmp:
+    name: camila_admin_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_config_tmp:
+    name: camila_config_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   keycloak_config:
+    name: keycloak_config
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   keycloak_data:
+    name: keycloak_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   grafana_data:
+    name: grafana_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   elasticsearch_data:
+    name: elasticsearch_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   fluentd_logs:
+    name: fluentd_logs
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
 
 networks:
   camila_product_network:

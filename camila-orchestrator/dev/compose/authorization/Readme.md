@@ -1,6 +1,15 @@
 # camila-orchestrator dev authorization
 
-To configure `keycloak`, the file [camila-realm.json](./camila-realm.json) is imported. It contains:
+> [Summary](#-summary)
+  • [Links](#-links)
+  • [Usage](#-usage)
+  • [Notes](#-notes)
+
+## 📜 Summary
+
+---
+
+To configure `keycloak`, the file [camila-realm-realm.json](camila-realm-realm.json) is imported. It contains:
 
 * **realm**: `camila-realm`
 * **scopes**: `camila/read`, `camila/write`
@@ -9,12 +18,18 @@ To configure `keycloak`, the file [camila-realm.json](./camila-realm.json) is im
 
 > In this configuration, the hostnames `keycloak` and `gateway` are used. These should be defined in the `/etc/hosts` file.
 
-## Links
+## 🔗 Links
+
+---
 
 * [oauth playground](https://www.oauth.com/playground)
 * [local keycloak openid-configuration](http://keycloak:9191/realms/camila-realm/.well-known/openid-configuration)
 
-## Demonstration with Oauth2/OpenID
+## 🌐 Usage
+
+---
+
+### Demonstration with Oauth2/OpenID
 
 ```bash
 ## Request authentication (in a browser)
@@ -42,11 +57,13 @@ curl --location 'http://gateway:8090/product-dev/api/products?salesUnits=0.80&st
 --header "Authorization: Bearer ${access_token}"
 ```
 
-## Using `postman`
+### Using `postman`
 
 [Readme.md](./../../../../.docs/api/Readme.md)
 
-## Utilities
+## 📝 Notes
+
+---
 
 > To export the manually configured `camila-realm` in `keycloak`, the CLI is used because not all data is exported from the GUI
 
@@ -54,5 +71,5 @@ curl --location 'http://gateway:8090/product-dev/api/products?salesUnits=0.80&st
 
 ```bash
 docker exec -it keycloak bash -c "/opt/keycloak/bin/kc.sh export --dir /opt/keycloak/ --realm camila-realm --users realm_file"
-docker cp keycloak:/opt/keycloak/camila-realm-realm.json camila-realm.json
+docker cp keycloak:/opt/keycloak/camila-realm-realm.json camila-realm-realm.json
 ```

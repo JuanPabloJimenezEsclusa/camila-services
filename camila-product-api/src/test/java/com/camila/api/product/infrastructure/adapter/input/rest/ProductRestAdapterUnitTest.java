@@ -64,7 +64,7 @@ class ProductRestAdapterUnitTest {
     when(productDTOMapper.toProductDTO(expectedProduct)).thenReturn(expectedProductDTO);
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.findById(internalId, any()))
+    productRestAdapter.findById(internalId, "", "", any())
       .as(StepVerifier::create)
       .expectNext(expectedProductDTO)
       .verifyComplete();
@@ -83,7 +83,7 @@ class ProductRestAdapterUnitTest {
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.findById(internalId, any()))
+    Objects.requireNonNull(productRestAdapter.findById(internalId, "", "", any()))
       .as(StepVerifier::create)
       .verifyComplete();
 
@@ -115,7 +115,7 @@ class ProductRestAdapterUnitTest {
     when(productDTOMapper.toProductDTO(product2)).thenReturn(productDTO2);
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, any()))
+    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, "", "", any()))
       .as(StepVerifier::create)
       .expectNext(productDTO1)
       .expectNext(productDTO2)
@@ -143,7 +143,7 @@ class ProductRestAdapterUnitTest {
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, any()))
+    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, "", "", any()))
       .as(StepVerifier::create)
       .verifyComplete();
 

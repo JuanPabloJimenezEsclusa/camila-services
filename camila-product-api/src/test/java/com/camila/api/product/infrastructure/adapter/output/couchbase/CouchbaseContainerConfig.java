@@ -31,8 +31,8 @@ public abstract class CouchbaseContainerConfig {
   private static final String BUCKET_NAME = "camila-product-bucket";
   private static final String BUCKET_SCOPE = "product";
   private static final String BUCKET_COLLECTION = "products";
-  private static final String USERNAME = "admin";
-  private static final String PASSWORD = "admin1234";
+  private static final String USERNAME = "Administrator";
+  private static final String PASSWORD = "password";
 
   private static final String PRODUCTS_JSON = Objects.requireNonNull(
     CouchbaseContainerConfig.class.getClassLoader().getResource("scripts/couchbase/products.json")

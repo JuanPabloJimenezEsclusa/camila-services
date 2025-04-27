@@ -8,7 +8,7 @@ import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 /**
  * The type Graphql config.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class GraphqlConfig {
   /**
    * Runtime wiring configurer runtime wiring configurer.

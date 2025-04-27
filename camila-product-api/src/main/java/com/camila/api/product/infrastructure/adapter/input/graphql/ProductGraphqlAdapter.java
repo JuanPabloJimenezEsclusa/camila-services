@@ -47,9 +47,9 @@ class ProductGraphqlAdapter {
    * Sort products flux.
    *
    * @param salesUnits the sales units
-   * @param stock      the stock
-   * @param page       the page
-   * @param size       the size
+   * @param stock the stock
+   * @param page the page
+   * @param size the size
    * @return the flux
    */
   @QueryMapping

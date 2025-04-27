@@ -72,7 +72,7 @@ import org.springframework.context.annotation.Profile;
         @OAuthScope(name = "camila/write", description = "write scope")})
   ))
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Profile("dev|pre")
 public class Oauth2OpenAPIConfig {
 }

@@ -9,18 +9,6 @@ spring:
     refresh:
       # https://github.com/spring-cloud/spring-cloud-release/wiki/AOT-transformations-and-native-image-support#refresh-scope
       enabled: false
-  data:
-    mongodb:
-      # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
-      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=60000&socketTimeoutMS=120000"
-      authentication-database: camila-db
-      ssl:
-        enabled: false
-      auto-index-creation: true
-      uuid-representation: JAVA_LEGACY
-    couchbase:
-      bucket-name: camila-product-bucket
-      scope-name: product
   couchbase:
     connection-string: couchbase://localhost:11207
     username: Administrator
@@ -28,21 +16,38 @@ spring:
     env:
       ssl:
         enabled: false
-  main:
-    web-application-type: reactive
-  webflux:
-    base-path: /product-dev/api
+  data:
+    couchbase:
+      bucket-name: camila-product-bucket
+      scope-name: product
+    mongodb:
+      # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
+      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
+      authentication-database: camila-db
+      ssl:
+        enabled: false
+      auto-index-creation: true
+      uuid-representation: JAVA_LEGACY
+  docker:
+    compose:
+      enabled: false
   graphql:
     graphiql:
       enabled: true
       path: /graphiql
+  main:
+    web-application-type: reactive
   rsocket:
     server:
       mapping-path: /product-dev/api/rsocket
       transport: websocket
-  docker:
-    compose:
-      enabled: false
+  webflux:
+    base-path: /product-dev/api
+  cache:
+    type: caffeine
+    cache-names: findByInternalId,sortedProducts
+    caffeine:
+      spec: initialCapacity=50,maximumSize=10,expireAfterAccess=60s
 
 info:
   app:
@@ -50,7 +55,14 @@ info:
     version: "@project.version@"
 
 springdoc:
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+    resolve-schema-properties: true
   enable-spring-security: false
+  show-actuator: true
+  show-login-endpoint: true
   swagger-ui:
     filter: true
     show-extensions: true
@@ -63,13 +75,6 @@ springdoc:
     display-operation-id: true
     defaultModelsExpandDepth: 1
     tagsSorter: alpha
-  show-actuator: true
-  api-docs:
-    enabled: true
-    groups:
-      enabled: true
-    resolve-schema-properties: true
-  show-login-endpoint: true
 
 management:
   endpoints:
@@ -120,9 +125,32 @@ management:
 
 logging:
   charset:
-    file: UTF-8
     console: UTF-8
-  config: classpath:logback.xml
+  structured:
+    format:
+      console: ecs
+    ecs:
+      service:
+        name: "${info.app.name}"
+        version: "${info.app.version}"
+        environment: "${spring.profiles.active}"
+  level:
+    root: INFO
+    com.camila.api.product: DEBUG
+    com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
+    org.springframework: INFO
+    org.springframework.web: WARN
+    org.springframework.data: WARN
+    org.springframework.context: WARN
+    org.mongodb: WARN
+    com.mongodb: WARN
+    com.couchbase: WARN
+    org.springframework.boot: INFO
+    org.springframework.boot.web.embedded.netty: WARN
+    net.devh.boot.grpc.server: WARN
+    io.grpc.netty: WARN
+    reactor: WARN
 
 de:
   flapdoodle:
@@ -157,7 +185,7 @@ spring:
     activate:
       on-profile: "loc|dev"
   jmx:
-    enabled: false
+    enabled: true
   rsocket:
     server:
       port: 7000
@@ -197,10 +225,8 @@ chaos:
 debug: false
 logging:
   level:
-    root: WARN
-    org.hibernate.validator: ERROR
-    com.netflix.discovery: ERROR
-    org.springframework.boot: ERROR
+    root: ERROR
+    com.camila.api.product: ERROR
     org.springframework: ERROR
     org.springframework.data: ERROR
     org.springframework.security: ERROR
@@ -210,8 +236,13 @@ logging:
     org.mongodb: ERROR
     com.mongodb: ERROR
     com.couchbase: ERROR
+    org.springframework.boot: ERROR
+    org.springframework.boot.web.embedded.netty: ERROR
     net.devh.boot.grpc.server: ERROR
     io.grpc.netty: ERROR
+    reactor: ERROR
+    org.hibernate.validator: ERROR
+    com.netflix.discovery: ERROR
 
 ---
 ###### Disable config|discovery feature by default ######
@@ -298,9 +329,12 @@ eureka:
     leaseRenewalIntervalInSeconds: 15
 
 # Enable all management endpoints
+# https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing.tracer-implementations
 management:
   tracing:
     enabled: true
+    sampling:
+      probability: 1.0
   zipkin:
     tracing:
       endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
@@ -313,12 +347,12 @@ spring:
   config:
     activate:
       on-profile: "int"
-  webflux:
-    base-path: /product-int/api
   data:
     mongodb:
-      uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=5000&socketTimeoutMS=120000"
+      uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
       authentication-database: camila-db
+  webflux:
+    base-path: /product-int/api
 
 # Disable all management endpoints
 management:
@@ -330,21 +364,21 @@ management:
 
 # Spring base properties
 spring:
-  main:
-    log-startup-info: true
   config:
     activate:
       on-profile: "pre|pro"
-  webflux:
-    base-path: /product/api
   devtools:
     add-properties: false
     livereload:
       enabled: false
+  main:
+    log-startup-info: true
   rsocket:
     server:
       mapping-path: /product/api/rsocket
       port: 7000
+  webflux:
+    base-path: /product/api
 
   # Enable AWS Cognito Oauth2 security
   security:
@@ -387,6 +421,8 @@ logging:
     org.springframework.web: ERROR
     org.springframework.data: ERROR
     org.springframework.context: ERROR
+    org.mongodb: ERROR
+    com.mongodb: ERROR
     com.couchbase: ERROR
     org.springframework.boot: ERROR
     org.springframework.boot.web.embedded.netty: INFO
@@ -400,11 +436,11 @@ spring:
   config:
     activate:
       on-profile: "local-compose"
-  jmx:
-    enabled: true
-  rsocket:
-    server:
-      port: 7000
+  couchbase:
+    connection-string: couchbase
+  data:
+    mongodb:
+      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
   # https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose
   docker:
     compose:
@@ -425,13 +461,11 @@ spring:
         active: "docker-compose"
       file: "${user.dir}/../camila-orchestrator/dev/compose/docker-compose-spring-boot.yml"
       lifecycle-management: start_and_stop
-  data:
-    mongodb:
-      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=60000&socketTimeoutMS=120000"
-  couchbase:
-    connection-string: couchbase://couchbase
-    username: Administrator
-    password: password
+  jmx:
+    enabled: true
+  rsocket:
+    server:
+      port: 7000
 
 grpc:
   server:
@@ -440,19 +474,22 @@ grpc:
 debug: false
 logging:
   level:
-    root: WARN
-    org.hibernate.validator: ERROR
-    com.netflix.discovery: ERROR
-    org.springframework.boot: ERROR
-    org.springframework.data: ERROR
-    org.springframework.security: ERROR
-    org.springframework.dao: ERROR
-    org.springframework.web: ERROR
-    org.springframework.context: ERROR
-    org.springframework.cache: DEBUG
-    org.mongodb: ERROR
-    com.mongodb: ERROR
-    com.couchbase: ERROR
-    net.devh.boot.grpc.server: INFO
-    io.grpc.netty: ERROR
-    io.netty: INFO
+    root: INFO
+    com.camila.api: DEBUG
+    com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
+    org.springframework: WARN
+    org.springframework.web: WARN
+    org.springframework.data: WARN
+    org.springframework.context: WARN
+    org.mongodb: WARN
+    com.mongodb: WARN
+    com.couchbase: WARN
+    org.springframework.boot: WARN
+    org.springframework.boot.actuate: WARN
+    org.springframework.boot.docker: WARN
+    org.springframework.boot.rsocket: WARN
+    net.devh.boot.grpc.server: WARN
+    io.grpc.netty: WARN
+    io.netty: WARN
+    reactor: WARN

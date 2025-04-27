@@ -15,6 +15,7 @@ import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -26,6 +27,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Conditional(MongoCondition.class)
 @Repository
+@Primary
 public class ProductMongoAdapter implements ProductRepository {
 
   private final ProductMongoRepository productMongoRepository;
@@ -49,12 +51,13 @@ public class ProductMongoAdapter implements ProductRepository {
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    return productMongoRepository.findByInternalId(internalId).map(mapper::toProduct);
+    return productMongoRepository.findByInternalId(internalId).map(mapper::toProduct)
+      .doOnNext(product -> log.debug("find By Id: {}", product));
   }
 
   @Override
   public Flux<Product> sortByMetricsWeights(final List<MetricWeight> metricsWeights, final long offset, final long limit) {
-    log.info("Sorting products by metrics weights: {}", metricsWeights);
+    log.debug("Sorting products by metrics weights: {}", metricsWeights);
     return mongoOperations.aggregate(
         newAggregation(
           buildWeightedScoreField(metricsWeights),

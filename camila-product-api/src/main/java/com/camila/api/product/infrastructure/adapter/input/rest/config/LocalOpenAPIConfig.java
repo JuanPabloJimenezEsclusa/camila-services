@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 /**
  * The type Open api config.
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Profile("default|loc|local-compose|int|pro")
 public class LocalOpenAPIConfig {
   @Bean

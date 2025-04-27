@@ -12,18 +12,19 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 /**
- * The type Mongo enabled config.
+ * The type Mongo config.
  */
 @Configuration
 @Profile("loc|local-compose|int|dev|pre|pro")
 @Conditional(MongoCondition.class)
 @EnableReactiveMongoRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")
 @EnableAutoConfiguration(exclude = {
+  // Couchbase autoconfiguration must be excluded to avoid conflicts
   CouchbaseAutoConfiguration.class,
   CouchbaseDataAutoConfiguration.class,
   CouchbaseRepositoriesAutoConfiguration.class,
   CouchbaseReactiveDataAutoConfiguration.class,
   CouchbaseReactiveRepositoriesAutoConfiguration.class
 })
-public class MongoEnabledConfig {
+public class MongoConfig {
 }
