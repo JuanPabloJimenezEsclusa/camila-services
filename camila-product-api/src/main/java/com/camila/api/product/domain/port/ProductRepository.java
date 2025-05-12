@@ -8,24 +8,25 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
- * The interface Product repository.
+ * The interface ProductRepository.
  */
 public interface ProductRepository {
+
   /**
-   * Find by internal id.
+   * Finds a product by its internal ID.
    *
-   * @param internalId the internal id
-   * @return the product
+   * @param internalId the internal ID of the product
+   * @return a Mono emitting the product if found, or empty if not found
    */
   Mono<Product> findByInternalId(String internalId);
 
   /**
-   * Sort by metrics weights.
+   * Sorts products based on a list of metric weights.
    *
-   * @param metricsWeights the metrics weights
-   * @param offset the offset
-   * @param limit the limit
-   * @return the product flux
+   * @param metricsWeights the list of metric weights used for sorting
+   * @param offset the starting point for the result set
+   * @param limit the maximum number of products to return
+   * @return a Flux emitting the sorted products
    */
   Flux<Product> sortByMetricsWeights(List<MetricWeight> metricsWeights, long offset, long limit);
 }

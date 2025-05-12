@@ -1,0 +1,101 @@
+### Rest - Actuator
+GET {{host}}:{{port-api}}/product-int/api/actuator/health HTTP/2
+Accept: application/json
+Content-Type: application/json
+
+### Rest - findById (SSE)
+GET {{host}}:{{port-api}}/product-int/api/products/6 HTTP/2
+Accept: text/event-stream
+Content-Type: application/json
+
+### Rest - sortProducts (ndjson)
+GET {{host}}:{{port-api}}/product-int/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+Accept: application/x-ndjson
+Content-Type: application/json
+
+### Graphql - findById
+GRAPHQL {{host}}:{{port-api}}/product-int/api/graphql
+
+query findById($internalId: ID) {
+  findById(internalId: $internalId) {
+    id, internalId, category, name, salesUnits, stock
+  }
+}
+
+{
+"internalId": "1"
+}
+
+### Graphql - sortProducts
+GRAPHQL {{host}}:{{port-api}}/product-int/api/graphql
+
+query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+  sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+    id @include(if: $withDetails)
+    internalId @include(if: $withDetails)
+    category @include(if: $withDetails)
+    name
+    salesUnits
+    stock
+  }
+}
+
+{
+  "salesUnits": 0.001,
+  "stock": 0.999,
+  "page": 0,
+  "size": 1000,
+  "withDetails": false
+}
+
+### Websockt
+WEBSOCKET ws://{{host}}:{{port-api}}/product-int/api/ws/products
+Content-Type: application/json
+
+===
+{
+  "method": "SORT_PRODUCTS",
+  "salesUnits": "0.001",
+  "stock": "0.999",
+  "page": "0",
+  "size": "10000"
+}
+=== wait-for-server
+
+### RSocket request rsponse with websocket - findByInternalId
+RSOCKET products.request-response-findByInternalId
+Host: ws://{{host}}:{{port-rsocket}}/product-int/api/rsocket
+
+{
+  "internalId": "5"
+}
+
+### RSocket request stream with websocket - SortProducts
+RSOCKET products.request-stream-sortByMetricsWeights
+Host: ws://{{host}}:{{port-rsocket}}/product-int/api/rsocket
+
+{
+  "salesUnits": "0.001",
+  "stock": "0.999",
+  "page": "0",
+  "size": "5"
+}
+
+### GRPC - findByInternalId
+GRPC grpc://{{host}}:{{port-grpc}}/product.ProductService/GetProductByInternalId
+
+{
+  "internalId": "1000"
+}
+
+### GRPC - SortProducts
+GRPC grpc://{{host}}:{{port-grpc}}/product.ProductService/SortByMetricsWeights
+
+{
+  "requestParams": {
+    "salesUnits": "0.999",
+    "stock": "0.001",
+    "page": "0",
+    "size": "1000"
+  }
+}

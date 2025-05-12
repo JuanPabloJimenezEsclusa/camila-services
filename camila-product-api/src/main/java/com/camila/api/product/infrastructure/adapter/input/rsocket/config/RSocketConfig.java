@@ -13,7 +13,7 @@ import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 /**
  * The type RSocket config.
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class RSocketConfig {
 
   /**

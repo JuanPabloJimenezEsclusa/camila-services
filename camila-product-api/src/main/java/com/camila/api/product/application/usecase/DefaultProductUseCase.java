@@ -29,7 +29,7 @@ public class DefaultProductUseCase implements ProductUseCase {
   /**
    * Instantiates a new Default product use case.
    *
-   * @param productRepository the product output port
+   * @param productRepository the product repository used for data access
    */
   public DefaultProductUseCase(final ProductRepository productRepository) {
     this.productRepository = productRepository;

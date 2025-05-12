@@ -1,4 +1,4 @@
-package com.camila.api.product.infrastructure.adapter.input.rest.config;
+package com.camila.api.product.infrastructure.adapter.input.cache.config;
 
 import java.util.concurrent.TimeUnit;
 

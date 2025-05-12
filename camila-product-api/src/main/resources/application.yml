@@ -351,8 +351,17 @@ spring:
     mongodb:
       uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
       authentication-database: camila-db
+  rsocket:
+    server:
+      mapping-path: /product-int/api/rsocket
+      transport: websocket
+      port: 7000
   webflux:
     base-path: /product-int/api
+
+grpc:
+  server:
+    port: 6565
 
 # Disable all management endpoints
 management:

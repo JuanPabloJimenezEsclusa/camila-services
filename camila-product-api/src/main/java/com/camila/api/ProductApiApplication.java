@@ -8,8 +8,6 @@ import reactor.core.publisher.Hooks;
 
 /**
  * Main class for the Product API application.
- * This class serves as the entry point for the Spring Boot application
- * and includes configurations for caching and service discovery.
  */
 @SpringBootApplication
 @EnableDiscoveryClient

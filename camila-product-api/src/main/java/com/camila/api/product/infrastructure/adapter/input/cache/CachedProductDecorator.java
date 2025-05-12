@@ -24,10 +24,6 @@ import reactor.core.publisher.Mono;
  *   <li>Improve testability of the application layer without Spring dependencies</li>
  *   <li>Enable architecture tests to verify proper layering of dependencies</li>
  * </ul>
- *
- * <p>This implementation caches results from both {@code findByInternalId} and
- * {@code sortByMetricsWeights} methods using different cache regions and key strategies
- * appropriate for each method's parameters.</p>
  */
 @EnableCaching
 public class CachedProductDecorator implements ProductUseCase {

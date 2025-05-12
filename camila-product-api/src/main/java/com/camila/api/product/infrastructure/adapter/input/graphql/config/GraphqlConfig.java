@@ -10,10 +10,13 @@ import org.springframework.graphql.execution.RuntimeWiringConfigurer;
  */
 @Configuration(proxyBeanMethods = false)
 public class GraphqlConfig {
+
   /**
-   * Runtime wiring configurer runtime wiring configurer.
+   * Configures the runtime wiring for GraphQL.
+   * This method registers custom scalars, such as the JSON scalar, to extend the
+   * GraphQL schema capabilities.
    *
-   * @return the runtime wiring configurer
+   * @return the RuntimeWiringConfigurer bean used to customize the GraphQL runtime wiring
    */
   @Bean
   RuntimeWiringConfigurer runtimeWiringConfigurer() {
