@@ -83,7 +83,7 @@ class ProductGraphqlAdapterITCase {
     final var query = """
       query findById($internalId: ID) {
         findById(internalId: $internalId) {
-          id, internalId, category, name, salesUnits, stock
+          id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock
         }
       }
       """;
@@ -100,21 +100,25 @@ class ProductGraphqlAdapterITCase {
   @Order(2)
   void sortProductsWithStockMoreWeight() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $withDetails: Boolean!) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock) {
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $withDetails: Boolean!) {
+        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock) {
           id @include(if: $withDetails)
           internalId @include(if: $withDetails)
           category @include(if: $withDetails)
           name
           salesUnits
           stock
+          profitMargin
+          daysInStock
         }
       }
       """;
 
     graphQlTester.document(query)
-      .variable("salesUnits", 0.001)
-      .variable("stock", 0.999)
+      .variable("salesUnits", 0.0008)
+      .variable("stock", 0.9990)
+      .variable("profitMargin", 0.0001)
+      .variable("daysInStock", 0.0001)
       .variable("withDetails", false)
       .execute()
       .path("data.sortProducts[0].salesUnits").entity(Integer.class).isEqualTo(3)
@@ -131,18 +135,22 @@ class ProductGraphqlAdapterITCase {
   @Order(2)
   void sortProductsWithPageFilter() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int!) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int!) {
+        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
           name
           salesUnits
           stock
+          profitMargin
+          daysInStock
         }
       }
       """;
 
     graphQlTester.document(query)
       .variable("salesUnits", 0.001)
-      .variable("stock", 0.999)
+      .variable("stock", 0.997)
+      .variable("profitMargin", 0.001)
+      .variable("daysInStock", 0.001)
       .variable("page", 0)
       .variable("size", 2)
       .execute()
@@ -156,14 +164,18 @@ class ProductGraphqlAdapterITCase {
   @Order(2)
   void sortProductsWithPageOut() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) { id }
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int) {
+        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
+          id
+        }
       }
       """;
 
     graphQlTester.document(query)
       .variable("salesUnits", 0.001)
-      .variable("stock", 0.999)
+      .variable("stock", 0.997)
+      .variable("profitMargin", 0.001)
+      .variable("daysInStock", 0.001)
       .variable("page", 1)
       .variable("size", 10)
       .execute()

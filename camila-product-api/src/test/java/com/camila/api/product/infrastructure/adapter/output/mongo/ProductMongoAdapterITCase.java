@@ -37,7 +37,11 @@ class ProductMongoAdapterITCase {
     return Stream.of(
       Arguments.of(
         "Stock-focused weights",
-        List.of(new MetricWeight(Metrics.SALES_UNITS, 0.001), new MetricWeight(Metrics.STOCK, 0.999)),
+        List.of(
+          new MetricWeight(Metrics.SALES_UNITS, 0.0018),
+          new MetricWeight(Metrics.STOCK, 0.9990),
+          new MetricWeight(Metrics.PROFIT_MARGIN, 0.0001),
+          new MetricWeight(Metrics.DAYS_IN_STOCK, 0.0001)),
         0, 100,
         "PLEATED T-SHIRT",
         "SHIRT",
@@ -46,7 +50,11 @@ class ProductMongoAdapterITCase {
       ),
       Arguments.of(
         "Sales-focused weights",
-        List.of(new MetricWeight(Metrics.SALES_UNITS, 0.9), new MetricWeight(Metrics.STOCK, 0.1)),
+        List.of(
+          new MetricWeight(Metrics.SALES_UNITS, 0.90),
+          new MetricWeight(Metrics.STOCK, 0.08),
+          new MetricWeight(Metrics.PROFIT_MARGIN, 0.01),
+          new MetricWeight(Metrics.DAYS_IN_STOCK, 0.01)),
         0, 10,
         "CONTRASTING LACE T-SHIRT",
         "SHIRT",
@@ -70,6 +78,24 @@ class ProductMongoAdapterITCase {
         "SHIRT",
         3,
         Map.of("S", 25, "M", 30, "L", 10)
+      ),
+      Arguments.of(
+        "Single metric - profit only",
+        List.of(new MetricWeight(Metrics.PROFIT_MARGIN, 1.0)),
+        0, 10,
+        "V-NECH BASIC SHIRT",
+        "SHIRT",
+        100,
+        Map.of("S", 4, "M", 9, "L", 0)
+      ),
+      Arguments.of(
+        "Single metric - days in stock only",
+        List.of(new MetricWeight(Metrics.DAYS_IN_STOCK, 1.0)),
+        0, 10,
+        "SLOGAN T-SHIRT",
+        "SHIRT",
+        20,
+        Map.of("S", 9, "M", 2, "L", 5)
       ),
       Arguments.of(
         "Unknown metric filtered out",

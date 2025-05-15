@@ -17,7 +17,9 @@ public record ProductMongoEntity(
   @Indexed(unique = true) String name,
   String category,
   int salesUnits,
-  Map<String, Integer> stock) {
+  Map<String, Integer> stock,
+  double profitMargin,
+  int daysInStock) {
 
   /**
    * The constant DOCUMENT_NAME.

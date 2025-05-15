@@ -19,7 +19,7 @@ public interface ProductCouchbaseRepository extends ReactiveCouchbaseRepository<
    * @return the product couchbase entity
    */
   @Query("""
-      SELECT meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock
+      SELECT meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock
       FROM #{#n1ql.bucket}.`product`.`products` AS p
       WHERE p.internalId = $1
     """)
@@ -30,19 +30,25 @@ public interface ProductCouchbaseRepository extends ReactiveCouchbaseRepository<
    *
    * @param salesWeight the sales weight
    * @param stockWeight the stock weight
+   * @param profitMargin the profit margin
+   * @param daysInStock the days in stock
    * @param limit the limit
    * @param offset the offset
    * @return the product couchbase entity flux
    */
   @Query("""
     SELECT
-      meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock,
-      ((p.salesUnits * $1) + ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) /
-        ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * $2)) AS weightedScore
+      meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock,
+      ((p.salesUnits * $1) +
+      ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) / ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * $2) +
+      (p.profitMargin * $3) +
+      (p.daysInStock * $4)) AS weightedScore
     FROM #{#n1ql.bucket}.`product`.`products` AS p
-    GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock
+    GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock
     ORDER BY weightedScore DESC
-    LIMIT $3 OFFSET $4
+    LIMIT $5 OFFSET $6
     """)
-  Flux<ProductCouchbaseEntity> sortByMetricsWeights(double salesWeight, double stockWeight, long limit, long offset);
+  Flux<ProductCouchbaseEntity> sortByMetricsWeights(double salesWeight, double stockWeight,
+                                                    double profitMargin, double daysInStock,
+                                                    long limit, long offset);
 }

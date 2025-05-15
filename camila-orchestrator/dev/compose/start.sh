@@ -5,6 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 workspace="$(pwd)"
@@ -34,4 +36,5 @@ main() {
   __initServices
 }
 
+echo -e "${SEPARATOR} 🔨 Main: ${0} ${SEPARATOR}"
 time main | tee result-dev-start.log

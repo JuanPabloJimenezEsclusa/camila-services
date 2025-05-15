@@ -1,3 +1,10 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=coverage)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 <p align="center" style="text-align: center">
@@ -60,23 +67,25 @@ With this improvement, it is expected to optimize the user experience, increase 
 
 Metrics:
 
-| name          | description            |
-|---------------|------------------------|
-| Unit Sales    | number of units sold   | 
-| Stock ratio   | size ratio with stock  |
+| name          | description           |
+|---------------|-----------------------|
+| Unit sales    | number of units sold  | 
+| Stock ratio   | size ratio with stock |
+| Profit margin | profit margin         |
+| Days in stock | days in stock         |
 
 ---
 
 Product data sample:
 
-| id | name                          | sales_units | stock                |
-|----|-------------------------------|-------------|----------------------|
-| 1  | V-NECH BASIC SHIRT            | 100         | S: 4 / M:9 / L:0     |
-| 2  | CONTRASTING FABRIC T-SHIRT    | 50          | S: 35 / M:9 / L:9    |
-| 3  | RAISED PRINT T-SHIRT          | 80          | S: 20 / M:2 / L:20   |
-| 4  | PLEATED T-SHIRT               | 3           | S: 25 / M:30 / L:10  |
-| 5  | CONTRASTING LACE T-SHIRT      | 650         | S: 0 / M:1 / L:0     |
-| 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     |
+| id | name                          | sales_units | stock                | profit_margin | days_in_stock |
+|----|-------------------------------|-------------|----------------------|---------------|---------------|
+| 1  | V-NECH BASIC SHIRT            | 100         | S: 4 / M:9 / L:0     | 0.5           | 30            |
+| 2  | CONTRASTING FABRIC T-SHIRT    | 50          | S: 35 / M:9 / L:9    | 0.3           | 150           |
+| 3  | RAISED PRINT T-SHIRT          | 80          | S: 20 / M:2 / L:20   | 0.01          | 1             |
+| 4  | PLEATED T-SHIRT               | 3           | S: 25 / M:30 / L:10  | 0.12          | 65            |
+| 5  | CONTRASTING LACE T-SHIRT      | 650         | S: 0 / M:1 / L:0     | 0.17          | 31            |
+| 6  | SLOGAN T-SHIRT                | 20          | S: 9 / M:2 / L:5     | 0.39          | 167           |
 
 
 ## 🏗️ Architecture
@@ -141,6 +150,12 @@ mvn spring-boot:build-image \
 ---
 
 See [CHANGELOG.md](CHANGELOG.md) for details on version history and changes.
+
+To update, run the following command:
+
+```bash
+mvn generate-sources
+```
 
 ## 🤝 Code of Conduct
 

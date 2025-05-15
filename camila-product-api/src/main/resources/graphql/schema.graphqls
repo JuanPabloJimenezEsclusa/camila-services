@@ -8,9 +8,17 @@ type Product {
     category: String!,
     salesUnits: Int!,
     stock: JSON!
+    profitMargin: Float!
+    daysInStock: Int!
 }
 
 type Query {
     findById(internalId: ID = "1"): Product
-    sortProducts(salesUnits: Float = 0.999, stock: Float = 0.001, page: Int = 0, size: Int = 10): [Product!]
+    sortProducts(
+        salesUnits: Float = 0.997,
+        stock: Float = 0.001,
+        profitMargin: Float = 0.001,
+        daysInStock: Float = 0.001,
+        page: Int = 0,
+        size: Int = 10): [Product!]
 }

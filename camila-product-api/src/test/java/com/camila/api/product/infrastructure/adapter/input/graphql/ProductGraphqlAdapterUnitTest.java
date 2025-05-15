@@ -36,11 +36,12 @@ class ProductGraphqlAdapterUnitTest {
   private ProductGraphqlAdapter productGraphqlAdapter;
 
   private static Stream<Arguments> sortProductsParams() {
+    // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of(0.0f, 0.0f, 0, 10),
-      Arguments.of(10.0f, 5.0f, 0, 20),
-      Arguments.of(100.0f, 100.0f, 5, 15),
-      Arguments.of(50.0f, 75.0f, 2, 25)
+      Arguments.of(0.0f, 0.0f, 0.0f, 0.0f, 0, 10),
+      Arguments.of(0.7f, 0.3f, 0.0f, 0.0f, 0, 20),
+      Arguments.of(1.0f, 1.0f, 1.0f, 1.0f, 5, 15),
+      Arguments.of(0.2f, 0.6f, 0.1f, 0.1f, 2, 25)
     );
   }
 
@@ -62,16 +63,20 @@ class ProductGraphqlAdapterUnitTest {
     verifyNoMoreInteractions(productUseCase);
   }
 
-  @ParameterizedTest(name = "salesUnits={0}, stock={1}, page={2}, size={3}")
+  @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, page={2}, size={3}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
-  void shouldSortProducts(final Float salesUnits, final Float stock, final Integer page, final Integer size) {
+  void shouldSortProducts(final Float salesUnits, final Float stock,
+                          final Float profitMargin, final Float daysInStock,
+                          final Integer page, final Integer size) {
     // Given
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
     final var expectedParams = Map.of(
       "salesUnits", salesUnits.toString(),
       "stock", stock.toString(),
+      "profitMargin", profitMargin.toString(),
+      "daysInStock", daysInStock.toString(),
       "page", page.toString(),
       "size", size.toString()
     );
@@ -79,7 +84,7 @@ class ProductGraphqlAdapterUnitTest {
     when(productUseCase.sortByMetricsWeights(anyMap())).thenReturn(Flux.just(product1, product2));
 
     // When & Then
-    productGraphqlAdapter.sortProducts(salesUnits, stock, page, size)
+    productGraphqlAdapter.sortProducts(salesUnits, stock, profitMargin, daysInStock, page, size)
       .as(StepVerifier::create)
       .expectNext(product1)
       .expectNext(product2)
@@ -93,15 +98,17 @@ class ProductGraphqlAdapterUnitTest {
   @DisplayName("Should handle empty result when sorting products")
   void shouldHandleEmptyResultWhenSortingProducts() {
     // Given
-    Float salesUnits = 10.0f;
-    Float stock = 20.0f;
-    Integer page = 0;
-    Integer size = 10;
+    final Float salesUnits = 0.25f;
+    final Float stock = 0.65f;
+    final Float profitMargin = 0.05f;
+    final Float daysInStock = 0.05f;
+    final Integer page = 0;
+    final Integer size = 10;
 
     when(productUseCase.sortByMetricsWeights(anyMap())).thenReturn(Flux.empty());
 
     // When & Then
-    productGraphqlAdapter.sortProducts(salesUnits, stock, page, size)
+    productGraphqlAdapter.sortProducts(salesUnits, stock, profitMargin, daysInStock, page, size)
       .as(StepVerifier::create)
       .verifyComplete();
 

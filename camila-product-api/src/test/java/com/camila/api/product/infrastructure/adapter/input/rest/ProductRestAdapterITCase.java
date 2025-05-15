@@ -107,6 +107,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRestAdapterITCase extends CouchbaseContainerConfig {
 
+  private static final String SORT_PRODUCTS_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
   private static final SecureRandom random = new SecureRandom();
 
   @Autowired
@@ -130,7 +131,7 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   @DisplayName("[ProductRestAdapter] sort products with stock more weight")
   @Order(1)
   void sortProductsWithStockMoreWeight() {
-    webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.001", "0.999")
+    webClient.get().uri(SORT_PRODUCTS_URI, "0.0018", "0.9990", "0.0001", "0.0001")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .header("traceId", generateRandomString())
       .header("apiVersion", "1.0.0")
@@ -142,6 +143,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
       .jsonPath("$[0].stock['S']").isEqualTo(25)
       .jsonPath("$[0].stock['M']").isEqualTo(30)
       .jsonPath("$[0].stock['L']").isEqualTo(10)
+      .jsonPath("$[0].profitMargin").isEqualTo(0.12)
+      .jsonPath("$[0].daysInStock").isEqualTo(65)
       .jsonPath("$[0].stock['XL']").doesNotExist();
   }
 
@@ -149,7 +152,7 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   @DisplayName("[ProductRestAdapter] sort products with sales units more weight")
   @Order(1)
   void sortProductsWithSalesUnitsMoreWeight() {
-    webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.9", "0.1")
+    webClient.get().uri(SORT_PRODUCTS_URI, "0.90", "0.08", "0.01", "0.01")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .header("traceId", generateRandomString())
       .header("apiVersion", "1.0.0")
@@ -160,7 +163,9 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
       .jsonPath("$[0].salesUnits").isEqualTo(650)
       .jsonPath("$[0].stock['S']").isEqualTo(0)
       .jsonPath("$[0].stock['M']").isEqualTo(1)
-      .jsonPath("$[0].stock['L']").isEqualTo(0);
+      .jsonPath("$[0].stock['L']").isEqualTo(0)
+      .jsonPath("$[0].profitMargin").isEqualTo(0.17)
+      .jsonPath("$[0].daysInStock").isEqualTo(31);
   }
 
   @Test

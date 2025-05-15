@@ -9,6 +9,6 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}🗑️ Delete the namespace. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Delete the namespace. ${SEPARATOR}"
 kubectl delete namespaces camila-product-api-ns --grace-period=0 --force
 kubectl delete persistentvolume/camila-product-api-data-pv --grace-period=0 --force

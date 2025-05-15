@@ -33,7 +33,7 @@ class ProductRSocketAdapterITCase {
   @BeforeAll
   static void setUpOnce(@Autowired final RSocketRequester.Builder builder,
                         @LocalServerPort final Integer port) throws URISyntaxException {
-    requester = builder.websocket(new URI("ws://localhost:" + port + "/product-dev/api/rsocket"));
+    requester = builder.websocket(new URI("ws://localhost:%s/product-dev/api/rsocket".formatted(port)));
   }
 
   @Test
@@ -79,8 +79,10 @@ class ProductRSocketAdapterITCase {
   void sortByMetricsSalesUnitsMoreWeightOk() {
     var message = """
       {
-        "salesUnits": "0.9",
-        "stock": "0.1",
+        "salesUnits": "0.9990",
+        "stock": "0.0008",
+        "profitMargin": "0.0001",
+        "daysInStock": "0.0001",
         "page": "0",
         "size": "10"
       }

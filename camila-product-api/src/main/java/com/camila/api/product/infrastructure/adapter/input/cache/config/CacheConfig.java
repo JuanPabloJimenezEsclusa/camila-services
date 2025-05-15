@@ -1,6 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.cache.config;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
@@ -28,8 +28,9 @@ public class CacheConfig {
   @Bean
   public Caffeine<Object, Object> caffeineConfig() {
     return Caffeine.newBuilder()
-      .expireAfterWrite(1, TimeUnit.MINUTES)
-      .maximumSize(100);
+      .expireAfterWrite(Duration.ofMinutes(1L))
+      .initialCapacity(100)
+      .maximumSize(10_000);
   }
 
   /**
@@ -42,6 +43,7 @@ public class CacheConfig {
   public CacheManager cacheManager(final Caffeine<Object, Object> caffeine) {
     final var cacheManager = new CaffeineCacheManager();
     cacheManager.setCaffeine(caffeine);
+    cacheManager.setAllowNullValues(true);
     // Enable async cache mode for reactive types
     cacheManager.setAsyncCacheMode(true);
     return cacheManager;

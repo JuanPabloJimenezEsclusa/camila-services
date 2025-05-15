@@ -64,10 +64,11 @@ docker-compose down
 ---
 
 * **Databases:**
-  * [Couchbase database UI](http://localhost:8091/ui/index.html)
+  * [Couchbase database UI](http://localhost:8091/ui/index.html) (Administrator/password)
 * **API:**
   * [Product API documentation 1](http://localhost:8080/product-dev/api/swagger-ui.html)
   * [Product API documentation 2](http://localhost:8081/product-dev/api/swagger-ui.html)
+  * [Product API documentation 3](http://localhost:8082/product-dev/api/swagger-ui.html)
 * **Gateway:**
   * [Gateway API documentation](http://localhost:8090/swagger-ui.html)
 * **Discovery:**

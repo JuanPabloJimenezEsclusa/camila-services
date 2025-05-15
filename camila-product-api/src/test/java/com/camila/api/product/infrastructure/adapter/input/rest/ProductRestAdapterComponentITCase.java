@@ -56,15 +56,17 @@ class ProductRestAdapterComponentITCase {
   private ProductDTOMapper productDTOMapper;
 
   private static Stream<Arguments> sortProductsWeightParams() {
+    // salesUnits, stock, profitMargin, daysInStock
     return Stream.of(
-      Arguments.of("0.001", "0.999"),
-      Arguments.of("0.5", "0.5"),
-      Arguments.of("0.9", "0.1"),
-      Arguments.of("0.0", "1.0")
+      Arguments.of("0.0001", "0.9990", "0.0001", "0.0001"),
+      Arguments.of("0.5", "0.5", "0.0", "0.0"),
+      Arguments.of("0.900", "0.088", "0.001", "0.001"),
+      Arguments.of("0.0", "1.0", "0.0", "0.0")
     );
   }
 
   private static Stream<Arguments> paginationParams() {
+    // page, size
     return Stream.of(
       Arguments.of("0", "10"),
       Arguments.of("1", "20"),
@@ -126,20 +128,24 @@ class ProductRestAdapterComponentITCase {
     verifyNoInteractions(queryParametersValidator, productDTOMapper);
   }
 
-  @ParameterizedTest(name = "with salesUnits={0}, stock={1}")
+  @ParameterizedTest(name = "{index} -> with salesUnits={0}, stock={1}")
   @MethodSource("sortProductsWeightParams")
   @DisplayName("Should sort products with different weight parameters")
-  void shouldSortProductsWithWeightParams(final String salesUnits, final String stock) {
+  void shouldSortProductsWithWeightParams(final String salesUnits, final String stock,
+                                          final String profitMargin, final String daysInStock) {
     // Given
+    final var uri = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
     final var requestParams = Map.of(
       "salesUnits", salesUnits,
-      "stock", stock
+      "stock", stock,
+      "profitMargin", profitMargin,
+      "daysInStock", daysInStock
     );
     final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product));
 
     // When & Then
-    webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", salesUnits, stock)
+    webClient.get().uri(uri, salesUnits, stock, profitMargin, daysInStock)
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange()
       .expectStatus().isOk()
@@ -152,7 +158,7 @@ class ProductRestAdapterComponentITCase {
     verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
   }
 
-  @ParameterizedTest(name = "with page={0}, size={1}")
+  @ParameterizedTest(name = "{index} -> with page={0}, size={1}")
   @MethodSource("paginationParams")
   @DisplayName("Should sort products with pagination parameters")
   void shouldSortProductsWithPaginationParams(final String page, final String size) {
@@ -182,14 +188,17 @@ class ProductRestAdapterComponentITCase {
   @DisplayName("Should handle empty result when sorting products")
   void shouldHandleEmptyResultWhenSortingProducts() {
     // Given
+    final var uri = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
     final var requestParams = Map.of(
       "salesUnits", "0.5",
-      "stock", "0.5"
+      "stock", "0.5",
+      "profitMargin", "0.0",
+      "daysInStock", "0.0"
     );
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
 
     // When & Then
-    webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}", "0.5", "0.5")
+    webClient.get().uri(uri, "0.5", "0.5", "0.0", "0.0")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange()
       .expectStatus().isOk()
@@ -201,7 +210,7 @@ class ProductRestAdapterComponentITCase {
     verifyNoInteractions(productDTOMapper);
   }
 
-  @ParameterizedTest(name = "with params={0}")
+  @ParameterizedTest(name = "{index} -> with params={0}")
   @MethodSource("invalidTestParams")
   @DisplayName("Should handle validation error with invalid parameters")
   void shouldHandleValidationErrorWithInvalidParameters(final Map<String, String> params) {

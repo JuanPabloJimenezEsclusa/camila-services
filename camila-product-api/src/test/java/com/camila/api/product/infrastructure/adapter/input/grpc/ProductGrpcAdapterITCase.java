@@ -69,7 +69,11 @@ class ProductGrpcAdapterITCase {
   void sortByMetricsWeightsOk() {
     // Given
     final var request = SortByMetricsWeightsRequest.newBuilder()
-      .putAllRequestParams(Map.of("salesUnits", "0.001", "stock", "0.999"))
+      .putAllRequestParams(Map.of(
+        "salesUnits", "0.0008",
+        "stock", "0.9990",
+        "profitMargin", "0.0001",
+        "daysInStock", "0.0001"))
       .build();
     // When
     final Iterator<Product> productIterator = blockingStub.sortByMetricsWeights(request);

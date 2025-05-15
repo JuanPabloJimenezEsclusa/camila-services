@@ -135,7 +135,7 @@ main() {
 
   /opt/couchbase/bin/curl -v http://localhost:8093/query/service \
   -u "${COUCHBASE_ADMINISTRATOR_USERNAME}:${COUCHBASE_ADMINISTRATOR_PASSWORD}"\
-  -d 'statement=CREATE INDEX adv_internalId_name_stock_category_salesUnits ON `default`:`camila-product-bucket`.`product`.`products`(`internalId`,`name`,`category`,`salesUnits`,`stock`)'
+  -d 'statement=CREATE INDEX adv_internalId_name_stock_category_salesUnits ON `default`:`camila-product-bucket`.`product`.`products`(`internalId`,`name`,`category`,`salesUnits`,`stock`,`profitMargin`,`daysInStock`)'
 
   echo "All initialization steps completed successfully."
 }

@@ -96,8 +96,10 @@ class ProductWebSocketHandlerITCase {
     final String sortProductsRequest = """
       {
         "method": "SORT_PRODUCTS",
-        "salesUnits": "0.8",
-        "stock": "0.2",
+        "salesUnits": "0.80",
+        "stock": "0.18",
+        "profitMargin": "0.01",
+        "daysInStock": "0.01",
         "page": "0",
         "size": "10"
       }

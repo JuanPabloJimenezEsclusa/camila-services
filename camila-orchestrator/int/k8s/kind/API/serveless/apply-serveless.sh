@@ -9,28 +9,28 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}🗑️ Remove image. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Remove image. ${SEPARATOR}"
 docker rmi \
   docker.io/library/camila-product-api-serveless:1.0.0 \
   kind-registry:5000/camila-product-api-serveless:1.0.0 \
   172.18.0.6:5000/camila-product-api-serveless:1.0.0 --force || true
 
-echo -e "${SEPARATOR}🔨 Compile and build the image. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
 export SPRING_PROFILES_ACTIVE=int
 mvn compile jib:dockerBuild \
   -P jib \
   -Dmaven.test.skip=true \
   -f ../../../../../../camila-product-api/pom.xml
 
-echo -e "${SEPARATOR}🔨 Tag and push the image in local registry. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🔨 Tag and push the image in local registry. ${SEPARATOR}"
 docker tag docker.io/library/camila-product-api-serveless:1.0.0 kind-registry:5000/camila-product-api-serveless:1.0.0
 docker push kind-registry:5000/camila-product-api-serveless:1.0.0
 
-echo -e "${SEPARATOR}📦 Apply the k8s resources. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Apply the k8s resources. ${SEPARATOR}"
 kubectl apply -f ./camila-product-api-serveless.yml
 
-echo -e "${SEPARATOR}⏳ Wait for the ksvc to be ready. ${SEPARATOR}"
+echo -e "${SEPARATOR} ⏳ Wait for the ksvc to be ready. ${SEPARATOR}"
 kubectl wait --for=condition=ready --timeout=5m ksvc/camila-product-api-serveless -n camila-product-api-serveless-ns
 
-echo -e "${SEPARATOR}📋 Get the ksvc. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📋 Get the ksvc. ${SEPARATOR}"
 kubectl get ksvc -n camila-product-api-serveless-ns

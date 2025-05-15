@@ -59,6 +59,8 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
       .setCategory(product.category())
       .setSalesUnits(product.salesUnits())
       .putAllStock(product.stock())
+      .setProfitMargin(product.profitMargin())
+      .setDaysInStock(product.daysInStock())
       .build();
   }
 }

@@ -3,10 +3,10 @@ use camila-db
 db.createUser({user: "camilauser", pwd: "camilauser", roles : [{role: "readWrite", db: "camila-db"}]})
 
 db.products.insertMany([
-    { "internalId": "1", "name": "V-NECH BASIC SHIRT", "category": "SHIRT", "salesUnits": 100, "stock": { "S": 4, "M": 9, "L": 0 }},
-    { "internalId": "2", "name": "CONTRASTING FABRIC T-SHIRT", "category": "SHIRT", "salesUnits": 50, "stock": { "S": 35, "M": 9, "L": 9 }},
-    { "internalId": "3", "name": "RAISED PRINT T-SHIRT", "category": "SHIRT", "salesUnits": 80,  "stock": { "S": 20, "M": 2, "L": 20 }},
-    { "internalId": "4", "name": "PLEATED T-SHIRT", "category": "SHIRT", "salesUnits": 3, "stock": { "S": 25, "M": 30, "L": 10 }},
-    { "internalId": "5", "name": "CONTRASTING LACE T-SHIRT", "category": "SHIRT", "salesUnits": 650, "stock": { "S": 0, "M": 1, "L": 0 }},
-    { "internalId": "6", "name": "SLOGAN T-SHIRT", "category": "SHIRT", "salesUnits": 20, "stock": { "S": 9, "M": 2, "L": 5 }}
+  {"internalId":"1", "name":"V-NECH BASIC SHIRT", "category":"SHIRT", "salesUnits":100, "stock":{"S":4,"M":9,"L":0}, "profitMargin":0.5, "daysInStock":30},
+  {"internalId":"2", "name":"CONTRASTING FABRIC T-SHIRT", "category":"SHIRT", "salesUnits":50, "stock":{"S":35,"M":9,"L":9}, "profitMargin":0.3, "daysInStock":150},
+  {"internalId":"3", "name":"RAISED PRINT T-SHIRT", "category":"SHIRT", "salesUnits":80, "stock":{"S":20,"M":2,"L":20}, "profitMargin":0.01, "daysInStock":1},
+  {"internalId":"4", "name":"PLEATED T-SHIRT", "category":"SHIRT", "salesUnits":3, "stock":{"S":25,"M":30,"L":10}, "profitMargin":0.12, "daysInStock":65},
+  {"internalId":"5", "name":"CONTRASTING LACE T-SHIRT", "category":"SHIRT", "salesUnits":650, "stock":{"S":0,"M":1,"L":0}, "profitMargin":0.17, "daysInStock":31},
+  {"internalId":"6", "name":"SLOGAN T-SHIRT", "category":"SHIRT", "salesUnits":20, "stock":{"S":9,"M":2,"L":5}, "profitMargin":0.39, "daysInStock":167}
 ]);

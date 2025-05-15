@@ -111,13 +111,22 @@ mvn clean test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner
 * Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
 * Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
 * SpotBugs: [spotbugs-maven-plugin](https://spotbugs.github.io/)
+* SonarQube: [sonar-maven-plugin](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-maven/)
 
 ```bash
 unset SPRING_PROFILES_ACTIVE
 mvn clean verify site -P error-prone,quality-check | tee code-analysis.log
 ```
 
-> Report: [site-project-info](./../../target/site/project-info.html)
+```bash
+# Run SonarQube
+export SONAR_TOKEN=
+mvn sonar:sonar
+```
+
+> Report: 
+>  - [site-project-info](./../../target/site/project-info.html)
+>  - [sonar-qube.io](https://sonarcloud.io/summary/overall?id=JuanPabloJimenezEsclusa_camila-services&branch=main)
 
 ### Performance Tests
 

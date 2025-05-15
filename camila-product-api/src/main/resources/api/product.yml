@@ -32,7 +32,10 @@ paths:
       tags:
         - Products
       summary: Find product by internal identified
-      description: Consult product by ID
+      description: >-
+        Returns a product based on a single internal identifier. </br></br>
+        API consumers can specify the preferred language for the response using the `Accept-Language` header. </br>
+        The `Api-Version` header is used to specify the API version to use for the request. </br>
       operationId: findById
       parameters:
         - name: acceptLanguage
@@ -77,7 +80,15 @@ paths:
       tags:
         - Products
       summary: Find products sort by weight
-      description: 'Consult products sorted by metric:weight rules'
+      description: >-
+        Consult products sorted by metric:weight rules. </br></br>
+        API consumers can specify the preferred language for the response using the `Accept-Language` header. </br>
+        The `Api-Version` header is used to specify the API version to use for the request. </br></br>
+        Examples of Query JSon requests: </br></br>
+          - `{"salesUnits": "0.7", "stock": "0.1", "profitMargin": "0.1", "daysInStock": "0.1"}` </br>
+          - `{"salesUnits": "0.001", "stock": "0.001", "profitMargin": "0.001", "daysInStock": "0.997", "page": "0", "size": "50"}` </br>
+          - `{"salesUnits": "1"}` </br>
+          - `{"stock": "0.8", "daysInStock": "0.2", "page": "0", "size": "10"}` </br>
       operationId: sortProducts
       parameters:
         - name: acceptLanguage
@@ -166,7 +177,7 @@ components:
           maxLength: 50
           pattern: '^\d+(?:\.\d*)?$'
         minProperties: 1
-        maxProperties: 4
+        maxProperties: 6
         example: { "salesUnits": "0.8", "stock": "0.2", "page": "0", "size": "50" }
       description: Parameters map
   schemas:
@@ -176,8 +187,6 @@ components:
         - internalId
         - name
         - category
-        - salesUnits
-        - stock
       properties:
         id:
           type: string
@@ -203,6 +212,7 @@ components:
           description: Product category
         salesUnits:
           type: integer
+          format: int32
           minimum: 0
           example: 3
           description: Number of units sold
@@ -217,3 +227,16 @@ components:
             M: 30
             L: 10
           description: Stock by size
+        profitMargin:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 50.0
+          description: Profit margin
+        daysInStock:
+          type: integer
+          format: int32
+          minimum: 0
+          example: 30
+          description: Days in stock

@@ -2,6 +2,7 @@ package com.camila.api.product.infrastructure.adapter.input.websocket;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
@@ -19,6 +20,11 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class ProductWebSocketHandler implements WebSocketHandler {
+
+  private static final String DEFAULT_WEIGHT = "0.0000000001";
+  private static final String DEFAULT_PAGE = "0";
+  private static final String DEFAULT_SIZE = "25";
+
   private final ProductUseCase productUseCase;
   private final ObjectMapper objectMapper;
 
@@ -64,10 +70,12 @@ public class ProductWebSocketHandler implements WebSocketHandler {
 
   private Flux<String> handleSortProducts(final JsonNode jsonNode) {
     var requestParams = Map.of(
-      "salesUnits", jsonNode.get("salesUnits").asText("0.001"),
-      "stock", jsonNode.get("stock").asText("0.999"),
-      "page", jsonNode.get("page").asText("0"),
-      "size", jsonNode.get("size").asText("25")
+      "salesUnits", getNodeTextOrDefault(jsonNode, "salesUnits", DEFAULT_WEIGHT),
+      "stock", getNodeTextOrDefault(jsonNode, "stock", DEFAULT_WEIGHT),
+      "profitMargin", getNodeTextOrDefault(jsonNode, "profitMargin", DEFAULT_WEIGHT),
+      "daysInStock", getNodeTextOrDefault(jsonNode, "daysInStock", DEFAULT_WEIGHT),
+      "page", getNodeTextOrDefault(jsonNode, "page", DEFAULT_PAGE),
+      "size", getNodeTextOrDefault(jsonNode, "size", DEFAULT_SIZE)
     );
     return productUseCase.sortByMetricsWeights(requestParams)
       .flatMap(this::convertProductToString)
@@ -82,8 +90,12 @@ public class ProductWebSocketHandler implements WebSocketHandler {
     }
   }
 
+  private String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName, final String defaultValue) {
+    return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asText).orElse(defaultValue);
+  }
+
   enum SocketMethod {
     FIND_BY_INTERNAL_ID,
-    SORT_PRODUCTS;
+    SORT_PRODUCTS
   }
 }

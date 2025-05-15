@@ -5,6 +5,8 @@ import java.util.Map;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.api.ProductsApi;
 import com.camila.api.product.infrastructure.adapter.input.rest.dto.ProductDTO;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,18 @@ import reactor.core.publisher.Mono;
 @RequestMapping
 @CrossOrigin
 class ProductRestAdapter implements ProductsApi {
+
+  private static final String SORTED_REQUEST_PARAMS = """
+    {
+      "salesUnits": 0.85,
+      "stock": 0.05,
+      "profitMargin": 0.05,
+      "daysInStock": 0.05,
+      "page": 0,
+      "size": 50
+    }
+    """;
+
   private final QueryParametersValidator queryParametersValidator;
   private final ProductUseCase productUseCase;
   private final ProductDTOMapper productDTOMapper;
@@ -40,6 +54,9 @@ class ProductRestAdapter implements ProductsApi {
     this.productDTOMapper = productDTOMapper;
   }
 
+  @Parameters(value = {
+    @Parameter(name = "internalId", description = "Internal product identifier", example = "1")
+  })
   @Override
   public Mono<ProductDTO> findById(final String internalId,
                                    final String acceptLanguage,
@@ -50,6 +67,9 @@ class ProductRestAdapter implements ProductsApi {
       .doOnNext(productDTO -> log.info("find By Id: {}", internalId));
   }
 
+  @Parameters(value = {
+    @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
+  })
   @Override
   public Flux<ProductDTO> sortProducts(final Map<String, String> requestParams,
                                        final String acceptLanguage,

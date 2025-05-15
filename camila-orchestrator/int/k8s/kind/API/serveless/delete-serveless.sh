@@ -9,10 +9,10 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}🗑️ Delete the namespace. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Delete the namespace. ${SEPARATOR}"
 kubectl delete namespaces camila-product-api-serveless-ns --grace-period=0 --force
 
-echo -e "${SEPARATOR}🗑️ Remove image. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Remove image. ${SEPARATOR}"
 docker rmi \
   docker.io/library/camila-product-api-serveless:1.0.0 \
   kind-registry:5000/camila-product-api-serveless:1.0.0 \

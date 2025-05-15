@@ -9,14 +9,14 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}🗑️ Delete the kind cluster. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Delete the kind cluster. ${SEPARATOR}"
 kind delete cluster --name kind-cluster
 
-echo -e "${SEPARATOR}🗑️ Delete tmp folders. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Delete tmp folders. ${SEPARATOR}"
 sudo rm -rdf /tmp/shared/ /tmp/hostpath-provisioner/ || true
 
-echo -e "${SEPARATOR}🗑️ Delete the local registry. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Delete the local registry. ${SEPARATOR}"
 docker stop kind-registry || true
 
-echo -e "${SEPARATOR}🧹 Prune docker. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🧹 Prune docker. ${SEPARATOR}"
 docker system prune --volumes --force || true

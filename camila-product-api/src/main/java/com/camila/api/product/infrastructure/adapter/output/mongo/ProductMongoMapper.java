@@ -22,5 +22,7 @@ public interface ProductMongoMapper {
   @Mapping(source = "category", target = "category")
   @Mapping(source = "salesUnits", target = "salesUnits")
   @Mapping(source = "stock", target = "stock")
+  @Mapping(source = "profitMargin", target = "profitMargin")
+  @Mapping(source = "daysInStock", target = "daysInStock")
   Product toProduct(ProductMongoEntity productMongoEntity);
 }

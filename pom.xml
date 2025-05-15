@@ -51,11 +51,19 @@
     <java.version>21</java.version>
     <spring-cloud-version>2024.0.1</spring-cloud-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>10.23.0</checkstyle.version>
     <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
     <rewrite-maven-plugin.version>6.6.1</rewrite-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+
+    <sonar.organization>juanpablojimenezesclusa</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.projectKey>JuanPabloJimenezEsclusa_camila-services</sonar.projectKey>
+    <sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled>
+    <sonar.coverage.jacoco.xmlReportPaths>camila-product-api/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
   </properties>
 
   <dependencyManagement>
@@ -77,6 +85,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
           <version>${maven-site-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>5.1.0.4751</version>
         </plugin>
         <plugin>
           <groupId>org.springframework.boot</groupId>
@@ -199,6 +212,30 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>se.bjurr.gitchangelog</groupId>
+        <artifactId>git-changelog-maven-plugin</artifactId>
+        <version>2.2.5</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>GenerateGitChangelog</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>git-changelog</goal>
+            </goals>
+            <configuration>
+              <templateFile>src/main/resources/changelog.mustache</templateFile>
+              <file>CHANGELOG.md</file>
+              <readableTagName>-([^-]+?)$</readableTagName>
+              <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+              <ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
+              <timeZone>UTC</timeZone>
+              <removeIssueFromMessage>true</removeIssueFromMessage>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

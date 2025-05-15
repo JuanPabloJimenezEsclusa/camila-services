@@ -7,7 +7,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -45,21 +44,23 @@ class ProductGrpcAdapterUnitTest {
   private ArgumentCaptor<com.camila.api.product.infrastructure.adapter.input.grpc.Product> productCaptor;
 
   private static Stream<Arguments> sortProductsParams() {
+    // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of(1, 1, 0, 10),
-      Arguments.of(10, 5, 0, 20),
-      Arguments.of(100, 100, 5, 15),
-      Arguments.of(50, 75, 2, 25)
+      Arguments.of(1.0, 1.0, 1.0, 1.0, 0, 10),
+      Arguments.of(0.7, 0.3, 0.0, 0.0, 0, 20),
+      Arguments.of(0.25, 0.25, 0.50, 0.0, 5, 15),
+      Arguments.of(0.25, 0.75, 0.0, 0.0, 2, 25)
     );
   }
 
-  private static Product createDomainProduct(final String internalId, final String name,
-                                             final String category, final int salesUnits) {
-    final var stock = new HashMap<String, Integer>();
-    stock.put("warehouse1", 10);
-    stock.put("warehouse2", 20);
+  private static Product createDomainProduct(final String internalId, final String name, final String category) {
+    final var salesUnits = 10;
+    final var stock = Map.of("warehouse1", 10, "warehouse2", 20);
+    final var profitMargin = 0.5D;
+    final var daysInStock = 45;
 
-    return new Product("id_" + internalId, internalId, name, category, salesUnits, stock);
+    return new Product("id_" + internalId, internalId, name, category,
+      salesUnits, stock, profitMargin, daysInStock);
   }
 
   @Test
@@ -68,7 +69,7 @@ class ProductGrpcAdapterUnitTest {
     // Given
     final var internalId = "123";
     final var request = ProductInternalId.newBuilder().setInternalId(internalId).build();
-    final var domainProduct = createDomainProduct(internalId, "Test Product", "Category", 10);
+    final var domainProduct = createDomainProduct(internalId, "Test Product", "Category");
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(domainProduct));
 
     // When
@@ -104,22 +105,25 @@ class ProductGrpcAdapterUnitTest {
     verifyNoMoreInteractions(productUseCase);
   }
 
-  @ParameterizedTest(name = "with salesUnits={0}, stock={1}, page={2}, size={3}")
+  @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, stock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
-  void shouldSortProductsByMetricsWeights(final Integer salesUnits, final Integer stock,
+  void shouldSortProductsByMetricsWeights(final Double salesUnits, final Double stock,
+                                          final Double profitMargin, final Double daysInStock,
                                           final Integer page, final Integer size) {
     // Given
     final var requestParams = Map.of(
       "salesUnits", salesUnits.toString(),
       "stock", stock.toString(),
+      "profitMargin", profitMargin.toString(),
+      "daysInStock", daysInStock.toString(),
       "page", page.toString(),
       "size", size.toString()
     );
 
     final var request = SortByMetricsWeightsRequest.newBuilder().putAllRequestParams(requestParams).build();
-    final var product1 = createDomainProduct("1", "Product 1", "Category 1", salesUnits);
-    final var product2 = createDomainProduct("2", "Product 2", "Category 2", salesUnits);
+    final var product1 = createDomainProduct("1", "Product 1", "Category 1");
+    final var product2 = createDomainProduct("2", "Product 2", "Category 2");
 
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
 
@@ -136,8 +140,10 @@ class ProductGrpcAdapterUnitTest {
   void shouldHandleEmptyResultsWhenSortingProducts() {
     // Given
     final var requestParams = Map.of(
-      "salesUnits", "10.0",
-      "stock", "5.0",
+      "salesUnits", "0.6",
+      "stock", "0.4",
+      "profitMargin", "0.0",
+      "daysInStock", "0.0",
       "page", "0",
       "size", "10"
     );
@@ -163,8 +169,10 @@ class ProductGrpcAdapterUnitTest {
   void shouldHandleErrorWhenSortingProducts() {
     // Given
     final var requestParams = Map.of(
-      "salesUnits", "10.0",
-      "stock", "5.0",
+      "salesUnits", "0.6",
+      "stock", "0.4",
+      "profitMargin", "0.0",
+      "daysInStock", "0.0",
       "page", "0",
       "size", "10"
     );

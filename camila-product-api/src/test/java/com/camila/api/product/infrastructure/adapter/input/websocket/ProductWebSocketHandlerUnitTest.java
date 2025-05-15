@@ -18,8 +18,6 @@ import java.util.stream.Stream;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +28,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -44,10 +43,10 @@ class ProductWebSocketHandlerUnitTest {
   private ProductUseCase productUseCase;
 
   @Mock
-  private ObjectMapper objectMapper;
-
-  @Mock
   private WebSocketSession session;
+
+  @Spy
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   private ProductWebSocketHandler handler;
   private WebSocketMessage inputMessage;
@@ -55,11 +54,12 @@ class ProductWebSocketHandlerUnitTest {
   private AtomicBoolean completed;
 
   private static Stream<Arguments> sortProductsParams() {
+    // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of("0.0", "1.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "2", "50"),
-      Arguments.of("0.3", "0.7", "5", "15")
+      Arguments.of("0.0", "1.0", "0.0", "0.0", "0", "10"),
+      Arguments.of("0.5", "0.5", "0.5", "0.5", "1", "20"),
+      Arguments.of("0.8", "0.2", "0.0", "0.0", "2", "50"),
+      Arguments.of("0.3", "0.7", "0.0", "0.0", "5", "15")
     );
   }
 
@@ -93,9 +93,6 @@ class ProductWebSocketHandlerUnitTest {
     final var inputPayload = "{invalid json}";
     setupInputMessage(inputPayload);
 
-    when(objectMapper.readTree(inputPayload)).thenThrow(new JsonProcessingException("Test error") {
-    });
-
     // When
     executeHandlerAndAwaitCompletion();
 
@@ -109,8 +106,6 @@ class ProductWebSocketHandlerUnitTest {
   @DisplayName("Should handle find by internal ID WebSocket message")
   void shouldHandleFindByInternalIdMessage() throws Exception {
     // Given
-    final var rootNode = setupJsonNodeHierarchy("FIND_BY_INTERNAL_ID");
-    final var idNode = mock(JsonNode.class);
     final var mockProduct = Instancio.of(Product.class).create();
     final var internalId = "123";
     final var inputPayload = """
@@ -119,18 +114,9 @@ class ProductWebSocketHandlerUnitTest {
         "internalId": "%s"
       }
       """.formatted(internalId);
-    final var expectedJson = """
-      {
-        "product": "data"
-      }
-      """;
 
     setupInputMessage(inputPayload);
-    when(rootNode.get("internalId")).thenReturn(idNode);
-    when(idNode.asText()).thenReturn(internalId);
-    when(objectMapper.readTree(inputPayload)).thenReturn(rootNode);
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(mockProduct));
-    when(objectMapper.writeValueAsString(mockProduct)).thenReturn(expectedJson);
 
     // When
     executeHandlerAndAwaitCompletion();
@@ -139,22 +125,22 @@ class ProductWebSocketHandlerUnitTest {
     verify(productUseCase).findByInternalId(internalId);
     verify(objectMapper).writeValueAsString(mockProduct);
     assertThat(capturedResponses).hasSize(1);
-    assertThat(capturedResponses.getFirst()).isEqualTo(expectedJson);
+    assertThat(capturedResponses.getFirst()).isEqualTo(objectMapper.writeValueAsString(mockProduct));
   }
 
   @Test
   @DisplayName("Should handle product not found for find by internal ID")
-  void shouldHandleProductNotFoundForFindByInternalId() throws Exception {
+  void shouldHandleProductNotFoundForFindByInternalId() {
     // Given
-    final var rootNode = setupJsonNodeHierarchy("FIND_BY_INTERNAL_ID");
-    final var idNode = mock(JsonNode.class);
     final var internalId = "nonexistent";
-    final var inputPayload = "{\"method\":\"FIND_BY_INTERNAL_ID\",\"internalId\":\"" + internalId + "\"}";
+    final var inputPayload = """
+      {
+        "method": "FIND_BY_INTERNAL_ID",
+        "internalId": "%s"
+      }
+      """.formatted(internalId);
 
     setupInputMessage(inputPayload);
-    when(rootNode.get("internalId")).thenReturn(idNode);
-    when(idNode.asText()).thenReturn(internalId);
-    when(objectMapper.readTree(inputPayload)).thenReturn(rootNode);
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When
@@ -166,13 +152,13 @@ class ProductWebSocketHandlerUnitTest {
     assertThat(capturedResponses.getFirst()).isEqualTo("Product not found");
   }
 
-  @ParameterizedTest(name = "salesUnits={0}, stock={1}, page={2}, size={3}")
+  @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, daysInStock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should handle sort products message with different parameters")
   void shouldHandleSortProductsMessage(final String salesUnits, final String stock,
+                                       final String profitMargin, final String daysInStock,
                                        final String page, final String size) throws Exception {
     // Given
-    final var rootNode = setupJsonNodeHierarchy("SORT_PRODUCTS");
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
     final var inputPayload = """
@@ -180,33 +166,23 @@ class ProductWebSocketHandlerUnitTest {
         "method": "SORT_PRODUCTS",
         "salesUnits": "%s",
         "stock": "%s",
+        "profitMargin": "%s",
+        "daysInStock": "%s",
         "page": "%s",
         "size": "%s"
       }
-      """.formatted(salesUnits, stock, page, size);
-    final var product1Json = """
-      {
-        "product1": "data"
-      }
-      """;
-    final var product2Json = """
-      {
-        "product2": "data"
-      }
-      """;
+      """.formatted(salesUnits, stock, profitMargin, daysInStock, page, size);
     final var expectedParams = Map.of(
       "salesUnits", salesUnits,
       "stock", stock,
+      "profitMargin", profitMargin,
+      "daysInStock", daysInStock,
       "page", page,
       "size", size
     );
 
     setupInputMessage(inputPayload);
-    setupSortNodesWithValues(rootNode, salesUnits, stock, page, size);
-    when(objectMapper.readTree(inputPayload)).thenReturn(rootNode);
     when(productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.just(product1, product2));
-    when(objectMapper.writeValueAsString(product1)).thenReturn(product1Json);
-    when(objectMapper.writeValueAsString(product2)).thenReturn(product2Json);
 
     // When
     executeHandlerAndAwaitCompletion();
@@ -215,29 +191,29 @@ class ProductWebSocketHandlerUnitTest {
     verify(productUseCase).sortByMetricsWeights(expectedParams);
     verify(objectMapper).writeValueAsString(product1);
     verify(objectMapper).writeValueAsString(product2);
-    assertThat(capturedResponses).hasSize(2).containsExactly(product1Json, product2Json);
+    assertThat(capturedResponses).hasSize(2)
+      .containsExactly(objectMapper.writeValueAsString(product1), objectMapper.writeValueAsString(product2));
   }
 
   @Test
   @DisplayName("Should handle no products found when sorting")
-  void shouldHandleNoProductsFoundWhenSorting() throws Exception {
+  void shouldHandleNoProductsFoundWhenSorting() {
     // Given
-    final var rootNode = setupJsonNodeHierarchy("SORT_PRODUCTS");
     final var inputPayload = """
       {
         "method": "SORT_PRODUCTS"
       }
       """;
     final var expectedParams = Map.of(
-      "salesUnits", "0.001",
-      "stock", "0.999",
+      "salesUnits", "0.0000000001",
+      "stock", "0.0000000001",
+      "profitMargin", "0.0000000001",
+      "daysInStock", "0.0000000001",
       "page", "0",
       "size", "25"
     );
 
     setupInputMessage(inputPayload);
-    setupSortNodesWithValues(rootNode, "0.001", "0.999", "0", "25");
-    when(objectMapper.readTree(inputPayload)).thenReturn(rootNode);
     when(productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.empty());
 
     // When
@@ -254,35 +230,8 @@ class ProductWebSocketHandlerUnitTest {
     when(session.receive()).thenReturn(Flux.just(inputMessage));
   }
 
-  private JsonNode setupJsonNodeHierarchy(final String method) {
-    final var rootNode = mock(JsonNode.class);
-    final var methodNode = mock(JsonNode.class);
-
-    when(rootNode.get("method")).thenReturn(methodNode);
-    when(methodNode.asText(anyString())).thenReturn(method);
-    return rootNode;
-  }
-
   private void executeHandlerAndAwaitCompletion() {
     handler.handle(session).subscribe();
     await().atMost(2, SECONDS).untilTrue(completed);
-  }
-
-  private void setupSortNodesWithValues(final JsonNode rootNode, final String salesUnits, final String stock,
-                                        final String page, final String size) {
-    final var salesNode = mock(JsonNode.class);
-    final var stockNode = mock(JsonNode.class);
-    final var pageNode = mock(JsonNode.class);
-    final var sizeNode = mock(JsonNode.class);
-
-    when(rootNode.get("salesUnits")).thenReturn(salesNode);
-    when(rootNode.get("stock")).thenReturn(stockNode);
-    when(rootNode.get("page")).thenReturn(pageNode);
-    when(rootNode.get("size")).thenReturn(sizeNode);
-
-    when(salesNode.asText(anyString())).thenReturn(salesUnits);
-    when(stockNode.asText(anyString())).thenReturn(stock);
-    when(pageNode.asText(anyString())).thenReturn(page);
-    when(sizeNode.asText(anyString())).thenReturn(size);
   }
 }

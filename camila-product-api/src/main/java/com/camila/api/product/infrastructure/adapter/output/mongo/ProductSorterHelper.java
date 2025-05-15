@@ -68,7 +68,7 @@ class ProductSorterHelper {
    * @return the add fields operation
    */
   static AddFieldsOperation buildWeightedScoreField(final List<MetricWeight> metricsWeights) {
-    var weightExpressions = metricsWeights.stream()
+    final var weightExpressions = metricsWeights.stream()
       .filter(metricWeight -> metricWeight.metric() != Metrics.UNKNOWN)
       .map(ProductSorterHelper::getAggregationExpression)
       .toList();
@@ -93,37 +93,31 @@ class ProductSorterHelper {
   private static AggregationExpression getAggregationExpression(final MetricWeight metricWeight) {
     return metricWeight.metric() == Metrics.STOCK
       ? getStockByWeights(metricWeight.weight())
-      : getSalesUnitsByWeights(metricWeight.weight());
+      : getWeightBySimpleMultiply(metricWeight.metric().getDescription(), metricWeight.weight());
   }
 
   private static AggregationExpression joinWeightExpressions(final List<AggregationExpression> weightExpressions) {
-    if (weightExpressions.isEmpty()) {
-      return getSalesUnitsByWeights(100D);
-    }
-
-    if (weightExpressions.size() == 1) {
-      return weightExpressions.getFirst();
-    }
-
-    return ArithmeticOperators.valueOf(weightExpressions.get(0)).add(weightExpressions.get(1));
+    return weightExpressions.stream()
+      .reduce((aggregationExpression, aggregationExpression2) ->
+        ArithmeticOperators.valueOf(aggregationExpression).add(aggregationExpression2))
+      .orElseGet(() -> getWeightBySimpleMultiply(Metrics.SALES_UNITS.getDescription(), 1D));
   }
 
-  private static AggregationExpression getSalesUnitsByWeights(final double weight) {
-    return ArithmeticOperators.Multiply
-      .valueOf(Metrics.SALES_UNITS.getDescription())
-      .multiplyBy(weight);
+  private static AggregationExpression getWeightBySimpleMultiply(final String metricDescription,
+                                                                 final double weight) {
+    return ArithmeticOperators.Multiply.valueOf(metricDescription).multiplyBy(weight);
   }
 
   private static AggregationExpression getStockByWeights(final double weight) {
-    AggregationExpression divisor = AccumulatorOperators.Sum.sumOf(
+    final AggregationExpression divisor = AccumulatorOperators.Sum.sumOf(
       VariableOperators.Map.itemsOf(ObjectOperators.valueOf(Metrics.STOCK.getDescription()).toArray())
         .as("size")
         .andApply(ConvertOperators.valueOf("$$size.v").convertToDouble()));
 
-    AggregationExpression dividend = ArrayOperators.Size.lengthOfArray(
+    final AggregationExpression dividend = ArrayOperators.Size.lengthOfArray(
       ObjectOperators.valueOf(Metrics.STOCK.getDescription()).toArray());
 
-    AggregationExpression stockByWeights = ArithmeticOperators.Multiply
+    final AggregationExpression stockByWeights = ArithmeticOperators.Multiply
       .valueOf(ArithmeticOperators.Divide.valueOf(divisor).divideBy(dividend))
       .multiplyBy(weight);
 

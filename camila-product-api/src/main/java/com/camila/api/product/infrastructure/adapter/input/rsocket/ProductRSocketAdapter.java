@@ -21,9 +21,15 @@ import reactor.core.publisher.Mono;
 @Controller
 @MessageMapping("products")
 class ProductRSocketAdapter {
+  private static final String DEFAULT_WEIGHT = "0.0000000001";
+  private static final String DEFAULT_PAGE = "0";
+  private static final String DEFAULT_SIZE = "25";
+
   private static final String INTERNAL_ID = "internalId";
   private static final String SALES_UNITS = "salesUnits";
   private static final String STOCK = "stock";
+  private static final String PROFIT_MARGIN = "profitMargin";
+  private static final String DAYS_IN_STOCK = "daysInStock";
   private static final String PAGE = "page";
   private static final String SIZE = "size";
 
@@ -94,7 +100,7 @@ class ProductRSocketAdapter {
   private Mono<String> validateAndBuildFindRequest(final String message) {
     try {
       final var jsonNode = objectMapper.readTree(message);
-      return Mono.just(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText("0"));
+      return Mono.just(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText(DEFAULT_PAGE));
     } catch (final Exception e) {
       return Mono.error(e);
     }
@@ -104,10 +110,12 @@ class ProductRSocketAdapter {
     try {
       final var jsonNode = objectMapper.readTree(message);
       return Flux.just(Map.of(
-        SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText("0.001"),
-        STOCK, validate(jsonNode, STOCK).get(STOCK).asText("0.999"),
-        PAGE, validate(jsonNode, PAGE).get(PAGE).asText("0"),
-        SIZE, validate(jsonNode, SIZE).get(SIZE).asText("25")));
+        SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText(DEFAULT_WEIGHT),
+        STOCK, validate(jsonNode, STOCK).get(STOCK).asText(DEFAULT_WEIGHT),
+        PROFIT_MARGIN, validate(jsonNode, PROFIT_MARGIN).get(PROFIT_MARGIN).asText(DEFAULT_WEIGHT),
+        DAYS_IN_STOCK, validate(jsonNode, DAYS_IN_STOCK).get(DAYS_IN_STOCK).asText(DEFAULT_WEIGHT),
+        PAGE, validate(jsonNode, PAGE).get(PAGE).asText(DEFAULT_PAGE),
+        SIZE, validate(jsonNode, SIZE).get(SIZE).asText(DEFAULT_SIZE)));
     } catch (final Exception e) {
       return Flux.error(e);
     }

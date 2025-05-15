@@ -9,7 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}✏️ Update /etc/hosts file. ${SEPARATOR}"
+echo -e "${SEPARATOR} ✏️ Update /etc/hosts file. ${SEPARATOR}"
 if grep -q "kind-registry" /etc/hosts; then
   echo "🔄 Updating existing entry..."
   sudo sed -i "s/.*kind-registry$/172.18.0.6 kind-registry/" /etc/hosts
@@ -18,16 +18,16 @@ else
   echo "172.18.0.6 kind-registry" | sudo tee -a /etc/hosts > /dev/null
 fi
 
-echo -e "${SEPARATOR}📦 Install clients and start cluster. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Install clients and start cluster. ${SEPARATOR}"
 cd clusters
 ./install.sh
 ./start-cluster.sh
 
-echo -e "${SEPARATOR}🚀 Install DDBB. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🚀 Install DDBB. ${SEPARATOR}"
 cd ../DDBB
 ./apply.sh
 
-echo -e "${SEPARATOR}🚀 Fill DDBB with minimum data. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🚀 Fill DDBB with minimum data. ${SEPARATOR}"
 mongo_pod="$(kubectl get pods -n mongodb --selector=app=mongo -o jsonpath='{.items[*].metadata.name}')" && \
 kubectl exec -it --namespace=mongodb "${mongo_pod}" -- \
   bash -c "mongosh --host localhost:27017 \
@@ -35,6 +35,6 @@ kubectl exec -it --namespace=mongodb "${mongo_pod}" -- \
            --password password123 \
            --authenticationDatabase admin" < ../../../../dev/compose/data/mongodb/minimum_data.script
 
-echo -e "${SEPARATOR}🚀 Install API. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🚀 Install API. ${SEPARATOR}"
 cd ../API/serveless
 ./apply-serveless.sh

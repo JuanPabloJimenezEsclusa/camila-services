@@ -62,8 +62,10 @@ public class RSocketTestClient {
       var future = new CompletableFuture<>();
       var message = """
         {
-          "salesUnits": "0.9",
-          "stock": "0.1",
+          "salesUnits": "0.90",
+          "stock": "0.18",
+          "profitMargin": "0.01",
+          "daysInStock": "0.01",
           "page": "0",
           "size": "10000"
         }

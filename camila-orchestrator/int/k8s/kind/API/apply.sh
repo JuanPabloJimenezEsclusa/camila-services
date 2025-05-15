@@ -9,24 +9,24 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}🗑️ Remove image. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🗑️ Remove image. ${SEPARATOR}"
 docker rmi docker.io/library/camila-product-api:1.0.0 || true
 
-echo -e "${SEPARATOR}🔨 Compile and build the image. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
 export SPRING_PROFILES_ACTIVE=int
 mvn clean spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true \
   -f ../../../../../camila-product-api/pom.xml
 
-echo -e "${SEPARATOR}🐳 A simple way to load the image into the kind cluster. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🐳 A simple way to load the image into the kind cluster. ${SEPARATOR}"
 kind load docker-image docker.io/library/camila-product-api:1.0.0 --name kind-cluster
 
-echo -e "${SEPARATOR}📦 Apply the k8s resources. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Apply the k8s resources. ${SEPARATOR}"
 kubectl apply -f ./camila-product-api.yml
 
-echo -e "${SEPARATOR}⏳ Wait for the pod to be ready. ${SEPARATOR}"
+echo -e "${SEPARATOR} ⏳ Wait for the pod to be ready. ${SEPARATOR}"
 kubectl wait --for=condition=ready pod -l app=camila-product-api -n camila-product-api-ns --timeout=5m
 
-echo -e "${SEPARATOR}📋 Get the resources. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📋 Get the resources. ${SEPARATOR}"
 kubectl get all,pv,pvc,resourcequotas,ingress -n camila-product-api-ns -o wide --show-labels

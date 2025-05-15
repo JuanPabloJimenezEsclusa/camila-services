@@ -54,8 +54,17 @@ public class ProductCouchbaseAdapter implements ProductRepository {
       .filter(metricWeight -> metricWeight.metric() == Metrics.STOCK)
       .findFirst()
       .orElse(new MetricWeight(Metrics.STOCK, DEFAULT_WEIGHT)).weight();
+    final double profitMargin = metricsWeights.stream()
+      .filter(metricWeight -> metricWeight.metric() == Metrics.PROFIT_MARGIN)
+      .findFirst()
+      .orElse(new MetricWeight(Metrics.PROFIT_MARGIN, DEFAULT_WEIGHT)).weight();
+    final double daysInStock = metricsWeights.stream()
+      .filter(metricWeight -> metricWeight.metric() == Metrics.DAYS_IN_STOCK)
+      .findFirst()
+      .orElse(new MetricWeight(Metrics.DAYS_IN_STOCK, DEFAULT_WEIGHT)).weight();
 
-    return productCouchbaseRepository.sortByMetricsWeights(saleUnitsWeight, stockWeight, limit, offset)
+    return productCouchbaseRepository.sortByMetricsWeights(saleUnitsWeight, stockWeight,
+        profitMargin, daysInStock, limit, offset)
       .doOnNext(result -> log.debug("couchbase.adapter.sortByMetricsWeights: {}", result))
       .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.sortByMetricsWeights: {}", throwable.getMessage()))
       .map(mapper::toProduct);

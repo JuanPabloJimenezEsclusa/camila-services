@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 public enum Metrics {
   SALES_UNITS("salesUnits"),
   STOCK("stock"),
+  PROFIT_MARGIN("profitMargin"),
+  DAYS_IN_STOCK("daysInStock"),
   UNKNOWN("unknown");
 
   private final String description;

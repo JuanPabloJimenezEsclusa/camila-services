@@ -12,10 +12,10 @@ success=false
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}📦 Apply the k8s resources. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Apply the k8s resources. ${SEPARATOR}"
 kubectl apply -f ./camila-product-ddbb.yml
 
-echo -e "${SEPARATOR}🔑 Assign permissions to the hostpath-provisioner. ${SEPARATOR}"
+echo -e "${SEPARATOR} 🔑 Assign permissions to the hostpath-provisioner. ${SEPARATOR}"
 while [ $attempt -lt $max_attempts ] && [ "${success}" = false ]; do
   attempt=$((attempt + 1))
   if sudo chmod a+w /tmp/hostpath-provisioner/data/mongo/ -R 2>/dev/null; then
@@ -32,8 +32,8 @@ if [ "${success}" = false ]; then
   exit 1;
 fi
 
-echo -e "${SEPARATOR}⏳ Wait for the pod to be ready. ${SEPARATOR}"
+echo -e "${SEPARATOR} ⏳ Wait for the pod to be ready. ${SEPARATOR}"
 kubectl wait --for=condition=ready pod -l app=mongo -n mongodb --timeout=5m
 
-echo -e "${SEPARATOR}📋 ${SEPARATOR}"
+echo -e "${SEPARATOR} 📋 ${SEPARATOR}"
 kubectl get all,sa,pv,pvc,resourcequotas,ingress -n mongodb -o wide --show-labels

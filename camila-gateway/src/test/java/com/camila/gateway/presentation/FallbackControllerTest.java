@@ -28,7 +28,7 @@ class FallbackControllerTest {
     assertNotNull(webClient);
   }
 
-  @ParameterizedTest(name = "fallbackAllProducts | code: {0}  | uri: {1} | result: {2}")
+  @ParameterizedTest(name = "{index} -> fallbackAllProducts | code: {0}  | uri: {1} | result: {2}")
   @CsvSource(value = {
     "502 | /product-dev/api/products?salesUnits=0.5&stock=0.5 | {\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}",
     "502 | /product-dev/api/products/1                        | {\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}"

@@ -116,17 +116,17 @@ curl -X 'GET' \
   -H 'Accept: application/json'
   
 curl -X 'GET' \
-  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.18&profitMargin=0.01&daysInStock=0.01&page=0&size=20' \
   -H 'Accept: application/json'
 
 # Server-sent Event (SSE)
 curl -X 'GET' \
-  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.18&profitMargin=0.01&daysInStock=0.01&page=0&size=20' \
   -H 'Accept: text/event-stream'
 
 # NDJSON: https://github.com/ndjson/ndjson-spec
 curl -X 'GET' \
-  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.18&profitMargin=0.01&daysInStock=0.01&page=0&size=20' \
   -H 'Accept: application/x-ndjson'
 ```
 
@@ -140,12 +140,27 @@ curl -X 'GET' \
 curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
-  --data-raw '{"query":"query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {\n    sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {\n        id @include(if: $withDetails)\n        internalId @include(if: $withDetails)\n        category @include(if: $withDetails)\n        name\n        salesUnits\n        stock\n    }\n}\n","variables":{"salesUnits":0.001,"stock":0.999,"page":0,"size":2,"withDetails":false}}'
+  --data-raw '{"query":"query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {\n
+    sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {\n
+      id @include(if: $withDetails)\n
+      internalId @include(if: $withDetails)\n
+      category @include(if: $withDetails)\n
+      name\n
+      salesUnits\n
+      stock\n
+      profitMargin\n
+      daysInStock\n
+    }\n}\n",
+    "variables":{"salesUnits":0.0008,"stock":0.9990, "profitMargin":0.0001, "daysInStock": 0.0001,"page":0,"size":2,"withDetails":false}}'
 
 curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
-  --data '{"query":"query findById($internalId: ID) {\n  findById(internalId: $internalId) {\n    id, internalId, category, name, salesUnits, stock\n  }\n}\n","variables":{"internalId":"1"}}'
+  --data '{"query":"query findById($internalId: ID) {\n  
+    findById(internalId: $internalId) {\n   
+      id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock\n  
+    }\n}\n",
+    "variables":{"internalId":"1"}}'
 ```
 
 ### Websocket
@@ -157,14 +172,14 @@ curl --location 'http://localhost:8080/product-dev/api/graphql' \
 echo '{ "method": "FIND_BY_INTERNAL_ID", "internalId": "1" }' \
   | websocat -n1 ws://localhost:8080/product-dev/api/ws/products
 
-echo '{ "method": "SORT_PRODUCTS", "salesUnits": "0.001", "stock": "0.999", "page": "0", "size": "100" }' \
+echo '{ "method": "SORT_PRODUCTS", "salesUnits": "0.0008", "stock": "0.9990", "profitMargin": "0.0001", "daysInStock": "0.0001", "page": "0", "size": "100" }' \
   | websocat --no-close ws://localhost:8080/product-dev/api/ws/products
 
 docker run --rm -it \
   --network=host \
   ghcr.io/vi/websocat:nightly \
   ws://localhost:8080/product-dev/api/ws/products 
-{ "method": "SORT_PRODUCTS", "salesUnits": "0.999", "stock": "0.001", "page": "0", "size": "100" }
+{ "method": "SORT_PRODUCTS", "salesUnits": "0.9990", "stock": "0.0008", "profitMargin": "0.0001", "daysInStock": "0.0001", "page": "0", "size": "100" }
 ```
 
 ### RSocket
@@ -219,8 +234,15 @@ db.products.aggregate([
                   }
                 ]
               },
-              0.20
-            ]}]}}},
+              0.18
+            ]
+          },
+          {
+            $multiply: ["$profitMargin", 0.01]
+          },
+          {
+            $multiply: ["$daysInStock", 0.01]
+          }]}}},
   {
     $sort: {
       weightedScore: -1
@@ -233,9 +255,11 @@ db.products.aggregate([
 ```couchbasequery
 SELECT
   meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock,
-  ((p.salesUnits * 0.80) + ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) /
-                           ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * 0.20)) AS weightedScore
+  ((p.salesUnits * 0.80) + 
+   ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) / ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * 0.18) +
+   (p.profitMargin * 0.01) +
+   (p.daysInStock * 0.01)) AS weightedScore
 FROM `camila-product-bucket`.`product`.`products` AS p
-GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock
+GROUP BY meta().id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock
 ORDER BY weightedScore DESC
 ```

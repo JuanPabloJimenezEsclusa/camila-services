@@ -9,7 +9,7 @@ Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
-GET http://localhost:8090/product-dev/api/products/10 HTTP/2
+GET http://localhost:8090/product-dev/api/products/1 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
@@ -26,32 +26,36 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 
 query findById($internalId: ID) {
   findById(internalId: $internalId) {
-    id, internalId, category, name, salesUnits, stock
+    id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock
   }
 }
 
 {
-"internalId": "100"
+"internalId": "1"
 }
 
 ### Graphql - sortProducts
 GRAPHQL http://localhost:8090/product-dev/api/graphql
 Authorization: Bearer {{$auth.token("auth-id")}}
 
-query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
-  sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+  sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
     id @include(if: $withDetails)
     internalId @include(if: $withDetails)
     category @include(if: $withDetails)
     name
     salesUnits
     stock
+    profitMargin
+    daysInStock
   }
 }
 
 {
   "salesUnits": 0.001,
-  "stock": 0.999,
+  "stock": 0.001,
+  "profitMargin": 0.001,
+  "daysInStock": 0.997,
   "page": 0,
   "size": 2,
   "withDetails": false
@@ -65,13 +69,15 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 ===
 {
   "method": "FIND_BY_INTERNAL_ID",
-  "internalId": "10"
+  "internalId": "5"
 }
 === wait-for-server
 {
   "method": "SORT_PRODUCTS",
-  "salesUnits": "0.001",
-  "stock": "0.999",
+  "salesUnits": "0.0000001",
+  "stock": "0.0000001",
+  "profitMargin": "0.0000001",
+  "daysInStock": "0.9999997",
   "page": "0",
   "size": "5"
 }
@@ -96,8 +102,10 @@ Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
-  "salesUnits": "0.001",
-  "stock": "0.999",
+  "salesUnits": "0.0005",
+  "stock": "0.9990",
+  "profitMargin": "0.0005",
+  "daysInStock": "0.0000",
   "page": "0",
   "size": "5"
 }
@@ -106,7 +114,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 GRPC localhost:6565/product.ProductService/GetProductByInternalId
 
 {
-  "internalId": "1000"
+  "internalId": "1"
 }
 
 ### GRPC - SortProducts
@@ -117,6 +125,6 @@ GRPC localhost:6566/product.ProductService/SortByMetricsWeights
     "salesUnits": "0.999",
     "stock": "0.001",
     "page": "0",
-    "size": "10"
+    "size": "100"
   }
 }

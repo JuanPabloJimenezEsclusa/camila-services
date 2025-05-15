@@ -45,11 +45,12 @@ class ProductRestAdapterUnitTest {
   private ProductRestAdapter productRestAdapter;
 
   private static Stream<Arguments> sortProductsParams() {
+    // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of("0.0", "1.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "2", "50"),
-      Arguments.of("0.3", "0.7", "5", "15")
+      Arguments.of("0.0", "1.0", "0.0", "0.0", "0", "10"),
+      Arguments.of("0.5", "0.5", "0.5", "0.5", "1", "20"),
+      Arguments.of("0.8", "0.2", "0.0", "0.0", "2", "50"),
+      Arguments.of("0.3", "0.7", "0.0", "0.0", "5", "15")
     );
   }
 
@@ -92,15 +93,18 @@ class ProductRestAdapterUnitTest {
     verifyNoInteractions(queryParametersValidator, productDTOMapper);
   }
 
-  @ParameterizedTest(name = "salesUnits={0}, stock={1}, page={2}, size={3}")
+  @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, stock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
   void shouldSortProducts(final String salesUnits, final String stock,
+                          final String profitMargin, final String daysInStock,
                           final String page, final String size) {
     // Given
     final var requestParams = Map.of(
       "salesUnits", salesUnits,
       "stock", stock,
+      "profitMargin", profitMargin,
+      "daysInStock", daysInStock,
       "page", page,
       "size", size
     );
@@ -133,8 +137,10 @@ class ProductRestAdapterUnitTest {
   void shouldReturnEmptyFluxWhenNoProductsMatchSortingCriteria() {
     // Given
     final var requestParams = Map.of(
-      "salesUnits", "0.5",
-      "stock", "0.5",
+      "salesUnits", "0.25",
+      "stock", "0.25",
+      "profitMargin", "0.25",
+      "daysInStock", "0.25",
       "page", "0",
       "size", "10"
     );

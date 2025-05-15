@@ -44,7 +44,14 @@ public class CachedProductDecorator implements ProductUseCase {
     return delegate.findByInternalId(internalId);
   }
 
-  @Cacheable(cacheNames = "sortedProducts", key = "T(java.util.Objects).hash(#requestParams)")
+  @Cacheable(cacheNames = "sortedProducts", key = "{"
+    + "#requestParams.getOrDefault('salesUnits', '0'),"
+    + "#requestParams.getOrDefault('stock', '0'),"
+    + "#requestParams.getOrDefault('profitMargin', '0'),"
+    + "#requestParams.getOrDefault('daysInStock', '0'),"
+    + "#requestParams.getOrDefault('page', '0'),"
+    + "#requestParams.getOrDefault('size', '10')"
+    + "}")
   @Override
   public Flux<Product> sortByMetricsWeights(final Map<String, String> requestParams) {
     return delegate.sortByMetricsWeights(requestParams);

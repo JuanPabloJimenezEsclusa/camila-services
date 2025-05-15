@@ -9,7 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR}📦 Install kubectl. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Install kubectl. ${SEPARATOR}"
 
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-kubectl-binary-with-curl-on-linux
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -19,14 +19,14 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 rm kubectl kubectl.sha256
 kubectl version --client --output=yaml
 
-echo -e "${SEPARATOR}📦 Install helm. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Install helm. ${SEPARATOR}"
 
 # https://helm.sh/docs/intro/install/#from-script
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 helm version
 helm repo list || true
 
-echo -e "${SEPARATOR}📦 Install kind. ${SEPARATOR}"
+echo -e "${SEPARATOR} 📦 Install kind. ${SEPARATOR}"
 
 # https://kind.sigs.k8s.io/
 # https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries
