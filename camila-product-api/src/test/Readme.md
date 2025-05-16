@@ -77,7 +77,8 @@ mvn clean test
 
 ```bash
 export SPRING_PROFILES_ACTIVE=loc
-mvn clean spring-boot:process-test-aot
+mvn spring-boot:process-test-aot \
+  -Dspring-boot.run.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED"
 ```
 
 ### Integration and Benchmark Tests

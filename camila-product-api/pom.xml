@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -13,103 +13,40 @@
   <groupId>com.camila.api</groupId>
   <artifactId>camila-product-api</artifactId>
   <name>camila-product-api</name>
-  <description>camila-product-api</description>
-
-  <properties>
-    <java.version>21</java.version>
-    <spring-cloud.version>2024.0.1</spring-cloud.version>
-    <cucumber.version>7.22.0</cucumber.version>
-    <opentelemetry.version>1.49.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.49.0-alpha</opentelemetry-api-incubator.version>
-    <graphql-java.version>23.1</graphql-java.version>
-    <graphql-java-extended-scalars.version>22.0</graphql-java-extended-scalars.version>
-    <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.30.2</protobuf-java.version>
-    <io-grpc.version>1.63.0</io-grpc.version>
-    <jspecify.version>1.0.0</jspecify.version>
-    <awaitility.version>4.2.2</awaitility.version>
-    <de.flapdoodle.embed.mongo.spring3x.version>4.20.0</de.flapdoodle.embed.mongo.spring3x.version>
-    <archunit-junit5.version>1.4.0</archunit-junit5.version>
-    <instancio-junit.version>5.4.0</instancio-junit.version>
-    <jmh.version>1.37</jmh.version>
-    <junit-platform-suite.version>1.12.2</junit-platform-suite.version>
-    <chaos-monkey-spring-boot.version>3.2.0</chaos-monkey-spring-boot.version>
-    <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
-    <mapstruct.version>1.6.3</mapstruct.version>
-    <jib-maven-plugin.version>3.4.5</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
-    <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-    <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-    <pitest-maven.version>1.19.1</pitest-maven.version>
-    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
-    <java-client.version>3.8.0</java-client.version>
-    <testcontainers.version>1.20.6</testcontainers.version>
-    <git-commit-id-maven-plugin.version>9.0.1</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.12.0</openapi-generator-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
-  </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- include to fix: "Failed while enforcing RequireUpperBoundDeps" - check in the future and remove -->
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-context</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-logs</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-common</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-trace</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-metrics</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-extension-trace-propagators</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api-incubator</artifactId>
-        <version>${opentelemetry-api-incubator.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <description>REST API for Camila Product Service</description>
 
   <dependencies>
+    <!-- Spring Boot Core -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-web</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Spring Boot Data -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -139,8 +76,25 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>com.couchbase.client</groupId>
+      <artifactId>java-client</artifactId>
+      <version>${couchbase-java-client.version}</version>
+    </dependency>
+
+    <!-- Spring Boot Communication -->
+    <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-starter-rsocket</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -156,64 +110,8 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>com.graphql-java</groupId>
-      <artifactId>graphql-java</artifactId>
-      <version>${graphql-java.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.graphql-java</groupId>
-      <artifactId>graphql-java-extended-scalars</artifactId>
-      <version>${graphql-java-extended-scalars.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-websocket</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-rsocket</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.security</groupId>
-          <artifactId>spring-security-web</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-tracing-bridge-otel</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-registry-prometheus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-zipkin</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
+
+    <!-- Spring Cloud -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -233,23 +131,37 @@
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
-    <!-- GRPC -->
+    <!-- GraphQL -->
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>${graphql-java.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-scalars</artifactId>
+      <version>${graphql-java-extended-scalars.version}</version>
+    </dependency>
+
+    <!-- Observability -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing-bridge-otel</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-zipkin</artifactId>
+    </dependency>
+
+    <!-- gRPC -->
     <dependency>
       <groupId>net.devh</groupId>
       <artifactId>grpc-server-spring-boot-starter</artifactId>
       <version>${grpc-server-spring-boot-starter.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.guava</groupId>
-          <artifactId>guava</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.devh</groupId>
-      <artifactId>grpc-client-spring-boot-starter</artifactId>
-      <version>${grpc-server-spring-boot-starter.version}</version>
-      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
@@ -278,6 +190,14 @@
       <version>${io-grpc.version}</version>
     </dependency>
 
+    <!-- API Documentation -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+      <version>${springdoc-openapi.version}</version>
+    </dependency>
+
+    <!-- Utilities -->
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
@@ -287,6 +207,8 @@
       <artifactId>jspecify</artifactId>
       <version>${jspecify.version}</version>
     </dependency>
+
+    <!-- Development Tools -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -308,6 +230,14 @@
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -342,6 +272,8 @@
       <version>${instancio-junit.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- JMH -->
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
@@ -354,13 +286,15 @@
       <version>${jmh.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <!-- GraphQL Testing -->
     <dependency>
       <groupId>org.springframework.graphql</groupId>
       <artifactId>spring-graphql-test</artifactId>
-      <version>1.3.5</version>
       <scope>test</scope>
     </dependency>
 
+    <!-- Cucumber -->
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-core</artifactId>
@@ -392,30 +326,24 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- Testcontainers -->
     <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>chaos-monkey-spring-boot</artifactId>
-      <version>${chaos-monkey-spring-boot.version}</version>
-      <scope>runtime</scope>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>couchbase</artifactId>
+      <scope>test</scope>
     </dependency>
 
+    <!-- gRPC Testing -->
     <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-      <version>${springdoc-openapi.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mapstruct</groupId>
-      <artifactId>mapstruct</artifactId>
-      <version>${mapstruct.version}</version>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.google.cloud.tools</groupId>
-      <artifactId>jib-maven-plugin</artifactId>
-      <version>${jib-maven-plugin.version}</version>
-      <scope>compile</scope>
+      <groupId>net.devh</groupId>
+      <artifactId>grpc-client-spring-boot-starter</artifactId>
+      <version>${grpc-server-spring-boot-starter.version}</version>
+      <scope>test</scope>
       <exclusions>
         <exclusion>
           <groupId>com.google.guava</groupId>
@@ -424,283 +352,221 @@
       </exclusions>
     </dependency>
 
+    <!-- Runtime Dependencies -->
     <dependency>
-      <groupId>com.couchbase.client</groupId>
-      <artifactId>java-client</artifactId>
-      <version>${java-client.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <version>${testcontainers.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>${testcontainers.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>couchbase</artifactId>
-      <version>${testcontainers.version}</version>
-      <scope>test</scope>
+      <groupId>de.codecentric</groupId>
+      <artifactId>chaos-monkey-spring-boot</artifactId>
+      <version>${chaos-monkey-spring-boot.version}</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.github.ekryd.sortpom</groupId>
-          <artifactId>sortpom-maven-plugin</artifactId>
-          <version>3.2.1</version>
-          <configuration>
-            <createBackupFile>false</createBackupFile>
-            <expandEmptyElements>false</expandEmptyElements>
-            <keepBlankLines>true</keepBlankLines>
-            <nrOfIndentSpace>2</nrOfIndentSpace>
-            <sortPlugins>groupId,artifactId</sortPlugins>
-            <verifyFail>stop</verifyFail>
-          </configuration>
-          <executions>
-            <execution>
-              <id>sort-pom-files</id>
-              <goals>
-                <goal>verify</goal>
-              </goals>
-              <phase>validate</phase>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>io.github.git-commit-id</groupId>
-          <artifactId>git-commit-id-maven-plugin</artifactId>
-          <version>${git-commit-id-maven-plugin.version}</version>
-          <configuration>
-            <generateGitPropertiesFile>true</generateGitPropertiesFile>
-            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-            <includeOnlyProperties>
-              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
-              <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
-              <includeOnlyProperty>^git.commit.message.(short|full)$</includeOnlyProperty>
-            </includeOnlyProperties>
-            <commitIdGenerationMode>full</commitIdGenerationMode>
-            <failOnNoGitDirectory>false</failOnNoGitDirectory>
-          </configuration>
-          <executions>
-            <execution>
-              <id>get-the-git-infos</id>
-              <goals>
-                <goal>revision</goal>
-              </goals>
-              <phase>initialize</phase>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${maven-compiler-plugin.version}</version>
-          <configuration>
-            <source>21</source>
-            <target>21</target>
-            <encoding>UTF-8</encoding>
-            <annotationProcessorPaths>
-              <path>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>3.4.5</version>
-              </path>
-              <path>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>1.6.3</version>
-              </path>
-              <path>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.38</version>
-              </path>
-              <!-- Uses the index to improve runtime startup -->
-              <path>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-indexer</artifactId>
-                <version>6.2.5</version>
-              </path>
-              <path>
-                <groupId>org.openjdk.jmh</groupId>
-                <artifactId>jmh-generator-annprocess</artifactId>
-                <version>${jmh.version}</version>
-              </path>
-              <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-mapstruct-binding</artifactId>
-                <version>0.2.0</version>
-              </dependency>
-            </annotationProcessorPaths>
-            <compilerArgs>
-              <arg>-Amapstruct.defaultComponentModel=spring</arg>
-            </compilerArgs>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.3.0</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>integration-test</goal>
-                <goal>verify</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>${jacoco-maven-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>default-prepare-agent</id>
-              <goals>
-                <goal>prepare-agent</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>default-prepare-agent-integration</id>
-              <goals>
-                <goal>prepare-agent-integration</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>merge-results</id>
-              <goals>
-                <goal>merge</goal>
-              </goals>
-              <phase>verify</phase>
-              <configuration>
-                <fileSets>
-                  <fileSet>
-                    <directory>${project.build.directory}</directory>
-                    <includes>
-                      <include>*.exec</include>
-                    </includes>
-                  </fileSet>
-                </fileSets>
-                <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
-              </configuration>
-            </execution>
-            <execution>
-              <id>report</id>
-              <goals>
-                <goal>report</goal>
-              </goals>
-              <phase>verify</phase>
-              <configuration>
-                <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
-                <excludes>
-                  <exclude>**/input/grpc/**</exclude>
-                  <exclude>*/input/rest/api/**</exclude>
-                  <exclude>**/input/rest/dto/**</exclude>
-                  <exclude>**/input/security/*Config**</exclude>
-                  <exclude>**/*MapperImpl**</exclude>
-                </excludes>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.openapitools</groupId>
-          <artifactId>openapi-generator-maven-plugin</artifactId>
-          <version>${openapi-generator-maven-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>generate-api-docs</id>
-              <goals>
-                <goal>generate</goal>
-              </goals>
-              <configuration>
-                <inputSpec>${project.basedir}/src/main/resources/api/product.yml</inputSpec>
-                <generatorName>spring</generatorName>
-                <configOptions>
-                  <reactive>true</reactive>
-                  <useTags>true</useTags>
-                  <openApiNullable>false</openApiNullable>
-                  <interfaceOnly>true</interfaceOnly>
-                  <useSpringBoot3>true</useSpringBoot3>
-                  <skipDefaultInterface>true</skipDefaultInterface>
-                  <useResponseEntity>false</useResponseEntity>
-                  <responseWrapper>ResponseEntity</responseWrapper>
-                  <library>spring-boot</library>
-                  <basePackage>${project.groupId}.product.infrastructure.adapter.input.rest</basePackage>
-                  <apiPackage>${project.groupId}.product.infrastructure.adapter.input.rest.api</apiPackage>
-                  <modelPackage>${project.groupId}.product.infrastructure.adapter.input.rest.dto</modelPackage>
-                </configOptions>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.xolstice.maven.plugins</groupId>
-          <artifactId>protobuf-maven-plugin</artifactId>
-          <version>0.6.1</version>
-          <configuration>
-            <protocArtifact>com.google.protobuf:protoc:4.27.2:exe:${os.detected.classifier}</protocArtifact>
-            <pluginId>grpc-java</pluginId>
-            <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.63.0:exe:${os.detected.classifier}</pluginArtifact>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>compile</goal>
-                <goal>compile-custom</goal>
-              </goals>
-              <configuration>
-                <pluginParameter>jakarta_omit</pluginParameter>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
+      <!-- Core Plugins -->
       <plugin>
-        <groupId>com.github.ekryd.sortpom</groupId>
-        <artifactId>sortpom-maven-plugin</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
+
+      <!-- Code Quality -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>UTF-8</encoding>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-configuration-processor</artifactId>
+              <version>3.4.5</version>
+            </path>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>org.springframework</groupId>
+              <artifactId>spring-context-indexer</artifactId>
+              <version>${spring-framework.version}</version>
+            </path>
+            <path>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-generator-annprocess</artifactId>
+              <version>${jmh.version}</version>
+            </path>
+            <dependency>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
+            </dependency>
+          </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amapstruct.defaultComponentModel=spring</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+
+      <!-- Testing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Code Coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-prepare-agent-integration</id>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>merge-results</id>
+            <goals>
+              <goal>merge</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <directory>${project.build.directory}</directory>
+                  <includes>
+                    <include>*.exec</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+              <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+            </configuration>
+          </execution>
+          <execution>
+            <id>report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+              <excludes>
+                <exclude>**/input/grpc/**</exclude>
+                <exclude>*/input/rest/api/**</exclude>
+                <exclude>**/input/rest/dto/**</exclude>
+                <exclude>**/input/security/*Config**</exclude>
+                <exclude>**/*MapperImpl**</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Versioning -->
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-      </plugin>
+
+      <!-- API Generation -->
       <plugin>
         <groupId>org.openapitools</groupId>
         <artifactId>openapi-generator-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-api-docs</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/api/product.yml</inputSpec>
+              <generatorName>spring</generatorName>
+              <configOptions>
+                <reactive>true</reactive>
+                <useTags>true</useTags>
+                <openApiNullable>false</openApiNullable>
+                <interfaceOnly>true</interfaceOnly>
+                <useSpringBoot3>true</useSpringBoot3>
+                <skipDefaultInterface>true</skipDefaultInterface>
+                <useResponseEntity>false</useResponseEntity>
+                <responseWrapper>ResponseEntity</responseWrapper>
+                <library>spring-boot</library>
+                <basePackage>${project.groupId}.product.infrastructure.adapter.input.rest</basePackage>
+                <apiPackage>${project.groupId}.product.infrastructure.adapter.input.rest.api</apiPackage>
+                <modelPackage>${project.groupId}.product.infrastructure.adapter.input.rest.dto</modelPackage>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
+
+      <!-- gRPC -->
       <plugin>
         <groupId>org.xolstice.maven.plugins</groupId>
         <artifactId>protobuf-maven-plugin</artifactId>
+        <configuration>
+          <protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
+          <pluginId>grpc-java</pluginId>
+          <pluginArtifact>io.grpc:protoc-gen-grpc-java:${io-grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>compile-custom</goal>
+            </goals>
+            <configuration>
+              <pluginParameter>jakarta_omit</pluginParameter>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- POM sorting -->
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <createBackupFile>false</createBackupFile>
+          <expandEmptyElements>false</expandEmptyElements>
+          <keepBlankLines>true</keepBlankLines>
+          <nrOfIndentSpace>2</nrOfIndentSpace>
+          <sortPlugins>groupId,artifactId</sortPlugins>
+          <verifyFail>stop</verifyFail>
+        </configuration>
       </plugin>
     </plugins>
+
     <extensions>
       <extension>
         <groupId>kr.motd.maven</groupId>
@@ -860,7 +726,6 @@
           <plugin>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>${spotbugs-maven-plugin.version}</version>
             <configuration>
               <includeFilterFile>../src/main/resources/spotbugs-security-include.xml</includeFilterFile>
               <excludeFilterFile>../src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
@@ -907,7 +772,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>${maven-site-plugin.version}</version>
           </plugin>
           <plugin>
             <groupId>org.jacoco</groupId>

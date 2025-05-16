@@ -5,12 +5,23 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-29] refactor(mvn): change build tools**
+
+
+[42975bb9006bb35](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/42975bb9006bb35) JuanPabloJimenezEsclusa *2025-05-16 06:17:32*
+
+**[GH-29] feat(metrics): add profitMargin and daysInStock metrics**
+
+ * BREAKING CHANGE: Change data model
+
+[ac4fbf20600d656](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ac4fbf20600d656) JuanPabloJimenezEsclusa *2025-05-15 17:03:35*
+
 **[GH-29] refactor(paas): update k8s in docker configuration**
 
 
 [1eb1c9aa9e0d108](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/1eb1c9aa9e0d108) JuanPabloJimenezEsclusa *2025-05-12 11:16:14*
 
-**[GH-29] refactor: add cache, api version filter**
+**[GH-29] refactor: add cache, api version version filter**
 
 
 [6910ea0cb47c99b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6910ea0cb47c99b) JuanPabloJimenezEsclusa *2025-05-01 15:42:00*
