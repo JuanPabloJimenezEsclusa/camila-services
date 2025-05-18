@@ -216,13 +216,13 @@ class ProductRestAdapterComponentITCase {
   void shouldHandleValidationErrorWithInvalidParameters(final Map<String, String> params) {
     // When & Then
     webClient.get().uri(builder -> {
-        builder.path("/products");
-        params.forEach(builder::queryParam);
-        return builder.build();
-      })
-      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .exchange()
-      .expectStatus().is4xxClientError();
+      builder.path("/products");
+      params.forEach(builder::queryParam);
+      return builder.build();
+    })
+    .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+    .exchange()
+    .expectStatus().is4xxClientError();
 
     verify(queryParametersValidator).validate(anyMap());
     verifyNoMoreInteractions(queryParametersValidator);

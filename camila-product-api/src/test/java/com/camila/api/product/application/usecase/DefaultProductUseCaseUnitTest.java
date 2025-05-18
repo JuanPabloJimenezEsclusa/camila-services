@@ -133,8 +133,8 @@ class DefaultProductUseCaseUnitTest {
     productUseCase.findByInternalId(internalId)
       .as(StepVerifier::create)
       .expectErrorMatches(throwable ->
-        throwable instanceof ProductException &&
-          throwable.getCause().getMessage().equals("Test exception"))
+        throwable instanceof ProductException
+          && throwable.getCause().getMessage().equals("Test exception"))
       .verify();
 
     verify(productRepository).findByInternalId(internalId);
@@ -173,8 +173,8 @@ class DefaultProductUseCaseUnitTest {
     productUseCase.sortByMetricsWeights(requestParams)
       .as(StepVerifier::create)
       .expectErrorMatches(throwable ->
-        throwable instanceof IllegalArgumentException &&
-          throwable.getMessage().equals(expectedError))
+        throwable instanceof IllegalArgumentException
+          && throwable.getMessage().equals(expectedError))
       .verify();
 
     verifyNoInteractions(productRepository);
@@ -211,8 +211,8 @@ class DefaultProductUseCaseUnitTest {
     productUseCase.sortByMetricsWeights(requestParams)
       .as(StepVerifier::create)
       .expectErrorMatches(throwable ->
-        throwable instanceof ProductException &&
-          throwable.getCause().getMessage().equals("Test exception"))
+        throwable instanceof ProductException
+          && throwable.getCause().getMessage().equals("Test exception"))
       .verify();
 
     verify(productRepository).sortByMetricsWeights(anyList(), eq(0L), eq(10L));

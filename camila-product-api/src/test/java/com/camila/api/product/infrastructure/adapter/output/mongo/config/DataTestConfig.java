@@ -2,7 +2,6 @@ package com.camila.api.product.infrastructure.adapter.output.mongo.config;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.Duration;
 import java.util.Objects;
 
 import jakarta.annotation.PostConstruct;
@@ -47,7 +46,10 @@ public class DataTestConfig {
   public void init() throws IOException {
     final var file = resourceFile.getFile();
     final var jsonQuery = Files.readString(file.toPath());
-    final var documentMono = mongoOperations.executeCommand(jsonQuery);
-    log.info(Objects.requireNonNull(documentMono.block(Duration.ofSeconds(10L))).toJson());
+    final var operationResult = mongoOperations.executeCommand(jsonQuery);
+
+    operationResult
+      .doOnNext(result -> log.info("Data test result: {}", Objects.requireNonNull(result).toJson()))
+      .subscribe();
   }
 }

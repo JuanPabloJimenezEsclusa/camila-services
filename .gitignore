@@ -3,9 +3,10 @@
 .idea/codeStyles/codeStyleConfig.xml
 .env
 **/setupComplete.txt
+.qodo
 
-# Created by https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,intellij+all,intellij+iml,visualstudiocode,terraform
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,intellij+all,intellij+iml,visualstudiocode,terraform
+# Created by https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,terraform,intellij+all,intellij+iml,visualstudiocode,gradle,kate
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,terraform,intellij+all,intellij+iml,visualstudiocode,gradle,kate
 
 ### Database ###
 *.accdb
@@ -516,5 +517,29 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,intellij+all,intellij+iml,visualstudiocode,terraform
-.qodo
+### Gradle ###
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties
+
+# Cache of project
+.gradletasknamecache
+
+# Eclipse Gradle plugin generated files
+# Eclipse Core
+# JDT-specific (Eclipse Java Development Tools)
+
+### Gradle Patch ###
+# Java heap dump
+*.hprof
+
+# End of https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,terraform,intellij+all,intellij+iml,visualstudiocode,gradle,kate

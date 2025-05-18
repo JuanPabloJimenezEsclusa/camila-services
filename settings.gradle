@@ -1,0 +1,7 @@
+rootProject.name = 'camila-services'
+
+include 'camila-admin'
+include 'camila-config'
+include 'camila-discovery'
+include 'camila-gateway'
+include 'camila-product-api'

@@ -63,7 +63,7 @@ class ProductRSocketAdapterITCase {
   @Order(4)
   void findByInternalIdKo() {
     var message = """
-      { }
+      {}
       """;
 
     assert requester != null;

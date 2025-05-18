@@ -129,9 +129,9 @@ class ProductMongoAdapterITCase {
     productRepository.findByInternalId(internalId)
       .as(StepVerifier::create)
       .expectNextMatches(product ->
-        product.name().equals("CONTRASTING LACE T-SHIRT") &&
-          product.category().equals("SHIRT") &&
-          product.salesUnits() == 650)
+        product.name().equals("CONTRASTING LACE T-SHIRT")
+          && product.category().equals("SHIRT")
+          && product.salesUnits() == 650)
       .verifyComplete();
   }
 
@@ -161,10 +161,10 @@ class ProductMongoAdapterITCase {
     productRepository.sortByMetricsWeights(weights, offset, limit)
       .as(StepVerifier::create)
       .expectNextMatches(product ->
-        product.name().equals(expectedName) &&
-          product.category().equals(expectedCategory) &&
-          product.salesUnits() == expectedSalesUnits &&
-          product.stock().equals(expectedStock))
+        product.name().equals(expectedName)
+          && product.category().equals(expectedCategory)
+          && product.salesUnits() == expectedSalesUnits
+          && product.stock().equals(expectedStock))
       .expectNextCount(scenario.equals("Default metrics with pagination") ? 0 : 1)
       .thenCancel()
       .verify();

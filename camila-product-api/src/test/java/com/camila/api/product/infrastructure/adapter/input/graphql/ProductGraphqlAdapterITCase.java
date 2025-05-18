@@ -135,8 +135,10 @@ class ProductGraphqlAdapterITCase {
   @Order(2)
   void sortProductsWithPageFilter() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int!) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float,
+          $daysInStock: Float, $page: Int, $size: Int!) {
+        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin,
+            daysInStock: $daysInStock, page: $page, size: $size) {
           name
           salesUnits
           stock
@@ -164,8 +166,10 @@ class ProductGraphqlAdapterITCase {
   @Order(2)
   void sortProductsWithPageOut() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float,
+          $daysInStock: Float, $page: Int, $size: Int) {
+        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin,
+            daysInStock: $daysInStock, page: $page, size: $size) {
           id
         }
       }

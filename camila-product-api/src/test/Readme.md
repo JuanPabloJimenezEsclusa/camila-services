@@ -73,6 +73,13 @@ cd ../../
 mvn clean test
 ```
 
+```bash
+cd ../../
+gradle clean unitTest
+```
+
+> Report: [gradle-tests-suite](./../../build/reports/tests/test/index.html)
+
 ### Unit Tests with AOT
 
 ```bash
@@ -106,6 +113,10 @@ mvn clean test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner
 
 > Report: [cucumber-reports](./../../target/cucumber-reports/Cucumber.html)
 
+```bash
+gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner"
+```
+
 ### Code Analysis
 
 * Checkstyle: [maven-checkstyle-plugin](https://checkstyle.sourceforge.io/)
@@ -116,7 +127,12 @@ mvn clean test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner
 
 ```bash
 unset SPRING_PROFILES_ACTIVE
-mvn clean verify site -P error-prone,quality-check | tee code-analysis.log
+mvn -B -q clean verify site -P error-prone,quality-check | tee code-analysis.log
+```
+
+```bash
+unset SPRING_PROFILES_ACTIVE
+gradle clean check checkstyleMain checkstyleTest spotbugsMain spotbugsTest dependencyCheckAnalyze | tee code-analysis.log
 ```
 
 ```bash

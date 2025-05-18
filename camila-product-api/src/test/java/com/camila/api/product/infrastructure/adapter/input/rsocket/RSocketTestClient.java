@@ -34,15 +34,15 @@ public class RSocketTestClient {
    * @param args the input arguments
    */
   public static void main(String[] args) {
-    var rSocketStrategies = getrSocketStrategies();
-    var requester = getrSocketRequester(rSocketStrategies);
+    final var rsocketStrategies = getrSocketStrategies();
+    final var requester = getrSocketRequester(rsocketStrategies);
 
     getProductsSortByWeights(requester);
     getProductByInternalId(requester);
   }
 
   private static RSocketStrategies getrSocketStrategies() {
-    var objectMapper = new ObjectMapper(new CBORFactory());
+    final var objectMapper = new ObjectMapper(new CBORFactory());
     return RSocketStrategies.builder()
       .encoders(encoders -> encoders.add(new Jackson2CborEncoder(objectMapper)))
       .decoders(decoders -> decoders.add(new Jackson2CborDecoder(objectMapper)))
@@ -50,17 +50,17 @@ public class RSocketTestClient {
       .build();
   }
 
-  private static RSocketRequester getrSocketRequester(final RSocketStrategies rSocketStrategies) {
+  private static RSocketRequester getrSocketRequester(final RSocketStrategies rsocketStrategies) {
     return RSocketRequester.builder()
-      .rsocketStrategies(rSocketStrategies)
+      .rsocketStrategies(rsocketStrategies)
       .dataMimeType(MimeTypeUtils.APPLICATION_JSON)
       .websocket(URI.create(API_RSOCKET));
   }
 
   private static void getProductsSortByWeights(final RSocketRequester requester) {
-    logWithElapsedTime(requester, rSocketRequester -> {
-      var future = new CompletableFuture<>();
-      var message = """
+    logWithElapsedTime(requester, rsocketRequester -> {
+      final var future = new CompletableFuture<>();
+      final var message = """
         {
           "salesUnits": "0.90",
           "stock": "0.18",
@@ -93,9 +93,9 @@ public class RSocketTestClient {
   }
 
   private static void getProductByInternalId(final RSocketRequester requester) {
-    logWithElapsedTime(requester, rSocketRequester -> {
-      var future = new CompletableFuture<>();
-      var message = """
+    logWithElapsedTime(requester, rsocketRequester -> {
+      final var future = new CompletableFuture<>();
+      final var message = """
         {
           "internalId": "63132"
         }
@@ -124,10 +124,9 @@ public class RSocketTestClient {
 
   private static void logWithElapsedTime(final RSocketRequester requester,
                                          final Consumer<RSocketRequester> supplier) {
-    var start = Instant.now();
+    final var start = Instant.now();
     supplier.accept(requester);
-    var end = Instant.now();
-    var duration = Duration.between(start, end);
+    final var duration = Duration.between(start, Instant.now());
     log.info("Completed (getProductByInternalId) - time: {} ms", duration.toMillis());
   }
 }

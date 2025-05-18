@@ -1,0 +1,247 @@
+plugins {
+  id 'java'
+  id 'jacoco'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+  id 'org.openapi.generator'
+  id 'org.springdoc.openapi-gradle-plugin'
+  id 'com.google.protobuf' version '0.9.5'
+  id 'com.google.cloud.tools.jib' version '3.4.2'
+}
+
+group = 'com.camila.api'
+version = '1.0.0'
+
+ext {
+  set('protobufVersion', '3.24.0')
+  set('grpcVersion', '1.61.0')
+  set('mapstructVersion', '1.6.3')
+}
+
+dependencies {
+  // Spring Boot Core
+  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+  // Spring Boot Security
+  implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+  implementation('org.springframework.boot:spring-boot-starter-security') {
+    exclude group: 'org.springframework.security', module: 'spring-security-web'
+  }
+
+  // Spring Boot Data
+  implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+  implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+  implementation('org.springframework.boot:spring-boot-starter-data-couchbase') {
+    exclude group: 'com.couchbase.client', module: 'java-client'
+  }
+  implementation('org.springframework.boot:spring-boot-starter-data-couchbase-reactive') {
+    exclude group: 'com.couchbase.client', module: 'java-client'
+  }
+  implementation 'com.couchbase.client:java-client'
+
+  // Spring Boot Communication
+  implementation 'org.springframework.boot:spring-boot-starter-rsocket'
+  implementation('org.springframework.boot:spring-boot-starter-websocket') {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-web'
+  }
+  implementation('org.springframework.boot:spring-boot-starter-graphql') {
+    exclude group: 'com.graphql-java', module: 'graphql-java'
+    exclude group: 'io.micrometer', module: 'context-propagation'
+  }
+
+  // Spring Cloud
+  implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
+    exclude group: 'com.fasterxml.woodstox', module: 'woodstox-core'
+    exclude group: 'com.google.guava', module: 'guava'
+  }
+  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+  // GraphQL
+  implementation "com.graphql-java:graphql-java:${graphqlJavaVersion}"
+  implementation "com.graphql-java:graphql-java-extended-scalars:${graphqlJavaExtendedScalarsVersion}"
+
+  // Observability
+  implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+  implementation 'io.micrometer:micrometer-registry-prometheus'
+  implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+
+  // gRPC
+  implementation("net.devh:grpc-server-spring-boot-starter:${grpcServerSpringBootStarterVersion}") {
+    exclude group: 'com.google.guava', module: 'guava'
+  }
+  implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+  implementation "io.grpc:grpc-netty:${grpcVersion}"
+  implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+  implementation "io.grpc:grpc-stub:${grpcVersion}"
+  // Workaround for @javax.annotation.Generated
+  implementation 'javax.annotation:javax.annotation-api:1.3.1'
+
+  // API Documentation
+  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}"
+
+  // Utilities
+  implementation 'com.github.ben-manes.caffeine:caffeine'
+  implementation "org.jspecify:jspecify:${jspecifyVersion}"
+
+  // Development Tools
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+  annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+  developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+  implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+  annotationProcessor "org.springframework:spring-context-indexer"
+
+  // Runtime Dependencies
+  runtimeOnly "de.codecentric:chaos-monkey-spring-boot:${chaosMonkeySpringBootVersion}"
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+  testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+  testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:${flapdoodleEmbedMongoSpring3xVersion}"
+  testImplementation "com.tngtech.archunit:archunit-junit5:${archunitJunit5Version}"
+  testImplementation "org.instancio:instancio-junit:${instancioJunitVersion}"
+
+  // JMH
+  testImplementation "org.openjdk.jmh:jmh-core:${jmhVersion}"
+  testAnnotationProcessor "org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}"
+
+  // GraphQL Testing
+  testImplementation 'org.springframework.graphql:spring-graphql-test'
+
+  // Cucumber
+  testImplementation "io.cucumber:cucumber-core:${cucumberVersion}"
+  testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+  testImplementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+  testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+  testImplementation "org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}"
+
+  // Testcontainers
+  testImplementation 'org.testcontainers:junit-jupiter'
+  testImplementation 'org.testcontainers:couchbase'
+
+  // gRPC Testing
+  testImplementation("net.devh:grpc-client-spring-boot-starter:${grpcServerSpringBootStarterVersion}") {
+    exclude group: 'com.google.guava', module: 'guava'
+  }
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:${protobufVersion}"
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+openApiGenerate {
+  generatorName = "spring"
+  inputSpec = "${projectDir}/src/main/resources/api/product.yml"
+  outputDir = "${buildDir}/generated/openapi"
+  apiPackage = "com.camila.api.product.infrastructure.adapter.input.rest.api"
+  modelPackage = "com.camila.api.product.infrastructure.adapter.input.rest.dto"
+  configOptions = [
+    reactive            : "true",
+    useTags             : "true",
+    openApiNullable     : "false",
+    interfaceOnly       : "true",
+    useSpringBoot3      : "true",
+    skipDefaultInterface: "true",
+    useResponseEntity   : "false",
+    responseWrapper     : "ResponseEntity",
+    library             : "spring-boot",
+    basePackage         : "com.camila.api.product.infrastructure.adapter.input.rest"
+  ]
+}
+
+jacoco {
+  toolVersion = '0.8.13'
+}
+
+jacocoTestReport {
+  reports {
+    xml.required = true
+    html.required = true
+  }
+
+  afterEvaluate {
+    classDirectories.setFrom(files(classDirectories.files.collect {
+      fileTree(dir: it, exclude: [
+        '**/input/grpc/**',
+        '**/input/rest/api/**',
+        '**/input/rest/dto/**',
+        '**/input/security/*Config**',
+        '**/*MapperImpl**'
+      ])
+    }))
+  }
+}
+
+configurations {
+  cucumberRuntime {
+    extendsFrom testImplementation
+  }
+}
+
+// Profile equivalents - configure with Gradle properties or system properties
+if (project.hasProperty('native') || System.getProperty('native') == 'true') {
+  dependencies {
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bctls-jdk18on:1.78.1'
+  }
+}
+
+if (project.hasProperty('jib') || System.getProperty('jib') == 'true') {
+  jib {
+    from {
+      image = 'eclipse-temurin:21-jdk-alpine'
+    }
+    to {
+      image = "docker.io/library/${project.name}-serveless"
+      tags = [project.version]
+    }
+    container {
+      jvmFlags = ['-Xms512m', '-Xmx2048m', '-Xdebug']
+      mainClass = 'com.camila.api.ProductApiApplication'
+      ports = ['31080']
+      labels = [entorn: 'int']
+      format = 'OCI'
+      environment = [
+        SERVER_PORT           : '31080',
+        SPRING_PROFILES_ACTIVE: 'int',
+        LANG                  : 'en_US.utf8',
+        LANGUAGE              : 'en_US.utf8',
+        LC_ALL                : 'en_US.utf8'
+      ]
+    }
+  }
+}
+
+tasks.named('compileJava').configure {
+  dependsOn tasks.named('openApiGenerate')
+}
+
+sourceSets {
+  main {
+    java {
+      srcDir "$buildDir/generated/openapi/src/main/java"
+    }
+  }
+}

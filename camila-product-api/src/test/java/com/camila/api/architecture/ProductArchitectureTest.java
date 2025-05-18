@@ -24,7 +24,8 @@ class ProductArchitectureTest {
 
     // external hexagonal layers. No others layer access
     .whereLayer(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name()).mayNotBeAccessedByAnyLayer()
-    .whereLayer(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name()).mayOnlyBeAccessedByLayers(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name())
+    .whereLayer(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name())
+    .mayOnlyBeAccessedByLayers(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name())
 
     // application layer. Accessible only by externals layers
     .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyBeAccessedByLayers(
@@ -32,8 +33,8 @@ class ProductArchitectureTest {
     .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyAccessLayers(HEXAGONAL_LAYERS.DOMAIN.name())
 
     // domain layer. Not use other layer class
-    .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayOnlyBeAccessedByLayers(
-      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(), HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name(), HEXAGONAL_LAYERS.APPLICATION.name())
+    .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayOnlyBeAccessedByLayers(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(),
+      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name(), HEXAGONAL_LAYERS.APPLICATION.name())
     .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayNotAccessAnyLayer()
     .ensureAllClassesAreContainedInArchitecture();
   @ArchTest

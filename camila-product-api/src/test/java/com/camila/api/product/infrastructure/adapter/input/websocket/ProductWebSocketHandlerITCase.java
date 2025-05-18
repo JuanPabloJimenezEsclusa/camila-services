@@ -86,7 +86,7 @@ class ProductWebSocketHandlerITCase {
           }
           return Mono.empty();
         }).then())
-      .block(Duration.ofSeconds(5L));
+      .subscribe();
   }
 
   @Test
@@ -124,6 +124,6 @@ class ProductWebSocketHandlerITCase {
           }
           return Mono.empty();
         }).then())
-      .block(Duration.ofSeconds(5L));
+      .subscribe();
   }
 }

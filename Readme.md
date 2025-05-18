@@ -131,6 +131,7 @@ mvn rewrite:runNoFork -Popen-rewrite
 
 ```bash
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
+export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 
 # Jars
 # This can deploy packages into github repository,

@@ -3,14 +3,19 @@ name: SonarQube
 on:
   push:
     branches: [main, develop]
-  pull_request:
-    types: [opened, synchronize, reopened]
 
 jobs:
   build:
     name: Build and analyze
+    environment: pro
     runs-on: ubuntu-latest
     steps:
+      - name: Configure GPG Key
+        run: |
+          echo -n "${MAVEN_GPG_KEY}" | base64 --decode | gpg --batch --passphrase ${MAVEN_GPG_PASSPHRASE} --import
+        env:
+          MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -34,6 +39,8 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         run: |
           mvn -B clean \
             verify \
