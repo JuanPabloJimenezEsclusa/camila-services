@@ -16,7 +16,7 @@
 
 Microservice example. Implements a product API with the following features:
 
-- Design: [API First](https://www.postman.com/api-first/)
+- Design: [API First Approach](https://www.postman.com/api-first/), [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design)
 - Paradigm: [Reactive](https://projectreactor.io/learn)
 - Architecture: [Hexagonal](https://alistair.cockburn.us/hexagonal-architecture/)
 - Communication: [Rest](https://en.wikipedia.org/wiki/REST), [Graphql](https://graphql.org/), [Websocket](https://en.wikipedia.org/wiki/WebSocket), [RSocket](https://rsocket.io/), [GRPC](https://grpc.io/docs/what-is-grpc/core-concepts/)
@@ -67,6 +67,8 @@ The API-first approach enables:
 
 ---
 
+Hexagonal Architecture with Domain Driven Design (DDD)
+
 ```txt
 📦api
  ┣ 📂product
@@ -94,6 +96,8 @@ The API-first approach enables:
 ```
 
 ![Hexagonal-architecture](.docs/architecture/camila-product-api-architecture-v1.svg "Hexagonal Diagram")
+
+The best reference for this architecture is in: [software-craftsmanship](https://www.happycoders.eu/software-craftsmanship/hexagonal-architecture/)
 
 ## 🔗 Links
 

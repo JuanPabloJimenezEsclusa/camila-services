@@ -30,7 +30,7 @@ public enum Metrics {
    * @return the matching Metrics enum value, or UNKNOWN if no match is found
    */
   public static Metrics getMetrics(final String description) {
-    return Stream.of(Metrics.values())
+    return Stream.of(values())
       .filter(metrics -> metrics.description.equalsIgnoreCase(description))
       .findFirst()
       .orElse(UNKNOWN);

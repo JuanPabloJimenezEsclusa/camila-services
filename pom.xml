@@ -97,6 +97,7 @@
     <checkstyle.version>10.23.1</checkstyle.version>
     <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
     <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
+    <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <pitest-maven.version>1.19.1</pitest-maven.version>
@@ -112,6 +113,10 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.projectKey>JuanPabloJimenezEsclusa_camila-services</sonar.projectKey>
     <sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled>
+    <sonar.java.spotbugs.reportPaths>camila-product-api/target/spotbugsXml.xml</sonar.java.spotbugs.reportPaths>
+    <sonar.java.cpd.reportPaths>camila-product-api/target/cpd.xml</sonar.java.cpd.reportPaths>
+    <sonar.java.pmd.reportPaths>camila-product-api/target/pmd.xml</sonar.java.pmd.reportPaths>
+    <sonar.java.checkstyle.reportPaths>camila-product-api/target/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
     <sonar.coverage.jacoco.xmlReportPaths>camila-product-api/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
   </properties>

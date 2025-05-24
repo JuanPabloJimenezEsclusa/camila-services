@@ -32,12 +32,9 @@ public class DefaultProductUseCase implements ProductUseCase {
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    try {
-      return productRepository.findByInternalId(internalId)
-        .doOnNext(product -> log.debug("find By Id: {}", product));
-    } catch (Exception e) {
-      return Mono.error(new ProductException(e));
-    }
+    return productRepository.findByInternalId(internalId)
+      .doOnNext(product -> log.debug("find By Id: {}", product))
+      .onErrorResume(e -> Mono.error(new ProductException(e)));
   }
 
   @Override
@@ -48,11 +45,10 @@ public class DefaultProductUseCase implements ProductUseCase {
           criteria.getMetricWeights(),
           criteria.getOffset(),
           criteria.getLimit())
-        .doOnNext(product -> log.debug("find sort by: {}", product));
+        .doOnNext(product -> log.debug("find sort by: {}", product))
+        .onErrorResume(e -> Flux.error(new ProductException(e)));
     } catch (IllegalArgumentException e) {
       return Flux.error(e);
-    } catch (Exception e) {
-      return Flux.error(new ProductException(e));
     }
   }
 }

@@ -126,7 +126,8 @@ class DefaultProductUseCaseUnitTest {
   void shouldHandleExceptionWhenFindingProductById() {
     // Given: Repository throws an exception
     final String internalId = "invalid";
-    when(productRepository.findByInternalId(internalId)).thenThrow(new RuntimeException("Test exception"));
+    when(productRepository.findByInternalId(internalId))
+      .thenReturn(Mono.error(new RuntimeException("Test exception")));
 
     // When: Finding product by internal ID
     // Then: Should wrap exception in ProductException
@@ -204,7 +205,7 @@ class DefaultProductUseCaseUnitTest {
     // Given: Repository throws an exception
     final var requestParams = Map.of("salesUnits", "1");
     when(productRepository.sortByMetricsWeights(anyList(), anyLong(), anyLong()))
-      .thenThrow(new RuntimeException("Test exception"));
+      .thenReturn(Flux.error(new RuntimeException("Test exception")));
 
     // When: Sorting products
     // Then: Should wrap exception in ProductException

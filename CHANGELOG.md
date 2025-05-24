@@ -5,10 +5,15 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-29] chore: add gradle support**
+
+
+[756125d59580fe9](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/756125d59580fe9) JuanPabloJimenezEsclusa *2025-05-21 07:14:01*
+
 **[GH-29] refactor(mvn): change build tools**
 
 
-[42975bb9006bb35](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/42975bb9006bb35) JuanPabloJimenezEsclusa *2025-05-16 06:17:32*
+[dcb5a509f128bcb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dcb5a509f128bcb) JuanPabloJimenezEsclusa *2025-05-16 08:35:37*
 
 **[GH-29] feat(metrics): add profitMargin and daysInStock metrics**
 

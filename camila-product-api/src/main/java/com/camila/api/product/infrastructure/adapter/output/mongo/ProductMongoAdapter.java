@@ -1,10 +1,5 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo;
 
-import static com.camila.api.product.infrastructure.adapter.output.mongo.ProductSorterHelper.buildLimitOperation;
-import static com.camila.api.product.infrastructure.adapter.output.mongo.ProductSorterHelper.buildOptions;
-import static com.camila.api.product.infrastructure.adapter.output.mongo.ProductSorterHelper.buildSkipOperation;
-import static com.camila.api.product.infrastructure.adapter.output.mongo.ProductSorterHelper.buildSortOperation;
-import static com.camila.api.product.infrastructure.adapter.output.mongo.ProductSorterHelper.buildWeightedScoreField;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 import java.util.List;
@@ -38,8 +33,8 @@ public class ProductMongoAdapter implements ProductRepository {
    * Instantiates a new Product mongo adapter.
    *
    * @param productMongoRepository the product mongo repository
-   * @param mongoOperations        the mongo operations
-   * @param mapper                 the mapper
+   * @param mongoOperations the mongo operations
+   * @param mapper the mapper
    */
   public ProductMongoAdapter(final ProductMongoRepository productMongoRepository,
                              final ReactiveMongoOperations mongoOperations,
@@ -60,11 +55,11 @@ public class ProductMongoAdapter implements ProductRepository {
     log.debug("Sorting products by metrics weights: {}", metricsWeights);
     return mongoOperations.aggregate(
         newAggregation(
-          buildWeightedScoreField(metricsWeights),
-          buildSortOperation(),
-          buildSkipOperation(offset),
-          buildLimitOperation(limit))
-          .withOptions(buildOptions()),
+          ProductSorterHelper.buildWeightedScoreField(metricsWeights),
+          ProductSorterHelper.buildSortOperation(),
+          ProductSorterHelper.buildSkipOperation(offset),
+          ProductSorterHelper.buildLimitOperation(limit))
+          .withOptions(ProductSorterHelper.buildOptions()),
         ProductMongoEntity.DOCUMENT_NAME,
         ProductMongoEntity.class)
       .doOnNext(productEntity -> log.debug("Product sorted by metrics weights: {}", productEntity))

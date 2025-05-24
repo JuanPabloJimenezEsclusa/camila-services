@@ -873,6 +873,22 @@
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>${maven-pmd-plugin.version}</version>
+            <configuration>
+              <linkXRef>false</linkXRef>
+              <excludes>
+                <exclude>**/input/grpc/**</exclude>
+                <exclude>**/generated-sources/protobuf/**</exclude>
+                <exclude>**/input/rest/api/**</exclude>
+                <exclude>**/input/rest/dto/**</exclude>
+                <exclude>**/input/security/*Config**</exclude>
+                <exclude>**/*MapperImpl**</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <version>${maven-project-info-reports-plugin.version}</version>
             <reportSets>
