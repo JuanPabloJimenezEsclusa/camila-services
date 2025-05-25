@@ -127,6 +127,18 @@ Product data sample:
 mvn rewrite:runNoFork -Popen-rewrite
 ```
 
+### Dependency Updates
+
+```bash
+# Check version dependencies
+mvn versions:display-dependency-updates
+mvn versions:display-plugin-updates
+mvn versions:display-property-updates
+
+# Check outdated dependencies
+mvn -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
+```
+
 ### Packing
 
 ```bash

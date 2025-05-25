@@ -6,6 +6,7 @@ import com.camila.api.product.domain.exception.ProductException;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.model.ProductSortCriteria;
 import com.camila.api.product.domain.port.ProductRepository;
+import com.camila.api.product.domain.service.ProductWeightResolver;
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +42,8 @@ public class DefaultProductUseCase implements ProductUseCase {
   public Flux<Product> sortByMetricsWeights(final Map<String, String> requestParams) {
     try {
       final var criteria = ProductSortCriteria.fromRequestParams(requestParams);
-      return productRepository.sortByMetricsWeights(
-          criteria.getMetricWeights(),
-          criteria.getOffset(),
-          criteria.getLimit())
+      final var appliedWeights = ProductWeightResolver.resolve(criteria.getMetricWeights());
+      return productRepository.sortByMetricsWeights(appliedWeights, criteria.getOffset(), criteria.getLimit())
         .doOnNext(product -> log.debug("find sort by: {}", product))
         .onErrorResume(e -> Flux.error(new ProductException(e)));
     } catch (IllegalArgumentException e) {

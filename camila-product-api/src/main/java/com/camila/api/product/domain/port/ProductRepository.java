@@ -1,8 +1,6 @@
 package com.camila.api.product.domain.port;
 
-import java.util.List;
-
-import com.camila.api.product.domain.model.MetricWeight;
+import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Product;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,10 +21,10 @@ public interface ProductRepository {
   /**
    * Sorts products based on a list of metric weights.
    *
-   * @param metricsWeights the list of metric weights used for sorting
+   * @param appliedWeights the list of applied metric weights used for sorting
    * @param offset the starting point for the result set
    * @param limit the maximum number of products to return
    * @return a Flux emitting the sorted products
    */
-  Flux<Product> sortByMetricsWeights(List<MetricWeight> metricsWeights, long offset, long limit);
+  Flux<Product> sortByMetricsWeights(AppliedWeights appliedWeights, long offset, long limit);
 }

@@ -388,7 +388,7 @@
             <path>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.4.5</version>
+              <version>3.5.0</version>
             </path>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -555,7 +555,7 @@
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>${sortpom-maven-plugin.version}</version>
         <configuration>
           <createBackupFile>false</createBackupFile>
           <expandEmptyElements>false</expandEmptyElements>
@@ -726,6 +726,7 @@
           <plugin>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-maven-plugin</artifactId>
+            <version>${spotbugs-maven-plugin.version}</version>
             <configuration>
               <includeFilterFile>../src/main/resources/spotbugs-security-include.xml</includeFilterFile>
               <excludeFilterFile>../src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
@@ -924,6 +925,20 @@
             </reportSets>
           </plugin>
           <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
+            <reportSets>
+              <reportSet>
+                <reports>
+                  <report>dependency-updates-report</report>
+                  <report>plugin-updates-report</report>
+                  <report>property-updates-report</report>
+                </reports>
+              </reportSet>
+            </reportSets>
+          </plugin>
+          <plugin>
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
             <version>${dependency-check-maven.version}</version>
@@ -958,7 +973,7 @@
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.4.5</version>
+                  <version>3.5.0</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>

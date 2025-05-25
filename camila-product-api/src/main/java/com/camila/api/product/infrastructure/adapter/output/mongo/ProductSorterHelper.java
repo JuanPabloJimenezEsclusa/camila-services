@@ -1,18 +1,17 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.addFields;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.limit;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.skip;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static com.camila.api.product.domain.service.ProductWeightResolver.DEFAULT_WEIGHT;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.camila.api.product.domain.model.MetricWeight;
+import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Metrics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.AccumulatorOperators;
 import org.springframework.data.mongodb.core.aggregation.AddFieldsOperation;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationExpression;
 import org.springframework.data.mongodb.core.aggregation.AggregationOptions;
 import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
@@ -39,7 +38,7 @@ class ProductSorterHelper {
    * @return the limit operation
    */
   static LimitOperation buildLimitOperation(final long limit) {
-    return limit(limit);
+    return Aggregation.limit(limit);
   }
 
   /**
@@ -49,7 +48,7 @@ class ProductSorterHelper {
    * @return the skip operation
    */
   static SkipOperation buildSkipOperation(final long offset) {
-    return skip(offset);
+    return Aggregation.skip(offset);
   }
 
   /**
@@ -58,24 +57,35 @@ class ProductSorterHelper {
    * @return the sort operation
    */
   static SortOperation buildSortOperation() {
-    return sort(Sort.Direction.DESC, "weightedScore");
+    return Aggregation.sort(Sort.Direction.DESC, "weightedScore");
   }
 
   /**
    * Build weighted score field add fields operation.
    *
-   * @param metricsWeights the metrics weights
+   * @param appliedWeights the metrics weights
    * @return the add fields operation
    */
-  static AddFieldsOperation buildWeightedScoreField(final List<MetricWeight> metricsWeights) {
-    final var weightExpressions = metricsWeights.stream()
-      .filter(metricWeight -> metricWeight.metric() != Metrics.UNKNOWN)
-      .map(ProductSorterHelper::getAggregationExpression)
-      .toList();
+  static AddFieldsOperation buildWeightedScoreField(final AppliedWeights appliedWeights) {
+    final var weightExpressions = new ArrayList<AggregationExpression>();
 
-    return addFields()
+    if (appliedWeights.salesUnitsWeight() > DEFAULT_WEIGHT) {
+      weightExpressions.add(getWeightBySimpleMultiply(Metrics.SALES_UNITS.getDescription(), appliedWeights.salesUnitsWeight()));
+    }
+    if (appliedWeights.stockWeight() > DEFAULT_WEIGHT) {
+      weightExpressions.add(getStockByWeights(appliedWeights.stockWeight()));
+    }
+    if (appliedWeights.profitMarginWeight() > DEFAULT_WEIGHT) {
+      weightExpressions.add(getWeightBySimpleMultiply(Metrics.PROFIT_MARGIN.getDescription(), appliedWeights.profitMarginWeight()));
+    }
+    if (appliedWeights.daysInStockWeight() > DEFAULT_WEIGHT) {
+      weightExpressions.add(getWeightBySimpleMultiply(Metrics.DAYS_IN_STOCK.getDescription(), appliedWeights.daysInStockWeight()));
+    }
+
+    return Aggregation.addFields()
       .addFieldWithValue("weightedScore", joinWeightExpressions(weightExpressions))
       .build();
+
   }
 
   /**
@@ -88,12 +98,6 @@ class ProductSorterHelper {
       .builder()
       .allowDiskUse(true)
       .build();
-  }
-
-  private static AggregationExpression getAggregationExpression(final MetricWeight metricWeight) {
-    return metricWeight.metric() == Metrics.STOCK
-      ? getStockByWeights(metricWeight.weight())
-      : getWeightBySimpleMultiply(metricWeight.metric().getDescription(), metricWeight.weight());
   }
 
   private static AggregationExpression joinWeightExpressions(final List<AggregationExpression> weightExpressions) {

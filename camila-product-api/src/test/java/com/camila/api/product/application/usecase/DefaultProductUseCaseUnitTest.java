@@ -1,6 +1,6 @@
 package com.camila.api.product.application.usecase;
 
-import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import com.camila.api.product.domain.exception.ProductException;
+import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
 import org.instancio.Instancio;
@@ -149,7 +150,7 @@ class DefaultProductUseCaseUnitTest {
                                           final long expectedOffset, final long expectedLimit) {
     // Given: Request parameters and expected results
     final var product = Instancio.of(Product.class).create();
-    when(productRepository.sortByMetricsWeights(anyList(), eq(expectedOffset), eq(expectedLimit)))
+    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset), eq(expectedLimit)))
       .thenReturn(Flux.just(product));
 
     // When: Sorting products
@@ -159,7 +160,7 @@ class DefaultProductUseCaseUnitTest {
       .expectNext(product)
       .verifyComplete();
 
-    verify(productRepository).sortByMetricsWeights(anyList(), eq(expectedOffset), eq(expectedLimit));
+    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset), eq(expectedLimit));
     verifyNoMoreInteractions(productRepository);
   }
 
@@ -186,7 +187,7 @@ class DefaultProductUseCaseUnitTest {
   void shouldReturnEmptyFluxWhenNoProductsMatchSortCriteria() {
     // Given: Repository returns empty flux
     final var requestParams = Map.of("salesUnits", "1.0");
-    when(productRepository.sortByMetricsWeights(anyList(), anyLong(), anyLong()))
+    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
       .thenReturn(Flux.empty());
 
     // When: Sorting products
@@ -195,7 +196,7 @@ class DefaultProductUseCaseUnitTest {
       .as(StepVerifier::create)
       .verifyComplete();
 
-    verify(productRepository).sortByMetricsWeights(anyList(), eq(0L), eq(10L));
+    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
     verifyNoMoreInteractions(productRepository);
   }
 
@@ -204,7 +205,7 @@ class DefaultProductUseCaseUnitTest {
   void shouldHandleExceptionWhenSortingProducts() {
     // Given: Repository throws an exception
     final var requestParams = Map.of("salesUnits", "1");
-    when(productRepository.sortByMetricsWeights(anyList(), anyLong(), anyLong()))
+    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
       .thenReturn(Flux.error(new RuntimeException("Test exception")));
 
     // When: Sorting products
@@ -216,7 +217,7 @@ class DefaultProductUseCaseUnitTest {
           && throwable.getCause().getMessage().equals("Test exception"))
       .verify();
 
-    verify(productRepository).sortByMetricsWeights(anyList(), eq(0L), eq(10L));
+    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
     verifyNoMoreInteractions(productRepository);
   }
 

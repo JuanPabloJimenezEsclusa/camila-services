@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import com.camila.api.product.domain.model.MetricWeight;
 import com.camila.api.product.domain.model.Metrics;
 import com.camila.api.product.domain.port.ProductRepository;
+import com.camila.api.product.domain.service.ProductWeightResolver;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -144,9 +145,10 @@ class ProductCouchbaseAdapterITCase extends CouchbaseContainerConfig {
                             final int expectedSecondProductSalesUnits, final Map<String, Integer> expectedSecondProductStock,
                             final int expectedRemainingCount) {
     // Given: Metric weights and pagination parameters
+    final var appliedWeights = ProductWeightResolver.resolve(weights);
     // When: Sorting products by metric weights
     // Then: Should return products in correct order
-    productRepository.sortByMetricsWeights(weights, offset, limit)
+    productRepository.sortByMetricsWeights(appliedWeights, offset, limit)
       .as(StepVerifier::create)
       .expectNextMatches(product -> {
         assertThat(product.id()).isNotNull();

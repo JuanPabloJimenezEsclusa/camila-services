@@ -1,9 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.output.couchbase;
 
-import java.util.List;
-
-import com.camila.api.product.domain.model.MetricWeight;
-import com.camila.api.product.domain.model.Metrics;
+import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition;
@@ -20,7 +17,6 @@ import reactor.core.publisher.Mono;
 @Conditional(CouchbaseCondition.class)
 @Repository
 public class ProductCouchbaseAdapter implements ProductRepository {
-  private static final double DEFAULT_WEIGHT = 0.0000000001;
   private final ProductCouchbaseRepository productCouchbaseRepository;
   private final ProductCouchbaseMapper mapper;
 
@@ -28,7 +24,7 @@ public class ProductCouchbaseAdapter implements ProductRepository {
    * Instantiates a new Product couchbase adapter.
    *
    * @param productCouchbaseRepository the product couchbase repository
-   * @param mapper                     the mapper
+   * @param mapper the mapper
    */
   public ProductCouchbaseAdapter(final ProductCouchbaseRepository productCouchbaseRepository,
                                  final ProductCouchbaseMapper mapper) {
@@ -45,26 +41,10 @@ public class ProductCouchbaseAdapter implements ProductRepository {
   }
 
   @Override
-  public Flux<Product> sortByMetricsWeights(final List<MetricWeight> metricsWeights, final long offset, final long limit) {
-    final double saleUnitsWeight = metricsWeights.stream()
-      .filter(metricWeight -> metricWeight.metric() == Metrics.SALES_UNITS)
-      .findFirst()
-      .orElse(new MetricWeight(Metrics.SALES_UNITS, DEFAULT_WEIGHT)).weight();
-    final double stockWeight = metricsWeights.stream()
-      .filter(metricWeight -> metricWeight.metric() == Metrics.STOCK)
-      .findFirst()
-      .orElse(new MetricWeight(Metrics.STOCK, DEFAULT_WEIGHT)).weight();
-    final double profitMargin = metricsWeights.stream()
-      .filter(metricWeight -> metricWeight.metric() == Metrics.PROFIT_MARGIN)
-      .findFirst()
-      .orElse(new MetricWeight(Metrics.PROFIT_MARGIN, DEFAULT_WEIGHT)).weight();
-    final double daysInStock = metricsWeights.stream()
-      .filter(metricWeight -> metricWeight.metric() == Metrics.DAYS_IN_STOCK)
-      .findFirst()
-      .orElse(new MetricWeight(Metrics.DAYS_IN_STOCK, DEFAULT_WEIGHT)).weight();
-
-    return productCouchbaseRepository.sortByMetricsWeights(saleUnitsWeight, stockWeight,
-        profitMargin, daysInStock, limit, offset)
+  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset, final long limit) {
+    return productCouchbaseRepository.sortByMetricsWeights(appliedWeights.salesUnitsWeight(),
+        appliedWeights.stockWeight(), appliedWeights.profitMarginWeight(), appliedWeights.daysInStockWeight(),
+        limit, offset)
       .doOnNext(result -> log.debug("couchbase.adapter.sortByMetricsWeights: {}", result))
       .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.sortByMetricsWeights: {}", throwable.getMessage()))
       .map(mapper::toProduct);

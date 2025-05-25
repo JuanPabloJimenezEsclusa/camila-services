@@ -2,9 +2,7 @@ package com.camila.api.product.infrastructure.adapter.output.mongo;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
-import java.util.List;
-
-import com.camila.api.product.domain.model.MetricWeight;
+import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition;
@@ -51,11 +49,11 @@ public class ProductMongoAdapter implements ProductRepository {
   }
 
   @Override
-  public Flux<Product> sortByMetricsWeights(final List<MetricWeight> metricsWeights, final long offset, final long limit) {
-    log.debug("Sorting products by metrics weights: {}", metricsWeights);
+  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset, final long limit) {
+    log.debug("Sorting products by metrics weights: {}", appliedWeights);
     return mongoOperations.aggregate(
         newAggregation(
-          ProductSorterHelper.buildWeightedScoreField(metricsWeights),
+          ProductSorterHelper.buildWeightedScoreField(appliedWeights),
           ProductSorterHelper.buildSortOperation(),
           ProductSorterHelper.buildSkipOperation(offset),
           ProductSorterHelper.buildLimitOperation(limit))

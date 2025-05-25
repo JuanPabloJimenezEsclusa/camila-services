@@ -76,6 +76,7 @@ Hexagonal Architecture with Domain Driven Design (DDD)
  ┃ ┃ ┣ 📂exception
  ┃ ┃ ┣ 📂model
  ┃ ┃ ┣ 📂port
+ ┃ ┃ ┣ 📂service
  ┃ ┃ ┗ 📂usecase
  ┃ ┣ 📂application
  ┃ ┃ ┗ 📂usecase
