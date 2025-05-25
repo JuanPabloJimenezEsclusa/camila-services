@@ -29,6 +29,7 @@ Microservice example. Implements a product API with the following features:
 * JDK >= 21
 * Docker ~= 27.3.0
 * Maven >= 3.9.4
+* Gradle >= 8.14.0
 * Spring >= 6.x
 * Spring-boot >= 3.4.x
 * MongoDB >= 8.x

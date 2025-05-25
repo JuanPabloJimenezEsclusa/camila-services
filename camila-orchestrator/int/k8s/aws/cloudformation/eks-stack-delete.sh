@@ -5,6 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 delete_connector_provider() {
@@ -41,8 +43,12 @@ delete_eks_stack() {
 # Main script
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
+
+  echo -e "${SEPARATOR} 🗑️ Delete connector provider. ${SEPARATOR}"
   delete_connector_provider
+  echo -e "${SEPARATOR}  🗑️ Delete eks stack. ${SEPARATOR}"
   delete_eks_stack
+
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }
 

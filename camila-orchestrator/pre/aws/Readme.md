@@ -20,9 +20,9 @@ Based on `AWS Cloud Provider`
 ---
 
 * Docker ~= 27.3.0
-* AWS CLI >= 2.15.52
+* AWS CLI >= 2.27.22
 * JQ >= 1.7
-* Terraform >= 1.9.8
+* Terraform >= 1.12.1
 
 ## 🏗️ Architecture
 
@@ -65,6 +65,8 @@ Based on `AWS Cloud Provider`
 | [delete-cognito-aws-stack.sh](cloudformation/delete-cognito-aws-stack.sh)                             | Script to delete Oauth2 service using AWS CLI                       |
 | [init-aws-stack.sh](cloudformation/init-aws-stack.sh)                                                 | Script to deploy infrastructure from an AWS CloudFormation template |
 | [delete-aws-stack.sh](cloudformation/delete-aws-stack.sh)                                             | Script to delete infrastructure using AWS CLI                       |
+| [init-app-runner-stack.sh](cloudformation/init-app-runner-stack.sh)                                   | Script to deploy App Runner from an AWS CloudFormation template     |
+| [delete-app-runner-stack.sh](cloudformation/delete-app-runner-stack.sh)                               | Script to delete App Runner using AWS CLI                           |
 
 ---
 
@@ -80,9 +82,15 @@ export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&timeoutMS=120000"
 ./cloudformation/init-aws-stack.sh
+
+# Init App Runner (if necessary)
+./cloudformation/init-app-runner-stack.sh
 ```
 
 ```bash
+# Delete App Runner (if necessary)
+./cloudformation/delete-app-runner-stack.sh
+
 # Delete containers infrastructure
 ./cloudformation/delete-aws-stack.sh
 
@@ -185,6 +193,7 @@ docker run --rm -it \
   * [AWS NAT Gateway](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#NatGateways) 💰💰💰
   * [AWS API Gateway](https://eu-west-1.console.aws.amazon.com/apigateway/main/apis?region=eu-west-1) 💰💰💰
   * [AWS WAF](https://us-east-1.console.aws.amazon.com/wafv2/homev2/web-acls?region=eu-west-1) 💰
+  * [APP Runner](https://eu-west-1.console.aws.amazon.com/apprunner/home?region=eu-west-1#/services) 💰
 
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview) (free tier)

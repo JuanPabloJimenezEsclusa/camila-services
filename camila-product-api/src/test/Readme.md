@@ -131,7 +131,7 @@ gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner"
 unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE=
-mvn -B -q clean verify site -P error-prone,quality-check | tee code-analysis.log
+mvn -B clean verify site -P error-prone,quality-check | tee code-analysis.log
 ```
 
 ```bash

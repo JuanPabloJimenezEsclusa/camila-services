@@ -18,4 +18,3 @@ sed -i -e "\|$source_str|h;"      `# Search for the source string and copy it to
 
 echo -e "${SEPARATOR} 🔨 Mapping hosts.... ${SEPARATOR}"
 cat /etc/hosts
-echo -e "${SEPARATOR}"

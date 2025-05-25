@@ -5,6 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 # Create cognito oauth2 stack
@@ -50,7 +52,9 @@ set_user_password() {
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
+  echo -e "${SEPARATOR} 🔑 Create cognito oauth2 stack. ${SEPARATOR}"
   create_cognito_oauth2_stack
+  echo -e "${SEPARATOR} 🔒 Set user password. ${SEPARATOR}"
   set_user_password
 
   echo "Done ${0##*/} (${FUNCNAME:-})"

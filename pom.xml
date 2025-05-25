@@ -120,12 +120,13 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.projectKey>JuanPabloJimenezEsclusa_camila-services</sonar.projectKey>
     <sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled>
-    <sonar.java.spotbugs.reportPaths>camila-product-api/target/spotbugsXml.xml</sonar.java.spotbugs.reportPaths>
-    <sonar.java.cpd.reportPaths>camila-product-api/target/cpd.xml</sonar.java.cpd.reportPaths>
-    <sonar.java.pmd.reportPaths>camila-product-api/target/pmd.xml</sonar.java.pmd.reportPaths>
-    <sonar.java.checkstyle.reportPaths>camila-product-api/target/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
-    <sonar.coverage.jacoco.xmlReportPaths>camila-product-api/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.java.spotbugs.reportPaths>${project.build.directory}/spotbugsXml.xml</sonar.java.spotbugs.reportPaths>
+    <sonar.java.cpd.reportPaths>${project.build.directory}/cpd.xml</sonar.java.cpd.reportPaths>
+    <sonar.java.pmd.reportPaths>${project.build.directory}/pmd.xml</sonar.java.pmd.reportPaths>
+    <sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
+    <sonar.branch.name>main</sonar.branch.name>
   </properties>
 
   <dependencyManagement>
@@ -436,25 +437,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${maven-surefire-plugin.version}</version>
-          <configuration>
-            <argLine>
-              --add-opens java.base/java.lang=ALL-UNNAMED
-              --add-opens java.base/java.util=ALL-UNNAMED
-              -javaagent:"${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.5/byte-buddy-agent-1.17.5.jar"
-            </argLine>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${maven-failsafe-plugin.version}</version>
-          <configuration>
-            <argLine>
-              --add-opens java.base/java.lang=ALL-UNNAMED
-              --add-opens java.base/java.util=ALL-UNNAMED
-              -javaagent:"${settings.localRepository}/net/bytebuddy/byte-buddy-agent/1.17.5/byte-buddy-agent-1.17.5.jar"
-            </argLine>
-          </configuration>
           <executions>
             <execution>
               <goals>

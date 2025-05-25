@@ -20,7 +20,7 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 ---
 
 * Docker ~= 27.3.0
-* AWS CLI >= 2.15.52
+* AWS CLI >= 2.27.22
 
 ## 🏗️ Architecture
 

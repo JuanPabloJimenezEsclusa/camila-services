@@ -5,6 +5,21 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-29] refactor(paas): update aws deployments**
+
+
+[79dfe0ede26f867](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/79dfe0ede26f867) JuanPabloJimenezEsclusa *2025-05-26 01:08:20*
+
+**[GH-29] chore: update dependencies and plugins versions**
+
+
+[6188ca251506b4c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6188ca251506b4c) JuanPabloJimenezEsclusa *2025-05-25 01:57:59*
+
+**[GH-29] chore: add PMD plugin support**
+
+
+[014525ade480e35](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/014525ade480e35) JuanPabloJimenezEsclusa *2025-05-24 15:00:11*
+
 **[GH-29] chore: add gradle support**
 
 

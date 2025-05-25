@@ -6,8 +6,8 @@ set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an unde
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 # Parameters
-CLIENT_ID="5lm2fmhasp4r85rm6015etp5e8"
-CLIENT_SECRET="2bnfk3v2a12d5gj5tml50dutbaht0i74kbhdph9753hhdfln0n6"
+CLIENT_ID="63po2nk910cprelfcvpvbv7ekk"
+CLIENT_SECRET="siql4p03g183lu2bj29ftdf11faif6v09pcelb34sk681cklgar"
 SCOPES="camila/read camila/write"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 
@@ -31,11 +31,13 @@ echo -e "\n ################# Access Token: ################# \n$ACCESS_TOKEN\n"
 echo -e "\n ################################################# \n"
 curl -Lvs -X GET 'https://poc.jpje-kops.xyz/product/api/products/99999' \
   -H 'Accept: application/x-ndjson' \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" | jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":"))]|@csv' \
-  | column -t -N 'ID,INTERNAL,NAME,CATEGORY,SALES,STOCK' -s ',' -o '|'
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" | \
+   jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":")),.profitMargin,.daysInStock]|@csv' \
+  | column -t -N 'ID,INTERNAL,NAME,CATEGORY,SALES,STOCK,PROFIT,DAYS' -s ',' -o '|'
 
 echo -e "\n ################################################# \n"
-curl -Lvs -X GET 'https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=1000' \
+curl -Lvs -X GET 'https://poc.jpje-kops.xyz/product/api/products?profitMargin=0.50&stock=0.50&page=0&size=1000' \
   -H 'Accept: application/x-ndjson' \
-  -H "Authorization: Bearer ${ACCESS_TOKEN}" | jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":"))]|@csv' \
-  | column -t -N 'ID,INTERNAL,NAME,CATEGORY,SALES,STOCK' -s ',' -o '|'
+  -H "Authorization: Bearer ${ACCESS_TOKEN}" | \
+   jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":")),.profitMargin,.daysInStock]|@csv' \
+  | column -t -N 'ID,INTERNAL,NAME,CATEGORY,SALES,STOCK,PROFIT,DAYS' -s ',' -o '|'

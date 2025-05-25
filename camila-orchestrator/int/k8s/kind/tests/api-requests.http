@@ -85,7 +85,7 @@ Host: ws://{{host}}:{{port-rsocket}}/product-int/api/rsocket
 GRPC grpc://{{host}}:{{port-grpc}}/product.ProductService/GetProductByInternalId
 
 {
-  "internalId": "1000"
+  "internalId": "1"
 }
 
 ### GRPC - SortProducts

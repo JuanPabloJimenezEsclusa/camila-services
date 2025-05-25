@@ -5,6 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 GITHUB_ECR_REGISTRY_ID="${GITHUB_ECR_REGISTRY_ID:-ghcr.io/juanpablojimenezesclusa}"
@@ -109,20 +111,25 @@ create_app_runner_stack() {
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
-  # Validate required environment variables
+  echo -e "${SEPARATOR} 📝 Validate required environment variables. ${SEPARATOR}"
   validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
   validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
   validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
   validate_env_var "MONGO_URI" "${MONGO_URI}"
 
-  # Validate URL formats
+  echo -e "${SEPARATOR} ✅ Validate URL formats. ${SEPARATOR}"
   validate_url_format "${COUCHBASE_CONNECTION}"
   validate_url_format "${MONGO_URI}"
 
+  echo -e "${SEPARATOR} 📦 Create ECR repository if it doesn't exist. ${SEPARATOR}"
   create_ecr_repository
+  echo -e "${SEPARATOR} 🔑 Login to ECR. ${SEPARATOR}"
   login_to_ecr
+  echo -e "${SEPARATOR} 🐳 Build and push Docker image to ECR. ${SEPARATOR}"
   build_and_push_image
+  echo -e "${SEPARATOR} 🤫 Create secrets stack. ${SEPARATOR}"
   create_secret_stack
+  echo -e "${SEPARATOR} ☁️ Create app runner stack. ${SEPARATOR}"
   create_app_runner_stack
 
   echo "Done ${0##*/} (${FUNCNAME:-})"

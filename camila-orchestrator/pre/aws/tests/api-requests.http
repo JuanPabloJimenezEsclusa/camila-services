@@ -7,7 +7,7 @@ Content-Type: application/json
 
 ### Rest - findById (SSE)
 # https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-#GET https://poc.jpje-kops.xyz/product/api/products/99999 HTTP/2
+#GET https://poc.jpje-kops.xyz/product/api/products/63255 HTTP/2
 GET https://jpje.net/products/99999 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
@@ -53,8 +53,10 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 {
-  "salesUnits": 0.001,
-  "stock": 0.999,
+  "salesUnits": 0.00001,
+  "stock": 0.00001,
+  "profitMargin": 0.00008,
+  "daysInStock": 0.99990,
   "page": 0,
   "size": 1000,
   "withDetails": false
