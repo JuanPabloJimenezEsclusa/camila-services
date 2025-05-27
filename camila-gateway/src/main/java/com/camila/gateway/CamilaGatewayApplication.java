@@ -18,6 +18,6 @@ public class CamilaGatewayApplication {
    * @param args the input arguments
    */
   public static void main(String[] args) {
-		SpringApplication.run(CamilaGatewayApplication.class, args);
-	}
+    SpringApplication.run(CamilaGatewayApplication.class, args);
+  }
 }

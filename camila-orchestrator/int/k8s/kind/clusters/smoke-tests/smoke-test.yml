@@ -4,7 +4,13 @@ kind: Namespace
 metadata:
   name: test
 spec: {}
-status: {}
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: smoke-test-account
+  namespace: test
 
 ---
 apiVersion: v1
@@ -30,11 +36,12 @@ spec:
 
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: test
   namespace: test
 spec:
+  serviceName: test
   replicas: 1
   selector:
     matchLabels:
@@ -44,9 +51,11 @@ spec:
       labels:
         app: test
     spec:
+      serviceAccountName: "smoke-test-account"
+      automountServiceAccountToken: false
       containers:
       - name: name
-qq        image: nginx:stable
+        image: nginx:stable
         resources:
           limits:
             cpu: "1"
@@ -62,7 +71,6 @@ qq        image: nginx:stable
         volumeMounts:
         - name: volume
           mountPath: /pvc/
-      automountServiceAccountToken: true
       volumes:
       - name: volume
         persistentVolumeClaim:

@@ -15,10 +15,12 @@ export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-22.0.1+8.1"}"
 mvn clean package \
   -Pnative \
   -Dmaven.test.skip=true \
+  -Dspring-boot.aot.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED" \
   -f ./pom.xml | tee result-package-native.log
 
 # Compile/package and build container image
 mvn spring-boot:build-image \
   -Pnative \
   -Dmaven.test.skip=true \
+  -Dspring-boot.aot.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED" \
   -f ./pom.xml | tee result-build-image-native.log

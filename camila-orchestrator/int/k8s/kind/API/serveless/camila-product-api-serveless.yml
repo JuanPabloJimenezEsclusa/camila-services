@@ -4,7 +4,6 @@ kind: Namespace
 metadata:
   name: camila-product-api-serveless-ns
 spec: {}
-status: {}
 
 ---
 apiVersion: v1
@@ -13,7 +12,7 @@ metadata:
   name: camila-product-api-serveless-ns-quota
   namespace: camila-product-api-serveless-ns
 spec:
-  hard: 
+  hard:
     limits.cpu: "8"
     limits.memory: 8192Mi
     pods: "10"
@@ -27,8 +26,8 @@ metadata:
   name: camila-product-api-serveless-creds
   namespace: camila-product-api-serveless-ns
 data:
-  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nby1ub2RlcG9ydC1zdmMubW9uZ29kYi5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNy9jYW1pbGEtZGI="
-  #mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
+  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nb2RiOjI3MDE3L2NhbWlsYS1kYg=="
+  #mongodb://<camilauser>:<camilauser>@mongodb:27017/camila-db
 
 ---
 apiVersion: v1
@@ -50,13 +49,21 @@ spec:
   template:
     metadata:
       annotations:
-        autoscaling.knative.dev/target: "20"
+        autoscaling.knative.dev/class: hpa.autoscaling.knative.dev
+        autoscaling.knative.dev/metric: cpu
+        autoscaling.knative.dev/target: "70"
         serving.knative.dev/progress-deadline: "10s"
+        queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
+        queue.sidecar.serving.knative.dev/cpu-resource-limit: "2"
+        queue.sidecar.serving.knative.dev/memory-resource-request: "1Gi"
+        queue.sidecar.serving.knative.dev/memory-resource-limit: "2Gi"
+        queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
+        queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     spec:
       containers:
-        - image: docker.io/library/camila-product-api-serveless:1.0.0
+        - image: 172.18.0.6:5000/camila-product-api-serveless:1.0.0
           name: camila-product-api-serveless
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 31080
           resources:
@@ -73,7 +80,22 @@ spec:
                   name: camila-product-api-serveless-creds
                   key: uri
             - name: SPRING_PROFILES_ACTIVE
-              valueFrom: 
+              valueFrom:
                 configMapKeyRef:
                   name: camila-product-api-serveless-config
                   key: SPRING_PROFILES_ACTIVE
+            - name: REPOSITORY_TECHNOLOGY
+              valueFrom:
+                configMapKeyRef:
+                  name: camila-product-api-serveless-config
+                  key: REPOSITORY_TECHNOLOGY
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: camila-product-api-serveless-ns
+spec:
+  type: ExternalName
+  externalName: mongo-nodeport-svc.mongodb.svc.cluster.local

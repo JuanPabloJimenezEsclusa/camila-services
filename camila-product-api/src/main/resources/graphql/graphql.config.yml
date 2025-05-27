@@ -1,0 +1,15 @@
+schema: schema.graphqls
+documents: '**/*.graphql'
+extensions:
+  endpoints:
+    default:
+      url: '${env:SERVER_URL:http://localhost:8080}${spring.webflux.base-path:/product/api}/graphql'
+      headers:
+        Content-Type: 'application/json'
+        Accept: 'application/json'
+    dev:
+        url: '${env:SERVER_URL:http://localhost:8080}${spring.webflux.base-path:/product/api}/graphql'
+        headers:
+            Content-Type: 'application/json'
+            Accept: 'application/json'
+            Authorization: 'Bearer ${env:TOKEN}'

@@ -1,13 +1,25 @@
 # Jmeter
 
+> [Summary](#-summary)
+  • [Dependencies](#-dependencies)
+  • [Architecture](#-architecture)
+
+## 📜 Summary
+
+---
+
 Performance testing project using JMeter
 
-## Prerequisites
+## ⚙️ Dependencies
+
+---
 
 * JDK >= 21
 * JMeter >= 5.6.2
 
-## Project Structure
+## 🏗️ Architecture
+
+---
 
 ```txt
 📦 jmeter

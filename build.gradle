@@ -1,0 +1,201 @@
+plugins {
+  id 'java'
+  id 'jacoco'
+  id 'org.sonarqube' version '6.2.0.5505'
+  id 'org.springframework.boot' version '3.4.5' apply false
+  id 'io.spring.dependency-management' version '1.1.6' apply false
+  id 'org.graalvm.buildtools.native' version '0.10.6' apply false
+  id 'com.github.spotbugs' version '6.0.7' apply false
+  id 'org.openapi.generator' version '7.12.0' apply false
+  id 'org.openrewrite.rewrite' version '6.6.1' apply false
+  id 'org.springdoc.openapi-gradle-plugin' version '1.8.0' apply false
+  id "io.freefair.lombok" version "8.13.1" apply false
+}
+
+allprojects {
+  group = 'com.camila.core'
+  version = '1.0.0'
+
+  repositories {
+    mavenCentral()
+    gradlePluginPortal()
+    mavenLocal()
+  }
+}
+
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'org.springframework.boot'
+  apply plugin: 'jacoco'
+  apply plugin: 'checkstyle'
+  apply plugin: 'io.freefair.lombok'
+
+  java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+  }
+
+  ext {
+    springBootVersion = '3.4.5'
+    springFrameworkVersion = '6.2.5'
+    springCloudVersion = '2024.0.1'
+    springBootAdminVersion = '3.2.1'
+
+    // Observability
+    opentelemetryVersion = '1.49.0'
+    opentelemetryApiIncubatorVersion = '1.49.0-alpha'
+
+    // Database
+    couchbaseJavaClientVersion = '3.8.0'
+
+    // Testing
+    testcontainersVersion = '1.20.6'
+    cucumberVersion = '7.22.0'
+    junitPlatformSuiteVersion = '1.12.2'
+    archunitJunit5Version = '1.4.0'
+    instancioJunitVersion = '5.4.0'
+    awaitilityVersion = '4.2.2'
+    jmhVersion = '1.37'
+    flapdoodleEmbedMongoSpring3xVersion = '4.20.0'
+
+    // API Documentation
+    springdocOpenapiVersion = '2.8.8'
+    graphqlJavaVersion = '23.1'
+    graphqlJavaExtendedScalarsVersion = '22.0'
+
+    // GRPC
+    protobufJavaVersion = '3.25.3'
+    grpcServerSpringBootStarterVersion = '3.1.0.RELEASE'
+
+    // Tools
+    lombokVersion = '1.18.38'
+    mapstructVersion = '1.6.3'
+    jspecifyVersion = '0.3.0'
+    chaosMonkeySpringBootVersion = '3.1.0'
+
+    // Plugins
+    flattenmavenpluginVersion = '1.6.0'
+    pitestavenmavenpluginVersion = '1.15.8'
+    jimgemavenPluginVersion = '3.4.2'
+    gitCommitIdMavenPluginVersion = '9.0.1'
+    mavenSitePluginVersion = '4.0.0-M13'
+    mavenCheckstylePluginVersion = '3.3.1'
+    mavenCompilerPluginVersion = '3.13.0'
+    dependencyCheckMavenVersion = '9.2.1'
+    checkstyleVersion = '10.23.0'
+    mavenProjectInfoReportsPluginVersion = '3.5.0'
+    chaosMonkeySpringBootVersion = '3.2.0'
+  }
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+      mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+      mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+      mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+    }
+
+    dependencies {
+      // OpenTelemetry Dependencies
+      dependency "io.opentelemetry:opentelemetry-api:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-sdk:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-context:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-sdk-logs:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-sdk-common:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-sdk-trace:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-sdk-metrics:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-extension-trace-propagators:${opentelemetryVersion}"
+      dependency "io.opentelemetry:opentelemetry-api-incubator:${opentelemetryApiIncubatorVersion}"
+
+      // Couchbase
+      dependency "com.couchbase.client:java-client:${couchbaseJavaClientVersion}"
+    }
+  }
+
+  checkstyle {
+    toolVersion = "${checkstyleVersion}"
+    configFile = file("${rootDir}/src/main/resources/checkstyle.xml")
+  }
+
+  tasks.withType(Checkstyle) {
+    exclude '**/input/grpc/**'
+    exclude '**/input/rest/api/**'
+    exclude '**/input/rest/dto/**'
+    exclude '**/input/security/*Config**'
+    exclude '**/*MapperImpl**'
+    exclude '**/generated/**'
+    exclude '**/benchmark/**'
+  }
+
+  tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+  }
+
+  bootJar {
+    requiresUnpack '**/repackaged/**'
+    layered {
+      enabled = true
+    }
+  }
+
+  springBoot {
+    buildInfo()
+  }
+
+  tasks.register('unitTest', Test) {
+    description = 'Runs unit tests only'
+    group = 'verification'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+
+    include("**/*Test.class")
+    exclude("**/*ITCase.class", "**/*Behaviour**")
+
+    useJUnitPlatform {
+      excludeTags 'integration', 'cucumber'
+    }
+  }
+
+  tasks.named('check') {
+    dependsOn tasks.named('unitTest')
+  }
+
+  tasks.register('jacocoAllTestReport', JacocoReport) {
+    executionData fileTree(project.buildDir).include("/jacoco/*.exec")
+    reports {
+      xml.required = true
+      html.required = true
+    }
+    afterEvaluate {
+      classDirectories.setFrom(files(classDirectories.files.collect {
+        fileTree(dir: it, exclude: [
+          '**/input/grpc/**',
+          '**/input/rest/api/**',
+          '**/input/rest/dto/**',
+          '**/input/security/*Config**',
+          '**/*MapperImpl**'
+        ])
+      }))
+    }
+  }
+}
+
+sonar {
+  properties {
+    property "sonar.organization", "juanpablojimenezesclusa"
+    property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.projectKey", "JuanPabloJimenezEsclusa_camila-services"
+    property "sonar.scm.exclusions.disabled", "true"
+    property "sonar.coverage.jacoco.xmlReportPaths", "camila-product-api/build/reports/jacoco/test/jacocoTestReport.xml"
+    property "sonar.exclusions", "**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**"
+  }
+}
+
+// Define a task to be run instead of top-level jar
+task emptyJar(type: Jar) {
+  archiveFileName = 'empty.jar'
+}
+
+jar.enabled = false
+artifacts.archives emptyJar

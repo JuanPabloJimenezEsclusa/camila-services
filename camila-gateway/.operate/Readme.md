@@ -4,7 +4,8 @@ This section provides information on how to build, deploy, and run the project l
 
 ## Scripts
 
-The following table summarizes the available scripts for building, running, and deploying the project:
+The following table summarizes the available scripts for building, running, and deploying the
+project:
 
 | Command                                       | Description                                             |
 |-----------------------------------------------|---------------------------------------------------------|

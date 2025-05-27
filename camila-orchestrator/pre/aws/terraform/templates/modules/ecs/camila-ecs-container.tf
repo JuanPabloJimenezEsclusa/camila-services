@@ -382,7 +382,7 @@ resource "aws_ecs_task_definition" "main" {
       { name = "SERVER_URL", value = "https://${var.domain_name}" },
       { name = "SECURITY_ISSUER_URI", value = "https://cognito-idp.${data.aws_region.current.name}.amazonaws.com/${var.user_pool_id}" },
       { name = "SECURITY_DOMAIN_URI", value = "https://camila-realm.auth.${data.aws_region.current.name}.amazoncognito.com" },
-      { name = "spring.application.repository.technology", value = var.repository_technology },
+      { name = "repository.technology", value = var.repository_technology },
       { name = "spring.couchbase.connection-string", value = var.couchbase_connection },
       { name = "spring.couchbase.username", value = var.couchbase_username },
       { name = "spring.couchbase.env.ssl.enabled", value = "true" },

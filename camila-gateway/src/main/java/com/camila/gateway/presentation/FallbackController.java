@@ -26,9 +26,10 @@ class FallbackController {
     return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(Mono.just(
       new FallbackResponse("Service Unavailable", fallbackMessage)));
   }
-}
 
-/**
- * The type Fallback response.
- */
-record FallbackResponse(String message, String details) {}
+  /**
+   * The type Fallback response.
+   */
+  record FallbackResponse(String message, String details) {
+  }
+}

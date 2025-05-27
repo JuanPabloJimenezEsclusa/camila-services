@@ -167,7 +167,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.0.3-ubi9
+    image: mongodb/mongodb-community-server:8.0.8-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: "on-failure"
@@ -203,7 +203,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:7.6.3
+    image: couchbase/server:7.6.5
     container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: "on-failure"
@@ -251,19 +251,19 @@ services:
       - .env
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 3
       resources:
         limits:
           memory: "1024m"
           cpus: "1"
     ports:
-      - "8080-8081:8080"
-      - "7000-7001:7000"
-      - "6565-6566:6565"
+      - "8080-8082:8080"
+      - "7000-7002:7000"
+      - "6565-6567:6565"
     expose:
-      - 8080-8081
-      - 7000-7001
-      - 6565-6566
+      - 8080-8082
+      - 7000-7002
+      - 6565-6567
     depends_on:
       config:
         condition: service_healthy
@@ -298,7 +298,7 @@ services:
       camila_product_network:
   ## Security (Authn/Authz)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0
+    image: quay.io/keycloak/keycloak:26.2
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
@@ -330,7 +330,7 @@ services:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v2.55.1
+    image: prom/prometheus:v3.3.0
     container_name: prometheus
     hostname: prometheus
     restart: "on-failure"
@@ -356,7 +356,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:11.3.1
+    image: grafana/grafana:11.6.0
     container_name: grafana
     hostname: grafana
     restart: "on-failure"
@@ -373,6 +373,7 @@ services:
       - 3000
     volumes:
       - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
       - grafana_data:/var/lib/grafana
     links:
       - prometheus
@@ -387,7 +388,7 @@ services:
   ## Tracing
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
-    image: openzipkin/zipkin:3.4
+    image: openzipkin/zipkin:3.5.0
     container_name: zipkin
     hostname: zipkin
     restart: "on-failure"
@@ -408,7 +409,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:8.16.1
+    image: elasticsearch:8.18.0
     container_name: elasticsearch
     hostname: elasticsearch
     restart: "no"
@@ -463,7 +464,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:8.16.1
+    image: kibana:8.18.0
     container_name: kibana
     hostname: kibana
     restart: "no"
@@ -490,17 +491,65 @@ services:
 
 volumes:
   camila_product_mongodb_data:
+    name: camila_product_mongodb_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_product_couchbase_data:
+    name: camila_product_couchbase_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_product_backend_tmp:
+    name: camila_product_backend_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_gateway_tmp:
+    name: camila_gateway_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_discovery_tmp:
+    name: camila_discovery_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_admin_tmp:
+    name: camila_admin_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_config_tmp:
+    name: camila_config_tmp
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   keycloak_config:
+    name: keycloak_config
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   keycloak_data:
+    name: keycloak_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   grafana_data:
+    name: grafana_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   elasticsearch_data:
+    name: elasticsearch_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   fluentd_logs:
+    name: fluentd_logs
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
 
 networks:
   camila_product_network:

@@ -1,0 +1,242 @@
+openapi: 3.1.0
+
+info:
+  title: Camila Product API
+  description: API Rest in Camila Product project
+  contact:
+    name: Juan Pablo Jimenez Esclusa
+    email: 'juan.pablo.jimenez,esclusa@gmail.com'
+  license:
+    name: GPL-3.0
+    url: >-
+      https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/LICENSE.md
+  version: 1.0.0
+  summary: Camila Product API (API First)
+
+externalDocs:
+  description: Camila Service Documentation
+  url: >-
+    https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/Readme.md
+
+servers:
+  - url: 'http://localhost:8080/product-dev/api'
+    description: Generated server url
+
+tags:
+  - name: Products
+    description: Products API
+
+paths:
+  '/products/{internalId}':
+    get:
+      tags:
+        - Products
+      summary: Find product by internal identified
+      description: >-
+        Returns a product based on a single internal identifier. </br></br>
+        API consumers can specify the preferred language for the response using the `Accept-Language` header. </br>
+        The `Api-Version` header is used to specify the API version to use for the request. </br>
+      operationId: findById
+      parameters:
+        - name: acceptLanguage
+          $ref: '#/components/parameters/AcceptLanguage'
+        - name: apiVersion
+          $ref: '#/components/parameters/ApiVersion'
+        - name: internalId
+          $ref: '#/components/parameters/InternalId'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
+        '401':
+          description: Unauthorized
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '406':
+          description: Not Acceptable
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '500':
+          description: Server Error
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Find products sort by weight
+      description: >-
+        Consult products sorted by metric:weight rules. </br></br>
+        API consumers can specify the preferred language for the response using the `Accept-Language` header. </br>
+        The `Api-Version` header is used to specify the API version to use for the request. </br></br>
+        Examples of Query JSon requests: </br></br>
+          - `{"salesUnits": "0.7", "stock": "0.1", "profitMargin": "0.1", "daysInStock": "0.1"}` </br>
+          - `{"salesUnits": "0.001", "stock": "0.001", "profitMargin": "0.001", "daysInStock": "0.997", "page": "0", "size": "50"}` </br>
+          - `{"salesUnits": "1"}` </br>
+          - `{"stock": "0.8", "daysInStock": "0.2", "page": "0", "size": "10"}` </br>
+      operationId: sortProducts
+      parameters:
+        - name: acceptLanguage
+          $ref: '#/components/parameters/AcceptLanguage'
+        - name: apiVersion
+          $ref: '#/components/parameters/ApiVersion'
+        - name: requestParams
+          $ref: '#/components/parameters/RequestParams'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/event-stream:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+            application/x-ndjson:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+        '401':
+          description: Unauthorized
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '406':
+          description: Not Acceptable
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '500':
+          description: Server Error
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+
+components:
+  parameters:
+    AcceptLanguage:
+      name: Accept-Language
+      in: header
+      schema:
+        type: string
+        default: en-US
+        example: en-US
+      description: Preferred language for response
+    ApiVersion:
+      name: X-Api-version
+      in: header
+      required: false
+      schema:
+        type: string
+        default: "1.0.0"
+        example: "1.0.0"
+      description: API version to use for the request
+    InternalId:
+      name: internalId
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        pattern: '^\d+$'
+        example: "1"
+      description: Internal product identifier
+    RequestParams:
+      name: requestParams
+      in: query
+      required: true
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+          minLength: 0
+          maxLength: 50
+          pattern: '^\d+(?:\.\d*)?$'
+        minProperties: 1
+        maxProperties: 6
+        example: { "salesUnits": "0.8", "stock": "0.2", "page": "0", "size": "50" }
+      description: Parameters map
+  schemas:
+    ProductDTO:
+      type: object
+      required:
+        - internalId
+        - name
+        - category
+      properties:
+        id:
+          type: string
+          minLength: 1
+          maxLength: 50
+          description: Hash identifier
+        internalId:
+          type: string
+          minLength: 1
+          maxLength: 50
+          pattern: '^\d+$'
+          example: "4"
+          description: Internal product identifier
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: "PLEATED T-SHIRT"
+          description: Product name
+        category:
+          type: string
+          maxLength: 50
+          description: Product category
+        salesUnits:
+          type: integer
+          format: int32
+          minimum: 0
+          example: 3
+          description: Number of units sold
+        stock:
+          type: object
+          additionalProperties:
+            type: integer
+            minimum: 0
+          minProperties: 1
+          example:
+            S: 25
+            M: 30
+            L: 10
+          description: Stock by size
+        profitMargin:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+          example: 50.0
+          description: Profit margin
+        daysInStock:
+          type: integer
+          format: int32
+          minimum: 0
+          example: 30
+          description: Days in stock

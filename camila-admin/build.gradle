@@ -1,0 +1,28 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Service Admin'
+
+dependencies {
+  // Spring Boot
+  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+  // Spring Cloud
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+  // Admin Server
+  implementation 'de.codecentric:spring-boot-admin-starter-server'
+
+  // Monitoring
+  implementation 'io.micrometer:micrometer-registry-prometheus'
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+}

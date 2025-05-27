@@ -1,10 +1,23 @@
 package com.camila.api.benchmark;
 
+import java.security.SecureRandom;
+import java.util.Collection;
+import java.util.concurrent.TimeUnit;
+
 import com.camila.api.ProductApiApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
@@ -20,10 +33,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.Collection;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import({ProductApiApplication.class})
 @State(Scope.Benchmark)
@@ -31,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 @DisplayName("[JMH-T][ProductRestAdapter] Java benchmark tests")
 @SuppressWarnings({"java:S5786"}) // JMH requires public test class
 public class ProductRestAdapterBenchmarkITCase {
-  private static final Random RANDOM_VALUES = new Random();
+  private static final SecureRandom RANDOM_VALUES = new SecureRandom();
   private static WebTestClient webClient;
 
   @Autowired

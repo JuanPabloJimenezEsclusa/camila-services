@@ -1,0 +1,25 @@
+<FindBugsFilter>
+  <!-- Exclude generated code and configuration -->
+  <Match>
+    <Package name="~.*generated.*|~.*openapi.*|~.*protobuf.*|~.*generated-sources.*" />
+  </Match>
+
+  <Match>
+    <Class name="~.*grpc.*|~.*input.*rest.*api.*|~.*input.*rest.*dto.*|~.*security.*Config|~.*MapperImpl|~.*benchmark.*|~.*jmh.*|~.*generated-sources.*" />
+  </Match>
+
+  <!-- Common Spring-specific issues -->
+  <Match>
+    <Class name="~.*"/>
+    <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/>
+  </Match>
+
+  <!-- False positives -->
+  <Match>
+    <Class name="~.*CouchbaseContainerConfig.*"/>
+    <Or>
+      <Method name="loadBucketCollectionData"/>
+    </Or>
+    <Bug pattern="PATH_TRAVERSAL_IN"/>
+  </Match>
+</FindBugsFilter>

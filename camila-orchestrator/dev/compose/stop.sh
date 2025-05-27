@@ -5,7 +5,13 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
-# detener servicios
-docker-compose down
+echo -e "${SEPARATOR} 🔨 Stop services ${SEPARATOR}"
+docker-compose --file docker-compose.yml down --remove-orphans --volumes
+
+echo -e "${SEPARATOR} 🧹 Clean up ${SEPARATOR}"
+docker volume prune --force --all
+docker images --filter reference='camila-*' --format '{{.Repository}}:{{.Tag}}' | xargs -I {} docker rmi -f {}

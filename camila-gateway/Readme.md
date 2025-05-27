@@ -1,6 +1,7 @@
 # camila-gateway
 
-This project implements an API gateway for services, including support for patterns like `circuit-breaker` and `retry` to improve service resilience.
+This project implements an API gateway for services, including support for patterns like
+`circuit-breaker` and `retry` to improve service resilience.
 
 ## Prerequisites
 
@@ -39,7 +40,8 @@ curl -X 'GET' \
 
 ## Examples with Security: `oauth2` delegated to an `SSO` service
 
-> You need to modify the `/etc/hosts` file to map `127.0.0.1  gateway  keycloak` and configure `keycloak` as a Single Sign-On (SSO) service.
+> You need to modify the `/etc/hosts` file to map `127.0.0.1  gateway  keycloak` and configure
+`keycloak` as a Single Sign-On (SSO) service.
 
 ```bash
 curl --location 'http://gateway:8090/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
@@ -53,4 +55,5 @@ curl --location 'http://gateway:8090/product-dev/api/products/1' \
 
 ## Operations (build, deploy)
 
-For instructions on building and deploying this project, refer to the [Operate - Readme](.operate/Readme.md) file.
+For instructions on building and deploying this project, refer to
+the [Operate - Readme](.operate/Readme.md) file.

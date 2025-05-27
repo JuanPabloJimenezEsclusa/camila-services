@@ -20,29 +20,29 @@ management:
         include: "*"
   endpoint:
     env:
-      enabled: true
       show-values: ALWAYS
       cache:
         time-to-live: 60s
+      access: unrestricted
     info:
-      enabled: true
       cache:
         time-to-live: 3600s
+      access: unrestricted
     beans:
-      enabled: true
       cache:
         time-to-live: 10s
+      access: unrestricted
     health:
-      enabled: true
       show-details: ALWAYS
       show-components: ALWAYS
+      access: unrestricted
     configprops:
-      enabled: true
       show-values: ALWAYS
+      access: unrestricted
     shutdown:
-      enabled: true
+      access: unrestricted
     prometheus:
-      enabled: true
+      access: unrestricted
   info:
     env:
       enabled: true
@@ -56,6 +56,7 @@ server:
 
 eureka:
   client:
+    # commented to registry itself in admin dashboard
     #registerWithEureka: false
     #fetchRegistry: false
     enabled: true
@@ -65,12 +66,14 @@ eureka:
     preferIpAddress: true
     statusPageUrlPath: actuator/info
     healthCheckUrlPath: actuator/health
+    appname: ${spring.application.name}
+    instanceId: ${spring.application.name}:${random.value}
     nonSecurePortEnabled: true
     leaseRenewalIntervalInSeconds: 15
 
 logging:
   level:
-    org.springframework.boot: debug
-    org.springframework: debug
+    org.springframework.boot: DEBUG
+    org.springframework: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
