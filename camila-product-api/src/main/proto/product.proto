@@ -4,7 +4,7 @@ package product;
 
 option optimize_for = SPEED;
 option java_multiple_files = true;
-option java_package = "com.camila.api.product.framework.adapter.input.grpc";
+option java_package = "com.camila.api.product.infrastructure.adapter.input.grpc";
 option java_outer_classname = "ProductServiceOuterClass";
 
 service ProductService {
@@ -27,4 +27,6 @@ message Product {
   string category = 4;
   int32 salesUnits = 5;
   map<string, int32> stock = 6;
+  double profitMargin = 7;
+  int32 daysInStock = 8;
 }

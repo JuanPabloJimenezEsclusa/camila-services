@@ -24,8 +24,8 @@ docker run -it --rm \
   --ulimit memlock=100000000:100000000 \
   --oom-kill-disable \
   -e CLUSTER_NAME=camila-couchbase-cluster \
-  -e COUCHBASE_ADMINISTRATOR_USERNAME=admin \
-  -e COUCHBASE_ADMINISTRATOR_PASSWORD=admin1234 \
+  -e COUCHBASE_ADMINISTRATOR_USERNAME=Administrator \
+  -e COUCHBASE_ADMINISTRATOR_PASSWORD=password \
   -e COUCHBASE_BUCKET=camila-product-bucket \
   -e COUCHBASE_BUCKET_SCOPE=product \
   -e COUCHBASE_BUCKET_COLLECTION=products \
@@ -35,4 +35,4 @@ docker run -it --rm \
   --memory="4096m" --memory-reservation="4096m" --memory-swap="4096m" --cpu-shares=4000 \
   -v ./.operate/data/couchbase:/opt/couchbase/init \
   -v couchbase-data7:/opt/couchbase/var \
-  couchbase/server:community-7.6.3 sh -c "/opt/couchbase/init/init-cbserver.sh"
+  couchbase/server:community-7.6.5 sh -c "/opt/couchbase/init/init-cbserver.sh"

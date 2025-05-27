@@ -6,7 +6,8 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.5</version>
+    <version>3.4.6</version>
+    <relativePath/>
   </parent>
 
   <groupId>com.camila.core</groupId>
@@ -48,17 +49,165 @@
   </distributionManagement>
 
   <properties>
+    <!-- Java -->
     <java.version>21</java.version>
-    <spring-cloud-version>2023.0.3</spring-cloud-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Spring -->
+    <spring-cloud.version>2024.0.1</spring-cloud.version>
+    <spring-boot-admin.version>3.4.6</spring-boot-admin.version>
+
+    <!-- Observability -->
+    <opentelemetry.version>1.50.0</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.50.0-alpha</opentelemetry-api-incubator.version>
+
+    <!-- API -->
+    <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
+    <graphql-java.version>23.1</graphql-java.version>
+    <graphql-java-extended-scalars.version>22.0</graphql-java-extended-scalars.version>
+
+    <!-- Testing -->
+    <cucumber.version>7.22.2</cucumber.version>
+    <testcontainers.version>1.21.0</testcontainers.version>
+    <awaitility.version>4.3.0</awaitility.version>
+    <de.flapdoodle.embed.mongo.spring3x.version>4.20.0</de.flapdoodle.embed.mongo.spring3x.version>
+    <archunit-junit5.version>1.4.1</archunit-junit5.version>
+    <instancio-junit.version>5.4.1</instancio-junit.version>
+    <jmh.version>1.37</jmh.version>
+    <junit-platform-suite.version>1.12.2</junit-platform-suite.version>
+
+    <!-- Quality -->
+    <chaos-monkey-spring-boot.version>3.2.2</chaos-monkey-spring-boot.version>
+    <jspecify.version>1.0.0</jspecify.version>
+    <mapstruct.version>1.6.3</mapstruct.version>
+
+    <!-- Database -->
+    <couchbase-java-client.version>3.8.1</couchbase-java-client.version>
+
+    <!-- GRPC -->
+    <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
+    <protobuf-java.version>4.31.0</protobuf-java.version>
+    <io-grpc.version>1.63.0</io-grpc.version>
+
+    <!-- Build Tools -->
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
+    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>10.23.1</checkstyle.version>
+    <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
+    <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
+    <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
+    <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
+    <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+    <pitest-maven.version>1.19.1</pitest-maven.version>
+    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
+    <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.13.0</openapi-generator-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
+    <rewrite-maven-plugin.version>6.6.1</rewrite-maven-plugin.version>
+    <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
+    <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+    <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
+    <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
+    <git-changelog-maven-plugin.version>2.2.5</git-changelog-maven-plugin.version>
+    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
+    <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
+
+    <!-- Sonar -->
+    <sonar.organization>juanpablojimenezesclusa</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.projectKey>JuanPabloJimenezEsclusa_camila-services</sonar.projectKey>
+    <sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled>
+    <sonar.java.spotbugs.reportPaths>${project.build.directory}/spotbugsXml.xml</sonar.java.spotbugs.reportPaths>
+    <sonar.java.cpd.reportPaths>${project.build.directory}/cpd.xml</sonar.java.cpd.reportPaths>
+    <sonar.java.pmd.reportPaths>${project.build.directory}/pmd.xml</sonar.java.pmd.reportPaths>
+    <sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
+    <sonar.branch.name>main</sonar.branch.name>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- Spring Cloud BOM -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud-version}</version>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Spring Boot Admin -->
+      <dependency>
+        <groupId>de.codecentric</groupId>
+        <artifactId>spring-boot-admin-dependencies</artifactId>
+        <version>${spring-boot-admin.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- OpenTelemetry Dependencies -->
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-api</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-context</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-logs</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-common</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-trace</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-sdk-metrics</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-extension-trace-propagators</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-api-incubator</artifactId>
+        <version>${opentelemetry-api-incubator.version}</version>
+      </dependency>
+
+      <!-- Couchbase -->
+      <dependency>
+        <groupId>com.couchbase.client</groupId>
+        <artifactId>java-client</artifactId>
+        <version>${couchbase-java-client.version}</version>
+      </dependency>
+
+      <!-- Testing -->
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${testcontainers.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -68,65 +217,292 @@
   <build>
     <pluginManagement>
       <plugins>
+        <!-- Core Plugins -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <!-- https://github.com/spring-projects/spring-boot/issues/38532#issuecomment-1825427641 -->
+            <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
+            <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
+            <loaderImplementation>CLASSIC</loaderImplementation>
+            <layers>
+              <enabled>true</enabled>
+            </layers>
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+            <image>
+              <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes#paketo-tiny-builder-for-building-oci-images -->
+              <builder>paketobuildpacks/builder-jammy-base</builder>
+              <env>
+                <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                <BP_HEALTH_CHECKER>curl</BP_HEALTH_CHECKER>
+                <BP_JVM_TYPE>JRE</BP_JVM_TYPE>
+                <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
+                <BP_JVM_HEAD_ROOM>5</BP_JVM_HEAD_ROOM>
+                <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
+                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8</BP_JVM_JAVA_OPTS>
+                <BP_OCI_SOURCE>true</BP_OCI_SOURCE>
+                <BP_MAVEN_BUILT_ARTIFACT>target/*.jar</BP_MAVEN_BUILT_ARTIFACT>
+                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true</BP_MAVEN_BUILD_ARGUMENTS>
+                <BPL_JMX_ENABLED>true</BPL_JMX_ENABLED>
+                <BPL_SPRING_AOT_ENABLED>true</BPL_SPRING_AOT_ENABLED>
+                <BP_OCI_AUTHORS>Juan Pablo Jimenez Esclusa</BP_OCI_AUTHORS>
+                <BP_OCI_CREATED>2025</BP_OCI_CREATED>
+              </env>
+            </image>
+          </configuration>
+        </plugin>
+
+        <!-- Git Info -->
+        <plugin>
+          <groupId>io.github.git-commit-id</groupId>
+          <artifactId>git-commit-id-maven-plugin</artifactId>
+          <version>${git-commit-id-maven-plugin.version}</version>
+          <configuration>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+            <includeOnlyProperties>
+              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
+              <includeOnlyProperty>^git.commit.message.(short|full)$</includeOnlyProperty>
+            </includeOnlyProperties>
+            <commitIdGenerationMode>full</commitIdGenerationMode>
+            <failOnNoGitDirectory>false</failOnNoGitDirectory>
+          </configuration>
+          <executions>
+            <execution>
+              <id>get-the-git-infos</id>
+              <goals>
+                <goal>revision</goal>
+              </goals>
+              <phase>initialize</phase>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Code Quality -->
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <configuration>
+            <excludes>
+              <exclude>**/input/grpc/**</exclude>
+              <exclude>**/input/rest/api/**</exclude>
+              <exclude>**/input/rest/dto/**</exclude>
+              <exclude>**/input/security/*Config**</exclude>
+              <exclude>**/*MapperImpl**</exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <id>default-prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>default-prepare-agent-integration</id>
+              <goals>
+                <goal>prepare-agent-integration</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>report</id>
+              <goals>
+                <goal>report</goal>
+              </goals>
+              <phase>verify</phase>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>enforce</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <banDuplicatePomDependencyVersions/>
+                  <requireReleaseDeps/>
+                  <requireUpperBoundDeps>
+                    <excludes>
+                      <exclude>org.apache.httpcomponents:httpclient</exclude>
+                      <exclude>com.google.j2objc:j2objc-annotations</exclude>
+                      <exlucde>org.glassfish.hk2:hk2-api</exlucde>
+                      <exlucde>com.google.errorprone:error_prone_annotations</exlucde>
+                      <exlucde>io.zipkin.reporter2:zipkin-sender-okhttp3</exlucde>
+                      <exlucde>io.zipkin.reporter2:zipkin-reporter</exlucde>
+                    </excludes>
+                  </requireUpperBoundDeps>
+                  <requireMavenVersion>
+                    <version>[3.9.4,4.0.0)</version>
+                  </requireMavenVersion>
+                  <requireJavaVersion>
+                    <version>[21,25)</version>
+                  </requireJavaVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${maven-gpg-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+              <configuration>
+                <gpgArguments>
+                  <arg>--pinentry-mode</arg>
+                  <arg>loopback</arg>
+                </gpgArguments>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>se.bjurr.gitchangelog</groupId>
+          <artifactId>git-changelog-maven-plugin</artifactId>
+          <version>${git-changelog-maven-plugin.version}</version>
+          <inherited>false</inherited>
+          <executions>
+            <execution>
+              <id>GenerateGitChangelog</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>git-changelog</goal>
+              </goals>
+              <configuration>
+                <templateFile>src/main/resources/changelog.mustache</templateFile>
+                <file>CHANGELOG.md</file>
+                <readableTagName>-([^-]+?)$</readableTagName>
+                <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                <ignoreCommitsIfMessageMatches>^\[maven-release-plugin\].*</ignoreCommitsIfMessageMatches>
+                <timeZone>UTC</timeZone>
+                <removeIssueFromMessage>true</removeIssueFromMessage>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Site Generation -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M15</version>
+          <version>${maven-site-plugin.version}</version>
+        </plugin>
+
+        <!-- API Generation -->
+        <plugin>
+          <groupId>org.openapitools</groupId>
+          <artifactId>openapi-generator-maven-plugin</artifactId>
+          <version>${openapi-generator-maven-plugin.version}</version>
+        </plugin>
+
+        <!-- GRPC -->
+        <plugin>
+          <groupId>org.xolstice.maven.plugins</groupId>
+          <artifactId>protobuf-maven-plugin</artifactId>
+          <version>${protobuf-maven-plugin.version}</version>
+          <configuration>
+            <protocArtifact>com.google.protobuf:protoc:${protobuf-java.version}:exe:${os.detected.classifier}</protocArtifact>
+            <pluginId>grpc-java</pluginId>
+            <pluginArtifact>io.grpc:protoc-gen-grpc-java:${io-grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+          </configuration>
+        </plugin>
+
+        <!-- Testing -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven-failsafe-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
+
     <plugins>
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>enforce</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <banDuplicatePomDependencyVersions/>
-                <requireReleaseDeps/>
-                <requireUpperBoundDeps>
-                  <excludes>
-                    <exclude>org.apache.httpcomponents:httpclient</exclude>
-                    <exclude>com.google.j2objc:j2objc-annotations</exclude>
-                    <exlucde>org.glassfish.hk2:hk2-api</exlucde>
-                  </excludes>
-                </requireUpperBoundDeps>
-                <requireMavenVersion>
-                  <version>3.8.4</version>
-                </requireMavenVersion>
-                <requireJavaVersion>
-                  <version>[21,23)</version>
-                </requireJavaVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.2.4</version>
-        <executions>
-          <execution>
-            <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
-          </execution>
-        </executions>
+        <groupId>se.bjurr.gitchangelog</groupId>
+        <artifactId>git-changelog-maven-plugin</artifactId>
       </plugin>
     </plugins>
+
+    <extensions>
+      <extension>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.7.1</version>
+      </extension>
+    </extensions>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration>
+          <configLocation>src/main/resources/checkstyle.xml</configLocation>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <profiles>
     <profile>
@@ -139,7 +515,7 @@
           <plugin>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>5.39.2</version>
+            <version>${rewrite-maven-plugin.version}</version>
             <configuration>
               <activeRecipes>
                 <recipe>org.openrewrite.maven.BestPractices</recipe>
@@ -180,5 +556,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>

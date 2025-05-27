@@ -1,6 +1,10 @@
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: kind-cluster
+containerdConfigPatches:
+  - |-
+    [plugins."io.containerd.grpc.v1.cri".registry]
+      config_path = "/etc/containerd/certs.d"
 kubeadmConfigPatchesJSON6902:
   - group: kubeadm.k8s.io
     version: v1beta3
@@ -18,17 +22,25 @@ nodes:
         containerPath: /tmp/hostpath-provisioner
       - hostPath: /tmp/shared
         containerPath: /tmp/shared
+      - hostPath: /tmp/kind/_default
+        containerPath: /etc/containerd/certs.d/_default
     extraPortMappings:
       # knative
       - containerPort: 31080
         hostPort: 80
       - containerPort: 31443
         hostPort: 443
-      # Para exponer rest app
+      # Para exponer api rest/graphql/websocket
       - containerPort: 30080
         hostPort: 8080
       - containerPort: 30005
         hostPort: 5005
+      # Para exponer rsocket
+      - containerPort: 30070
+        hostPort: 7000
+      # Para exponer api grpc
+      - containerPort: 30065
+        hostPort: 6565
       # Para exponer mongo
       - containerPort: 32000
         hostPort: 27017
@@ -44,6 +56,8 @@ nodes:
         containerPath: /tmp/hostpath-provisioner
       - hostPath: /tmp/shared
         containerPath: /tmp/shared
+      - hostPath: /tmp/kind/_default
+        containerPath: /etc/containerd/certs.d/_default
     labels:
       tier: utils
   - role: worker
@@ -52,6 +66,8 @@ nodes:
         containerPath: /tmp/hostpath-provisioner
       - hostPath: /tmp/shared
         containerPath: /tmp/shared
+      - hostPath: /tmp/kind/_default
+        containerPath: /etc/containerd/certs.d/_default
     labels:
       tier: backend
   - role: worker
@@ -60,5 +76,7 @@ nodes:
         containerPath: /tmp/hostpath-provisioner
       - hostPath: /tmp/shared
         containerPath: /tmp/shared
+      - hostPath: /tmp/kind/_default
+        containerPath: /etc/containerd/certs.d/_default
     labels:
       tier: backend

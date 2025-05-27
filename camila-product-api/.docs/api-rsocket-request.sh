@@ -13,9 +13,9 @@ cd "$(dirname "$0")"
 # "wss://poc.jpje-kops.xyz:7001/product/api/rsocket"
 # "ws://localhost:7000/product-dev/api/rsocket"
 
-RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"wss://poc.jpje-kops.xyz:7001/product/api/rsocket"}"
+RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"ws://localhost:7000/product-dev/api/rsocket"}"
 RSOCKET_ENDPOINT="products.request-response-findByInternalId"
-REQUEST_DATA='{ "internalId": "63132" }'
+REQUEST_DATA='{ "internalId": "1" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "######################## (findByInternalId)\n01-RESPONSE_FILE: ${RESPONSE_FILE}\n######################## (findByInternalId)\n"
 
@@ -32,7 +32,7 @@ rm "${RESPONSE_FILE}"
 ###################
 
 RSOCKET_ENDPOINT="products.request-stream-sortByMetricsWeights"
-REQUEST_DATA='{ "salesUnits": "0.001", "stock": "0.999", "page": "0", "size": "10" }'
+REQUEST_DATA='{ "salesUnits": "0.0018", "stock": "0.9990", "profitMargin": "0.0001", "daysInStock": "0.0001", "page": "0", "size": "10" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "######################## (sortByMetricsWeights)\n01-RESPONSE_FILE: ${RESPONSE_FILE}\n######################## (sortByMetricsWeights)\n"
 

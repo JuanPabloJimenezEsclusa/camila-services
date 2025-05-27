@@ -5,37 +5,30 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 workspace="$(pwd)"
 baseProjectPath="../../../"
 
-# variables de entorno
+# Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
 export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
 
 __buildProjects() {
-  # vamos a la base del proyecto (camila-services)
+  # root project workspace path
   cd "${workspace}/${baseProjectPath}"
-
-  # compilar y empaquetar en imágenes todos los módulos del proyecto
-  mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./pom.xml
-
-  # compilar y empaquetar en imágenes cada módulos, comentar para saltar
-  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-admin/pom.xml
-  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-config/pom.xml
-  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-discovery/pom.xml
-  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-gateway/pom.xml
-  #mvn clean spring-boot:build-image -Dmaven.test.skip=true -f ./camila-product-api/pom.xml #-Pnative
+  # compile and build the project
+  mvn clean spring-boot:build-image -Dmaven.test.skip=true -Dmaven.build.cache.enabled=false -f ./pom.xml
 }
 
 __initServices() {
   cd "${workspace}"
-
-  # iniciar los servicios
-  docker-compose up -d --build --force-recreate
-  # mostrar los servicios
-  docker-compose ps
+  # init services
+  docker-compose --file docker-compose.yml up -d --build --force-recreate
+  # show services status
+  docker-compose --file docker-compose.yml ps
 }
 
 main() {
@@ -43,4 +36,5 @@ main() {
   __initServices
 }
 
+echo -e "${SEPARATOR} 🔨 Main: ${0} ${SEPARATOR}"
 time main | tee result-dev-start.log

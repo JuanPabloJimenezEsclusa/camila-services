@@ -5,6 +5,8 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
 COUCHBASE_CONNECTION="${COUCHBASE_CONNECTION:-}"
@@ -16,7 +18,8 @@ MONGO_URI="${MONGO_URI:-}"
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
-  # Create the terraform plan
+  # Destroy the terraform plan
+  echo -e "${SEPARATOR} 🗑️ Destroy the terraform plan. ${SEPARATOR}"
   terraform -chdir=templates apply -destroy -auto-approve \
     -var "couchbase_connection=${COUCHBASE_CONNECTION}" \
     -var "couchbase_username=${COUCHBASE_USERNAME}" \

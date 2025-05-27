@@ -7,6 +7,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: mongodb
+  labels:
+    name: mongodb
 spec: {}
 
 ---
@@ -89,7 +91,7 @@ spec:
         app: mongo
     spec:
       containers:
-        - image: mongodb/mongodb-community-server:8.0.3-ubi9
+        - image: mongodb/mongodb-community-server:8.0.8-ubi9
           name: camila-mongo-product-db
           resources:
             limits:
@@ -111,10 +113,26 @@ spec:
                 secretKeyRef:
                   name: mongo-creds
                   key: password
+          readinessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 90
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - mongosh
+                - --eval
+                - "db.adminCommand('ping')"
+            initialDelaySeconds: 90
+            periodSeconds: 10
           volumeMounts:
             - name: "mongo-data-dir"
               mountPath: "/data/db"
-      automountServiceAccountToken: true
+      automountServiceAccountToken: false
       volumes:
         - name: "mongo-data-dir"
           persistentVolumeClaim:

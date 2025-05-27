@@ -1,24 +1,24 @@
 package com.camila.api.behaviour;
 
+import java.util.List;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.util.List;
-
 @SuppressWarnings("java:S2187")
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductBehaviourTest {
+  private static final String SORT_PRODUCT_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
   private static List<String> parameters = List.of();
   private static WebTestClient.ResponseSpec exchange = null;
 
@@ -26,28 +26,30 @@ public class ProductBehaviourTest {
   private WebTestClient webClient;
 
   @Given("^some metrics weights and page config$")
-  public void someMetricsWeightsAndPageConfig(@NotNull DataTable table) {
+  public void someMetricsWeightsAndPageConfig(final DataTable table) {
     parameters = List.of(
       table.cell(1, 0),
       table.cell(1, 1),
       table.cell(1, 2),
-      table.cell(1, 3));
+      table.cell(1, 3),
+      table.cell(1, 4),
+      table.cell(1, 5));
   }
 
   @When("^consult products sort and paginated$")
   public void consultProductsSortAndPaginated() {
-    exchange = webClient.get().uri("/products?salesUnits={salesUnits}&stock={stock}&page={page}&size={size}", parameters.toArray())
+    exchange = webClient.get().uri(SORT_PRODUCT_URI, parameters.toArray())
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange();
   }
 
   @Then("^receive status$")
-  public void receiveStatus(@NotNull DataTable table) {
+  public void receiveStatus(final DataTable table) {
     exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1, 0)));
   }
 
   @And("^get sorted data$")
-  public void getSortedData(@NotNull DataTable table) {
+  public void getSortedData(final DataTable table) {
     var body = exchange.expectBody();
 
     table.asMaps().forEach(element -> {
@@ -57,7 +59,9 @@ public class ProductBehaviourTest {
         .jsonPath("$[" + index + "].salesUnits").isEqualTo(element.get("salesUnits"))
         .jsonPath("$[" + index + "].stock['S']").isEqualTo(element.get("stock_S"))
         .jsonPath("$[" + index + "].stock['M']").isEqualTo(element.get("stock_M"))
-        .jsonPath("$[" + index + "].stock['L']").isEqualTo(element.get("stock_L"));
+        .jsonPath("$[" + index + "].stock['L']").isEqualTo(element.get("stock_L"))
+        .jsonPath("$[" + index + "].profitMargin").isEqualTo(element.get("profitMargin"))
+        .jsonPath("$[" + index + "].daysInStock").isEqualTo(element.get("daysInStock"));
     });
   }
 

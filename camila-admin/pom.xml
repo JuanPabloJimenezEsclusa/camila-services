@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>com.camila.core</groupId>
     <artifactId>camila-services</artifactId>
@@ -13,35 +14,24 @@
   <name>camila-admin</name>
   <description>Camila Service Admin</description>
 
-  <properties>
-    <java.version>21</java.version>
-    <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
-  </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.codecentric</groupId>
-        <artifactId>spring-boot-admin-dependencies</artifactId>
-        <version>${spring-boot-admin.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
   <dependencies>
+    <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>de.codecentric</groupId>
-      <artifactId>spring-boot-admin-starter-server</artifactId>
-    </dependency>
+
+    <!-- Spring Cloud -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -51,17 +41,19 @@
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
+    <!-- Admin Server -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <scope>runtime</scope>
-      <optional>true</optional>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-server</artifactId>
     </dependency>
+
+    <!-- Monitoring -->
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
-      <scope>runtime</scope>
     </dependency>
+
+    <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -87,30 +79,7 @@
       <plugin>
         <groupId>io.github.git-commit-id</groupId>
         <artifactId>git-commit-id-maven-plugin</artifactId>
-        <version>9.0.0</version>
-        <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-            <phase>initialize</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <generateGitPropertiesFile>true</generateGitPropertiesFile>
-          <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-          <includeOnlyProperties>
-            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.user.(name|email)$</includeOnlyProperty>
-            <includeOnlyProperty>^git.commit.message.(short|full)$</includeOnlyProperty>
-          </includeOnlyProperties>
-          <commitIdGenerationMode>full</commitIdGenerationMode>
-          <failOnNoGitDirectory>false</failOnNoGitDirectory>
-        </configuration>
       </plugin>
     </plugins>
   </build>
-
 </project>

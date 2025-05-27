@@ -3,7 +3,7 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.0.3-ubi9
+    image: mongodb/mongodb-community-server:8.0.8-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: "on-failure"
@@ -41,7 +41,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:7.6.3
+    image: couchbase/server:7.6.5
     container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: "on-failure"
@@ -85,7 +85,15 @@ services:
 
 volumes:
   camila_product_mongodb_data:
+    name: camila_product_mongodb_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
   camila_product_couchbase_data:
+    name: camila_product_couchbase_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
 
 networks:
   camila_product_network:

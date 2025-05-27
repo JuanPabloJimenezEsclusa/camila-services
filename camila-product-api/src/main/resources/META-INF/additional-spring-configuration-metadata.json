@@ -1,0 +1,31 @@
+{
+  "properties": [
+    {
+      "name": "repository.technology",
+      "type": "java.lang.String",
+      "description": "The technology to use for repository implementation (mongo, couchbase, etc.).",
+      "defaultValue": "mongo"
+    },
+    {
+      "name": "openapi.oAuthFlow.url",
+      "type": "java.lang.String",
+      "description": "Base URL for OAuth flow in OpenAPI documentation.",
+      "defaultValue": "http://localhost:8080"
+    },
+    {
+      "name": "openapi.oAuthFlow.tokenUrl",
+      "type": "java.lang.String",
+      "description": "OAuth token URL for OpenAPI documentation."
+    },
+    {
+      "name": "openapi.oAuthFlow.authorizationUrl",
+      "type": "java.lang.String",
+      "description": "OAuth authorization URL for OpenAPI documentation."
+    },
+    {
+      "name": "openapi.oAuthFlow.refreshUrl",
+      "type": "java.lang.String",
+      "description": "OAuth refresh token URL for OpenAPI documentation."
+    }
+  ]
+}

@@ -11,4 +11,7 @@ cd "$(dirname "$0")/.."
 export SPRING_PROFILES_ACTIVE=loc
 
 mvn clean package -Pnative
-mvn spring-boot:build-image -Pnative -Dmaven.test.skip=true -f ./pom.xml
+mvn spring-boot:build-image -Pnative \
+  -Dmaven.build.cache.enabled=false \
+  -Dmaven.test.skip=true \
+  -f ./pom.xml

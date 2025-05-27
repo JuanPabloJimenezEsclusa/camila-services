@@ -9,6 +9,9 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
+SEPARATOR="\n ################################################## \n"
+
 cd "$(dirname "$0")"
 
+echo -e "${SEPARATOR} 🗑️ Delete namespace. ${SEPARATOR}"
 kubectl delete namespaces camila-product-api-ns --grace-period=0 --force

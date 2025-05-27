@@ -3,8 +3,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: camila-product-api-ns
+  labels:
+      name: camila-product-api-ns
 spec: {}
-status: {}
 
 ---
 apiVersion: v1
@@ -63,8 +64,8 @@ metadata:
   name: camila-product-api-creds
   namespace: camila-product-api-ns
 data:
-  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nby1ub2RlcG9ydC1zdmMubW9uZ29kYi5zdmMuY2x1c3Rlci5sb2NhbDoyNzAxNy9jYW1pbGEtZGI="
-  #mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db
+  uri: "bW9uZ29kYjovL2NhbWlsYXVzZXI6Y2FtaWxhdXNlckBtb25nb2RiOjI3MDE3L2NhbWlsYS1kYg=="
+  #mongodb://<camilauser>:<camilauser>@mongodb:27017/camila-db
 
 ---
 apiVersion: v1
@@ -156,10 +157,22 @@ spec:
                 configMapKeyRef:
                   name: camila-product-api-config
                   key: JVM_OPTIONS
+            - name: REPOSITORY_TECHNOLOGY
+              valueFrom:
+                configMapKeyRef:
+                  name: camila-product-api-config
+                  key: REPOSITORY_TECHNOLOGY
           ports:
             - name: api-port
               containerPort: 8080
+              hostPort: 8080
               protocol: TCP
+            - name: rsocket-port
+              containerPort: 7000
+              hostPort: 7000
+            - name: grpc-port
+              containerPort: 6565
+              hostPort: 6565
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -183,7 +196,7 @@ spec:
           volumeMounts:
             - name: "camila-product-api-data-dir"
               mountPath: "/tmp"
-      automountServiceAccountToken: true
+      automountServiceAccountToken: false
       volumes:
         - name: "camila-product-api-data-dir"
           persistentVolumeClaim:
@@ -205,6 +218,16 @@ spec:
       protocol: TCP
       targetPort: 8080
       nodePort: 30080
+    - name: rsocket-port
+      port: 7000
+      protocol: TCP
+      targetPort: 7000
+      nodePort: 30070
+    - name: grpc-port
+      port: 6565
+      protocol: TCP
+      targetPort: 6565
+      nodePort: 30065
     - name: jmx-port
       port: 5005
       protocol: TCP
@@ -215,6 +238,16 @@ spec:
   type: NodePort
 
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: camila-product-api-ns
+spec:
+  type: ExternalName
+  externalName: mongo-nodeport-svc.mongodb.svc.cluster.local
+
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -222,17 +255,48 @@ metadata:
   namespace: camila-product-api-ns
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization"
+    nginx.ingress.kubernetes.io/cors-expose-headers: "Content-Length,Content-Range"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/cors-max-age: "3600"
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
 spec:
   rules:
     - http:
         paths:
           - pathType: Prefix
-            path: /product-int/api/
+            path: /product-int/api
             backend:
               service:
                 name: camila-product-api-nodeport-svc
                 port:
                   number: 30080
+          - pathType: Prefix
+            path: /product-int/api/rsocket
+            backend:
+              service:
+                name: camila-product-api-nodeport-svc
+                port:
+                  number: 30070
+          - pathType: ImplementationSpecific
+            path: /product.ProductService/GetProductByInternalId
+            backend:
+              service:
+                name: camila-product-api-nodeport-svc
+                port:
+                  number: 30065
+          - pathType: ImplementationSpecific
+            path: /product.ProductService/SortByMetricsWeights
+            backend:
+              service:
+                name: camila-product-api-nodeport-svc
+                port:
+                  number: 30065
 
 ---
 apiVersion: autoscaling/v2

@@ -9,7 +9,7 @@ Accept: text/event-stream
 Content-Type: application/json
 
 ### Rest - sortProducts (ndjson)
-GET http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20 HTTP/2
+GET http://localhost:8080/product-dev/api/products?salesUnits=0.70&stock=0.20&profitMargin=0.05&daysInStock=0.05&page=0&size=20 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 
@@ -23,26 +23,30 @@ query findById($internalId: ID) {
 }
 
 {
-"internalId": "100"
+"internalId": "1"
 }
 
 ### Graphql - sortProducts
 GRAPHQL http://localhost:8080/product-dev/api/graphql
 
-query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
-  sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+  sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
     id @include(if: $withDetails)
     internalId @include(if: $withDetails)
     category @include(if: $withDetails)
     name
     salesUnits
     stock
+    profitMargin
+    daysInStock
   }
 }
 
 {
-  "salesUnits": 0.001,
-  "stock": 0.999,
+  "salesUnits": 0.010,
+  "stock": 0.970,
+  "profitMargin": 0.010,
+  "daysInStock": 0.010,
   "page": 0,
   "size": 2,
   "withDetails": false
@@ -90,7 +94,7 @@ Host: ws://localhost:7000/product-dev/api/rsocket
 GRPC localhost:6565/product.ProductService/GetProductByInternalId
 
 {
-  "internalId": "1000"
+  "internalId": "1"
 }
 
 ### GRPC - SortProducts
@@ -98,8 +102,7 @@ GRPC localhost:6565/product.ProductService/SortByMetricsWeights
 
 {
   "requestParams": {
-    "salesUnits": "0.999",
-    "stock": "0.001",
+    "stock": "1.0",
     "page": "0",
     "size": "10000"
   }

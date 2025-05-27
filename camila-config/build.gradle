@@ -1,0 +1,26 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Service Config'
+
+dependencies {
+  // Spring Boot
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+  // Spring Cloud
+  implementation 'org.springframework.cloud:spring-cloud-config-server'
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+  // Observability
+  implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+  implementation 'io.micrometer:micrometer-registry-prometheus'
+  implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+}
