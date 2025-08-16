@@ -14,7 +14,7 @@ baseProjectPath="../../../"
 
 # Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-24.0.1+9.1"}"
 
 __buildProjects() {
   # root project workspace path

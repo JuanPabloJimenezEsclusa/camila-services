@@ -7,11 +7,11 @@ Parameters:
   HostedZoneId:
     Type: String
     Description: The ID of the Route 53 hosted zone
-    Default: Z102528520PCT47CK313B
+    Default: Z05681561G3JHUOXZV5CN
   DomainName:
     Type: String
     Description: The domain name for the Route 53 record set
-    Default: poc.jpje-kops.xyz
+    Default: tech.jpje.xyz
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
   ImageName:
     Type: String
@@ -423,7 +423,7 @@ Resources:
             - Name: SPRING_PROFILES_ACTIVE
               Value: "pre"
             - Name: SERVER_URL
-              Value: "https://poc.jpje-kops.xyz"
+              Value: "https://tech.jpje.xyz"
             - Name: SECURITY_ISSUER_URI
               Value: !Join
                 - "/"

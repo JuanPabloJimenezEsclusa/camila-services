@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Iterator;
 import java.util.Map;
 
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 )
 @DisplayName("[IT][ProductGrpcAdapter] Product grpc adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductGrpcAdapterITCase {
+class ProductGrpcAdapterITCase extends MongoContainerConfig {
   @GrpcClient("product-service")
   private ProductServiceGrpc.ProductServiceBlockingStub blockingStub;
 

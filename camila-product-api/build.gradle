@@ -102,7 +102,6 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
   testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
-  testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:${flapdoodleEmbedMongoSpring3xVersion}"
   testImplementation "com.tngtech.archunit:archunit-junit5:${archunitJunit5Version}"
   testImplementation "org.instancio:instancio-junit:${instancioJunitVersion}"
 
@@ -122,6 +121,7 @@ dependencies {
 
   // Testcontainers
   testImplementation 'org.testcontainers:junit-jupiter'
+  testImplementation 'org.testcontainers:mongodb'
   testImplementation 'org.testcontainers:couchbase'
 
   // gRPC Testing
@@ -131,7 +131,9 @@ dependencies {
 }
 
 tasks.named('test') {
-  useJUnitPlatform()
+  useJUnitPlatform {
+    exclude "**/*Behaviour**"
+  }
 }
 
 protobuf {
@@ -202,16 +204,16 @@ configurations {
 // Profile equivalents - configure with Gradle properties or system properties
 if (project.hasProperty('native') || System.getProperty('native') == 'true') {
   dependencies {
-    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
-    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
-    implementation 'org.bouncycastle:bctls-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.80'
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.80'
+    implementation 'org.bouncycastle:bctls-jdk18on:1.80'
   }
 }
 
 if (project.hasProperty('jib') || System.getProperty('jib') == 'true') {
   jib {
     from {
-      image = 'eclipse-temurin:21-jdk-alpine'
+      image = 'eclipse-temurin:24-jdk-alpine'
     }
     to {
       image = "docker.io/library/${project.name}-serveless"

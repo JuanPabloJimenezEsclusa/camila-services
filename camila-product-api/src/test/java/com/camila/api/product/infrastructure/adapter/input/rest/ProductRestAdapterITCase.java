@@ -12,7 +12,6 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongoAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
@@ -85,8 +84,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // mongo
   MongoReactiveDataAutoConfiguration.class,
   MongoReactiveRepositoriesAutoConfiguration.class,
-  MongoReactiveAutoConfiguration.class,
-  EmbeddedMongoAutoConfiguration.class
+  MongoReactiveAutoConfiguration.class
 })
 @Import({
   // Framework adapter input layer
@@ -193,9 +191,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
       .header("traceId", generateRandomString())
       .header("apiVersion", "1.0.0")
       .exchange()
-      .expectStatus().isOk()
-      .expectBody()
-      .jsonPath("$").isEmpty();
+      .expectStatus().isNotFound()
+      .expectBody().isEmpty();
   }
 
   @Test

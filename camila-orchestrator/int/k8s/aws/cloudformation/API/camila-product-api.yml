@@ -47,7 +47,7 @@ data:
   JVM_OPTIONS: "-Xms512m -Xmx1024m"
   JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
   REPOSITORY_TECHNOLOGY: "mongo"
-  SERVER_URL: "https://poc.jpje-kops.xyz"
+  SERVER_URL: "https://tech.jpje.xyz"
   MONGO_SSL: "true"
   RSOCKET_PORT: "7000"
   GRPC_PORT: "6565"

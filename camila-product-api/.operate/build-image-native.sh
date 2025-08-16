@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 
 # Native build
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-22.0.1+8.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-24.0.1+9.1"}"
 
 # Only for compiling/packaging the native artifact
 mvn clean package \

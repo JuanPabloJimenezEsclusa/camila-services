@@ -9,9 +9,21 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR} 🔨 Stop services ${SEPARATOR}"
-docker-compose --file docker-compose.yml down --remove-orphans --volumes
+__stopServices() {
+  echo -e "${SEPARATOR} 🔨 Stop services ${SEPARATOR}"
+  docker-compose --file docker-compose.yml down --remove-orphans --volumes
+}
 
-echo -e "${SEPARATOR} 🧹 Clean up ${SEPARATOR}"
-docker volume prune --force --all
-docker images --filter reference='camila-*' --format '{{.Repository}}:{{.Tag}}' | xargs -I {} docker rmi -f {}
+__cleanEnvironment() {
+  echo -e "${SEPARATOR} 🧹 Clean up ${SEPARATOR}"
+  docker volume prune --force --all
+  docker images --filter reference='camila-*' --format '{{.Repository}}:{{.Tag}}' | xargs -I {} docker rmi -f {}
+}
+
+main() {
+  __stopServices
+  __cleanEnvironment
+}
+
+echo -e "${SEPARATOR} 🔨 Main: ${0} ${SEPARATOR}"
+time main

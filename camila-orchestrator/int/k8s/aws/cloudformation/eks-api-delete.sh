@@ -13,5 +13,18 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-echo -e "${SEPARATOR} 🗑️ Delete namespace. ${SEPARATOR}"
-kubectl delete namespaces camila-product-api-ns --grace-period=0 --force
+__cleanup() {
+  echo -e "${SEPARATOR} 🗑️ Delete namespace. ${SEPARATOR}"
+  kubectl delete namespaces camila-product-api-ns --grace-period=0 --force
+}
+
+#Main function
+main() {
+  echo "Init ${0##*/} (${FUNCNAME:-})"
+
+  __cleanup
+
+  echo "Done ${0##*/} (${FUNCNAME:-})"
+}
+
+time main

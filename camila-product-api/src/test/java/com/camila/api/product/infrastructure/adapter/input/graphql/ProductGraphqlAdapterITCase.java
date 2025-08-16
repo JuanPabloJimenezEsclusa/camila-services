@@ -8,12 +8,10 @@ import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.infrastructure.adapter.input.graphql.config.GraphqlConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
-import com.camila.api.product.infrastructure.adapter.output.mongo.ProductMongoAdapter;
-import com.camila.api.product.infrastructure.adapter.output.mongo.ProductMongoMapperImpl;
-import com.camila.api.product.infrastructure.adapter.output.mongo.config.DataTestConfig;
-import com.camila.api.product.infrastructure.adapter.output.mongo.config.LocalConfig;
-import de.flapdoodle.embed.mongo.runtime.Mongod;
-import de.flapdoodle.embed.mongo.spring.autoconfigure.ReactiveClientServerFactory;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
@@ -24,6 +22,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
@@ -31,7 +34,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 @GraphQlTest(
-  properties = "repository.technology=mongo",
+  properties = {
+    "spring.main.lazy-initialization=true",
+    "repository.technology=couchbase"
+  },
   controllers = ProductGraphqlAdapter.class
 )
 /*
@@ -47,7 +53,14 @@ import org.springframework.graphql.test.tester.GraphQlTester;
   GrpcClientAutoConfiguration.class,
   GrpcClientHealthAutoConfiguration.class,
   GrpcServerFactoryAutoConfiguration.class,
-  LoadBalancerDefaultMappingsProviderAutoConfiguration.class
+  LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
+  // Security Components
+  ReactiveSecurityAutoConfiguration.class,
+  ReactiveUserDetailsServiceAutoConfiguration.class,
+  // mongo
+  MongoReactiveDataAutoConfiguration.class,
+  MongoReactiveRepositoriesAutoConfiguration.class,
+  MongoReactiveAutoConfiguration.class
 })
 @Import({
   // Slicing spring configuration
@@ -59,17 +72,14 @@ import org.springframework.graphql.test.tester.GraphQlTester;
   // Application layer
   DefaultProductUseCase.class,
   // Framework adapter output layer
-  ProductMongoAdapter.class,
-  ProductMongoMapperImpl.class,
-  LocalConfig.class,
-  DataTestConfig.class,
-  Mongod.class,
-  ReactiveClientServerFactory.class
+  CouchbaseConfig.class,
+  ProductCouchbaseAdapter.class,
+  ProductCouchbaseMapperImpl.class
 })
 @AutoConfigureGraphQlTester
 @DisplayName("[IT][ProductGraphqlAdapter] Product graphql adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductGraphqlAdapterITCase {
+class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
   private static final String ERROR_EXPECTED_VALUE = "Variable 'salesUnits' has an invalid value: "
     + "Expected a Number input, but it was a 'String'";
 
@@ -167,11 +177,9 @@ class ProductGraphqlAdapterITCase {
   void sortProductsWithPageOut() {
     final var query = """
       query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float,
-          $daysInStock: Float, $page: Int, $size: Int) {
+          $daysInStock: Float, $page: Int, $size: Int!) {
         sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin,
-            daysInStock: $daysInStock, page: $page, size: $size) {
-          id
-        }
+            daysInStock: $daysInStock, page: $page, size: $size) { id }
       }
       """;
 
@@ -183,8 +191,8 @@ class ProductGraphqlAdapterITCase {
       .variable("page", 1)
       .variable("size", 10)
       .execute()
-      .path("data.sortProducts").entityList(Product.class)
-      .satisfies(products -> assertThat(products).isEmpty());
+      .errors().expect(responseError ->
+        Objects.requireNonNull(responseError.getMessage()).contains("INTERNAL_ERROR"));
   }
 
   @Test

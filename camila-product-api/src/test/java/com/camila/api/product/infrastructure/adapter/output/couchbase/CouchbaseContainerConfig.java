@@ -43,20 +43,22 @@ public abstract class CouchbaseContainerConfig {
   private static final DockerImageName COUCHBASE_IMAGE = DockerImageName
     .parse("couchbase")
     .asCompatibleSubstituteFor("couchbase/server")
-    .withTag("7.6.5");
+    .withTag("7.6.7");
 
   private static final CouchbaseContainer container = new CouchbaseContainer(COUCHBASE_IMAGE)
     .withCredentials(USERNAME, PASSWORD)
     .withBucket(BUCKET_DEFINITION)
-    .withStartupTimeout(Duration.ofMinutes(3L))
+    .withStartupTimeout(Duration.ofMinutes(1L))
+    .withReuse(true)
     .waitingFor(Wait.forLogMessage(".*Couchbase started.*\\s", 1))
     .waitingFor(Wait.forLogMessage(".*Couchbase is ready for connections.*\\s", 1))
     .withCreateContainerCmdModifier(cmd ->
       Objects.requireNonNull(cmd
         .withName("camila-couchbase-testing-" + UUID.randomUUID())
         .getHostConfig())
-      .withMemory(3L * 1024 * 1024 * 1024)
-      .withMemorySwap(3L * 1024 * 1024 * 1024)
+      .withMemory(2L * 1024 * 1024 * 1024)
+      .withMemorySwap(2L * 1024 * 1024 * 1024)
+      .withMemorySwappiness(2L * 1024 * 1024 * 1024)
       .withCpuCount(1L));
 
   static {

@@ -25,8 +25,8 @@ import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 public class RSocketTestClient {
   // ws://localhost:7000/product-dev/api/rsocket
   // ws://localhost:7000/product-int/api/rsocket
-  // wss://poc.jpje-kops.xyz:7001/product/api/rsocket
-  private static final String API_RSOCKET = "wss://poc.jpje-kops.xyz:7001/product/api/rsocket";
+  // wss://tech.jpje.xyz:7001/product/api/rsocket
+  private static final String API_RSOCKET = "wss://tech.jpje.xyz:7001/product/api/rsocket";
 
   /**
    * The entry point of application.

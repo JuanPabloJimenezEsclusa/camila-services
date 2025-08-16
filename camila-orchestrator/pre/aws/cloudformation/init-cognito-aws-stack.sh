@@ -9,8 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-# Create cognito oauth2 stack
-create_cognito_oauth2_stack() {
+__create_cognito_oauth2_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation create-stack \
@@ -29,8 +28,7 @@ create_cognito_oauth2_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Set user password
-set_user_password() {
+__set_user_password() {
   echo "Init ${FUNCNAME:-} ..."
 
   # Get user pool id
@@ -48,14 +46,14 @@ set_user_password() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
   echo -e "${SEPARATOR} 🔑 Create cognito oauth2 stack. ${SEPARATOR}"
-  create_cognito_oauth2_stack
+  __create_cognito_oauth2_stack
   echo -e "${SEPARATOR} 🔒 Set user password. ${SEPARATOR}"
-  set_user_password
+  __set_user_password
 
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }

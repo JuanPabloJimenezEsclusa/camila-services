@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 # Require install: https://github.com/making/rsc
 # Be careful, this is a not maintained project
 
-RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"ws://localhost:7000/product-int/api/rsocket"}"
+RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"wss://tech.jpje.xyz/product-int/api/rsocket"}"
 RSOCKET_ENDPOINT="products.request-response-findByInternalId"
 REQUEST_DATA='{ "internalId": "1000" }'
 RESPONSE_FILE=$(mktemp)

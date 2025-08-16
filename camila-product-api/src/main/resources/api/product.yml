@@ -57,14 +57,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductDTO'
+        '400':
+          description: Bad Request
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
         '401':
           description: Unauthorized
           content:
             text/event-stream: { }
             application/x-ndjson: { }
             application/json: { }
-        '406':
-          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
+        '417':
+          description: Expectation Failed
           content:
             text/event-stream: { }
             application/x-ndjson: { }
@@ -116,14 +128,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ProductDTO'
+        '400':
+          description: Bad Request
+          content:
+            text/event-stream: { }
+            application/x-ndjson: { }
+            application/json: { }
         '401':
           description: Unauthorized
           content:
             text/event-stream: { }
             application/x-ndjson: { }
             application/json: { }
-        '406':
-          description: Not Acceptable
+        '417':
+          description: Expectation Failed
           content:
             text/event-stream: { }
             application/x-ndjson: { }

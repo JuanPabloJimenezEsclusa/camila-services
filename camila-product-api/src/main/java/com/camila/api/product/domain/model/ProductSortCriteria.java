@@ -56,7 +56,7 @@ public class ProductSortCriteria {
             throw new IllegalArgumentException("Weight for %s must be non-negative".formatted(entry.getKey()));
           }
           map.put(metric, weight);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
           throw new IllegalArgumentException("Invalid weight value for %s".formatted(entry.getKey()));
         }
       }, HashMap::putAll);
@@ -72,7 +72,7 @@ public class ProductSortCriteria {
   private static int parseIntParam(final String value, final String paramName) {
     try {
       return Integer.parseInt(value);
-    } catch (NumberFormatException e) {
+    } catch (NumberFormatException _) {
       throw new IllegalArgumentException("Invalid %s parameter: %s".formatted(paramName, value));
     }
   }

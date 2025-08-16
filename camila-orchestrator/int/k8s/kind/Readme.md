@@ -25,7 +25,8 @@ This setup uses Kind to create a local Kubernetes cluster inside Docker containe
 
 ---
 
-- [Kind >= 0.27.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+* Kind ~= [0.29.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+* K9s ~= [v0.50.9](https://github.com/derailed/k9s/releases)
 
 ## 🚀 Setup
 

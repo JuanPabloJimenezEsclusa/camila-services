@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.camila.api.product.domain.exception.NotFoundException;
 import com.camila.api.product.domain.exception.ProductException;
 import com.camila.api.product.domain.model.AppliedWeights;
 import com.camila.api.product.domain.model.Product;
@@ -116,7 +117,7 @@ class DefaultProductUseCaseUnitTest {
     // Then: Should return empty mono
     productUseCase.findByInternalId(internalId)
       .as(StepVerifier::create)
-      .verifyComplete();
+      .verifyError(NotFoundException.class);
 
     verify(productRepository).findByInternalId(internalId);
     verifyNoMoreInteractions(productRepository);
@@ -183,8 +184,8 @@ class DefaultProductUseCaseUnitTest {
   }
 
   @Test
-  @DisplayName("Should return empty flux when no products match sort criteria")
-  void shouldReturnEmptyFluxWhenNoProductsMatchSortCriteria() {
+  @DisplayName("Should handle exception when no products match sort criteria")
+  void shouldHandleExceptionWhenNoProductsMatchSortCriteria() {
     // Given: Repository returns empty flux
     final var requestParams = Map.of("salesUnits", "1.0");
     when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
@@ -194,7 +195,7 @@ class DefaultProductUseCaseUnitTest {
     // Then: Should return empty flux
     productUseCase.sortByMetricsWeights(requestParams)
       .as(StepVerifier::create)
-      .verifyComplete();
+      .verifyError(NotFoundException.class);
 
     verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
     verifyNoMoreInteractions(productRepository);

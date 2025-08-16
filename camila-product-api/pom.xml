@@ -13,7 +13,7 @@
   <groupId>com.camila.api</groupId>
   <artifactId>camila-product-api</artifactId>
   <name>camila-product-api</name>
-  <description>REST API for Camila Product Service</description>
+  <description>Camila Product Service (API)</description>
 
   <dependencies>
     <!-- Spring Boot Core -->
@@ -255,12 +255,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
-      <version>${de.flapdoodle.embed.mongo.spring3x.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.tngtech.archunit</groupId>
       <artifactId>archunit-junit5</artifactId>
       <version>${archunit-junit5.version}</version>
@@ -334,6 +328,11 @@
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
       <artifactId>couchbase</artifactId>
       <scope>test</scope>
     </dependency>
@@ -388,7 +387,7 @@
             <path>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.5.0</version>
+              <version>3.5.5</version>
             </path>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -440,55 +439,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-prepare-agent-integration</id>
-            <goals>
-              <goal>prepare-agent-integration</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>merge-results</id>
-            <goals>
-              <goal>merge</goal>
-            </goals>
-            <phase>verify</phase>
-            <configuration>
-              <fileSets>
-                <fileSet>
-                  <directory>${project.build.directory}</directory>
-                  <includes>
-                    <include>*.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
-            </configuration>
-          </execution>
-          <execution>
-            <id>report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <phase>verify</phase>
-            <configuration>
-              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
-              <excludes>
-                <exclude>**/input/grpc/**</exclude>
-                <exclude>*/input/rest/api/**</exclude>
-                <exclude>**/input/rest/dto/**</exclude>
-                <exclude>**/input/security/*Config**</exclude>
-                <exclude>**/*MapperImpl**</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
 
       <!-- Versioning -->
@@ -586,17 +536,17 @@
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.80</version>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.80</version>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bctls-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.80</version>
         </dependency>
       </dependencies>
       <build>
@@ -680,7 +630,7 @@
             <version>${jib-maven-plugin.version}</version>
             <configuration>
               <from>
-                <image>eclipse-temurin:21-jdk-alpine</image>
+                <image>eclipse-temurin:24-jdk-alpine</image>
               </from>
               <to>
                 <image>docker.io/library/${project.name}-serveless</image>
@@ -895,6 +845,7 @@
             <reportSets>
               <reportSet>
                 <reports>
+                  <report>index</report>
                   <report>summary</report>
                   <report>dependencies</report>
                   <report>plugins</report>
@@ -966,14 +917,14 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven-compiler-plugin.version}</version>
             <configuration>
-              <source>21</source>
-              <target>21</target>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
               <encoding>UTF-8</encoding>
               <annotationProcessorPaths>
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.5.0</version>
+                  <version>3.5.5</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>
@@ -989,7 +940,7 @@
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.2.5</version>
+                  <version>6.2.10</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>

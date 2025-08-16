@@ -57,7 +57,7 @@ query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $day
   "profitMargin": 0.001,
   "daysInStock": 0.997,
   "page": 0,
-  "size": 2,
+  "size": 200,
   "withDetails": false
 }
 
@@ -79,7 +79,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
   "profitMargin": "0.0000001",
   "daysInStock": "0.9999997",
   "page": "0",
-  "size": "5"
+  "size": "500"
 }
 === wait-for-server
 

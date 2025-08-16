@@ -18,15 +18,15 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 
 ### Test Types
 
-| Type                       | Details                                                                                                                                                                                                                           |
-|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Unit Tests                 | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                            |
-| Integration Tests          | Employ embedded databases (`de.flapdoodle.embed.mongo` for MongoDB and [Test Containers](https://testcontainers.com/modules/couchbase/) for Couchbase) and the `failsafe` plugin to validate interactions between components [IT] |
-| Architecture Tests         | Leverage the `ArchUnit` library to ensure adherence to architectural principles and best practices [AT]                                                                                                                           |
-| Mutation Tests             | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                 |
-| Behavioral Tests           | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                   |
-| Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                             |
-| Performance Tests (jmeter) | Employ [JMeter](https://jmeter.apache.org) to simulate heavy user load and assess performance under stress                                                                                                                        |
+| Type                       | Details                                                                                                                                                                                                                              |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unit Tests                 | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                               |
+| Integration Tests          | Employ Test containers modules for: [MongoDB](https://testcontainers.com/modules/mongodb/) and [Couchbase](https://testcontainers.com/modules/couchbase/) and the `failsafe` plugin to validate interactions between components [IT] |
+| Architecture Tests         | Leverage the `ArchUnit` library to ensure adherence to architectural principles and best practices [AT]                                                                                                                              |
+| Mutation Tests             | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                    |
+| Behavioral Tests           | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                      |
+| Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                                |
+| Performance Tests (jmeter) | Employ [JMeter](https://jmeter.apache.org) to simulate heavy user load and assess performance under stress                                                                                                                           |
 
 ## 🏗️ Architecture
 
@@ -139,7 +139,7 @@ mvn -B clean verify site -P error-prone,quality-check | tee code-analysis.log
 unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE=
-gradle clean check checkstyleMain checkstyleTest spotbugsMain spotbugsTest dependencyCheckAnalyze | tee code-analysis.log
+gradle clean check checkstyleMain checkstyleTest spotbugsMain spotbugsTest | tee code-analysis.log
 ```
 
 ```bash

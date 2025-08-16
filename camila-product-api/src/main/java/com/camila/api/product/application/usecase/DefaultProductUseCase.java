@@ -2,6 +2,7 @@ package com.camila.api.product.application.usecase;
 
 import java.util.Map;
 
+import com.camila.api.product.domain.exception.NotFoundException;
 import com.camila.api.product.domain.exception.ProductException;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.model.ProductSortCriteria;
@@ -35,7 +36,8 @@ public class DefaultProductUseCase implements ProductUseCase {
   public Mono<Product> findByInternalId(final String internalId) {
     return productRepository.findByInternalId(internalId)
       .doOnNext(product -> log.debug("find By Id: {}", product))
-      .onErrorResume(e -> Mono.error(new ProductException(e)));
+      .onErrorResume(e -> Mono.error(new ProductException(e)))
+      .switchIfEmpty(Mono.error(NotFoundException::new));
   }
 
   @Override
@@ -45,7 +47,8 @@ public class DefaultProductUseCase implements ProductUseCase {
       final var appliedWeights = ProductWeightResolver.resolve(criteria.getMetricWeights());
       return productRepository.sortByMetricsWeights(appliedWeights, criteria.getOffset(), criteria.getLimit())
         .doOnNext(product -> log.debug("find sort by: {}", product))
-        .onErrorResume(e -> Flux.error(new ProductException(e)));
+        .onErrorResume(e -> Flux.error(new ProductException(e)))
+        .switchIfEmpty(Flux.error(NotFoundException::new));
     } catch (IllegalArgumentException e) {
       return Flux.error(e);
     }

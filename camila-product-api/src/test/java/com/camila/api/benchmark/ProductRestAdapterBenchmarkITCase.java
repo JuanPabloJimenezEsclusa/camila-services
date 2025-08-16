@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
 import com.camila.api.ProductApiApplication;
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @DisplayName("[JMH-T][ProductRestAdapter] Java benchmark tests")
 @SuppressWarnings({"java:S5786"}) // JMH requires public test class
-public class ProductRestAdapterBenchmarkITCase {
+public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
   private static final SecureRandom RANDOM_VALUES = new SecureRandom();
   private static WebTestClient webClient;
 

@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.12.1"
+  required_version = ">= 1.13.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.98.0"
+      version = "~> 6.10.0"
     }
   }
 }
@@ -16,7 +16,7 @@ provider "aws" {
 variable "domain_name" {
   type        = string
   description = "The domain name for the Route 53 record set"
-  default     = "poc.jpje-kops.xyz"
+  default     = "tech.jpje.xyz"
 }
 
 variable "couchbase_connection" {

@@ -8,14 +8,12 @@ import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveRe
 import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseRepositoriesAutoConfiguration;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 /**
  * The type Mongo config.
  */
 @Configuration
-@Profile("loc|local-compose|int|dev|pre|pro")
 @Conditional(MongoCondition.class)
 @EnableReactiveMongoRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")
 @EnableAutoConfiguration(exclude = {
@@ -26,5 +24,4 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
   CouchbaseReactiveDataAutoConfiguration.class,
   CouchbaseReactiveRepositoriesAutoConfiguration.class
 })
-public class MongoConfig {
-}
+public class MongoConfig {}

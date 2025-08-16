@@ -15,7 +15,7 @@ COUCHBASE_PASSWORD="${COUCHBASE_PASSWORD:-}"
 MONGO_URI="${MONGO_URI:-}"
 
 # Function to validate environment variables
-validate_env_var() {
+__validate_env_var() {
   local var_name="${1}"
   local var_value="${2}"
 
@@ -25,7 +25,7 @@ validate_env_var() {
   fi
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
@@ -41,14 +41,14 @@ main() {
   echo -e "${SEPARATOR} 🧪 Validate required environment variables. ${SEPARATOR}"
   terraform -chdir=templates validate
 
-  validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
-  validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
-  validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
-  validate_env_var "MONGO_URI" "${MONGO_URI}"
+  __validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
+  __validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
+  __validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
+  __validate_env_var "MONGO_URI" "${MONGO_URI}"
 
   # Run Terraform plan
   echo -e "${SEPARATOR} 📝 Run Terraform plan. ${SEPARATOR}"
-  terraform -chdir=templates plan -compact-warnings -out=tfplan \
+  terraform -chdir=templates plan -out=tfplan \
     -var "couchbase_connection=${COUCHBASE_CONNECTION}" \
     -var "couchbase_username=${COUCHBASE_USERNAME}" \
     -var "couchbase_password=${COUCHBASE_PASSWORD}" \

@@ -9,8 +9,30 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-# Create eks stack
-create_eks_stack() {
+__install_aws_cli() {
+  echo "Init ${FUNCNAME:-} ..."
+
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip awscliv2.zip
+  sudo ./aws/install --update
+  rm -rf awscliv2.zip aws
+  aws --version
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
+
+__install_k9s() {
+  echo "Init ${FUNCNAME:-} ..."
+
+  wget https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb \
+    && sudo apt install ./k9s_linux_amd64.deb \
+    && rm k9s_linux_amd64.deb || true
+  k9s version
+
+  echo "End ${FUNCNAME:-} successfully!"
+}
+
+__create_eks_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation create-stack \
@@ -27,11 +49,17 @@ create_eks_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
+
+  echo -e "${SEPARATOR} 🛠️ Install aws cli. ${SEPARATOR}"
+  __install_aws_cli
+  echo -e "${SEPARATOR} 🛠️ Install k9s. ${SEPARATOR}"
+  __install_k9s
   echo -e "${SEPARATOR} 🛠️ Create eks stack. ${SEPARATOR}"
-  create_eks_stack
+  __create_eks_stack
+
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }
 

@@ -1,20 +1,30 @@
 ### Rest - Actuator
-GET https://poc.jpje-kops.xyz/product-int/api/actuator/health/readiness HTTP/2
+GET https://tech.jpje.xyz/product-int/api/actuator/health/readiness HTTP/2
+Accept: application/json
+Content-Type: application/json
+
+### Rest - Actuator - MongoDB
+GET https://tech.jpje.xyz/product-int/api/actuator/health/mongo HTTP/2
+Accept: application/json
+Content-Type: application/json
+
+### Rest - Actuator - Couchbase
+GET https://tech.jpje.xyz/product-int/api/actuator/health/couchbase HTTP/2
 Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
-GET https://poc.jpje-kops.xyz/product-int/api/products/99999 HTTP/2
+GET https://tech.jpje.xyz/product-int/api/products/99999 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 
 ### Rest - sortProducts (ndjson)
-GET https://poc.jpje-kops.xyz/product-int/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+GET https://tech.jpje.xyz/product-int/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 
 ### Graphql - findById
-GRAPHQL https://poc.jpje-kops.xyz/product-int/api/graphql
+GRAPHQL https://tech.jpje.xyz/product-int/api/graphql
 
 query findById($internalId: ID) {
   findById(internalId: $internalId) {
@@ -27,7 +37,7 @@ query findById($internalId: ID) {
 }
 
 ### Graphql - sortProducts
-GRAPHQL https://poc.jpje-kops.xyz/product-int/api/graphql
+GRAPHQL https://tech.jpje.xyz/product-int/api/graphql
 
 query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
   sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
@@ -49,7 +59,7 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 ### Websockt
-WEBSOCKET wss://poc.jpje-kops.xyz/product-int/api/ws/products
+WEBSOCKET wss://tech.jpje.xyz/product-int/api/ws/products
 Content-Type: application/json
 
 ===
@@ -64,7 +74,7 @@ Content-Type: application/json
 
 ### RSocket request rsponse with websocket - findByInternalId
 RSOCKET products.request-response-findByInternalId
-Host: wss://poc.jpje-kops.xyz/product-int/api/rsocket
+Host: wss://tech.jpje.xyz/product-int/api/rsocket
 
 {
   "internalId": "5"
@@ -72,7 +82,7 @@ Host: wss://poc.jpje-kops.xyz/product-int/api/rsocket
 
 ### RSocket request stream with websocket - SortProducts
 RSOCKET products.request-stream-sortByMetricsWeights
-Host: wss://poc.jpje-kops.xyz/product-int/api/rsocket
+Host: wss://tech.jpje.xyz/product-int/api/rsocket
 
 {
   "salesUnits": "0.001",
@@ -82,14 +92,14 @@ Host: wss://poc.jpje-kops.xyz/product-int/api/rsocket
 }
 
 ### GRPC - findByInternalId
-GRPC grpcs://poc.jpje-kops.xyz/product.ProductService/GetProductByInternalId
+GRPC grpcs://tech.jpje.xyz/product.ProductService/GetProductByInternalId
 
 {
   "internalId": "1000"
 }
 
 ### GRPC - SortProducts
-GRPC grpcs://poc.jpje-kops.xyz/product.ProductService/SortByMetricsWeights
+GRPC grpcs://tech.jpje.xyz/product.ProductService/SortByMetricsWeights
 
 {
   "requestParams": {

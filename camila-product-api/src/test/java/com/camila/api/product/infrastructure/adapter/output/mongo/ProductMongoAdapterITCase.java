@@ -29,7 +29,7 @@ import reactor.test.StepVerifier;
 @EntityScan(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")
 @ComponentScan(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")
 @DisplayName("[IT][ProductMongoAdapter] Product mongo adapter test")
-class ProductMongoAdapterITCase {
+class ProductMongoAdapterITCase extends MongoContainerConfig {
 
   @Autowired
   private ProductRepository productRepository;
