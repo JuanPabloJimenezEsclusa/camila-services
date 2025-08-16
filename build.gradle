@@ -3,7 +3,7 @@ plugins {
   id 'java'
   id 'jacoco'
   id 'org.sonarqube' version '6.2.0.5505'
-  id 'org.springframework.boot' version '3.5.4' apply false
+  id 'org.springframework.boot' version '3.5.5' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.10.6' apply false
   id 'com.github.spotbugs' version '6.2.4' apply false
@@ -38,8 +38,8 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '3.5.4'
-    springFrameworkVersion = '6.2.5'
+    springBootVersion = '3.5.5'
+    springFrameworkVersion = '6.2.10'
     springCloudVersion = '2025.0.0'
     springBootAdminVersion = '3.5.2'
 
@@ -52,17 +52,17 @@ subprojects {
 
     // Testing
     testcontainersVersion = '1.20.6'
-    cucumberVersion = '7.22.0'
-    junitPlatformSuiteVersion = '1.12.2'
-    archunitJunit5Version = '1.4.0'
+    cucumberVersion = '7.27.2'
+    junitPlatformSuiteVersion = '1.13.4'
+    archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.4.0'
     awaitilityVersion = '4.2.2'
     jmhVersion = '1.37'
 
     // API Documentation
-    springdocOpenapiVersion = '2.8.8'
-    graphqlJavaVersion = '23.1'
-    graphqlJavaExtendedScalarsVersion = '22.0'
+    springdocOpenapiVersion = '2.8.9'
+    graphqlJavaVersion = '24.2'
+    graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
     protobufJavaVersion = '3.25.3'
@@ -71,7 +71,7 @@ subprojects {
     // Tools
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
-    jspecifyVersion = '0.3.0'
+    jspecifyVersion = '1.0.0'
     chaosMonkeySpringBootVersion = '3.1.0'
 
     // Plugins
