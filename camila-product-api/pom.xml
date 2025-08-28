@@ -536,7 +536,7 @@
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk18on</artifactId>
-          <version>1.80</version>
+          <version>1.81</version>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
@@ -1067,7 +1067,7 @@
                 <dependency>
                   <groupId>org.pitest</groupId>
                   <artifactId>pitest-junit5-plugin</artifactId>
-                  <version>1.2.2</version>
+                  <version>1.2.3</version>
                 </dependency>
               </dependencies>
             </plugin>

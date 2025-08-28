@@ -82,7 +82,7 @@
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
-    <cucumber.version>7.22.2</cucumber.version>
+    <cucumber.version>7.27.2</cucumber.version>
     <testcontainers.version>1.21.3</testcontainers.version>
     <awaitility.version>4.3.0</awaitility.version>
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
@@ -114,7 +114,7 @@
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <pitest-maven.version>1.20.1</pitest-maven.version>
-    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
+    <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
@@ -223,6 +223,23 @@
         <version>${testcontainers.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <!-- JUnit Platform - Force version alignment -->
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-engine</artifactId>
+        <version>${junit-platform-suite.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-commons</artifactId>
+        <version>${junit-platform-suite.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>${junit-platform-suite.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

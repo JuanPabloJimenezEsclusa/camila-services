@@ -91,7 +91,7 @@ spec:
         app: mongo
     spec:
       containers:
-        - image: mongodb/mongodb-community-server:8.0.12-ubi9
+        - image: mongodb/mongodb-community-server:8.0.13-ubi9
           name: camila-mongo-product-db
           resources:
             limits:
