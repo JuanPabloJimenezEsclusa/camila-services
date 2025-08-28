@@ -8,9 +8,7 @@ if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 cd "$(dirname "$0")/.."
 
 # AOT compile
-export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
-
-mvn clean compile spring-boot:process-aot package \
+SPRING_PROFILES_ACTIVE="loc" mvn clean compile spring-boot:process-aot package \
   -Dmaven.build.cache.enabled=false \
   -Dspring-boot.run.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED" \
   -f ./pom.xml

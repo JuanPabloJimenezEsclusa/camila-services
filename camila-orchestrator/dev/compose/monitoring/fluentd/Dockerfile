@@ -1,8 +1,10 @@
-FROM fluentd:v1.18.0-1.0
+FROM fluent/fluentd:v1.18-debian
 
 USER root
 
-RUN gem install fluent-plugin-elasticsearch
+# https://github.com/uken/fluent-plugin-elasticsearch
+RUN gem install fluent-plugin-elasticsearch --no-document --version "6.0.0" \
+    && gem cleanup
 
 USER fluent
 

@@ -2,6 +2,7 @@ package com.camila.api.behaviour;
 
 import java.util.List;
 
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,11 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SuppressWarnings("java:S2187")
 @CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  properties = {"repository.technology=mongo"}
+)
 public class ProductBehaviourTest {
   private static final String SORT_PRODUCT_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
   private static List<String> parameters = List.of();
@@ -65,13 +70,17 @@ public class ProductBehaviourTest {
     });
   }
 
-  @And("empty body")
-  public void emptyBody() {
-    exchange.expectBody().jsonPath("$").isEmpty();
-  }
-
   @And("no body")
   public void noBody() {
     exchange.expectBody().jsonPath("$").doesNotExist();
+  }
+
+  /*
+    When spring context init, it will start a mongo container.
+    This class is used to force the initialization of the MongoContainerConfig class.
+    Without this, the mongo container will not start.
+   */
+  @Component
+  public static class TestContainerConfig extends MongoContainerConfig {
   }
 }

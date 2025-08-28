@@ -4,16 +4,33 @@ Description: 'AWS EKS Cluster with EFS, ALB and Route 53 configuration'
 Parameters:
   ClusterName:
     Type: String
+    Description: Name of the EKS cluster
     Default: camila-eks-cluster
   NodeGroupName:
     Type: String
+    Description: Name of the EKS node group
     Default: camila-node-group
   DomainName:
     Type: String
-    Default: poc.jpje-kops.xyz
+    Description: Domain name for the Route 53 hosted zone
+    Default: tech.jpje.xyz
   HostedZoneId:
     Type: AWS::Route53::HostedZone::Id
-    Default: Z102528520PCT47CK313B
+    Description: ID of the Route 53 hosted zone
+    Default: Z05681561G3JHUOXZV5CN
+  # Optionals
+  AdminUserArn:
+    Type: String
+    Description: ARN of the IAM user that should have admin access to the EKS cluster
+    Default: ""
+  AdminRoleArn:
+    Type: String
+    Description: ARN of the IAM role that should have admin access to the EKS cluster
+    Default: ""
+
+Conditions:
+  HasAdminUser: !Not [!Equals [!Ref AdminUserArn, ""]]
+  HasAdminRole: !Not [!Equals [!Ref AdminRoleArn, ""]]
 
 Resources:
   VPC:
@@ -182,10 +199,14 @@ Resources:
     Type: AWS::EKS::Cluster
     Properties:
       Name: !Ref ClusterName
-      Version: '1.32'
+      Version: '1.33'
       RoleArn: !GetAtt EKSClusterRole.Arn
       UpgradePolicy:
         SupportType: STANDARD
+      # Enable API access configuration
+      AccessConfig:
+        AuthenticationMode: API_AND_CONFIG_MAP
+        BootstrapClusterCreatorAdminPermissions: true
       ResourcesVpcConfig:
         SecurityGroupIds:
           - !Ref ClusterSecurityGroup
@@ -255,7 +276,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: vpc-cni
-      AddonVersion: v1.19.5-eksbuild.1
+      AddonVersion: v1.20.0-eksbuild.1
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -264,7 +285,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: coredns
-      AddonVersion: v1.11.4-eksbuild.14
+      AddonVersion: v1.12.2-eksbuild.4
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -273,7 +294,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: kube-proxy
-      AddonVersion: v1.32.3-eksbuild.7
+      AddonVersion: v1.33.0-eksbuild.2
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -365,6 +386,31 @@ Resources:
       Tags:
         - Key: "ENTORN"
           Value: "INT"
+
+  # EKS Access Entries for IAM principals
+  AdminUserAccessEntry:
+    Type: AWS::EKS::AccessEntry
+    Condition: HasAdminUser
+    Properties:
+      ClusterName: !Ref EKSCluster
+      PrincipalArn: !Ref AdminUserArn
+      AccessPolicies:
+        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+          AccessScope:
+            Type: cluster
+      Type: STANDARD
+
+  AdminRoleAccessEntry:
+    Type: AWS::EKS::AccessEntry
+    Condition: HasAdminRole
+    Properties:
+      ClusterName: !Ref EKSCluster
+      PrincipalArn: !Ref AdminRoleArn
+      AccessPolicies:
+        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+          AccessScope:
+            Type: cluster
+      Type: STANDARD
 
 Outputs:
   VpcId:

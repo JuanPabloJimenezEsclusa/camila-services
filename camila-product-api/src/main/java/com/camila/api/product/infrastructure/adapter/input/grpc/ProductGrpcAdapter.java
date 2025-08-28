@@ -1,7 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
 import java.time.Duration;
-import java.util.Map;
 
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
@@ -13,6 +12,7 @@ import reactor.core.scheduler.Schedulers;
  */
 @GrpcService
 class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
+  private static final long TIMEOUT_IN_SECONDS = 30L;
   private final ProductUseCase productUseCase;
 
   /**
@@ -27,10 +27,9 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
   @Override
   public void getProductByInternalId(final ProductInternalId request,
                                      final StreamObserver<Product> responseObserver) {
-    var domainProduct = productUseCase.findByInternalId(request.getInternalId());
-    domainProduct
+    productUseCase.findByInternalId(request.getInternalId())
       .subscribeOn(Schedulers.boundedElastic())
-      .timeout(Duration.ofMillis(5_000L))
+      .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
       .subscribe(
         product -> responseObserver.onNext(convertToGrpcProduct(product)),
         responseObserver::onError,
@@ -40,11 +39,9 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
   @Override
   public void sortByMetricsWeights(final SortByMetricsWeightsRequest request,
                                    final StreamObserver<Product> responseObserver) {
-    Map<String, String> requestParams = request.getRequestParamsMap();
-    var domainProducts = productUseCase.sortByMetricsWeights(requestParams);
-    domainProducts
+    productUseCase.sortByMetricsWeights(request.getRequestParamsMap())
       .subscribeOn(Schedulers.boundedElastic())
-      .timeout(Duration.ofMillis(30_000L))
+      .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
       .subscribe(
         product -> responseObserver.onNext(convertToGrpcProduct(product)),
         responseObserver::onError,

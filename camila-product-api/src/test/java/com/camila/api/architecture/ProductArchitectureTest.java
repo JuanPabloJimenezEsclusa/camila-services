@@ -87,7 +87,7 @@ class ProductArchitectureTest {
         // Testing dependencies
         "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..", "org.awaitility..",
         "org.springframework.test..", "org.springframework.boot.test..",
-        "org.springframework.cloud..", "de.flapdoodle.embed.mongo..", "org.springframework.boot.autoconfigure..",
+        "org.springframework.cloud..", "org.springframework.boot.autoconfigure..",
         // AOT
         "org.springframework.aot.generate..", "org.springframework.beans.factory..");
   @ArchTest
@@ -104,7 +104,7 @@ class ProductArchitectureTest {
         // Couchbase
         "com.couchbase.client..", "com.github.dockerjava.api..",
         // MongoDB
-        "org.bson..", "de.flapdoodle.embed..", "de.flapdoodle.reverse.transitions..",
+        "org.bson..", "com.mongodb.client..",
         "org.springframework.data.mongodb..", "org.springframework.data.repository..", "org.springframework.data.domain..",
         // Couchbase
         "org.springframework.data.couchbase..", "org.springframework.data.annotation..",

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.2">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="camila-product-api" enabled="true">
       <boolProp name="TestPlan.functional_mode">false</boolProp>
@@ -21,8 +21,8 @@
           <elementProp name="BASE_URL" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL,poc.jpje-kops.xyz)}</stringProp>
-            <stringProp name="Argument.desc">localhost | gateway | poc.jpje-kops.xyz</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL,tech.jpje.xyz)}</stringProp>
+            <stringProp name="Argument.desc">localhost | gateway | tech.jpje.xyz</stringProp>
           </elementProp>
           <elementProp name="BASE_URL_PORT" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL_PORT</stringProp>

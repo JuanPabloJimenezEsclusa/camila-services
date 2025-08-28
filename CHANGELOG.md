@@ -5,10 +5,32 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] chore: update dependencies versions**
+
+
+[955a6b674e00e94](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/955a6b674e00e94) JuanPabloJimenezEsclusa *2025-08-26 15:11:45*
+
+**[GH-32] chore: update dependencies versions**
+
+
+[0ab5f577d69cf97](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0ab5f577d69cf97) JuanPabloJimenezEsclusa *2025-08-16 20:16:56*
+
+**Merge pull request #31 from JuanPabloJimenezEsclusa/release/GH-29**
+
+ * [GH-29] Release 202505
+
+[f76a7456a0b8800](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f76a7456a0b8800) Juan Pablo Jimenez Esclusa *2025-05-27 01:19:51*
+
+**Merge pull request #30 from JuanPabloJimenezEsclusa/feature/GH-29-update-dependencies**
+
+ * [GH-29] refactor: update dependency tree
+
+[641d468a1236e14](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/641d468a1236e14) Juan Pablo Jimenez Esclusa *2025-05-27 00:37:16*
+
 **[GH-29] refactor(paas): update aws deployments**
 
 
-[79dfe0ede26f867](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/79dfe0ede26f867) JuanPabloJimenezEsclusa *2025-05-26 01:08:20*
+[2552fd37abac73f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2552fd37abac73f) JuanPabloJimenezEsclusa *2025-05-26 22:55:00*
 
 **[GH-29] chore: update dependencies and plugins versions**
 

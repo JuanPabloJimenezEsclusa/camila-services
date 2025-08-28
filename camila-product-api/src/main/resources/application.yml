@@ -2,6 +2,10 @@
 spring:
   application:
     name: "@project.name@"
+  # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
+  threads:
+    virtual:
+      enabled: true
   banner:
     # https://www.ascii-art-generator.org/
     location: classpath:/api-banner.txt
@@ -126,14 +130,6 @@ management:
 logging:
   charset:
     console: UTF-8
-  structured:
-    format:
-      console: ecs
-    ecs:
-      service:
-        name: "${info.app.name}"
-        version: "${info.app.version}"
-        environment: "${spring.profiles.active}"
   level:
     root: INFO
     com.camila.api.product: DEBUG
@@ -151,12 +147,6 @@ logging:
     net.devh.boot.grpc.server: WARN
     io.grpc.netty: WARN
     reactor: WARN
-
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 8.0.5
 
 server:
   port: ${PORT:8080}
@@ -423,6 +413,16 @@ openapi:
 
 # Enable logging for all levels
 logging:
+  # https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.structured
+  structured:
+    format:
+      # https://www.elastic.co/docs/reference/ecs
+      console: ecs
+    ecs:
+      service:
+        name: "${info.app.name}"
+        version: "${info.app.version}"
+        environment: "${spring.profiles.active}"
   level:
     reactor: ERROR
     org.hibernate.validator: ERROR

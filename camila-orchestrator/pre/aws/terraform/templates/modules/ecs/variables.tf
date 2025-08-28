@@ -1,6 +1,6 @@
 variable "hosted_zone_id" {
   description = "The ID of the Route 53 hosted zone"
-  default     = "Z102528520PCT47CK313B"
+  default     = "Z05681561G3JHUOXZV5CN"
 }
 
 variable "domain_name" {

@@ -26,16 +26,17 @@ Microservice example. Implements a product API with the following features:
 
 ---
 
-* JDK >= 21
-* Docker ~= 27.3.0
-* Maven >= 3.9.4
-* Gradle >= 8.14.0
-* Spring >= 6.x
-* Spring-boot >= 3.4.x
-* MongoDB >= 8.x
-* Couchbase >= 7.x
+* JDK ~= [24.x](https://openjdk.org/projects/jdk/24/)
+* Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
+* Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
+* Gradle ~= [9.0.0](https://gradle.org/releases/#9.0.0)
+* Spring ~= [6.x](https://spring.io/projects/spring-framework#learn)
+* Spring-boot ~= [3.5.x](https://spring.io/projects/spring-boot#learn)
+* Spring-cloud ~= [2025.0.x](https://spring.io/projects/spring-cloud#learn)
+* MongoDB ~= [8.x](https://www.mongodb.com/docs/manual/release-notes/)
+* Couchbase ~= [7.x](https://docs.couchbase.com/server/current/release-notes/relnotes.html)
 * Native Image compilation
-  * GraalVM >= 21.0.1+12.1
+  * GraalVM ~= [24.0.1+9.1](https://www.graalvm.org/release-notes/JDK_24/)
   * GCC >= (linux, x86_64, 11.4.0)
     * `zlib1g-dev`
 

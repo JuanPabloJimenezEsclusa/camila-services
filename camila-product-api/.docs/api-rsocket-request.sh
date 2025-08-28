@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 # Require install: https://github.com/making/rsc
 # Be careful, this is a not maintained project
 
-# "wss://poc.jpje-kops.xyz:7001/product/api/rsocket"
+# "wss://tech.jpje.xyz:7001/product/api/rsocket"
 # "ws://localhost:7000/product-dev/api/rsocket"
 
 RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"ws://localhost:7000/product-dev/api/rsocket"}"

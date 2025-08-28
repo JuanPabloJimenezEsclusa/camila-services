@@ -15,9 +15,6 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
 
 ---
 
-* [docker-compose >= v2.35.0](https://docs.docker.com/compose/install/standalone/)
-* [Kubernetes >= 1.33.0](https://kubernetes.io/releases/)
-* [Kind >= 0.27.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * Linux operating system
 
 ## 🏗️ Architecture

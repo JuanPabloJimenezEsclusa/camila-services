@@ -88,8 +88,8 @@ Feature: Consult sort products
     When  consult products sort and paginated
     Then  receive status
       | status |
-      | 200    |
-    And   empty body
+      | 404    |
+    And   no body
 
   Scenario: Get products - ko - bad parameters
     Given some metrics weights and page config
@@ -98,5 +98,5 @@ Feature: Consult sort products
     When  consult products sort and paginated
     Then  receive status
       | status |
-      | 417    |
+      | 400    |
     And   no body

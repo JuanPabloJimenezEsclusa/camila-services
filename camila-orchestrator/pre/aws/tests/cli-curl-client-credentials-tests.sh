@@ -6,8 +6,8 @@ set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an unde
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 # Parameters
-CLIENT_ID="63po2nk910cprelfcvpvbv7ekk"
-CLIENT_SECRET="siql4p03g183lu2bj29ftdf11faif6v09pcelb34sk681cklgar"
+CLIENT_ID="1dmad5iclmo5ukvaoidmou6tl"
+CLIENT_SECRET="3rk0gl5fi434m1tjrsu2uf97q8fn7riu1ia77mbc07egd8v76me"
 SCOPES="camila/read camila/write"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 
@@ -29,14 +29,14 @@ echo -e "\n ################# Access Token: ################# \n$ACCESS_TOKEN\n"
 
 # Tests API with token
 echo -e "\n ################################################# \n"
-curl -Lvs -X GET 'https://poc.jpje-kops.xyz/product/api/products/99999' \
+curl -Lvs -X GET 'https://tech.jpje.xyz/product/api/products/99999' \
   -H 'Accept: application/x-ndjson' \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" | \
    jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":")),.profitMargin,.daysInStock]|@csv' \
   | column -t -N 'ID,INTERNAL,NAME,CATEGORY,SALES,STOCK,PROFIT,DAYS' -s ',' -o '|'
 
 echo -e "\n ################################################# \n"
-curl -Lvs -X GET 'https://poc.jpje-kops.xyz/product/api/products?profitMargin=0.50&stock=0.50&page=0&size=1000' \
+curl -Lvs -X GET 'https://tech.jpje.xyz/product/api/products?profitMargin=0.01&stock=0.99&page=0&size=10000' \
   -H 'Accept: application/x-ndjson' \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" | \
    jq -r '[.id,.internalId,.name,.category,.salesUnits,(.stock|[.[]|tostring]|join(":")),.profitMargin,.daysInStock]|@csv' \

@@ -11,7 +11,7 @@ RAMP_UP="${RAMP_UP:-20}" # This variable specifies the duration (in seconds) for
 LOOPS="${LOOPS:-10}" # This variable defines the total number of times to iterate through the test
 
 BASE_URL_PROTOCOL="${BASE_URL_PROTOCOL:-"https"}"
-BASE_URL="${BASE_URL:-"poc.jpje-kops.xyz"}"
+BASE_URL="${BASE_URL:-"tech.jpje.xyz"}"
 BASE_URL_PORT="${BASE_URL_PORT:-"443"}"
 BASE_PATH="${BASE_PATH:-"product"}"
 

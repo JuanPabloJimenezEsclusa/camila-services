@@ -1,15 +1,16 @@
 plugins {
+  // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
   id 'org.sonarqube' version '6.2.0.5505'
-  id 'org.springframework.boot' version '3.4.5' apply false
-  id 'io.spring.dependency-management' version '1.1.6' apply false
+  id 'org.springframework.boot' version '3.5.4' apply false
+  id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.10.6' apply false
-  id 'com.github.spotbugs' version '6.0.7' apply false
-  id 'org.openapi.generator' version '7.12.0' apply false
-  id 'org.openrewrite.rewrite' version '6.6.1' apply false
-  id 'org.springdoc.openapi-gradle-plugin' version '1.8.0' apply false
-  id "io.freefair.lombok" version "8.13.1" apply false
+  id 'com.github.spotbugs' version '6.2.4' apply false
+  id 'org.openapi.generator' version '7.14.0' apply false
+  id 'org.openrewrite.rewrite' version '7.14.0' apply false
+  id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
+  id "io.freefair.lombok" version "8.14" apply false
 }
 
 allprojects {
@@ -32,22 +33,22 @@ subprojects {
   apply plugin: 'io.freefair.lombok'
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
   }
 
   ext {
-    springBootVersion = '3.4.5'
+    springBootVersion = '3.5.4'
     springFrameworkVersion = '6.2.5'
-    springCloudVersion = '2024.0.1'
-    springBootAdminVersion = '3.2.1'
+    springCloudVersion = '2025.0.0'
+    springBootAdminVersion = '3.5.2'
 
     // Observability
-    opentelemetryVersion = '1.49.0'
-    opentelemetryApiIncubatorVersion = '1.49.0-alpha'
+    opentelemetryVersion = '1.53.0'
+    opentelemetryApiIncubatorVersion = '1.53.0-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.8.0'
+    couchbaseJavaClientVersion = '3.9.0'
 
     // Testing
     testcontainersVersion = '1.20.6'
@@ -57,7 +58,6 @@ subprojects {
     instancioJunitVersion = '5.4.0'
     awaitilityVersion = '4.2.2'
     jmhVersion = '1.37'
-    flapdoodleEmbedMongoSpring3xVersion = '4.20.0'
 
     // API Documentation
     springdocOpenapiVersion = '2.8.8'
@@ -189,6 +189,7 @@ sonar {
     property "sonar.scm.exclusions.disabled", "true"
     property "sonar.coverage.jacoco.xmlReportPaths", "camila-product-api/build/reports/jacoco/test/jacocoTestReport.xml"
     property "sonar.exclusions", "**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**"
+    property "sonar.branch.name", "develop"
   }
 }
 

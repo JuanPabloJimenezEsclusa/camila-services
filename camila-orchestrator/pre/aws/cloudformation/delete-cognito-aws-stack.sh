@@ -9,8 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-# Delete cognito oauth2 stack
-delete_cognito_stack() {
+__delete_cognito_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation delete-stack \
@@ -26,11 +25,11 @@ delete_cognito_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
   echo -e "${SEPARATOR} 🗑️ Delete cognito stack. ${SEPARATOR}"
-  delete_cognito_stack
+  __delete_cognito_stack
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }
 
