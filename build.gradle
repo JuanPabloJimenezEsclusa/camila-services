@@ -54,7 +54,7 @@ subprojects {
     testcontainersVersion = '1.20.6'
     cucumberVersion = '7.22.0'
     junitPlatformSuiteVersion = '1.12.2'
-    archunitJunit5Version = '1.4.0'
+    archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.4.0'
     awaitilityVersion = '4.2.2'
     jmhVersion = '1.37'
