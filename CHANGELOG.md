@@ -5,10 +5,16 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**Merge pull request #51 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
+
+ * [GH-32] chore: update dependencies versions
+
+[995a230b135fccd](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/995a230b135fccd) Juan Pablo Jimenez Esclusa *2025-08-28 15:32:17*
+
 **[GH-32] chore: update dependencies versions**
 
 
-[6052622926250d7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6052622926250d7) JuanPabloJimenezEsclusa *2025-08-28 14:17:51*
+[6dae5469994f576](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6dae5469994f576) JuanPabloJimenezEsclusa *2025-08-28 15:19:59*
 
 **Merge pull request #33 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
 
