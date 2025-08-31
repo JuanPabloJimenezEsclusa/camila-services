@@ -18,6 +18,18 @@ import org.springframework.web.reactive.result.method.annotation.ResponseEntityE
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   /**
+   * Handle not found response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
+  @ExceptionHandler(NotFoundException.class)
+  protected ResponseEntity<String> handleNotFound(final NotFoundException exception) {
+    log.debug(exception.getMessage());
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  /**
    * Handle illegal argument response entity.
    *
    * @param exception the exception
@@ -27,18 +39,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   protected ResponseEntity<String> handleIllegalArgument(final RuntimeException exception) {
     log.debug(exception.getMessage());
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-  }
-
-  /**
-   * Handle not found response entity.
-   *
-   * @param exception the exception
-   * @return the response entity
-   */
-  @ExceptionHandler(NotFoundException.class)
-  protected ResponseEntity<String> handleNotFound(final NotFoundException exception) {
-    log.debug(exception.getMessage());
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
   /**

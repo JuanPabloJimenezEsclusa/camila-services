@@ -10,6 +10,17 @@ spring:
   config:
     import: "optional:configserver:${CONFIG_SERVER_URI:}"
   # https://cloud.spring.io/spring-cloud-gateway/reference/html/
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 20000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
   cloud:
     config:
       enabled: true
@@ -34,7 +45,7 @@ spring:
           enabled: true
     discovery:
       enabled: true
-    gateway:
+    gateway.server.webflux:
       metrics:
         enabled: true
       routes:
@@ -53,17 +64,24 @@ spring:
               args:
                 name: Cookie
             - name: TokenRelay
+            - name: RequestRateLimiter
+              # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/gatewayfilter-factories/requestratelimiter-factory.html#redis-ratelimiter
+              args:
+                key-resolver: '#{@userKeyResolver}'
+                redis-rate-limiter.replenishRate: ${gateway.replenishRate:1000}
+                redis-rate-limiter.burstCapacity: ${gateway.burstCapacity:2000}
+                redis-rate-limiter.requestedTokens: ${gateway.requestedTokens:1}
             - name: CircuitBreaker
               args:
                 name: fallbackCircuitBreaker
                 fallbackUri: forward:/fallback
                 # ReactiveResilience4JCircuitBreakerFactory.java (review)
-                minimumNumberOfCalls: 10
+                minimumNumberOfCalls: 100
             - name: Retry
               args:
                 retries: 3
                 statuses: BAD_REQUEST, INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT
-                methods: GET, HEAD, OPTIONS
+                methods: GET, POST, HEAD, OPTIONS
                 backoff:
                   firstBackoff: 10ms
                   maxBackoff: 50ms
@@ -71,7 +89,7 @@ spring:
                   basedOnPreviousValue: false
             - name: RequestSize
               args:
-                maxSize: 5000
+                maxSize: 10000
       globalcors:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
@@ -100,10 +118,32 @@ spring:
         fallback-headers:
           enabled: true
       default-filters:
+        - TokenRelay
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
   main:
     web-application-type: reactive
     lazy-initialization: true
+
+# https://docs.spring.io/spring-cloud-circuitbreaker/docs/current/reference/html/spring-cloud-circuitbreaker-resilience4j.html#_circuit_breaker_properties_configuration
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 1000
+        permittedNumberOfCallsInHalfOpenState: 100
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10
+        registerHealthIndicator: true
+    instances:
+      fallbackCircuitBreaker:
+        baseConfig: default
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 120s
+    instances:
+      fallbackCircuitBreaker:
+        baseConfig: default
 
 info:
   app:
@@ -137,6 +177,11 @@ springdoc:
 
 # actuator
 management:
+  health:
+    redis:
+      enabled: true
+    circuitbreakers:
+      enabled: true
   endpoints:
     web:
       exposure:

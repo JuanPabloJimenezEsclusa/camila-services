@@ -10,6 +10,9 @@ info:
       - "pro"
 
 gateway:
+  replenishRate: 2000
+  burstCapacity: 2000
+  requestedTokens: 1
   fallback:
     message: |
       Gateway is currently unable to handle the request due to a temporary overloading or maintenance of the server. 

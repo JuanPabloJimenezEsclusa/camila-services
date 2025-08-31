@@ -26,7 +26,6 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 | Mutation Tests             | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                    |
 | Behavioral Tests           | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                      |
 | Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                                |
-| Performance Tests (jmeter) | Employ [JMeter](https://jmeter.apache.org) to simulate heavy user load and assess performance under stress                                                                                                                           |
 
 ## 🏗️ Architecture
 
@@ -64,7 +63,6 @@ This project implements a comprehensive test suite for the `camila-product-api` 
   • [Mutation Tests](#mutation-tests)
   • [Behaviour Test](#behaviour-test)
   • [Code Analysis](#code-analysis)
-  • [Performance Tests](#performance-tests)
 
 ### Unit and Architecture Tests
 
@@ -151,26 +149,6 @@ mvn sonar:sonar
 > Report: 
 >  - [site-project-info](./../../target/site/project-info.html)
 >  - [sonar-qube.io](https://sonarcloud.io/summary/overall?id=JuanPabloJimenezEsclusa_camila-services&branch=main)
-
-### Performance Tests
-
-* Configuration: [Readme](./resources/scripts/jmeter)
-
-```bash
-# Optional: Set default values
-export JMETER_TEST_PATH="./resources/scripts/jmeter/"
-export THREADS=100
-export RAMP_UP=20 
-export LOOPS=5
-
-export BASE_URL_PROTOCOL="http"
-export BASE_URL="localhost"
-export BASE_URL_PORT="8080"
-export BASE_PATH="product-dev"
-
-# Run the test plan
-./resources/scripts/jmeter/run.sh
-```
 
 ## 📝 Notes
 

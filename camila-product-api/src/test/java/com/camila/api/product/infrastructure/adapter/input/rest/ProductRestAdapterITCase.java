@@ -191,7 +191,7 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
       .header("traceId", generateRandomString())
       .header("apiVersion", "1.0.0")
       .exchange()
-      .expectStatus().isNotFound()
+      .expectStatus().isNoContent()
       .expectBody().isEmpty();
   }
 

@@ -98,8 +98,8 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
   private static Stream<Arguments> exceptionTestCases() {
     return Stream.of(
       Arguments.of("Should return 200 OK", "/products/4", HttpStatus.OK),
+      Arguments.of("Should return 204 NOT_CONTENT", "/products/99", HttpStatus.NO_CONTENT),
       Arguments.of("Should return 400 BAD_REQUEST", "/products/.", HttpStatus.BAD_REQUEST),
-      Arguments.of("Should return 404 NOT_FOUND", "/products/99", HttpStatus.NOT_FOUND),
       Arguments.of("Should return 417 EXPECTATION_FAILED", "/products/test", HttpStatus.EXPECTATION_FAILED),
       Arguments.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits", HttpStatus.INTERNAL_SERVER_ERROR)
     );
