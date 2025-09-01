@@ -87,10 +87,12 @@ services:
     deploy:
       resources:
         limits:
-          memory: "1024m"
-          cpus: "2"
+          memory: "2048m"
+          cpus: "4"
     env_file:
       - .env
+    environment:
+      JVM_OPTIONS: "-Xms500m -Xmx2000m"
     ports:
       - "5015:5005"
       - "8090:8090"
@@ -103,16 +105,19 @@ services:
       discovery:
         condition: service_healthy
       keycloak:
-        condition: service_started
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     healthcheck:
       test: ps aux | grep java || exit 1
       interval: 5s
       timeout: 2s
-      retries: 3
-      start_period: 5s
+      retries: 5
+      start_period: 60s  # gateway needs more time to start for keycloak
     links:
       - discovery
       - keycloak
+      - redis
     volumes:
       - camila_gateway_tmp:/tmp
     logging:
@@ -242,6 +247,65 @@ services:
         tag: docker.app
     networks:
       camila_product_network:
+  redis:
+    image: redis:8.2.1-alpine
+    container_name: camila-redis-product-db
+    hostname: redis
+    restart: "on-failure"
+    command: redis-server --save 20 1 --loglevel warning --requirepass camila
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "1"
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    volumes:
+      - camila_product_redis_data:/data
+    healthcheck:
+      test: ps aux | grep redis-server || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
+    networks:
+      camila_product_network:
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: camila-redisinsight
+    hostname: redisinsight
+    restart: "on-failure"
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "1"
+    env_file:
+      - .env
+    ports:
+      - "5540:5540"
+    expose:
+      - 5540
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: docker.app
+    networks:
+      camila_product_network:
   ## Microservices
   backend-product:
     image: docker.io/library/camila-product-api:1.0.0
@@ -306,11 +370,14 @@ services:
     deploy:
       resources:
         limits:
-          memory: "1024m"
+          memory: "2048m"
           cpus: "2"
     restart: "on-failure"
     env_file:
       - .env
+    environment:
+      JAVA_TOOL_OPTIONS: ""
+      JAVA_OPTS: "${JAVA_OPTS} -Xms1024m -Xmx2048m -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC"
     ports:
       - "9191:9191"
     expose:
@@ -319,6 +386,14 @@ services:
       - ./authorization:/opt/keycloak/data/import
       - keycloak_config:/opt/keycloak/config
       - keycloak_data:/opt/keycloak/data
+    healthcheck:
+      test: [
+        'CMD-SHELL',
+        '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { java.net.URI uri = java.net.URI.create(args[0]); System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)uri.toURL().openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://0.0.0.0:9000/health/live'
+      ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
     logging:
       driver: fluentd
       options:
@@ -497,6 +572,11 @@ volumes:
       device: tmpfs
   camila_product_couchbase_data:
     name: camila_product_couchbase_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  camila_product_redis_data:
+    name: camila_product_redis_data
     driver_opts:
       type: tmpfs
       device: tmpfs

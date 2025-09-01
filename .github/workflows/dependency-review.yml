@@ -26,6 +26,9 @@ jobs:
       - name: 'Dependency Review'
         uses: actions/dependency-review-action@v4
         with:
+          base-ref: ${{ inputs.baseRef }}
+          head-ref: ${{ inputs.headRef }}
+          external-repo-token: ${{ secrets.GITHUB_TOKEN }}
           fail-on-severity: moderate
           comment-summary-in-pr: always
           vulnerability-check: true

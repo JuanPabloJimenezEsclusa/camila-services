@@ -1,34 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="camila-product-api" enabled="true">
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="camila-product-api">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.tearDown_on_shutdown">false</boolProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables Globales" enabled="true">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="Variables Globales">
         <collectionProp name="Arguments.arguments">
           <elementProp name="BASE_URL_PROTOCOL" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL_PROTOCOL</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL_PROTOCOL,https)}</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL_PROTOCOL,http)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">http | https</stringProp>
           </elementProp>
           <elementProp name="BASE_URL" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL,tech.jpje.xyz)}</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL,localhost)}</stringProp>
             <stringProp name="Argument.desc">localhost | gateway | tech.jpje.xyz</stringProp>
           </elementProp>
           <elementProp name="BASE_URL_PORT" elementType="Argument">
             <stringProp name="Argument.name">BASE_URL_PORT</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_URL_PORT,443)}</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_URL_PORT,8090)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">443 | 8080 | 8081 | 8090</stringProp>
+          </elementProp>
+          <elementProp name="BASE_PATH" elementType="Argument">
+            <stringProp name="Argument.name">BASE_PATH</stringProp>
+            <stringProp name="Argument.value">${__P(BASE_PATH,product-dev)}</stringProp>
+            <stringProp name="Argument.desc">product-dev | product-int | product</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_URL_PROTOCOL" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_URL_PROTOCOL</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_URL_PROTOCOL,http)}</stringProp>
+            <stringProp name="Argument.desc">http | https</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_URL" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_URL</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_URL,localhost)}</stringProp>
+            <stringProp name="Argument.desc">localhost | camila-realm.auth.eu-west-1.amazoncognito.com</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_URL_PORT" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_URL_PORT</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_URL_PORT,9191)}</stringProp>
+            <stringProp name="Argument.desc">9191 |  443</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_PATH" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_PATH</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_PATH,/realms/camila-realm/protocol/openid-connect/token)}</stringProp>
+            <stringProp name="Argument.desc">/realms/camila-realm/protocol/openid-connect/token | /oauth2/token</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_GRANT_TYPE" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_GRANT_TYPE</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_GRANT_TYPE,client_credentials)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">client_credentials | </stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_SCOPE" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_SCOPE</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_SCOPE,camila/read camila/write)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">camila/read camila/write |</stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_CLIENT_ID" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_CLIENT_ID</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_CLIENT_ID,camila-client)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">camila-client | </stringProp>
+          </elementProp>
+          <elementProp name="OAUTH_CLIENT_SECRET" elementType="Argument">
+            <stringProp name="Argument.name">OAUTH_CLIENT_SECRET</stringProp>
+            <stringProp name="Argument.value">${__P(OAUTH_CLIENT_SECRET,Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE |</stringProp>
           </elementProp>
           <elementProp name="THREADS" elementType="Argument">
             <stringProp name="Argument.name">THREADS</stringProp>
@@ -45,57 +98,46 @@
             <stringProp name="Argument.value">${__P(LOOPS,10)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="BASE_PATH" elementType="Argument">
-            <stringProp name="Argument.name">BASE_PATH</stringProp>
-            <stringProp name="Argument.value">${__P(BASE_PATH,product)}</stringProp>
-            <stringProp name="Argument.desc">product-dev | product-int | product</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="OAUTH_CLIENT_ID" elementType="Argument">
-            <stringProp name="Argument.name">OAUTH_CLIENT_ID</stringProp>
-            <stringProp name="Argument.value">${__P(OAUTH_CLIENT_ID,62eu6p9ghfdli95gm7c5efajfm)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="OAUTH_CLIENT_SECRET" elementType="Argument">
-            <stringProp name="Argument.name">OAUTH_CLIENT_SECRET</stringProp>
-            <stringProp name="Argument.value">${__P(OAUTH_CLIENT_SECRET,pk9h9ov18gnbqflok0lihn6t33ud329g2pui1v9legglamf5njk)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Token Initialization" enabled="true">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
           <stringProp name="LoopController.loops">1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP GET Oauth2 Token" enabled="true">
+          <intProp name="HTTPSampler.concurrentPool">6</intProp>
+          <stringProp name="HTTPSampler.domain">${OAUTH_URL}</stringProp>
+          <stringProp name="HTTPSampler.port">${OAUTH_URL_PORT}</stringProp>
+          <stringProp name="HTTPSampler.protocol">${OAUTH_URL_PROTOCOL}</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">${OAUTH_PATH}</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
             <collectionProp name="Arguments.arguments">
               <elementProp name="grant_type" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">grant_type</stringProp>
-                <stringProp name="Argument.value">client_credentials</stringProp>
+                <stringProp name="Argument.value">${OAUTH_GRANT_TYPE}</stringProp>
               </elementProp>
               <elementProp name="scopes" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">scopes</stringProp>
-                <stringProp name="Argument.value">camila/read camila/write</stringProp>
+                <stringProp name="Argument.value">${OAUTH_SCOPE}</stringProp>
               </elementProp>
               <elementProp name="client_id" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -113,22 +155,6 @@
               </elementProp>
             </collectionProp>
           </elementProp>
-          <stringProp name="HTTPSampler.domain">camila-realm.auth.eu-west-1.amazoncognito.com</stringProp>
-          <stringProp name="HTTPSampler.port">443</stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-          <stringProp name="HTTPSampler.path">/oauth2/token</stringProp>
-          <stringProp name="HTTPSampler.method">POST</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-          <boolProp name="HTTPSampler.image_parser">false</boolProp>
-          <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-          <boolProp name="HTTPSampler.md5">false</boolProp>
-          <intProp name="HTTPSampler.ipSourceType">0</intProp>
         </HTTPSamplerProxy>
         <hashTree>
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -243,20 +269,16 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
         </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="REST API Test" enabled="true">
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" enabled="true">
+        <stringProp name="ThreadGroup.num_threads">${THREADS}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${RAMP_UP}</stringProp>
+        <longProp name="ThreadGroup.duration">0</longProp>
+        <longProp name="ThreadGroup.delay">0</longProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
           <stringProp name="LoopController.loops">${LOOPS}</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${THREADS}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${RAMP_UP}</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration">0</stringProp>
-        <stringProp name="ThreadGroup.delay">0</stringProp>
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <longProp name="ThreadGroup.start_time">1672930945000</longProp>
-        <longProp name="ThreadGroup.end_time">1672930945000</longProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
-        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
       </ThreadGroup>
       <hashTree>
         <SampleTimeout guiclass="SampleTimeoutGui" testclass="SampleTimeout" testname="Sample Timeout" enabled="true">
@@ -388,6 +410,34 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
         </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="product-api" enabled="true"/>
         <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="RandomParameters" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">import java.text.DecimalFormat;
+
+DecimalFormat df = new DecimalFormat(&quot;0.0000&quot;);
+
+double rand1 = Math.random();
+double rand2 = Math.random();
+double rand3 = Math.random();
+double rand4 = Math.random();
+
+double sumaTotal = rand1 + rand2 + rand3 + rand4;
+
+double var1 = rand1 / sumaTotal;
+double var2 = rand2 / sumaTotal;
+double var3 = rand3 / sumaTotal;
+double var4 = rand4 / sumaTotal;
+
+vars.put(&quot;random_sales_units&quot;, df.format(var1));
+vars.put(&quot;random_stock&quot;, df.format(var2));
+vars.put(&quot;random_profit_margin&quot;, df.format(var3));
+vars.put(&quot;random_days_in_stock&quot;, df.format(var4));
+</stringProp>
+            <stringProp name="scriptLanguage">java</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
           <RandomOrderController guiclass="RandomOrderControllerGui" testclass="RandomOrderController" testname="Random Order Controller" enabled="true"/>
           <hashTree>
             <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
@@ -395,21 +445,12 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <stringProp name="RandomTimer.range">2000</stringProp>
             </PoissonRandomTimer>
             <hashTree/>
-            <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="RandomSalesUnits" enabled="true">
-              <stringProp name="variableName">random_sales_units</stringProp>
-              <stringProp name="outputFormat"></stringProp>
-              <stringProp name="minimumValue">0</stringProp>
-              <stringProp name="maximumValue">9999</stringProp>
-              <stringProp name="randomSeed">10000</stringProp>
-              <boolProp name="perThread">false</boolProp>
-            </RandomVariableConfig>
-            <hashTree/>
             <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="RandomPage" enabled="true">
-              <stringProp name="maximumValue">1000</stringProp>
+              <stringProp name="maximumValue">1</stringProp>
               <stringProp name="minimumValue">0</stringProp>
               <stringProp name="outputFormat"></stringProp>
               <boolProp name="perThread">false</boolProp>
-              <stringProp name="randomSeed">1000</stringProp>
+              <stringProp name="randomSeed">1</stringProp>
               <stringProp name="variableName">random_page</stringProp>
             </RandomVariableConfig>
             <hashTree/>
@@ -423,22 +464,45 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
             </RandomVariableConfig>
             <hashTree/>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - GET /api/products - application/json" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
+              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
+              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="salesUnits" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">salesUnits</stringProp>
-                    <stringProp name="Argument.value">0.${random_sales_units}</stringProp>
+                    <stringProp name="Argument.value">${random_sales_units}</stringProp>
                   </elementProp>
                   <elementProp name="stock" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">stock</stringProp>
-                    <stringProp name="Argument.value">0.${__intSum(9999,-${random_sales_units})}</stringProp>
+                    <stringProp name="Argument.value">${random_stock}</stringProp>
+                  </elementProp>
+                  <elementProp name="profitMargin" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_profit_margin}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">profitMargin</stringProp>
+                  </elementProp>
+                  <elementProp name="daysInStock" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_days_in_stock}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">daysInStock</stringProp>
                   </elementProp>
                   <elementProp name="page" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -456,22 +520,6 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
-              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
-              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
-              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-              <boolProp name="HTTPSampler.image_parser">false</boolProp>
-              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-              <boolProp name="HTTPSampler.md5">false</boolProp>
-              <intProp name="HTTPSampler.ipSourceType">0</intProp>
             </HTTPSamplerProxy>
             <hashTree>
               <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -506,11 +554,12 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
+                  <stringProp name="49590">204</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
                 <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">8</intProp>
+                <intProp name="Assertion.test_type">40</intProp>
                 <stringProp name="Assertion.scope">all</stringProp>
               </ResponseAssertion>
               <hashTree/>
@@ -592,22 +641,45 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - GET /api/products - application/x-ndjson" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
+              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
+              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="salesUnits" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">salesUnits</stringProp>
-                    <stringProp name="Argument.value">0.${random_sales_units}</stringProp>
+                    <stringProp name="Argument.value">${random_sales_units}</stringProp>
                   </elementProp>
                   <elementProp name="stock" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">stock</stringProp>
-                    <stringProp name="Argument.value">0.${__intSum(9999,-${random_sales_units})}</stringProp>
+                    <stringProp name="Argument.value">${random_stock}</stringProp>
+                  </elementProp>
+                  <elementProp name="profitMargin" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_profit_margin}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">profitMargin</stringProp>
+                  </elementProp>
+                  <elementProp name="daysInStock" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_days_in_stock}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">daysInStock</stringProp>
                   </elementProp>
                   <elementProp name="page" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -625,22 +697,6 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
-              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
-              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
-              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-              <boolProp name="HTTPSampler.image_parser">false</boolProp>
-              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-              <boolProp name="HTTPSampler.md5">false</boolProp>
-              <intProp name="HTTPSampler.ipSourceType">0</intProp>
             </HTTPSamplerProxy>
             <hashTree>
               <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -675,11 +731,12 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
+                  <stringProp name="49590">204</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
                 <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">8</intProp>
+                <intProp name="Assertion.test_type">40</intProp>
                 <stringProp name="Assertion.scope">all</stringProp>
               </ResponseAssertion>
               <hashTree/>
@@ -765,22 +822,45 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - GET /api/products - text/event-stream" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
+              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
+              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="salesUnits" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">salesUnits</stringProp>
-                    <stringProp name="Argument.value">0.${random_sales_units}</stringProp>
+                    <stringProp name="Argument.value">${random_sales_units}</stringProp>
                   </elementProp>
                   <elementProp name="stock" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                     <boolProp name="HTTPArgument.use_equals">true</boolProp>
                     <stringProp name="Argument.name">stock</stringProp>
-                    <stringProp name="Argument.value">0.${__intSum(9999,-${random_sales_units})}</stringProp>
+                    <stringProp name="Argument.value">${random_stock}</stringProp>
+                  </elementProp>
+                  <elementProp name="profitMargin" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_profit_margin}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">profitMargin</stringProp>
+                  </elementProp>
+                  <elementProp name="daysInStock" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${random_days_in_stock}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">daysInStock</stringProp>
                   </elementProp>
                   <elementProp name="page" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -798,22 +878,6 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
-              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
-              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
-              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/products</stringProp>
-              <stringProp name="HTTPSampler.method">GET</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-              <boolProp name="HTTPSampler.image_parser">false</boolProp>
-              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-              <boolProp name="HTTPSampler.md5">false</boolProp>
-              <intProp name="HTTPSampler.ipSourceType">0</intProp>
             </HTTPSamplerProxy>
             <hashTree>
               <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
@@ -848,11 +912,12 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="49586">200</stringProp>
+                  <stringProp name="49590">204</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
                 <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">8</intProp>
+                <intProp name="Assertion.test_type">40</intProp>
                 <stringProp name="Assertion.scope">all</stringProp>
               </ResponseAssertion>
               <hashTree/>
@@ -938,14 +1003,25 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
               <hashTree/>
             </hashTree>
             <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="HTTP - GraphQL /api/graphql" enabled="true">
+              <intProp name="HTTPSampler.concurrentPool">6</intProp>
+              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
+              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
+              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/graphql</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
                   <elementProp name="" elementType="HTTPArgument" enabled="true">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
-  &quot;salesUnits&quot;: 0.${random_sales_units},
-  &quot;stock&quot;: 0.${__intSum(9999,-${random_sales_units})},
+  &quot;salesUnits&quot;: ${random_sales_units},
+  &quot;stock&quot;: ${random_stock},
+  &quot;profitMargin&quot;: ${random_profit_margin},
+  &quot;daysInStock&quot;: ${random_days_in_stock},
   &quot;page&quot;: ${random_page},
   &quot;size&quot;: ${random_size},
   &quot;withDetails&quot;: false
@@ -955,18 +1031,6 @@ props.put(&quot;auth_token&quot;, token)</stringProp>
                   </elementProp>
                 </collectionProp>
               </elementProp>
-              <stringProp name="HTTPSampler.domain">${BASE_URL}</stringProp>
-              <stringProp name="HTTPSampler.port">${BASE_URL_PORT}</stringProp>
-              <stringProp name="HTTPSampler.protocol">${BASE_URL_PROTOCOL}</stringProp>
-              <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-              <stringProp name="HTTPSampler.path">/${BASE_PATH}/api/graphql</stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
-              <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
               <stringProp name="GraphQLHTTPSampler.query">
 query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
   sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
@@ -980,18 +1044,17 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 </stringProp>
               <stringProp name="GraphQLHTTPSampler.variables">{
-  &quot;salesUnits&quot;: 0.${random_sales_units},
-  &quot;stock&quot;: 0.${__intSum(9999,-${random_sales_units})},
+  &quot;salesUnits&quot;: ${random_sales_units},
+  &quot;stock&quot;: ${random_stock},
+  &quot;profitMargin&quot;: ${random_profit_margin},
+  &quot;daysInStock&quot;: ${random_days_in_stock},
   &quot;page&quot;: ${random_page},
   &quot;size&quot;: ${random_size},
   &quot;withDetails&quot;: false
 }
 </stringProp>
-              <boolProp name="HTTPSampler.image_parser">false</boolProp>
-              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
-              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
-              <boolProp name="HTTPSampler.md5">false</boolProp>
-              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
             </HTTPSamplerProxy>
             <hashTree>
               <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">

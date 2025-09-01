@@ -15,8 +15,19 @@ BASE_URL="${BASE_URL:-"tech.jpje.xyz"}"
 BASE_URL_PORT="${BASE_URL_PORT:-"443"}"
 BASE_PATH="${BASE_PATH:-"product"}"
 
+# Oauth2.0
+OAUTH_URL_PROTOCOL="${OAUTH_URL_PROTOCOL:-"http"}"
+OAUTH_URL="${OAUTH_URL:-"localhost"}"
+OAUTH_URL_PORT="${OAUTH_URL_PORT:-"9191"}"
+OAUTH_PATH="${OAUTH_PATH:-"/realms/camila-realm/protocol/openid-connect/token"}"
+OAUTH_GRANT_TYPE="${OAUTH_GRANT_TYPE:-"client_credentials"}"
+OAUTH_SCOPE="${OAUTH_SCOPE:-"camila/read camila/write"}"
+OAUTH_CLIENT_ID="${OAUTH_CLIENT_ID:-"camila-client"}"
+OAUTH_CLIENT_SECRET="${OAUTH_CLIENT_SECRET:-"Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE"}"
+
 echo "JMETER_TEST_PATH: ${JMETER_TEST_PATH} | THREADS: ${THREADS} | RAMP_UP: ${RAMP_UP} | LOOPS: ${LOOPS}"
 echo "BASE_URL: ${BASE_URL_PROTOCOL}://${BASE_URL}:${BASE_URL_PORT}/${BASE_PATH}"
+echo "OAUTH_URL: ${OAUTH_URL_PROTOCOL}://${OAUTH_URL}:${OAUTH_URL_PORT}${OAUTH_PATH}"
 
 # Test Workspace Cleanup
 rm -dr "${JMETER_TEST_PATH}/reports" || true
@@ -32,6 +43,14 @@ time jmeter -n \
   -JBASE_URL="${BASE_URL}" \
   -JBASE_URL_PORT="${BASE_URL_PORT}" \
   -JBASE_PATH="${BASE_PATH}" \
+  -JOAUTH_URL_PROTOCOL="${OAUTH_URL_PROTOCOL}" \
+  -JOAUTH_URL="${OAUTH_URL}" \
+  -JOAUTH_URL_PORT="${OAUTH_URL_PORT}" \
+  -JOAUTH_PATH="${OAUTH_PATH}" \
+  -JOAUTH_GRANT_TYPE="${OAUTH_GRANT_TYPE}" \
+  -JOAUTH_SCOPE="${OAUTH_SCOPE}" \
+  -JOAUTH_CLIENT_ID="${OAUTH_CLIENT_ID}" \
+  -JOAUTH_CLIENT_SECRET="${OAUTH_CLIENT_SECRET}" \
   -l "${JMETER_TEST_PATH}/reports/result.csv"
 
 # JMeter HTML Report Generation

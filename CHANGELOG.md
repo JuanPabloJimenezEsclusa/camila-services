@@ -5,6 +5,22 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] refactor: change performance tests impl**
+
+
+[8e46a3bfcbcab2b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8e46a3bfcbcab2b) JuanPabloJimenezEsclusa *2025-08-31 23:18:01*
+
+**Merge pull request #52 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
+
+ * [GH-32] chore: update dependencies versions
+
+[a8604b9b8167bf3](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a8604b9b8167bf3) Juan Pablo Jimenez Esclusa *2025-08-28 17:40:16*
+
+**[GH-32] chore: update dependencies versions**
+
+
+[4752e3938dfc160](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4752e3938dfc160) JuanPabloJimenezEsclusa *2025-08-28 17:09:48*
+
 **Merge pull request #51 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
 
  * [GH-32] chore: update dependencies versions

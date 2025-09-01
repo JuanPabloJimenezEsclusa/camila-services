@@ -88,7 +88,7 @@ Feature: Consult sort products
     When  consult products sort and paginated
     Then  receive status
       | status |
-      | 404    |
+      | 204    |
     And   no body
 
   Scenario: Get products - ko - bad parameters
