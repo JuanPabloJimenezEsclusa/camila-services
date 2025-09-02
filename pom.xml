@@ -116,7 +116,7 @@
     <pitest-maven.version>1.20.1</pitest-maven.version>
     <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
     <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
