@@ -107,7 +107,7 @@
     <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
     <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>11.0.0</checkstyle.version>
+    <checkstyle.version>11.0.1</checkstyle.version>
     <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
     <dependency-check-maven.version>12.1.3</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
