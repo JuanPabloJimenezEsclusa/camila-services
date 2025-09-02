@@ -6,7 +6,7 @@ plugins {
   id 'org.openapi.generator'
   id 'org.springdoc.openapi-gradle-plugin'
   id 'com.google.protobuf' version '0.9.5'
-  id 'com.google.cloud.tools.jib' version '3.4.2'
+  id 'com.google.cloud.tools.jib' version '3.4.5'
 }
 
 group = 'com.camila.api'
