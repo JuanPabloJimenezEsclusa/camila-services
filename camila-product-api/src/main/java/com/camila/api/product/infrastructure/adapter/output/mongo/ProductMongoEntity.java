@@ -36,6 +36,7 @@ public record ProductMongoEntity(
    * @param salesUnits the sales units
    * @param stock      the stock
    */
+  @SuppressWarnings("PMD.DanglingJavadoc") // Needed to avoid false positive
   public ProductMongoEntity {
     Objects.requireNonNull(id);
     Objects.requireNonNull(internalId);

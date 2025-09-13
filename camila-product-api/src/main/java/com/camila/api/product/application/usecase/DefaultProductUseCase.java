@@ -44,8 +44,8 @@ public class DefaultProductUseCase implements ProductUseCase {
   public Flux<Product> sortByMetricsWeights(final Map<String, String> requestParams) {
     try {
       final var criteria = ProductSortCriteria.fromRequestParams(requestParams);
-      final var appliedWeights = ProductWeightResolver.resolve(criteria.getMetricWeights());
-      return productRepository.sortByMetricsWeights(appliedWeights, criteria.getOffset(), criteria.getLimit())
+      final var appliedWeights = ProductWeightResolver.resolve(criteria.metricWeights());
+      return productRepository.sortByMetricsWeights(appliedWeights, criteria.offset(), criteria.limit())
         .doOnNext(product -> log.debug("find sort by: {}", product))
         .onErrorResume(e -> Flux.error(new ProductException(e)))
         .switchIfEmpty(Flux.error(NotFoundException::new));

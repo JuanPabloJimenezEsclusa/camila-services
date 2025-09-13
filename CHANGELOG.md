@@ -5,10 +5,63 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] ci: update workflow actions**
+
+
+[e4ba3412ae1f657](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e4ba3412ae1f657) JuanPabloJimenezEsclusa *2025-09-13 12:16:18*
+
+**Bump cucumber.version from 7.27.2 to 7.28.0**
+
+ * Bumps &#x60;cucumber.version&#x60; from 7.27.2 to 7.28.0.
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.28.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.28.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.28.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.28.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[55e1ba2a23d9ad4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/55e1ba2a23d9ad4) dependabot[bot] *2025-09-02 02:41:38*
+
+**Merge pull request #53 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
+
+ * [GH-32] refactor: change performance tests impl
+
+[32cecaedd5fbaf7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/32cecaedd5fbaf7) Juan Pablo Jimenez Esclusa *2025-09-01 00:40:49*
+
 **[GH-32] refactor: change performance tests impl**
 
 
-[8e46a3bfcbcab2b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8e46a3bfcbcab2b) JuanPabloJimenezEsclusa *2025-08-31 23:18:01*
+[2212a297ae4b4bd](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2212a297ae4b4bd) JuanPabloJimenezEsclusa *2025-09-01 00:32:06*
 
 **Merge pull request #52 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
 

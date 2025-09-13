@@ -8,19 +8,12 @@ import java.util.Map;
 /**
  * Represents the criteria for sorting products.
  */
-public class ProductSortCriteria {
+public record ProductSortCriteria(
+  List<MetricWeight> metricWeights,
+  int page,
+  int size) {
   private static final String DEFAULT_PAGE_NUMBER = "0";
   private static final String DEFAULT_PAGE_SIZE = "10";
-
-  private final List<MetricWeight> metricWeights;
-  private final int page;
-  private final int size;
-
-  private ProductSortCriteria(final List<MetricWeight> metricWeights, final int page, final int size) {
-    this.metricWeights = metricWeights;
-    this.page = page;
-    this.size = size;
-  }
 
   /**
    * Factory method to create a ProductSortCriteria instance from request parameters.
@@ -78,20 +71,11 @@ public class ProductSortCriteria {
   }
 
   /**
-   * Gets the list of metric weights.
-   *
-   * @return A list of MetricWeight objects
-   */
-  public List<MetricWeight> getMetricWeights() {
-    return metricWeights;
-  }
-
-  /**
    * Calculates the offset for pagination based on the page number and size.
    *
    * @return The offset as a long value
    */
-  public long getOffset() {
+  public long offset() {
     return (long) page * size;
   }
 
@@ -100,7 +84,7 @@ public class ProductSortCriteria {
    *
    * @return The page size as a long value
    */
-  public long getLimit() {
+  public long limit() {
     return size;
   }
 }

@@ -6,7 +6,6 @@ import com.camila.api.product.domain.usecase.ProductUseCase;
 import com.camila.api.product.infrastructure.adapter.input.rest.api.ProductsApi;
 import com.camila.api.product.infrastructure.adapter.input.rest.dto.ProductDTO;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,22 +53,18 @@ class ProductRestAdapter implements ProductsApi {
     this.productDTOMapper = productDTOMapper;
   }
 
-  @Parameters(value = {
-    @Parameter(name = "internalId", description = "Internal product identifier", example = "1")
-  })
+  @Parameter(name = "internalId", description = "Internal product identifier", example = "1")
   @Override
   public Mono<ProductDTO> findById(final String internalId,
                                    final String acceptLanguage,
                                    final String apiVersion,
                                    final ServerWebExchange exchange) {
-    return Mono.deferContextual(ctx -> productUseCase.findByInternalId(internalId)
+    return Mono.deferContextual(_ -> productUseCase.findByInternalId(internalId)
         .map(productDTOMapper::toProductDTO))
-      .doOnNext(productDTO -> log.info("find By Id: {}", internalId));
+      .doOnNext(_ -> log.info("find By Id: {}", internalId));
   }
 
-  @Parameters(value = {
-    @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
-  })
+  @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
   @Override
   public Flux<ProductDTO> sortProducts(final Map<String, String> requestParams,
                                        final String acceptLanguage,
@@ -78,6 +73,6 @@ class ProductRestAdapter implements ProductsApi {
     return queryParametersValidator.validate(requestParams)
       .flatMapMany(validParams -> productUseCase.sortByMetricsWeights(validParams)
         .map(productDTOMapper::toProductDTO))
-      .doOnNext(productDTO -> log.info("find sort by: {}", requestParams));
+      .doOnNext(_ -> log.info("find sort by: {}", requestParams));
   }
 }
