@@ -484,7 +484,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.1.2
+    image: elasticsearch:9.1.3
     container_name: elasticsearch
     hostname: elasticsearch
     restart: "no"
