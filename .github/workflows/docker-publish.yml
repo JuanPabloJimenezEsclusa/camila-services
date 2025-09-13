@@ -45,7 +45,10 @@ jobs:
 
       - name: Build images
         run: | 
-          mvn -B spring-boot:build-image -Dmaven.test.skip=true -f pom.xml
+          mvn -B spring-boot:build-image \
+            -Dmaven.test.skip=true \
+            -Dmaven.build.cache.enabled=false \
+            --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api
 
       - name: Transform lowercase - github.repository_owner
         run: |

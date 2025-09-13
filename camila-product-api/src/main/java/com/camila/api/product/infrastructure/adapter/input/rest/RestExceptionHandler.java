@@ -25,7 +25,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(NotFoundException.class)
   protected ResponseEntity<String> handleNotFound(final NotFoundException exception) {
-    log.debug(exception.getMessage());
+    if (log.isDebugEnabled()) {
+      log.debug(exception.getMessage());
+    }
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
@@ -37,7 +39,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(IllegalArgumentException.class)
   protected ResponseEntity<String> handleIllegalArgument(final RuntimeException exception) {
-    log.debug(exception.getMessage());
+    if (log.isDebugEnabled()) {
+      log.debug(exception.getMessage());
+    }
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
   }
 
@@ -49,7 +53,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(ConstraintViolationException.class)
   protected ResponseEntity<String> handleConstraintViolation(final RuntimeException exception) {
-    log.debug(exception.getMessage());
+    if (log.isDebugEnabled()) {
+      log.debug(exception.getMessage());
+    }
     return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
   }
 
@@ -61,7 +67,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(ProductException.class)
   protected ResponseEntity<String> handleProductServiceException(final ProductException exception) {
-    log.debug(exception.getMessage());
+    if (log.isDebugEnabled()) {
+      log.debug(exception.getMessage());
+    }
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
   }
 }

@@ -11,7 +11,10 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @SpringBootApplication
 @EnableConfigServer
 @EnableDiscoveryClient
-public class CamilaConfigApplication {
+@SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for proxying
+class CamilaConfigApplication {
+
+  private CamilaConfigApplication() { }
 
   /**
    * The entry point of application.
