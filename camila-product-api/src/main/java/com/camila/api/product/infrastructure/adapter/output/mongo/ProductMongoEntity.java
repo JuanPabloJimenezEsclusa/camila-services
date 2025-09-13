@@ -26,17 +26,6 @@ public record ProductMongoEntity(
    */
   static final String DOCUMENT_NAME = "products";
 
-  /**
-   * Instantiates a new Product mongo entity.
-   *
-   * @param id         the id
-   * @param internalId the internal id
-   * @param name       the name
-   * @param category   the category
-   * @param salesUnits the sales units
-   * @param stock      the stock
-   */
-  @SuppressWarnings("PMD.DanglingJavadoc") // Needed to avoid false positive
   public ProductMongoEntity {
     Objects.requireNonNull(id);
     Objects.requireNonNull(internalId);
