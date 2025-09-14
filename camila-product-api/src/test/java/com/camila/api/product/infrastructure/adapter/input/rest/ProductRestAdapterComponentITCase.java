@@ -1,7 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
 import static org.instancio.Select.field;
-import static org.mockito.Mockito.anyMap;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -37,7 +36,6 @@ import reactor.core.publisher.Mono;
 @Import({
   RestExceptionHandler.class,
   LocalSecurityConfig.class,
-  QueryParametersValidator.class,
   ProductDTOMapperImpl.class
 })
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter [component] test")
@@ -45,9 +43,6 @@ class ProductRestAdapterComponentITCase {
 
   @Autowired
   private WebTestClient webClient;
-
-  @MockitoSpyBean
-  private QueryParametersValidator queryParametersValidator;
 
   @MockitoBean
   private ProductUseCase productUseCase;
@@ -106,7 +101,6 @@ class ProductRestAdapterComponentITCase {
     verify(productUseCase).findByInternalId(internalId);
     verify(productDTOMapper).toProductDTO(product);
     verifyNoMoreInteractions(productUseCase, productDTOMapper);
-    verifyNoInteractions(queryParametersValidator);
   }
 
   @Test
@@ -125,7 +119,7 @@ class ProductRestAdapterComponentITCase {
 
     verify(productUseCase).findByInternalId(internalId);
     verifyNoMoreInteractions(productUseCase);
-    verifyNoInteractions(queryParametersValidator, productDTOMapper);
+    verifyNoInteractions(productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> with salesUnits={0}, stock={1}")
@@ -152,10 +146,9 @@ class ProductRestAdapterComponentITCase {
       .expectBody()
       .jsonPath("$[0].id").isEqualTo("1");
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
+    verifyNoMoreInteractions(productUseCase, productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> with page={0}, size={1}")
@@ -178,10 +171,9 @@ class ProductRestAdapterComponentITCase {
       .expectBody()
       .jsonPath("$[0].id").isEqualTo("1");
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
+    verifyNoMoreInteractions(productUseCase, productDTOMapper);
   }
 
   @Test
@@ -204,9 +196,8 @@ class ProductRestAdapterComponentITCase {
       .expectStatus().isOk()
       .expectBody().json("[]");
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase);
+    verifyNoMoreInteractions(productUseCase);
     verifyNoInteractions(productDTOMapper);
   }
 
@@ -224,8 +215,6 @@ class ProductRestAdapterComponentITCase {
     .exchange()
     .expectStatus().is4xxClientError();
 
-    verify(queryParametersValidator).validate(anyMap());
-    verifyNoMoreInteractions(queryParametersValidator);
     verifyNoInteractions(productUseCase, productDTOMapper);
   }
 }

@@ -91,7 +91,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   LocalOpenAPIConfig.class,
   Oauth2OpenAPIConfig.class,
   ProductRestAdapter.class,
-  QueryParametersValidator.class,
   ProductDTOMapperImpl.class,
   RestExceptionHandler.class,
   // Security

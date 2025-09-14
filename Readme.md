@@ -4,6 +4,20 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=coverage)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=bugs)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=JuanPabloJimenezEsclusa_camila-services&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services)
+
+[![Build Deploy Maven](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/build-deploy-maven.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/build-deploy-maven.yml)
+[![Code Analysis PMD](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/code-analysis-pmd.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/code-analysis-pmd.yml)
+[![Dependency Review](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/dependency-review.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/dependency-review.yml)
+[![Docker Publish](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/docker-publish.yml)
+[![SonarQube](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/sonarqube.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/sonarqube.yml)
+[![Behaviour Tests](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/test-behaviour.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/test-behaviour.yml)
+[![Mutation Tests](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/test-mutations.yml/badge.svg)](https://github.com/JuanPabloJimenezEsclusa/camila-services/actions/workflows/test-mutations.yml)
+
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
@@ -167,7 +181,7 @@ unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 # Verify project
-mvn -B verify site -P error-prone,quality-check
+mvn -B install site -P error-prone,quality-check
 # Consolidate reports
 mvn -B site:stage-deploy
 # Open report

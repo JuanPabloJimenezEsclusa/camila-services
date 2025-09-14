@@ -1,13 +1,13 @@
 package com.camila.api.product.infrastructure.adapter.input.cache.config;
 
-import java.time.Duration;
-
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * Configuration class for setting up caching in the application.
@@ -16,21 +16,22 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
-public class CacheConfig {
+@Profile("!dev&&!local-compose")
+public class CaffeineCacheConfig {
 
   /**
    * Configures the Caffeine cache with specific settings.
    *
    * @return a Caffeine instance configured with:
    *     - Expiration of cache entries 1 minute after write.
-   *     - Maximum size of 100 entries.
+   *     - Initial capacity of 100 entries.
+   *     - Maximum size of 10_000 entries.
    */
   @Bean
-  public Caffeine<Object, Object> caffeineConfig() {
-    return Caffeine.newBuilder()
-      .expireAfterWrite(Duration.ofMinutes(1L))
-      .initialCapacity(100)
-      .maximumSize(10_000);
+  public Caffeine<Object, Object> caffeineConfig(
+    @Value("${spring.cache.caffeine.spec:initialCapacity=100,maximumSize=10000,expireAfterAccess=60s}")
+    final String spec) {
+    return Caffeine.from(spec);
   }
 
   /**

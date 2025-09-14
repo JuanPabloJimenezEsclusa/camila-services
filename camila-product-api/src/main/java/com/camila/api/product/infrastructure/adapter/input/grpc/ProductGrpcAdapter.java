@@ -24,10 +24,23 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
     this.productUseCase = productUseCase;
   }
 
+  private static Product convertToGrpcProduct(final com.camila.api.product.domain.model.Product product) {
+    return Product.newBuilder()
+      .setId(product.id())
+      .setInternalId(product.internalId())
+      .setName(product.name())
+      .setCategory(product.category())
+      .setSalesUnits(product.salesUnits())
+      .putAllStock(product.stock())
+      .setProfitMargin(product.profitMargin())
+      .setDaysInStock(product.daysInStock())
+      .build();
+  }
+
   @Override
   public void getProductByInternalId(final ProductInternalId request,
                                      final StreamObserver<Product> responseObserver) {
-    productUseCase.findByInternalId(request.getInternalId())
+    this.productUseCase.findByInternalId(request.getInternalId())
       .subscribeOn(Schedulers.boundedElastic())
       .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
       .subscribe(
@@ -39,25 +52,12 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
   @Override
   public void sortByMetricsWeights(final SortByMetricsWeightsRequest request,
                                    final StreamObserver<Product> responseObserver) {
-    productUseCase.sortByMetricsWeights(request.getRequestParamsMap())
+    this.productUseCase.sortByMetricsWeights(request.getRequestParamsMap())
       .subscribeOn(Schedulers.boundedElastic())
       .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
       .subscribe(
         product -> responseObserver.onNext(convertToGrpcProduct(product)),
         responseObserver::onError,
         responseObserver::onCompleted);
-  }
-
-  private Product convertToGrpcProduct(final com.camila.api.product.domain.model.Product product) {
-    return Product.newBuilder()
-      .setId(product.id())
-      .setInternalId(product.internalId())
-      .setName(product.name())
-      .setCategory(product.category())
-      .setSalesUnits(product.salesUnits())
-      .putAllStock(product.stock())
-      .setProfitMargin(product.profitMargin())
-      .setDaysInStock(product.daysInStock())
-      .build();
   }
 }

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -59,10 +58,9 @@ class ProductRSocketAdapter {
    *
    * @param message the message
    * @return the product
-   * @throws JsonProcessingException the json processing exception
    */
   @MessageMapping("request-response-findByInternalId")
-  public Mono<Product> findByInternalId(final String message) throws JsonProcessingException {
+  public Mono<Product> findByInternalId(final String message) {
     return validateAndBuildFindRequest(message).flatMap(internalId ->
       productUseCase.findByInternalId(internalId)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product not found")))
@@ -75,10 +73,9 @@ class ProductRSocketAdapter {
    *
    * @param message the message
    * @return the product flux
-   * @throws JsonProcessingException the json processing exception
    */
   @MessageMapping("request-stream-sortByMetricsWeights")
-  public Flux<Product> sortByMetricsWeights(final String message) throws JsonProcessingException {
+  public Flux<Product> sortByMetricsWeights(final String message) {
     return validateAndBuildSortRequest(message)
       .flatMap(requestParams -> productUseCase.sortByMetricsWeights(requestParams)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product collection empty")))

@@ -31,7 +31,7 @@ public final class ProductWeightResolver {
       .collect(Collectors.toMap(
         MetricWeight::metric,
         MetricWeight::weight,
-        (existing, replacement) -> existing)
+        (existing, _) -> existing)
       );
 
     return new AppliedWeights(

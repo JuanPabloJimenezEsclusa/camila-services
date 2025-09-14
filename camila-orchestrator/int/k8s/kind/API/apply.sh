@@ -17,6 +17,7 @@ export SPRING_PROFILES_ACTIVE=int
 mvn clean spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true \
+  --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api \
   -f ../../../../../camila-product-api/pom.xml
 
 echo -e "${SEPARATOR} 🐳 A simple way to load the image into the kind cluster. ${SEPARATOR}"

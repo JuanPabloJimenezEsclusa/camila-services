@@ -15,6 +15,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableReactiveMethodSecurity
 class SecurityConfig {
 
+  /**
+   * Security web filter chain security web filter chain.
+   *
+   * @param http the http
+   * @return the security web filter chain
+   */
   @Bean
   SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
     return http

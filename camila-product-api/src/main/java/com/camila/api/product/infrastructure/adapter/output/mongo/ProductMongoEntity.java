@@ -26,6 +26,9 @@ public record ProductMongoEntity(
    */
   static final String DOCUMENT_NAME = "products";
 
+  /**
+   * Instantiates a new Product mongo entity.
+   */ // NOPMD
   public ProductMongoEntity {
     Objects.requireNonNull(id);
     Objects.requireNonNull(internalId);
