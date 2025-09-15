@@ -121,7 +121,7 @@
     <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
+    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
     <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
     <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.2.11</git-changelog-maven-plugin.version>
