@@ -12,7 +12,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for proxying
 class CamilaDiscoveryApplication {
 
-  private CamilaDiscoveryApplication() { }
+  private CamilaDiscoveryApplication() {}
 
   /**
    * The entry point of application.

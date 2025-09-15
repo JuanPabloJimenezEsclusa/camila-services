@@ -34,21 +34,17 @@ class ProductRestAdapter implements ProductsApi {
     }
     """;
 
-  private final QueryParametersValidator queryParametersValidator;
   private final ProductUseCase productUseCase;
   private final ProductDTOMapper productDTOMapper;
 
   /**
    * Instantiates a new Product rest adapter.
    *
-   * @param queryParametersValidator the query parameters validator
    * @param productUseCase the product use case
    * @param productDTOMapper the product dto mapper
    */
-  public ProductRestAdapter(final QueryParametersValidator queryParametersValidator,
-                            final ProductUseCase productUseCase,
+  public ProductRestAdapter(final ProductUseCase productUseCase,
                             final ProductDTOMapper productDTOMapper) {
-    this.queryParametersValidator = queryParametersValidator;
     this.productUseCase = productUseCase;
     this.productDTOMapper = productDTOMapper;
   }
@@ -59,7 +55,7 @@ class ProductRestAdapter implements ProductsApi {
                                    final String acceptLanguage,
                                    final String apiVersion,
                                    final ServerWebExchange exchange) {
-    return Mono.deferContextual(_ -> productUseCase.findByInternalId(internalId)
+    return Mono.deferContextual(_ -> this.productUseCase.findByInternalId(internalId)
         .map(productDTOMapper::toProductDTO))
       .doOnNext(_ -> log.info("find By Id: {}", internalId));
   }
@@ -70,8 +66,8 @@ class ProductRestAdapter implements ProductsApi {
                                        final String acceptLanguage,
                                        final String apiVersion,
                                        final ServerWebExchange exchange) {
-    return queryParametersValidator.validate(requestParams)
-      .flatMapMany(validParams -> productUseCase.sortByMetricsWeights(validParams)
+    return QueryParametersValidator.validate(requestParams)
+      .flatMapMany(validParams -> this.productUseCase.sortByMetricsWeights(validParams)
         .map(productDTOMapper::toProductDTO))
       .doOnNext(_ -> log.info("find sort by: {}", requestParams));
   }

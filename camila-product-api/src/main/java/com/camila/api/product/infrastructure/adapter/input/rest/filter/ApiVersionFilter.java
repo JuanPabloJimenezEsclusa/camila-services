@@ -20,21 +20,21 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Order(1)
 @Component
-public class ApiVersionFilter implements WebFilter {
+record ApiVersionFilter(
+  @Value("${info.app.version}")
+  String apiVersion
+) implements WebFilter {
 
   private static final String API_VERSION_HEADER = "X-Api-Version";
-
-  @Value("${info.app.version}")
-  private String apiVersion;
 
   @Override
   public Mono<Void> filter(final ServerWebExchange exchange, final WebFilterChain chain) {
     final var requestApiVersion = Optional
       .ofNullable(exchange.getRequest().getHeaders().getFirst(API_VERSION_HEADER))
-      .orElse(apiVersion);
+      .orElse(this.apiVersion);
 
-    if (!requestApiVersion.equalsIgnoreCase(apiVersion)) {
-      log.warn("API version mismatch: requested {} but service supports {}", requestApiVersion, apiVersion);
+    if (!requestApiVersion.equalsIgnoreCase(this.apiVersion)) {
+      log.warn("API version mismatch: requested {} but service supports {}", requestApiVersion, this.apiVersion);
       exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);
       return Mono.empty();
     }

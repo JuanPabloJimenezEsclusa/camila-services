@@ -27,10 +27,10 @@ cd dev/compose
 sudo ./mappingHosts.sh
 
 # Start the services
-./start.sh
+./start.sh buildProjects=true
 
 # Stop the services
-./stop.sh
+./stop.sh removeImages=true
 ```
 
 ### Manually
@@ -53,7 +53,9 @@ docker-compose up -d --build --force-recreate
 docker-compose ps
 
 # View logs (follow option shows live updates)
-docker-compose logs mongodb backend-product gateway --follow
+docker-compose logs mongodb couchbase redis --follow 
+docker-compose logs admin config discovery gateway backend-product --follow
+docker-compose logs fluentd elasticsearch kibana --follow
 
 # Stop the services
 docker-compose down

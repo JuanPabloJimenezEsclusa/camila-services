@@ -74,7 +74,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // Framework adapter input layer
   LocalOpenAPIConfig.class,
   ProductRestAdapter.class,
-  QueryParametersValidator.class,
   ProductDTOMapperImpl.class,
   RestExceptionHandler.class,
   // Security

@@ -5,13 +5,236 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] ci: update workflow actions**
+**[GH-32] feat(cache): add redis cache to product api**
 
 
-[e4ba3412ae1f657](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e4ba3412ae1f657) JuanPabloJimenezEsclusa *2025-09-13 12:16:18*
+[9e03d5808dd017b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9e03d5808dd017b) JuanPabloJimenezEsclusa *2025-09-15 03:18:23*
 
-**Bump cucumber.version from 7.27.2 to 7.28.0**
+**Bump cucumberVersion from 7.27.2 to 7.28.0 (#63)**
 
+ * Bumps &#x60;cucumberVersion&#x60; from 7.27.2 to 7.28.0.
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.27.2 to 7.28.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.27.2...v7.28.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[317c53047d953fa](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/317c53047d953fa) dependabot[bot] *2025-09-13 19:45:26*
+
+**Bump org.openapi.generator from 7.14.0 to 7.15.0 (#59)**
+
+ * Bumps org.openapi.generator from 7.14.0 to 7.15.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openapi.generator
+ * dependency-version: 7.15.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[f7187d51158495e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f7187d51158495e) dependabot[bot] *2025-09-13 19:34:58*
+
+**Update hashicorp/aws requirement from ~> 6.10.0 to ~> 6.12.0 (#67)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.10.0...v6.12.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.12.0
+ * dependency-type: direct:production
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[2ebcf51cb1c7343](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2ebcf51cb1c7343) dependabot[bot] *2025-09-13 19:12:15*
+
+**Bump kibana from 9.1.2 to 9.1.3 in /camila-orchestrator/dev/compose (#66)**
+
+ * Bumps kibana from 9.1.2 to 9.1.3.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: kibana
+ * dependency-version: 9.1.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[6beb54c108a1458](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6beb54c108a1458) dependabot[bot] *2025-09-13 18:58:49*
+
+**Bump elasticsearch in /camila-orchestrator/dev/compose (#65)**
+
+ * Bumps elasticsearch from 9.1.2 to 9.1.3.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.1.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[a6a64b2844767a3](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a6a64b2844767a3) dependabot[bot] *2025-09-13 18:45:32*
+
+**Bump org.openrewrite.rewrite from 7.14.0 to 7.15.0 (#62)**
+
+ * Bumps org.openrewrite.rewrite from 7.14.0 to 7.15.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.15.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[3df1e44be5ffe0d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3df1e44be5ffe0d) dependabot[bot] *2025-09-13 18:31:40*
+
+**Bump org.openapitools:openapi-generator-maven-plugin (#61)**
+
+ * Bumps org.openapitools:openapi-generator-maven-plugin from 7.14.0 to 7.15.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openapitools:openapi-generator-maven-plugin
+ * dependency-version: 7.15.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[23b017e59d46360](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/23b017e59d46360) dependabot[bot] *2025-09-13 18:21:49*
+
+**Bump com.google.protobuf:protobuf-java from 4.31.1 to 4.32.0 (#60)**
+
+ * Bumps [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) from 4.31.1 to 4.32.0.
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Changelog](https://github.com/protocolbuffers/protobuf/blob/main/protobuf_release.bzl)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.32.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[5881c276ce92b02](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5881c276ce92b02) dependabot[bot] *2025-09-13 17:05:47*
+
+**Bump io.freefair.lombok from 8.14 to 8.14.2 (#58)**
+
+ * Bumps io.freefair.lombok from 8.14 to 8.14.2.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 8.14.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[0820db9e7030137](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0820db9e7030137) dependabot[bot] *2025-09-13 16:37:38*
+
+**Bump org.bouncycastle:bctls-jdk18on from 1.80 to 1.81 (#56)**
+
+ * Bump org.bouncycastle:bctls-jdk18on from 1.80 to 1.81
+ * Bumps [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) from 1.80 to 1.81.
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.81&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] refactor: fix security code scan issues
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+
+[216cf974eb9baaf](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/216cf974eb9baaf) dependabot[bot] *2025-09-13 16:18:40*
+
+**Bump com.puppycrawl.tools:checkstyle from 11.0.0 to 11.0.1 (#57)**
+
+ * Bumps [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) from 11.0.0 to 11.0.1.
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-11.0.0...checkstyle-11.0.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 11.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[9b433d13ce76557](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9b433d13ce76557) dependabot[bot] *2025-09-13 16:03:42*
+
+**Bump com.google.cloud.tools.jib from 3.4.2 to 3.4.5 (#55)**
+
+ * Bumps com.google.cloud.tools.jib from 3.4.2 to 3.4.5.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.cloud.tools.jib
+ * dependency-version: 3.4.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[2e3242270b76d01](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2e3242270b76d01) dependabot[bot] *2025-09-13 15:46:35*
+
+**Bump cucumber.version from 7.27.2 to 7.28.0 (#54)**
+
+ * Bump cucumber.version from 7.27.2 to 7.28.0
  * Bumps &#x60;cucumber.version&#x60; from 7.27.2 to 7.28.0.
  * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.27.2 to 7.28.0
  * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
@@ -49,8 +272,14 @@ Changelog of camila-services.
  * update-type: version-update:semver-minor
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] ci: update workflow actions
+ * [GH-32] refactor: fix security code scan issues
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[55e1ba2a23d9ad4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/55e1ba2a23d9ad4) dependabot[bot] *2025-09-02 02:41:38*
+[d7abc135818ee3e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d7abc135818ee3e) dependabot[bot] *2025-09-13 15:12:49*
 
 **Merge pull request #53 from JuanPabloJimenezEsclusa/feature/GH-32-update-java-version**
 

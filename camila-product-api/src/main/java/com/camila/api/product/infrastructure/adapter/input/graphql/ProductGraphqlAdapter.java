@@ -40,7 +40,7 @@ class ProductGraphqlAdapter {
    */
   @QueryMapping
   public Mono<Product> findById(@Argument(name = "internalId") final String internalId) {
-    return productUseCase.findByInternalId(internalId);
+    return this.productUseCase.findByInternalId(internalId);
   }
 
   /**
@@ -70,6 +70,6 @@ class ProductGraphqlAdapter {
       "page", page.toString(),
       "size", size.toString()
     );
-    return productUseCase.sortByMetricsWeights(requestParams);
+    return this.productUseCase.sortByMetricsWeights(requestParams);
   }
 }

@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  test:
+    if: github.event.pull_request.draft == false
     name: Build and analyze
     environment: pro
     runs-on: ubuntu-latest

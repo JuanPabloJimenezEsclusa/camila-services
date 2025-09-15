@@ -41,7 +41,7 @@ public class CachedProductDecorator implements ProductUseCase {
   @Cacheable(cacheNames = "findByInternalId", key = "#internalId")
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    return delegate.findByInternalId(internalId);
+    return this.delegate.findByInternalId(internalId);
   }
 
   @Cacheable(cacheNames = "sortedProducts", key = "{"
@@ -54,6 +54,6 @@ public class CachedProductDecorator implements ProductUseCase {
     + "}")
   @Override
   public Flux<Product> sortByMetricsWeights(final Map<String, String> requestParams) {
-    return delegate.sortByMetricsWeights(requestParams);
+    return this.delegate.sortByMetricsWeights(requestParams);
   }
 }

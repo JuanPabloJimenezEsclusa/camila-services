@@ -492,14 +492,14 @@ services:
       resources:
         limits:
           memory: "2048m"
-          cpus: "2"
+          cpus: "4"
     environment:
       # service failed if it use .env
       - discovery.type=single-node
       - xpack.security.enabled=false
       - cluster.name=elasticsearch
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx1000m"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx2000m"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -534,8 +534,10 @@ services:
     volumes:
       - ./monitoring/fluentd:/fluentd
       - fluentd_logs:/fluentd/log
+      - fluentd_buffer:/fluentd/buffer
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     networks:
       camila_product_network:
   kibana:
@@ -555,7 +557,8 @@ services:
     expose:
       - 5601
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     links:
       - elasticsearch
     healthcheck:
@@ -627,6 +630,11 @@ volumes:
       device: tmpfs
   fluentd_logs:
     name: fluentd_logs
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  fluentd_buffer:
+    name: fluentd_buffer
     driver_opts:
       type: tmpfs
       device: tmpfs

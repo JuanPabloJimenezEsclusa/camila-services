@@ -14,7 +14,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for proxying
 class CamilaConfigApplication {
 
-  private CamilaConfigApplication() { }
+  private CamilaConfigApplication() {}
 
   /**
    * The entry point of application.

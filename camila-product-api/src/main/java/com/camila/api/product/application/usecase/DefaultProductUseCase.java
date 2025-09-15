@@ -17,20 +17,9 @@ import reactor.core.publisher.Mono;
 /**
  * The type Default product use case.
  */
-public class DefaultProductUseCase implements ProductUseCase {
+public record DefaultProductUseCase(ProductRepository productRepository) implements ProductUseCase {
 
   private static final Logger log = LoggerFactory.getLogger(DefaultProductUseCase.class);
-
-  private final ProductRepository productRepository;
-
-  /**
-   * Instantiates a new Default product use case.
-   *
-   * @param productRepository the product repository used for data access
-   */
-  public DefaultProductUseCase(final ProductRepository productRepository) {
-    this.productRepository = productRepository;
-  }
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
