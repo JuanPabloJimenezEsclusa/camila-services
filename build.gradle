@@ -72,7 +72,7 @@ subprojects {
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
     jspecifyVersion = '1.0.0'
-    chaosMonkeySpringBootVersion = '3.1.0'
+    chaosMonkeySpringBootVersion = '3.2.2'
 
     // Plugins
     flattenmavenpluginVersion = '1.6.0'
