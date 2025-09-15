@@ -45,13 +45,13 @@ subprojects {
 
     // Observability
     opentelemetryVersion = '1.54.0'
-    opentelemetryApiIncubatorVersion = '1.53.0-alpha'
+    opentelemetryApiIncubatorVersion = '1.54.0-alpha'
 
     // Database
     couchbaseJavaClientVersion = '3.9.0'
 
     // Testing
-    testcontainersVersion = '1.20.6'
+    testcontainersVersion = '1.21.3'
     cucumberVersion = '7.28.2'
     junitPlatformSuiteVersion = '1.13.4'
     archunitJunit5Version = '1.4.1'
@@ -60,7 +60,7 @@ subprojects {
     jmhVersion = '1.37'
 
     // API Documentation
-    springdocOpenapiVersion = '2.8.9'
+    springdocOpenapiVersion = '2.8.13'
     graphqlJavaVersion = '24.2'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
@@ -72,6 +72,7 @@ subprojects {
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
     jspecifyVersion = '1.0.0'
+    commonsLang3 = '3.18.0'
     chaosMonkeySpringBootVersion = '3.2.2'
 
     // Plugins
