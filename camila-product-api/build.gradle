@@ -76,14 +76,17 @@ dependencies {
   implementation "io.grpc:grpc-protobuf:${grpcVersion}"
   implementation "io.grpc:grpc-stub:${grpcVersion}"
   // Workaround for @javax.annotation.Generated
-  implementation 'javax.annotation:javax.annotation-api:1.3.1'
+  implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
   // API Documentation
-  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}"
+  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}" {
+    exclude group: 'org.apache.commons', module: 'commons-lang3'
+  }
 
   // Utilities
   implementation 'com.github.ben-manes.caffeine:caffeine'
   implementation "org.jspecify:jspecify:${jspecifyVersion}"
+  implementation "org.apache.commons:commons-lang3:${commonsLang3}"
 
   // Development Tools
   developmentOnly 'org.springframework.boot:spring-boot-devtools'

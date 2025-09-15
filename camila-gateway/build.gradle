@@ -29,11 +29,14 @@ dependencies {
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
   // API Documentation
-  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}"
+  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}" {
+    exclude group: 'org.apache.commons', module: 'commons-lang3'
+  }
 
   // Utilities
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
+  implementation "org.apache.commons:commons-lang3:${commonsLang3}"
 
   // Testing
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
