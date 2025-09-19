@@ -37,6 +37,7 @@
   • [Domain Storytelling](#-domain-storytelling) 
   • [Architecture](#-architecture) 
   • [Build and Packing](#-build-and-packing) 
+  • [SDLC](#-sdlc)
   • [Changelog](#-changelog) 
   • [Code of Conduct](#-code-of-conduct) 
   • [Contributing](#-contributing) 
@@ -187,6 +188,27 @@ mvn -B site:stage-deploy
 # Open report
 xdg-open ./target/report/camila-services/staging/index.html
 ```
+
+## ⚙️ SDLC
+
+---
+
+This project follows a lightweight SDLC (Software Development Life Cycle) to ensure features are planned, implemented, tested, released and monitored consistently.
+
+- Plan: capture requirements as issues and design decisions in the `.docs/architecture/` folder and in GitHub issues/PR descriptions.
+- Code: follow the contribution guidelines in `CONTRIBUTING.md` (branch-per-feature, small PRs, descriptive commit messages).
+- Build: CI runs via GitHub Actions (see `.github/workflows/` — e.g. build & deploy badges at the top of this README).
+- Test: unit, integration, mutation and behavior tests are defined (see `camila-product-api/src/test/Readme.md` and the tests folders). Run tests locally before creating a PR.
+- Release: artifacts are built with Maven and published from CI (see the build/deploy workflow badge above).
+- Deploy / Operate: orchestrations and deployment scripts live under `camila-orchestrator` and `.operate/` (see their READMEs).
+- Feedback & Improve: use issue tracker, code analysis reports, and CI feedback to iterate.
+
+Helpful links:
+
+- CONTRIBUTING: `CONTRIBUTING.md`
+- Tests & QA: `camila-product-api/src/test/Readme.md`
+- Operations / Deploy: `.operate/Readme.md` and `camila-orchestrator/Readme.md`
+- Architecture: `.docs/architecture/`
 
 ## 📋 Changelog
 
