@@ -48,6 +48,7 @@ This project implements a comprehensive test suite for the `camila-product-api` 
  ┃     ┃ ┣ 📂websocket (Integration tests) (Unit tests)
  ┃     ┃ ┗ 📂rsocket (Integration tests) (Unit tests)
  ┃     ┗ 📂output
+ ┃       ┣ 📂cache (Integration tests)
  ┃       ┣ 📂mongo (Integration tests)
  ┃       ┗ 📂couchbase (Integration tests)
  ┗ 📜ProductApiApplicationTests.java

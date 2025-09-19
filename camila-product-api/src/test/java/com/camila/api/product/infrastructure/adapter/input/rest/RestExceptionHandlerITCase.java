@@ -18,6 +18,7 @@ import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -96,11 +97,11 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
 
   private static Stream<Arguments> exceptionTestCases() {
     return Stream.of(
-      Arguments.of("Should return 200 OK", "/products/4", HttpStatus.OK),
-      Arguments.of("Should return 204 NOT_CONTENT", "/products/99", HttpStatus.NO_CONTENT),
-      Arguments.of("Should return 400 BAD_REQUEST", "/products/.", HttpStatus.BAD_REQUEST),
-      Arguments.of("Should return 417 EXPECTATION_FAILED", "/products/test", HttpStatus.EXPECTATION_FAILED),
-      Arguments.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits", HttpStatus.INTERNAL_SERVER_ERROR)
+      Arguments.of(Named.of("Should return 200 OK", "/products/4"), HttpStatus.OK),
+      Arguments.of(Named.of("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
+      Arguments.of(Named.of("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
+      Arguments.of(Named.of("Should return 417 EXPECTATION_FAILED", "/products/test"), HttpStatus.EXPECTATION_FAILED),
+      Arguments.of(Named.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"), HttpStatus.INTERNAL_SERVER_ERROR)
     );
   }
 
@@ -111,12 +112,11 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
       .toUpperCase(Locale.ROOT);
   }
 
-  @ParameterizedTest(name = "{0}")
+  @ParameterizedTest(name = "{index}: {0}")
   @MethodSource("exceptionTestCases")
   @DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
   @Order(6)
-  void shouldHandleExceptionsWithCorrectStatusCodes(final String escenario,
-                                                    final String endpoint,
+  void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint,
                                                     final HttpStatus expectedStatus) {
     webTestClient.get()
       .uri(endpoint)

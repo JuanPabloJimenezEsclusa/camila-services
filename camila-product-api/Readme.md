@@ -87,13 +87,13 @@ Hexagonal Architecture with Domain Driven Design (DDD)
  ┃   ┗ 📂adapter
  ┃     ┣ 📂input
  ┃     ┃ ┣ 📂security
- ┃     ┃ ┣ 📂cache
  ┃     ┃ ┣ 📂rest
  ┃     ┃ ┣ 📂graphql
  ┃     ┃ ┣ 📂websocket
  ┃     ┃ ┣ 📂rsocket
  ┃     ┃ ┗ 📂grpc
  ┃     ┗ 📂output
+ ┃       ┣ 📂cache
  ┃       ┣ 📂mongo
  ┃       ┗ 📂couchbase
  ┗ 📜ProductApiApplication.java

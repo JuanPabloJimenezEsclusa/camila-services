@@ -1,4 +1,4 @@
-package com.camila.api.product.infrastructure.adapter.input.cache.config;
+package com.camila.api.product.infrastructure.adapter.output.cache.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Value;

@@ -55,10 +55,10 @@ public class ProductBehaviourTest {
 
   @And("^get sorted data$")
   public void getSortedData(final DataTable table) {
-    var body = exchange.expectBody();
+    final var body = exchange.expectBody();
 
     table.asMaps().forEach(element -> {
-      var index = element.get("index");
+      final var index = element.get("index");
       body
         .jsonPath("$[" + index + "].internalId").isEqualTo(element.get("internalId"))
         .jsonPath("$[" + index + "].salesUnits").isEqualTo(element.get("salesUnits"))

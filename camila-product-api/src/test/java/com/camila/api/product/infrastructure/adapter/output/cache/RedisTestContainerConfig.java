@@ -1,4 +1,4 @@
-package com.camila.api.product.infrastructure.adapter.input.cache;
+package com.camila.api.product.infrastructure.adapter.output.cache;
 
 import java.time.Duration;
 import java.util.Objects;

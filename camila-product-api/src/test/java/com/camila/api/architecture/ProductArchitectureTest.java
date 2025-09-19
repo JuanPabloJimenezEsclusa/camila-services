@@ -68,9 +68,6 @@ class ProductArchitectureTest {
         "org.springframework.dao..", "org.springframework.graphql..", "org.springframework.core..",
         "org.springframework.lang..", "org.springframework.messaging..", "org.springframework.http..",
         "org.springframework.data.domain..", "org.springframework.validation.annotation..",
-        "org.springframework.cache..",
-        // Cache
-        "com.github.benmanes.caffeine..",
         // GRAPHQL
         "graphql.schema..", "graphql.scalars..",
         // GRPC
@@ -101,16 +98,19 @@ class ProductArchitectureTest {
         // Spring dependencies
         "org.springframework.context..", "org.springframework.stereotype..", "org.springframework.boot..",
         "org.springframework.core.io..", "org.springframework.core.type..", "org.springframework.core.env..",
-        // Couchbase
-        "com.couchbase.client..", "com.github.dockerjava.api..",
+        "org.springframework.cache..",
+        // Cache
+        "com.github.benmanes.caffeine..",
+        "org.springframework.data.redis..",
         // MongoDB
         "org.bson..", "com.mongodb.client..",
         "org.springframework.data.mongodb..", "org.springframework.data.repository..", "org.springframework.data.domain..",
         // Couchbase
-        "org.springframework.data.couchbase..", "org.springframework.data.annotation..",
+        "com.couchbase.client..", "com.github.dockerjava.api..",
+        "org.springframework.data.couchbase..", "org.springframework.data.annotation..", "org.springframework.data.convert..",
         // Testing dependencies
-        "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..",
-        "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..",
+        "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
+        "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.redis.testcontainers..",
         // AOT
         "org.springframework.aot.generate..", "org.springframework.beans.factory..");
   private static final String BASE_PKG = "com.camila.api.product";
