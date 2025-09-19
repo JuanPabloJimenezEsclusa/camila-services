@@ -1,9 +1,9 @@
-package com.camila.api.product.infrastructure.adapter.input.cache;
+package com.camila.api.product.infrastructure.adapter.output.cache;
 
 import static org.mockito.Mockito.mock;
 
-import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.cache.config.RedisCacheConfig;
+import com.camila.api.product.domain.port.ProductRepository;
+import com.camila.api.product.infrastructure.adapter.output.cache.config.RedisCacheConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +24,23 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 class RedisCachedProductDecoratorITCase extends RedisTestContainerConfig {
 
   @Autowired
-  private ProductUseCase cachedDecorator;
+  private ProductRepository cachedDecorator;
 
   @Autowired
-  @Qualifier("mockProductUseCase")
-  private ProductUseCase mockProductUseCase;
+  @Qualifier("mockProductRepository")
+  private ProductRepository mockProductRepository;
 
   @Autowired
   private CacheManager cacheManager;
 
   @Override
-  protected ProductUseCase cachedDecorator() {
+  protected ProductRepository cachedDecorator() {
     return cachedDecorator;
   }
 
   @Override
-  protected ProductUseCase mockProductUseCase() {
-    return mockProductUseCase;
+  protected ProductRepository mockProductRepository() {
+    return mockProductRepository;
   }
 
   @Override
@@ -52,15 +52,15 @@ class RedisCachedProductDecoratorITCase extends RedisTestContainerConfig {
   @Import(RedisCacheConfig.class)
   static class TestConfig {
     @Bean
-    @Qualifier("mockProductUseCase")
-    public ProductUseCase mockProductUseCase() {
-      return mock(ProductUseCase.class);
+    @Qualifier("mockProductRepository")
+    public ProductRepository mockProductRepository() {
+      return mock(ProductRepository.class);
     }
 
     @Bean
     @Primary
-    public ProductUseCase cachedDecorator(@Qualifier("mockProductUseCase") final ProductUseCase mockProductUseCase) {
-      return new CachedProductDecorator(mockProductUseCase);
+    public ProductRepository cachedDecorator(@Qualifier("mockProductRepository") final ProductRepository mockProductRepository) {
+      return new CachedProductRepositoryDecorator(mockProductRepository);
     }
   }
 }

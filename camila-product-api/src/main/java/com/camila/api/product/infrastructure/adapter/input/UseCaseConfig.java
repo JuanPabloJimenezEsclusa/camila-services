@@ -4,7 +4,7 @@ package com.camila.api.product.infrastructure.adapter.input;
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.cache.CachedProductDecorator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 class UseCaseConfig {
+
   /**
    * Product use case product use case.
    *
@@ -32,7 +33,7 @@ class UseCaseConfig {
    * @return the product use case
    */
   @Bean
-  public ProductUseCase productUseCase(final ProductRepository productRepository) {
-    return new CachedProductDecorator(new DefaultProductUseCase(productRepository));
+  public ProductUseCase productUseCase(@Qualifier("cachedProductRepository") final ProductRepository productRepository) {
+    return new DefaultProductUseCase(productRepository);
   }
 }

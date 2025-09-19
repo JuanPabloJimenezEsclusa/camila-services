@@ -52,7 +52,7 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
   @Test
   @DisplayName("[ProductRestAdapter] Run benchmarks")
   void runBenchmarks() throws Exception {
-    Options options = new OptionsBuilder()
+    final Options options = new OptionsBuilder()
       .include(".*findByInternalId.*|.*sortProductsWithStockMoreWeight.*")
       .warmupMode(WarmupMode.BULK)
       .shouldFailOnError(true)
@@ -73,9 +73,9 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
   @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
   @Threads(5)
   public void findByInternalId(Blackhole blackhole) {
-    var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
+    final var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
 
-    HttpStatusCode status = webClient.get().uri("/products/{id}", optionalId.orElseThrow())
+    final HttpStatusCode status = webClient.get().uri("/products/{id}", optionalId.orElseThrow())
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange()
       .expectStatus().isOk()
@@ -94,11 +94,11 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
   @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
   @Threads(5)
   public void sortProductsWithStockMoreWeight(Blackhole blackhole) {
-    var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
-    var salesUnits = optionalSalesUnits.orElseThrow();
-    var stock = 100 - salesUnits;
+    final var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
+    final var salesUnits = optionalSalesUnits.orElseThrow();
+    final var stock = 100 - salesUnits;
 
-    HttpStatusCode status = webClient.get()
+    final HttpStatusCode status = webClient.get()
       .uri("/products?salesUnits={salesUnits}&stock={stock}", salesUnits, stock)
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .exchange()

@@ -5,6 +5,17 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**Merge pull request #79 from JuanPabloJimenezEsclusa/dependabot/terraform/camila-orchestrator/pre/aws/terraform/templates/hashicorp/aws-tw-6.13.0**
+
+ * chore(deps): update hashicorp/aws requirement from ~&gt; 6.12.0 to ~&gt; 6.13.0 in /camila-orchestrator/pre/aws/terraform/templates
+
+[0e52c093708522c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0e52c093708522c) Juan Pablo Jimenez Esclusa *2025-09-15 22:54:23*
+
+**[GH-32] fix: change commons-lang3 version**
+
+
+[7106b95a9912763](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7106b95a9912763) JuanPabloJimenezEsclusa *2025-09-15 22:44:54*
+
 **chore(deps): update hashicorp/aws requirement from ~> 6.12.0 to ~> 6.13.0**
 
  * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
