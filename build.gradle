@@ -44,7 +44,7 @@ subprojects {
     springBootAdminVersion = '3.5.2'
 
     // Observability
-    opentelemetryVersion = '1.54.0'
+    opentelemetryVersion = '1.54.1'
     opentelemetryApiIncubatorVersion = '1.54.0-alpha'
 
     // Database
