@@ -15,6 +15,7 @@ class ProductArchitectureTest {
   // https://github.com/TNG/ArchUnit/tree/main/archunit-example/example-junit5/src/test/java/com/tngtech/archunit/exampletest/junit5
 
   @ArchTest
+  @SuppressWarnings("unused")
   static final ArchRule LAYER_DEPENDENCIES_ARE_RESPECTED = layeredArchitecture().consideringOnlyDependenciesInLayers()
     // define layers
     .layer(HEXAGONAL_LAYERS.DOMAIN.name()).definedBy(HEXAGONAL_LAYERS.DOMAIN.getValue())
@@ -28,22 +29,32 @@ class ProductArchitectureTest {
     .mayOnlyBeAccessedByLayers(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name())
 
     // application layer. Accessible only by externals layers
-    .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyBeAccessedByLayers(
-      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(), HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name())
-    .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name()).mayOnlyAccessLayers(HEXAGONAL_LAYERS.DOMAIN.name())
+    .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name())
+    .mayOnlyBeAccessedByLayers(
+      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(),
+      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name())
+    .whereLayer(HEXAGONAL_LAYERS.APPLICATION.name())
+    .mayOnlyAccessLayers(HEXAGONAL_LAYERS.DOMAIN.name())
 
     // domain layer. Not use other layer class
-    .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayOnlyBeAccessedByLayers(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(),
-      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name(), HEXAGONAL_LAYERS.APPLICATION.name())
+    .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name())
+    .mayOnlyBeAccessedByLayers(
+      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.name(),
+      HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.name(),
+      HEXAGONAL_LAYERS.APPLICATION.name())
     .whereLayer(HEXAGONAL_LAYERS.DOMAIN.name()).mayNotAccessAnyLayer()
     .ensureAllClassesAreContainedInArchitecture();
+
   @ArchTest
+  @SuppressWarnings("unused")
   static final ArchRule DOMAIN_ONLY_DEPEND_ON_STANDARD =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.DOMAIN.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(HEXAGONAL_LAYERS.DOMAIN.getValue(),
         // Basis dependencies
         "java..", "reactor.core..", "org.jspecify..", "com.fasterxml.jackson.annotation..");
+
   @ArchTest
+  @SuppressWarnings("unused")
   static final ArchRule APPLICATION_ONLY_DEPEND_ON_STANDARD_DOMAIN =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.APPLICATION.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(
@@ -52,12 +63,19 @@ class ProductArchitectureTest {
         "java..", "reactor.core..", "org.jspecify..", "org.slf4j..",
         // Testing dependencies
         "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..");
+
   @ArchTest
+  @SuppressWarnings("unused")
   static final ArchRule INFRASTRUCTURE_ADAPTER_INPUT_ONLY_DEPEND_ON_STANDARD_DOMAIN_APPLICATION =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(
-        HEXAGONAL_LAYERS.DOMAIN.getValue(), HEXAGONAL_LAYERS.APPLICATION.getValue(),
-        HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue(), HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.getValue(),
+        HEXAGONAL_LAYERS.DOMAIN.getValue(),
+        // For UseCaseConfig, tradeoff to keep the application layer free of Spring dependencies
+        // Requires to slice the Spring configuration in tests too
+        HEXAGONAL_LAYERS.APPLICATION.getValue(),
+        // For sliced spring configuration in tests too
+        HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue(),
+        HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.getValue(),
         // Basis dependencies
         "java..", "org.jspecify..", "com.fasterxml.jackson..", "org.slf4j..",
         "org.mapstruct..", "lombok..", "jakarta.validation..", "jakarta.annotation..",
@@ -87,11 +105,14 @@ class ProductArchitectureTest {
         "org.springframework.cloud..", "org.springframework.boot.autoconfigure..",
         // AOT
         "org.springframework.aot.generate..", "org.springframework.beans.factory..");
+
   @ArchTest
+  @SuppressWarnings("unused")
   static final ArchRule INFRASTRUCTURE_ADAPTER_OUTPUT_ONLY_DEPEND_ON_STANDARD_DOMAIN_APPLICATION =
     classes().that().resideInAPackage(HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue())
       .should().onlyDependOnClassesThat().resideInAnyPackage(
-        HEXAGONAL_LAYERS.DOMAIN.getValue(), HEXAGONAL_LAYERS.APPLICATION.getValue(), HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue(),
+        HEXAGONAL_LAYERS.DOMAIN.getValue(),
+        HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.getValue(),
         // Basis dependencies
         "java..", "reactor.core..", "org.jspecify..", "org.slf4j..", "org.mapstruct..", "lombok..",
         "com.fasterxml.jackson.core..", "com.fasterxml.jackson.databind..", "jakarta.annotation..",
@@ -113,6 +134,7 @@ class ProductArchitectureTest {
         "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.redis.testcontainers..",
         // AOT
         "org.springframework.aot.generate..", "org.springframework.beans.factory..");
+
   private static final String BASE_PKG = "com.camila.api.product";
 
   private enum HEXAGONAL_LAYERS {

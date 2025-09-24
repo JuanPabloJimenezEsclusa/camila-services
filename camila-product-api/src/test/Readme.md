@@ -119,7 +119,7 @@ gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner"
 ### Code Analysis
 
 * Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
-* Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
+* Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/), [nvd.nist.gov](https://nvd.nist.gov/)
 * Checkstyle: [maven-checkstyle-plugin](https://checkstyle.sourceforge.io/)
 * SpotBugs: [spotbugs-maven-plugin](https://spotbugs.github.io/)
 * PMD: [pmd-maven-plugin](https://pmd.github.io/)
@@ -131,6 +131,9 @@ unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE=
 mvn -B clean verify site -P error-prone,quality-check | tee code-analysis.log
+
+# To open SpotBugs GUI
+mvn -B spotbugs:gui -P quality-check
 ```
 
 ```bash

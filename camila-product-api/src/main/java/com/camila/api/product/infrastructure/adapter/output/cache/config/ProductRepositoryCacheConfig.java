@@ -1,12 +1,12 @@
 package com.camila.api.product.infrastructure.adapter.output.cache.config;
 
+import com.camila.api.product.domain.port.CachePort;
 import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.infrastructure.adapter.output.cache.CachedProductRepositoryDecorator;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Primary;
 
 /**
  * Configuration that enables caching and wraps the active ProductRepository
@@ -16,23 +16,26 @@ import org.springframework.context.annotation.Primary;
 @EnableCaching
 public class ProductRepositoryCacheConfig {
 
-  private static final String NO_IMPLEMENTATION_FOUND_TO_WRAP_CACHE =
-    "No ProductRepository implementation found to wrap with cache";
-
   /**
-   * Cached product repository.
+   * Register the cached product repository and prefer any available CachePort
+   * (for example, ReactiveRedisCacheAdapter or ReactiveCaffeineCacheAdapter) injected by
+   * profile-specific configuration.
    *
-   * @param repositories the repositories
+   * @param productRepositories the product repositories
+   * @param reactiveCacheServices the reactive cache services
    * @return the product repository
    */
   @Bean(name = "cachedProductRepository")
-  @Primary
-  public ProductRepository cachedProductRepository(final ObjectProvider<ProductRepository> repositories) {
-    final var delegate = repositories.stream()
-      .filter(repo -> !(repo instanceof CachedProductRepositoryDecorator))
+  public ProductRepository cachedProductRepository(final ObjectProvider<ProductRepository> productRepositories,
+                                                    final ObjectProvider<CachePort> reactiveCacheServices) {
+    final var delegateRepository = productRepositories.stream()
+      .filter(repository -> !(repository instanceof CachedProductRepositoryDecorator))
       .findFirst()
-      .orElseThrow(() -> new IllegalStateException(NO_IMPLEMENTATION_FOUND_TO_WRAP_CACHE));
+      .orElseThrow();
+    final var cacheService = reactiveCacheServices.stream()
+      .findFirst()
+      .orElseThrow();
 
-    return new CachedProductRepositoryDecorator(delegate);
+    return new CachedProductRepositoryDecorator(delegateRepository, cacheService);
   }
 }

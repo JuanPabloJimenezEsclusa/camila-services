@@ -1,9 +1,11 @@
-package com.camila.api.product.infrastructure.adapter.output.cache.config;
+package com.camila.api.product.infrastructure.adapter.output.cache.redis.config;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import com.camila.api.product.domain.port.CachePort;
+import com.camila.api.product.infrastructure.adapter.output.cache.redis.ReactiveRedisCacheAdapter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -15,8 +17,11 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.ReactiveRedisOperations;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * The type Redis cache config.
@@ -76,5 +81,37 @@ public class RedisCacheConfig {
       .cacheDefaults(cacheConfig)
       .initialCacheNames(initialNames)
       .build();
+  }
+
+  /**
+   * Reactive redis operations reactive redis operations.
+   *
+   * @param connectionFactory the connection factory
+   * @return the reactive redis operations
+   */
+  @Bean
+  public ReactiveRedisOperations<String, Object> reactiveRedisOperations(final LettuceConnectionFactory connectionFactory) {
+    final var keySerializer = new StringRedisSerializer();
+    final var valueSerializer = new GenericJackson2JsonRedisSerializer();
+    final RedisSerializationContext<String, Object> context = RedisSerializationContext
+      .<String, Object>newSerializationContext(valueSerializer)
+      .key(keySerializer)
+      .value(valueSerializer)
+      .hashKey(keySerializer)
+      .hashValue(valueSerializer)
+      .build();
+
+    return new ReactiveRedisTemplate<>(connectionFactory, context);
+  }
+
+  /**
+   * Reactive redis cache adapter.
+   *
+   * @param reactiveRedisOperations the reactive redis operations
+   * @return the reactive cache service
+   */
+  @Bean
+  public CachePort reactiveRedisCacheAdapter(final ReactiveRedisOperations<String, Object> reactiveRedisOperations) {
+    return new ReactiveRedisCacheAdapter(reactiveRedisOperations);
   }
 }

@@ -1,4 +1,4 @@
-package com.camila.api.product.infrastructure.adapter.output.cache;
+package com.camila.api.product.infrastructure.adapter.output.cache.redis;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -7,7 +7,9 @@ import java.util.UUID;
 import com.redis.testcontainers.RedisContainer;
 import org.testcontainers.utility.DockerImageName;
 
-abstract class RedisTestContainerConfig extends AbstractCachedProductDecoratorITCase {
+class RedisContainerConfig {
+
+  private static final String REDIS_PASSWORD = "camila";
 
   private static final DockerImageName REDIS_IMAGE = DockerImageName
     .parse("redis:8.2.1-alpine");
@@ -15,7 +17,7 @@ abstract class RedisTestContainerConfig extends AbstractCachedProductDecoratorIT
   private static final RedisContainer container = new RedisContainer(REDIS_IMAGE)
     .withStartupTimeout(Duration.ofMinutes(2L))
     .withReuse(true)
-    .withCommand("redis-server --save 20 1 --requirepass camila")
+    .withCommand("redis-server --save 20 1 --requirepass %s".formatted(REDIS_PASSWORD))
     .withCreateContainerCmdModifier(cmd ->
       Objects.requireNonNull(cmd
           .withName("camila-redis-testing-%s".formatted(UUID.randomUUID()))
@@ -25,7 +27,9 @@ abstract class RedisTestContainerConfig extends AbstractCachedProductDecoratorIT
         .withMemorySwappiness(2L * 1024 * 1024 * 1024)
         .withCpuCount(1L));
 
-  static {
+  private RedisContainerConfig() { }
+
+  static void init() {
     container.start();
     updateDataSourceProps();
   }

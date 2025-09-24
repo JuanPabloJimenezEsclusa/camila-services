@@ -5,6 +5,16 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] docs: add SDLC section in readme**
+
+
+[7be247fcac5484b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7be247fcac5484b) JuanPabloJimenezEsclusa *2025-09-19 17:15:45*
+
+**[GH-32] refactor(cache): move to driven adapter (#81)**
+
+
+[010c95c3fd7eddd](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/010c95c3fd7eddd) Juan Pablo Jimenez Esclusa *2025-09-19 07:25:48*
+
 **Merge pull request #79 from JuanPabloJimenezEsclusa/dependabot/terraform/camila-orchestrator/pre/aws/terraform/templates/hashicorp/aws-tw-6.13.0**
 
  * chore(deps): update hashicorp/aws requirement from ~&gt; 6.12.0 to ~&gt; 6.13.0 in /camila-orchestrator/pre/aws/terraform/templates

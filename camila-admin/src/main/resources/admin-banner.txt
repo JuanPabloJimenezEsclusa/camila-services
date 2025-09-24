@@ -1,5 +1,8 @@
+
    _   _   _   _   _     _   _   _
   / \ / \ / \ / \ / \   / \ / \ / \
  ( A | d | m | i | n ) ( A | P | I )
   \_/ \_/ \_/ \_/ \_/   \_/ \_/ \_/
- ${spring.application.name} - Spring-boot:${spring-boot.formatted-version}
+ ${spring.application.name}
+ 🔖  Spring-boot: ${spring-boot.formatted-version}
+ 📦  Commit: ${git.commit.id.full}
