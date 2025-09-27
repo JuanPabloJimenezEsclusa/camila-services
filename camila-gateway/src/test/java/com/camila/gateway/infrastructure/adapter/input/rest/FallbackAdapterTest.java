@@ -1,4 +1,4 @@
-package com.camila.gateway.presentation;
+package com.camila.gateway.infrastructure.adapter.input.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,8 +17,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SpringBootTest(
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
   properties = {"PRODUCT_SERVER_URL=http://localhost:9999/"})
-@DisplayName("[IT][FailBackController] FailBack controller test")
-class FallbackControllerTest {
+@DisplayName("[IT][FallbackAdapter] FailBack adapter test")
+class FallbackAdapterTest {
 
   @Autowired
   private WebTestClient webClient;
@@ -33,7 +33,7 @@ class FallbackControllerTest {
     "502|/product-dev/api/products?salesUnits=0.5&stock=0.5|{\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}",
     "502|/product-dev/api/products/1                       |{\"message\":\"Service Unavailable\",\"details\":\"Circuit-breaker-fallback\"}"
   }, delimiter = '|')
-  @DisplayName("[FailBackController] fallback all product")
+  @DisplayName("[FallbackAdapter] fallback all product")
   void fallbackAllProducts(final int statusCode, final String uri, final String result) {
     webClient
       .get().uri(uri)

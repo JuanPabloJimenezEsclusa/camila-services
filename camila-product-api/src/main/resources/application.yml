@@ -145,6 +145,7 @@ logging:
     com.couchbase: WARN
     io.lettuce: WARN
     org.springframework.boot: INFO
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: INFO
     org.springframework.boot.web.embedded.netty: WARN
     net.devh.boot.grpc.server: WARN
     io.grpc.netty: WARN
@@ -251,6 +252,14 @@ spring:
     user:
       name: ${BASIC_AUTH_USER:camila}
       password: ${BASIC_AUTH_PASS:camila}
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+    healthcheck:
+      enabled: false
 
 ---
 ###### Enable config|discovery feature on remote deploy ######
@@ -515,7 +524,7 @@ spring:
         timeout: 15s
       readiness:
         timeout: 2m
-        wait: only_if_started
+        wait: always
       profiles:
         active: "docker-compose"
       file: "${user.dir}/../camila-orchestrator/dev/compose/docker-compose-spring-boot.yml"

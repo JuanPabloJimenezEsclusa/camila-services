@@ -17,7 +17,10 @@ This project implements an API gateway for services, including support for patte
 
 ```txt
 📦gateway
- ┣ 📂presentation
+ ┃ ┗ 📂infrastructure
+ ┃   ┗ 📂adapter
+ ┃     ┗ 📂input
+ ┃       ┗ 📂rest
  ┗ 📜CamilaGatewayApplication.java
 ```
 

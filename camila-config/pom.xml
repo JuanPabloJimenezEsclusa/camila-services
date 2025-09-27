@@ -51,6 +51,12 @@
       <artifactId>opentelemetry-exporter-zipkin</artifactId>
     </dependency>
 
+    <!-- Utilities -->
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

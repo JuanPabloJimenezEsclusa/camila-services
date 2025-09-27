@@ -77,7 +77,7 @@ public class CachedProductRepositoryDecorator implements ProductRepository {
 
     return this.cacheService.getList(SORTED_PRODUCTS_CACHE, key, Product.class)
       .doOnNext(products -> {
-        if (!products.isEmpty()) {
+        if (!products.isEmpty() && log.isDebugEnabled()) {
           log.debug("Cache HIT for sortByMetricsWeights with {} products", products.size());
         }
       })

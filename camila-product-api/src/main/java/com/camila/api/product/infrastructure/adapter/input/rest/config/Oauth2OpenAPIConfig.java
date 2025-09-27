@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Profile;
     description = "API Rest in Camila Product project",
     contact = @Contact(
       name = "Juan Pablo Jimenez Esclusa",
-      email = "juan.pablo.jimenez,esclusa@gmail.com"),
+      email = "juan.pablo.jimenez.esclusa@gmail.com"),
     summary = "Camila Product API",
     version = "1.0.0",
     license = @License(

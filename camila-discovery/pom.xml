@@ -44,6 +44,12 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Utilities -->
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+
     <!-- Testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

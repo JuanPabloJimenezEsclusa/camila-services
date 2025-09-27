@@ -2,8 +2,8 @@ package com.camila.api.product.infrastructure.adapter.output.cache.redis;
 
 import static org.mockito.Mockito.mock;
 
-import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.domain.port.CachePort;
+import com.camila.api.product.domain.port.ProductRepository;
 import com.camila.api.product.infrastructure.adapter.output.cache.AbstractCachedProductDecoratorITCase;
 import com.camila.api.product.infrastructure.adapter.output.cache.CachedProductRepositoryDecorator;
 import com.camila.api.product.infrastructure.adapter.output.cache.redis.config.RedisCacheConfig;
@@ -17,7 +17,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -80,7 +79,6 @@ class RedisCachedProductDecoratorITCase extends AbstractCachedProductDecoratorIT
     }
 
     @Bean
-    @Primary
     public ProductRepository cachedProductRepositoryDecorator(
       @Qualifier("mockProductRepository") final ProductRepository mockProductRepository,
       @Qualifier("reactiveRedisCacheAdapter") final CachePort reactiveRedisCacheAdapter

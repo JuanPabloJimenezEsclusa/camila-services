@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.rest.config.LocalOpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.rest.config.Oauth2OpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
@@ -42,6 +41,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -88,7 +88,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 })
 @Import({
   // Framework adapter input layer
-  LocalOpenAPIConfig.class,
   Oauth2OpenAPIConfig.class,
   ProductRestAdapter.class,
   ProductDTOMapperImpl.class,
@@ -112,14 +111,21 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   @Autowired
   private WebTestClient webClient;
 
+  private static String generateRandomString() {
+    return random.ints(10, 0, 36)
+      .mapToObj(i -> Integer.toString(i, 36))
+      .collect(Collectors.joining())
+      .toUpperCase(Locale.ROOT);
+  }
+
   @Test
   @DisplayName("[ProductRestAdapter] findByInternalId ok")
   @Order(1)
   void findByInternalId() {
     webClient.get().uri("/products/{id}", 4)
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -132,8 +138,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithStockMoreWeight() {
     webClient.get().uri(SORT_PRODUCTS_URI, "0.0018", "0.9990", "0.0001", "0.0001")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -153,8 +159,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithSalesUnitsMoreWeight() {
     webClient.get().uri(SORT_PRODUCTS_URI, "0.90", "0.08", "0.01", "0.01")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -173,8 +179,8 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithPageFilter() {
     webClient.get().uri("/products?page={page}&size={size}", "5", "1")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isOk()
       .expectBody()
@@ -187,11 +193,11 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithPageOut() {
     webClient.get().uri("/products?page={page}&size={size}", "1", "10")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isNoContent()
-      .expectBody().isEmpty();
+      .expectBody().jsonPath("$.status").isEqualTo(HttpStatus.NO_CONTENT.value());
   }
 
   @Test
@@ -200,18 +206,10 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
   void sortProductsWithConstraintViolation() {
     webClient.get().uri("/products?page={page}&size={size}", "X", "Y")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().is4xxClientError()
-      .expectBody()
-      .isEmpty();
-  }
-
-  private static String generateRandomString() {
-    return random.ints(10, 0, 36)
-      .mapToObj(i -> Integer.toString(i, 36))
-      .collect(Collectors.joining())
-      .toUpperCase(Locale.ROOT);
+      .expectBody().jsonPath("$.status").isEqualTo(HttpStatus.BAD_REQUEST.value());
   }
 }

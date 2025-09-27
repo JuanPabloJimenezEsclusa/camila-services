@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.rest.config.LocalOpenAPIConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
@@ -73,7 +72,6 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 })
 @Import({
   // Framework adapter input layer
-  LocalOpenAPIConfig.class,
   ProductRestAdapter.class,
   ProductDTOMapperImpl.class,
   RestExceptionHandler.class,
@@ -121,8 +119,8 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
     webTestClient.get()
       .uri(endpoint)
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("traceId", generateRandomString())
-      .header("apiVersion", "1.0.0")
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
       .exchange()
       .expectStatus().isEqualTo(expectedStatus);
   }

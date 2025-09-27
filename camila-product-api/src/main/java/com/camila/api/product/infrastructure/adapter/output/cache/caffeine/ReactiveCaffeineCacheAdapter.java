@@ -34,7 +34,9 @@ public record ReactiveCaffeineCacheAdapter(
       }
       return Mono.just(type.cast(value));
     } catch (Exception e) {
-      log.warn("Error retrieving from cache: {}", e.getMessage());
+      if (log.isWarnEnabled()) {
+        log.warn("Error retrieving from cache: {}", e.getMessage());
+      }
       return Mono.empty();
     }
   }

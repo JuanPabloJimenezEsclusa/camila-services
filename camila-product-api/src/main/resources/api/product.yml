@@ -3,10 +3,16 @@ openapi: 3.1.1
 
 info:
   title: Camila Product API
-  description: API Rest in Camila Product project
+  description: |
+    This is the Product API for Camila services. </br></br>
+    The API allows to retrieve product information and sort products based on various metrics. </br>
+    It supports multiple response formats including JSON, NDJSON, and Server-Sent Events (SSE). </br>
+    The API is versioned using a custom header and supports localization via the `Accept-Language` header. </br>
+  termsOfService: >-
+    https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/TERMS_OF_SERVICE.md
   contact:
     name: Juan Pablo Jimenez Esclusa
-    email: 'juan.pablo.jimenez,esclusa@gmail.com'
+    email: 'juan.pablo.jimenez.esclusa@gmail.com'
   license:
     name: GPL-3.0
     url: >-
@@ -19,9 +25,36 @@ externalDocs:
   url: >-
     https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/Readme.md
 
+security: []
+
 servers:
-  - url: 'http://localhost:8080/product-dev/api'
+  - url: '{protocol}://{host}:{port}/{basePath}'
     description: Generated server url
+    variables:
+      protocol:
+        default: http
+        enum:
+          - http
+          - https
+      host:
+        default: localhost
+        enum:
+          - localhost
+          - gateway
+          - tech.jpje.xyz
+          - jpje.net
+      port:
+        default: '8080'
+        enum:
+          - '8080'
+          - '8090'
+          - '443'
+      basePath:
+        default: /product-dev/api
+        enum:
+          - /product-dev/api
+          - /product-int/api
+          - /product/api
 
 tags:
   - name: Products
@@ -32,7 +65,7 @@ paths:
     get:
       tags:
         - Products
-      summary: Find product by internal identified
+      summary: Find product by internal identifier.
       description: >-
         Returns a product based on a single internal identifier. </br></br>
         API consumers can specify the preferred language for the response using the `Accept-Language` header. </br>
@@ -61,33 +94,63 @@ paths:
         '400':
           description: Bad Request
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '401':
           description: Unauthorized
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '404':
           description: Not Found
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '417':
           description: Expectation Failed
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '500':
           description: Server Error
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
   /products:
     get:
       tags:
@@ -113,6 +176,15 @@ paths:
       responses:
         '200':
           description: Success
+          headers:
+            # Custom header to indicate total count of items (unpaged)
+            # Design decision: use X-Total-Count header to avoid modifying response body
+            X-Total-Count:
+              required: false
+              schema:
+                type: integer
+                format: int32
+              description: Total number of items matching the request (unpaged total).
           content:
             text/event-stream:
               schema:
@@ -132,47 +204,84 @@ paths:
         '400':
           description: Bad Request
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '401':
           description: Unauthorized
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '417':
           description: Expectation Failed
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
         '500':
           description: Server Error
           content:
-            text/event-stream: { }
-            application/x-ndjson: { }
-            application/json: { }
+            text/event-stream:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDTO'
 
 components:
   parameters:
     AcceptLanguage:
       name: Accept-Language
       in: header
+      required: false
       schema:
         type: string
         default: en-US
         example: en-US
-      description: Preferred language for response
+      description: |
+        Preferred language for the response. </br>
+        Supported languages: </br>
+          - en-US: English (United States) </br>
+          - es-ES: Spanish (Spain) </br>
+        If not provided, the default language is en-US.
+    # Custom header for API versioning
+    # Design decision: use custom header instead of URL versioning or media type versioning
+    # See https://restfulapi.net/versioning/
     ApiVersion:
-      name: X-Api-version
+      name: X-Api-Version
       in: header
       required: false
       schema:
         type: string
         default: "1.0.0"
         example: "1.0.0"
-      description: API version to use for the request
+      description: |
+        API version to use for the request. </br>
+        If not provided, the default version is 1.0.0.
+    # Path parameter for internal product identifier
+    # Design decision: use internalId as string to allow flexibility in identifier format
     InternalId:
       name: internalId
       in: path
@@ -184,10 +293,14 @@ components:
         pattern: '^\d+$'
         example: "1"
       description: Internal product identifier
+    # Query parameters as a single object
+    # Preferable when there are many parameters or optional parameters
+    # Design decision: use query parameters instead of request body for GET requests
     RequestParams:
       name: requestParams
       in: query
       required: true
+      style: form
       schema:
         type: object
         additionalProperties:
@@ -197,11 +310,24 @@ components:
           pattern: '^\d+(?:\.\d*)?$'
         minProperties: 1
         maxProperties: 6
-        example: { "salesUnits": "0.8", "stock": "0.2", "page": "0", "size": "50" }
-      description: Parameters map
+        example: { "salesUnits": "0.8", "stock": "0.2", "profitMargin": "0.8", "daysInStock": "0.2", "page": "0", "size": "50" }
+      description: |
+        Query parameters as a single object in JSON format. </br>
+        Possible parameters: </br>
+          - salesUnits: weight for sales units (0.0 to 1.0) </br>
+          - stock: weight for stock (0.0 to 1.0) </br>
+          - profitMargin: weight for profit margin (0.0 to 1.0) </br>
+          - daysInStock: weight for days in stock (0.0 to 1.0) </br>
+          - page: page number (default 0) </br>
+          - size: page size (default 50, max 100) </br>
+        At least one of the first four parameters must be provided. The sum of their weights must equal 1.0. </br>
+        The page and size parameters are optional and used for pagination.
   schemas:
     ProductDTO:
       type: object
+      description: |
+        Product details object. <br>
+        Encapsulates the product details in a structured format. <br>
       required:
         - internalId
         - name
@@ -211,6 +337,7 @@ components:
           type: string
           minLength: 1
           maxLength: 50
+          example: "68d418869d42783a46508f3c"
           description: Hash identifier
         internalId:
           type: string
@@ -228,6 +355,7 @@ components:
         category:
           type: string
           maxLength: 50
+          example: "SHIRT"
           description: Product category
         salesUnits:
           type: integer
@@ -259,3 +387,54 @@ components:
           minimum: 0
           example: 30
           description: Days in stock
+      example:
+        id: "b3d9c3e0-4c7b-4c0b-9a6d-123456789abc"
+        internalId: "4"
+        name: "PLEATED T-SHIRT"
+        category: "SHIRT"
+        salesUnits: 3
+        stock: { S: 25, M: 30, L: 10 }
+        profitMargin: 50.0
+        daysInStock: 30
+    ProblemDTO:
+      type: object
+      description: |
+        Problem details object. <br>
+        Encapsulates the error details in a structured format. <br>
+        Follows the RFC 7807 standard for problem details. <br>
+      required:
+        - type
+        - title
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+          description: URI reference that identifies the problem type
+        title:
+          type: string
+          description: Short, human-readable summary of the problem type
+        status:
+          type: integer
+          format: int32
+          description: HTTP status code
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence of the problem
+        instance:
+          type: string
+          description: URI reference that identifies the specific occurrence of the problem
+        errors:
+          type: object
+          description: Detailed validation errors
+          additionalProperties:
+            type: array
+            items: { type: string }
+      example:
+        type: "/problems/validation"
+        title: "Validation Failed"
+        status: 400
+        detail: "Some fields are invalid"
+        errors:
+          name: [ "must not be blank" ]
+  securitySchemes: {}

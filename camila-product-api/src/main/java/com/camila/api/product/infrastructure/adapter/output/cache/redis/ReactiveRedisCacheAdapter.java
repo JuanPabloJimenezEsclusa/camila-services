@@ -21,7 +21,9 @@ public record ReactiveRedisCacheAdapter(
         try {
           return Mono.just(type.cast(v));
         } catch (ClassCastException e) {
-          log.warn("Error retrieving from cache: {}", e.getMessage());
+          if (log.isWarnEnabled()) {
+            log.warn("Error retrieving from cache: {}", e.getMessage());
+          }
           return Mono.empty();
         }
       })

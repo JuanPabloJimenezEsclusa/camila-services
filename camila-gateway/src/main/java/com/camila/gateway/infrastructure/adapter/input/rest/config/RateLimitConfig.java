@@ -1,4 +1,4 @@
-package com.camila.gateway.presentation;
+package com.camila.gateway.infrastructure.adapter.input.rest.config;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;

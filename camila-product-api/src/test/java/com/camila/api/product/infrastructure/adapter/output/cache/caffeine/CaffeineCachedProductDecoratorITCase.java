@@ -15,7 +15,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -60,7 +59,6 @@ class CaffeineCachedProductDecoratorITCase extends AbstractCachedProductDecorato
     }
 
     @Bean
-    @Primary
     public ProductRepository cachedProductRepositoryDecorator(
       @Qualifier("mockProductRepository") final ProductRepository mockProductRepository,
       @Qualifier("reactiveCaffeineCacheAdapter") final CachePort reactiveCaffeineCacheAdapter) {

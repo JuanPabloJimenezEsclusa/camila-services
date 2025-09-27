@@ -32,12 +32,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = {"logging.level.com.camila.api.product=ERROR"})
 @Import({ProductApiApplication.class})
 @State(Scope.Benchmark)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@OutputTimeUnit(TimeUnit.SECONDS)
 @DisplayName("[JMH-T][ProductRestAdapter] Java benchmark tests")
 @SuppressWarnings({"java:S5786"}) // JMH requires public test class
 public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
@@ -45,7 +47,7 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
   private static WebTestClient webClient;
 
   @Autowired
-  void setWebTestClient(WebTestClient webClient) {
+  void setWebTestClient(final WebTestClient webClient) {
     ProductRestAdapterBenchmarkITCase.webClient = webClient;
   }
 
@@ -61,18 +63,18 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
       .resultFormat(ResultFormatType.CSV)
       .build();
 
-    Collection<RunResult> run = new Runner(options).run();
-    Assertions.assertNotNull(run);
+    final Collection<RunResult> run = new Runner(options).run();
+    Assertions.assertFalse(run.isEmpty());
   }
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
   @Fork(value = 0, warmups = 0)
-  @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
-  @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
   @Threads(5)
-  public void findByInternalId(Blackhole blackhole) {
+  public void findByInternalId(final Blackhole blackhole) {
     final var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
 
     final HttpStatusCode status = webClient.get().uri("/products/{id}", optionalId.orElseThrow())
@@ -83,17 +85,17 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
       .returnResult().getStatus();
 
     Assertions.assertNotNull(status);
-    blackhole.consume(status.toString());
+    blackhole.consume(status.value());
   }
 
   @Benchmark
   @BenchmarkMode(Mode.AverageTime)
   @Fork(value = 0, warmups = 0)
-  @OutputTimeUnit(TimeUnit.NANOSECONDS)
-  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
-  @Measurement(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 5)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
   @Threads(5)
-  public void sortProductsWithStockMoreWeight(Blackhole blackhole) {
+  public void sortProductsWithStockMoreWeight(final Blackhole blackhole) {
     final var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
     final var salesUnits = optionalSalesUnits.orElseThrow();
     final var stock = 100 - salesUnits;
@@ -107,6 +109,6 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
       .returnResult().getStatus();
 
     Assertions.assertNotNull(status);
-    blackhole.consume(status.toString());
+    blackhole.consume(status.value());
   }
 }

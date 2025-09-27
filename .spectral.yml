@@ -1,0 +1,37 @@
+extends:
+  - "spectral:oas"
+
+# Minimal, non-blocking custom rules to encourage good OpenAPI hygiene.
+# Keep rules conservative to avoid false positives on first run.
+rules:
+  info-contact-email:
+    description: "Ensure API `info.contact.email` is present (helps consumers contact the API owner)."
+    given: "$"
+    then:
+      field: info.contact.email
+      function: truthy
+    severity: "warn"
+
+  servers-exists:
+    description: "Ensure `servers` is provided at least in the root of the document."
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+    severity: "warn"
+
+  operation-summary:
+    description: "Encourage operations to include a short `summary` for generated SDKs and docs."
+    given: "$.paths[*][*]"
+    then:
+      field: summary
+      function: truthy
+    severity: "warn"
+
+  avoid-empty-description:
+    description: "Operation descriptions should be reasonably present (non-empty)."
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy
+    severity: "hint"
