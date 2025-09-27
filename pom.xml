@@ -111,7 +111,7 @@
     <io-grpc.version>1.75.0</io-grpc.version>
 
     <!-- Build Tools -->
-    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>11.0.1</checkstyle.version>
