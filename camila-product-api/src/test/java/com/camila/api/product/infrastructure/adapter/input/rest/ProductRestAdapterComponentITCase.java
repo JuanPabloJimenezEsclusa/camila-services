@@ -88,7 +88,9 @@ class ProductRestAdapterComponentITCase {
   void shouldFindProductById() {
     // Given
     final var internalId = "1";
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(product));
 
     // When & Then
@@ -129,13 +131,16 @@ class ProductRestAdapterComponentITCase {
                                           final String profitMargin, final String daysInStock) {
     // Given
     final var uri = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
+    final var internalId = "1";
     final var requestParams = Map.of(
       "salesUnits", salesUnits,
       "stock", stock,
       "profitMargin", profitMargin,
       "daysInStock", daysInStock
     );
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product));
 
     // When & Then
@@ -144,7 +149,7 @@ class ProductRestAdapterComponentITCase {
       .exchange()
       .expectStatus().isOk()
       .expectBody()
-      .jsonPath("$[0].id").isEqualTo("1");
+      .jsonPath("$[0].internalId").isEqualTo(internalId);
 
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);
@@ -156,11 +161,14 @@ class ProductRestAdapterComponentITCase {
   @DisplayName("Should sort products with pagination parameters")
   void shouldSortProductsWithPaginationParams(final String page, final String size) {
     // Given
+    final var internalId = "1";
     final var requestParams = Map.of(
       "page", page,
       "size", size
     );
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product));
 
     // When & Then
@@ -169,7 +177,7 @@ class ProductRestAdapterComponentITCase {
       .exchange()
       .expectStatus().isOk()
       .expectBody()
-      .jsonPath("$[0].id").isEqualTo("1");
+      .jsonPath("$[0].internalId").isEqualTo(internalId);
 
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);

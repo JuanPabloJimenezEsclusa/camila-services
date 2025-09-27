@@ -1,5 +1,7 @@
-package com.camila.api.product.infrastructure.adapter.output.cache.config;
+package com.camila.api.product.infrastructure.adapter.output.cache.caffeine.config;
 
+import com.camila.api.product.domain.port.CachePort;
+import com.camila.api.product.infrastructure.adapter.output.cache.caffeine.ReactiveCaffeineCacheAdapter;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -48,5 +50,16 @@ public class CaffeineCacheConfig {
     // Enable async cache mode for reactive types
     cacheManager.setAsyncCacheMode(true);
     return cacheManager;
+  }
+
+  /**
+   * Reactive caffeine cache adapter.
+   *
+   * @param cacheManager the cache manager
+   * @return the reactive cache service
+   */
+  @Bean
+  public CachePort reactiveCaffeineCacheAdapter(final CacheManager cacheManager) {
+    return new ReactiveCaffeineCacheAdapter(cacheManager);
   }
 }

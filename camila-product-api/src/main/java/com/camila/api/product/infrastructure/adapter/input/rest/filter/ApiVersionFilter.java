@@ -33,6 +33,7 @@ record ApiVersionFilter(
       .ofNullable(exchange.getRequest().getHeaders().getFirst(API_VERSION_HEADER))
       .orElse(this.apiVersion);
 
+    exchange.getResponse().getHeaders().set(API_VERSION_HEADER, requestApiVersion);
     if (!requestApiVersion.equalsIgnoreCase(this.apiVersion)) {
       log.warn("API version mismatch: requested {} but service supports {}", requestApiVersion, this.apiVersion);
       exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);

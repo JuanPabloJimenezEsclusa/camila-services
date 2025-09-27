@@ -1,9 +1,12 @@
-package com.camila.api.product.infrastructure.adapter.output.cache;
+package com.camila.api.product.infrastructure.adapter.output.cache.caffeine;
 
 import static org.mockito.Mockito.mock;
 
+import com.camila.api.product.domain.port.CachePort;
 import com.camila.api.product.domain.port.ProductRepository;
-import com.camila.api.product.infrastructure.adapter.output.cache.config.CaffeineCacheConfig;
+import com.camila.api.product.infrastructure.adapter.output.cache.AbstractCachedProductDecoratorITCase;
+import com.camila.api.product.infrastructure.adapter.output.cache.CachedProductRepositoryDecorator;
+import com.camila.api.product.infrastructure.adapter.output.cache.caffeine.config.CaffeineCacheConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -22,7 +24,8 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 class CaffeineCachedProductDecoratorITCase extends AbstractCachedProductDecoratorITCase {
 
   @Autowired
-  private ProductRepository cachedDecorator;
+  @Qualifier("cachedProductRepositoryDecorator")
+  private ProductRepository cachedProductRepositoryDecorator;
 
   @Autowired
   @Qualifier("mockProductRepository")
@@ -32,18 +35,18 @@ class CaffeineCachedProductDecoratorITCase extends AbstractCachedProductDecorato
   private CacheManager cacheManager;
 
   @Override
-  protected ProductRepository cachedDecorator() {
-    return cachedDecorator;
+  protected ProductRepository cachedProductRepositoryDecorator() {
+    return this.cachedProductRepositoryDecorator;
   }
 
   @Override
   protected ProductRepository mockProductRepository() {
-    return mockProductRepository;
+    return this.mockProductRepository;
   }
 
   @Override
   protected CacheManager cacheManager() {
-    return cacheManager;
+    return this.cacheManager;
   }
 
   @Configuration
@@ -56,9 +59,10 @@ class CaffeineCachedProductDecoratorITCase extends AbstractCachedProductDecorato
     }
 
     @Bean
-    @Primary
-    public ProductRepository cachedDecorator(@Qualifier("mockProductRepository") final ProductRepository mockProductRepository) {
-      return new CachedProductRepositoryDecorator(mockProductRepository);
+    public ProductRepository cachedProductRepositoryDecorator(
+      @Qualifier("mockProductRepository") final ProductRepository mockProductRepository,
+      @Qualifier("reactiveCaffeineCacheAdapter") final CachePort reactiveCaffeineCacheAdapter) {
+      return new CachedProductRepositoryDecorator(mockProductRepository, reactiveCaffeineCacheAdapter);
     }
   }
 }

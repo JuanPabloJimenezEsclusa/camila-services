@@ -4,6 +4,7 @@
 .env
 **/setupComplete.txt
 .qodo
+**/reports/**
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,terraform,intellij+all,intellij+iml,visualstudiocode,gradle,kate
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,linux,macos,maven,sonar,jmeter,eclipse,windows,database,intellij,sonarqube,terraform,intellij+all,intellij+iml,visualstudiocode,gradle,kate

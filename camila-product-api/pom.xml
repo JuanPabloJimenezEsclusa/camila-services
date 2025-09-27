@@ -135,6 +135,14 @@
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
+    <!-- Http 2 -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-tcnative-boringssl-static</artifactId>
+      <version>${netty-tcnative-boringssl-static.version}</version>
+      <classifier>${os.detected.classifier}</classifier>
+    </dependency>
+
     <!-- GraphQL -->
     <dependency>
       <groupId>com.graphql-java</groupId>
@@ -223,12 +231,10 @@
     <dependency>
       <groupId>org.jspecify</groupId>
       <artifactId>jspecify</artifactId>
-      <version>${jspecify.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>${commons-lang3.version}</version>
     </dependency>
 
     <!-- Development Tools -->
@@ -814,6 +820,7 @@
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
               <failOnError>false</failOnError>
+              <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
             </configuration>
             <executions>
               <execution>
@@ -848,6 +855,19 @@
               <excludes>
                 **/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**
               </excludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <configuration>
+              <source>${java.version}</source>
+              <encoding>${project.reporting.outputEncoding}</encoding>
+              <additionalJOptions>-Xdoclint:none</additionalJOptions>
+              <failOnError>false</failOnError>
+              <show>package</show>
+              <doclint>none</doclint>
             </configuration>
           </plugin>
           <plugin>
@@ -921,6 +941,12 @@
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
             <version>${dependency-check-maven.version}</version>
+            <configuration>
+              <skipProvidedScope>true</skipProvidedScope>
+              <skipRuntimeScope>true</skipRuntimeScope>
+              <failOnError>false</failOnError>
+              <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
+            </configuration>
             <reportSets>
               <reportSet>
                 <reports>

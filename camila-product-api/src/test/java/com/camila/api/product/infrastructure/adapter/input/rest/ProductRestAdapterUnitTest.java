@@ -104,8 +104,8 @@ class ProductRestAdapterUnitTest {
       "page", page,
       "size", size
     );
-    final var productDTO1 = Instancio.of(ProductDTO.class).set(field(ProductDTO::getId), "1").create();
-    final var productDTO2 = Instancio.of(ProductDTO.class).set(field(ProductDTO::getId), "1").create();
+    final var productDTO1 = Instancio.of(ProductDTO.class).create();
+    final var productDTO2 = Instancio.of(ProductDTO.class).create();
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
 

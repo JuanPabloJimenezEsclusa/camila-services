@@ -1,6 +1,10 @@
 spring:
   application:
     name: "@project.name@"
+  # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
+  threads:
+    virtual:
+      enabled: true
   banner:
     # https://www.ascii-art-generator.org/
     location: classpath:/discovery-banner.txt

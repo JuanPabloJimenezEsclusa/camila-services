@@ -6,10 +6,8 @@ USER root
 RUN gem install fluent-plugin-elasticsearch --no-document --version "~> 6.0.0" \
   && gem sources --clear-all \
   && gem cleanup \
-  && mkdir -p /fluentd/buffer
-
-RUN mkdir -p /fluentd/buffer && \
-  chown -R fluent:fluent /fluentd/buffer
+  && mkdir -p /fluentd/buffer \
+  && chown -R fluent:fluent /fluentd/buffer
 
 USER fluent
 

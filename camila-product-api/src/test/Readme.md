@@ -18,14 +18,15 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 
 ### Test Types
 
-| Type                       | Details                                                                                                                                                                                                                              |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Unit Tests                 | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                               |
-| Integration Tests          | Employ Test containers modules for: [MongoDB](https://testcontainers.com/modules/mongodb/) and [Couchbase](https://testcontainers.com/modules/couchbase/) and the `failsafe` plugin to validate interactions between components [IT] |
-| Architecture Tests         | Leverage the `ArchUnit` library to ensure adherence to architectural principles and best practices [AT]                                                                                                                              |
-| Mutation Tests             | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                    |
-| Behavioral Tests           | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                      |
-| Benchmark Tests (jmh)      | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                                |
+| Type                  | Details                                                                                                                                                                                                                              |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Contract Tests        | Uses [Stoplight](https://docs.stoplight.io) and [Redocly](https://redocly.com) to lint the API definition                                                                                                                            |
+| Unit Tests            | Utilize mocks and the `surefire` plugin to isolate and test individual components [UT]                                                                                                                                               |
+| Integration Tests     | Employ Test containers modules for: [MongoDB](https://testcontainers.com/modules/mongodb/) and [Couchbase](https://testcontainers.com/modules/couchbase/) and the `failsafe` plugin to validate interactions between components [IT] |
+| Architecture Tests    | Leverage the `ArchUnit` library to ensure adherence to architectural principles and best practices [AT]                                                                                                                              |
+| Mutation Tests        | Employ the [Pitest](https://github.com/pitest/pitest-junit5-plugin.git) plugin to systematically mutate code and verify its resilience to changes                                                                                    |
+| Behavioral Tests      | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                      |
+| Benchmark Tests (jmh) | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                                |
 
 ## 🏗️ Architecture
 
@@ -58,12 +59,34 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 
 ---
 
-> [Unit and Architecture Tests](#unit-and-architecture-tests)
+> [Contract Tests](#contract-tests)
+  • [Unit and Architecture Tests](#unit-and-architecture-tests)
   • [Unit Tests with AOT](#unit-tests-with-aot)
   • [Integration and Benchmark Tests](#integration-and-benchmark-tests)
   • [Mutation Tests](#mutation-tests)
   • [Behaviour Test](#behaviour-test)
   • [Code Analysis](#code-analysis)
+
+### Contract Tests
+
+```bash
+# https://docs.stoplight.io/docs/spectral/674b27b261c3c-overview
+docker run --rm -it \
+  --name="openapi-spectral-testing" \
+  --network=host \
+  --memory="256m" --memory-reservation="256m" --memory-swap="256m" --cpu-shares=500 \
+  -v $PWD/src/main/resources:/tmp/resources/ \
+  -v $PWD/../.spectral.yml:/tmp/spec/.spectral.yml \
+  stoplight/spectral:latest lint "/tmp/resources/api/*.yml" --ruleset /tmp/spec/.spectral.yml --format stylish --fail-severity hint -v
+
+# https://redocly.com/docs/cli/installation
+docker run --rm -it \
+  --name="openapi-redocly-testing" \
+  --network=host \
+  --memory="256m" --memory-reservation="256m" --memory-swap="256m" --cpu-shares=500 \
+  -v $PWD/src/main/resources:/spec \
+  redocly/cli:latest lint --format stylish --max-problems 20 "**/api/*.yml"
+```
 
 ### Unit and Architecture Tests
 
@@ -119,7 +142,7 @@ gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner"
 ### Code Analysis
 
 * Error Prone Analysis: [error-prone](https://github.com/google/error-prone)
-* Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
+* Dependency Check: [dependency-check-maven](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/), [nvd.nist.gov](https://nvd.nist.gov/)
 * Checkstyle: [maven-checkstyle-plugin](https://checkstyle.sourceforge.io/)
 * SpotBugs: [spotbugs-maven-plugin](https://spotbugs.github.io/)
 * PMD: [pmd-maven-plugin](https://pmd.github.io/)
@@ -131,6 +154,9 @@ unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE=
 mvn -B clean verify site -P error-prone,quality-check | tee code-analysis.log
+
+# To open SpotBugs GUI
+mvn -B spotbugs:gui -P quality-check
 ```
 
 ```bash

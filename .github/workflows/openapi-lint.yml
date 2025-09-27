@@ -1,0 +1,33 @@
+name: OpenAPI Lint & Validate
+
+on:
+  pull_request:
+    paths:
+      - '**/api/*.yml'
+
+jobs:
+  lint-openapi:
+    name: Lint OpenAPI specs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # https://nodejs.org/en/about/previous-releases
+          node-version: '24'
+      - name: Install spectral and redocly-cli
+        run: |
+          npm install -g @stoplight/spectral-cli@6.15.0 @redocly/cli@2.2.2
+      - name: Run Spectral lint
+        run: |
+          echo "Running Spectral lint for OpenAPI specs..."
+          spectral lint "**/api/*.yml" --ruleset .spectral.yml --format stylish --fail-severity hint -v || true
+      - name: Validate OpenAPI specs
+        run: |
+          echo "Validating OpenAPI specs with redocly cli..."
+          openapi lint --format stylish --max-problems 20 "**/api/*.yml" || true

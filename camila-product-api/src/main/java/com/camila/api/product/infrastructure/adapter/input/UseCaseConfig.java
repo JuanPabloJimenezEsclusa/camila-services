@@ -33,7 +33,7 @@ class UseCaseConfig {
    * @return the product use case
    */
   @Bean
-  public ProductUseCase productUseCase(@Qualifier("cachedProductRepository") final ProductRepository productRepository) {
+  public ProductUseCase productUseCase(@Qualifier("cachedProductRepositoryDecorator") final ProductRepository productRepository) {
     return new DefaultProductUseCase(productRepository);
   }
 }

@@ -1,4 +1,4 @@
-package com.camila.gateway.presentation;
+package com.camila.gateway.infrastructure.adapter.input.rest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
  * The type Fallback controller.
  */
 @RestController
-class FallbackController {
+class FallbackAdapter {
 
   @Value("${gateway.fallback.message:Circuit-breaker-fallback}")
   private String fallbackMessage;
