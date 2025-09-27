@@ -38,14 +38,14 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '3.5.5'
+    springBootVersion = '3.5.6'
     springFrameworkVersion = '6.2.10'
     springCloudVersion = '2025.0.0'
-    springBootAdminVersion = '3.5.2'
+    springBootAdminVersion = '3.5.5'
 
     // Observability
     opentelemetryVersion = '1.54.1'
-    opentelemetryApiIncubatorVersion = '1.54.0-alpha'
+    opentelemetryApiIncubatorVersion = '1.54.1-alpha'
 
     // Database
     couchbaseJavaClientVersion = '3.9.0'
