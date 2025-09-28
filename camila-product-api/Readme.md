@@ -26,7 +26,7 @@ Microservice example. Implements a product API with the following features:
 
 ---
 
-* JDK ~= [24.x](https://openjdk.org/projects/jdk/24/)
+* JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
 * Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
 * Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
 * Gradle ~= [9.0.0](https://gradle.org/releases/#9.0.0)
@@ -37,7 +37,7 @@ Microservice example. Implements a product API with the following features:
 * Couchbase ~= [7.x](https://docs.couchbase.com/server/current/release-notes/relnotes.html)
 * Redis ~= [8.x](https://redis.io/open-source/)
 * Native Image compilation
-  * GraalVM ~= [24.0.1+9.1](https://www.graalvm.org/release-notes/JDK_24/)
+  * GraalVM ~= [25+37.1](https://www.graalvm.org/release-notes/JDK_25/)
   * GCC >= (linux, x86_64, 11.4.0)
     * `zlib1g-dev`
 

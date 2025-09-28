@@ -5,7 +5,7 @@ This project implements an API gateway for services, including support for patte
 
 ## Prerequisites
 
-* JDK ~= [24.x](https://openjdk.org/projects/jdk/24/)
+* JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
 * Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
 * Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
 * Gradle ~= [9.0.0](https://gradle.org/releases/#9.0.0)

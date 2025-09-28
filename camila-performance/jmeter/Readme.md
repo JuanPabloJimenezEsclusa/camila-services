@@ -15,7 +15,7 @@ Performance testing project using JMeter
 
 ---
 
-* JDK ~= [24.x](https://openjdk.org/projects/jdk/24/)
+* JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
 * JMeter ~= [5.6.x](https://jmeter.apache.org/download_jmeter.cgi)
 
 ## 🏗️ Architecture
