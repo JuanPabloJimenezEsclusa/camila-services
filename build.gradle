@@ -61,7 +61,7 @@ subprojects {
 
     // API Documentation
     springdocOpenapiVersion = '2.8.13'
-    graphqlJavaVersion = '24.2'
+    graphqlJavaVersion = '24.3'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
