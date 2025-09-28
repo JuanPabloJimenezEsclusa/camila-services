@@ -100,30 +100,30 @@
     <chaos-monkey-spring-boot.version>3.2.2</chaos-monkey-spring-boot.version>
     <jspecify.version>1.0.0</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
-    <commons-lang3.version>3.18.0</commons-lang3.version>
+    <commons-lang3.version>3.19.0</commons-lang3.version>
 
     <!-- Database -->
     <couchbase-java-client.version>3.9.0</couchbase-java-client.version>
 
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.32.0</protobuf-java.version>
+    <protobuf-java.version>4.32.1</protobuf-java.version>
     <io-grpc.version>1.75.0</io-grpc.version>
 
     <!-- Build Tools -->
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>11.0.1</checkstyle.version>
-    <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
+    <checkstyle.version>11.1.0</checkstyle.version>
+    <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
     <dependency-check-maven.version>12.1.6</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <pitest-maven.version>1.20.2</pitest-maven.version>
+    <pitest-maven.version>1.20.3</pitest-maven.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.16.0</openapi-generator-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.9.6.0</spotbugs-maven-plugin.version>
     <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>

@@ -8,9 +8,9 @@ plugins {
   id 'org.graalvm.buildtools.native' version '0.10.6' apply false
   id 'com.github.spotbugs' version '6.4.2' apply false
   id 'org.openapi.generator' version '7.15.0' apply false
-  id 'org.openrewrite.rewrite' version '7.16.0' apply false
+  id 'org.openrewrite.rewrite' version '7.17.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
-  id "io.freefair.lombok" version "8.14.2" apply false
+  id "io.freefair.lombok" version "9.0.0" apply false
 }
 
 allprojects {
@@ -48,20 +48,20 @@ subprojects {
     opentelemetryApiIncubatorVersion = '1.54.1-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.9.0'
+    couchbaseJavaClientVersion = '3.9.1'
 
     // Testing
     testcontainersVersion = '1.21.3'
     cucumberVersion = '7.29.0'
     junitPlatformSuiteVersion = '1.13.4'
     archunitJunit5Version = '1.4.1'
-    instancioJunitVersion = '5.4.0'
-    awaitilityVersion = '4.2.2'
+    instancioJunitVersion = '5.5.1'
+    awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
 
     // API Documentation
     springdocOpenapiVersion = '2.8.13'
-    graphqlJavaVersion = '24.2'
+    graphqlJavaVersion = '24.3'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
@@ -72,7 +72,7 @@ subprojects {
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
     jspecifyVersion = '1.0.0'
-    commonsLang3 = '3.18.0'
+    commonsLang3 = '3.19.0'
     chaosMonkeySpringBootVersion = '3.2.2'
 
     // Plugins
