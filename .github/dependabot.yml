@@ -7,7 +7,7 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "io.opentelemetry.*"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 15
 
   - package-ecosystem: "gradle"
     directory: "/"
@@ -15,7 +15,7 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "io.opentelemetry.*"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 15
 
   - package-ecosystem: "docker"
     directory: "/camila-orchestrator/dev/compose/monitoring/fluentd/"

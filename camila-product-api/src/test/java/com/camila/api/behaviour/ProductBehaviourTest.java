@@ -90,7 +90,7 @@ public class ProductBehaviourTest {
         .jsonPath("$.status").isEqualTo(element.get("status"))
         .jsonPath("$.detail").isEqualTo(element.get("detail"))
         .jsonPath("$.instance").value(value ->
-          assertThat(value.toString().matches(element.get("instance"))).isTrue())
+          assertThat(value.toString()).matches(element.get("instance")))
         .jsonPath("$.errors").value(value ->
           assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of()))
     );

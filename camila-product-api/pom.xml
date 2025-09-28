@@ -994,7 +994,7 @@
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.2.10</version>
+                  <version>6.2.11</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>
