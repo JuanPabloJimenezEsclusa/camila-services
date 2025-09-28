@@ -1,6 +1,10 @@
 package com.camila.api.behaviour;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import io.cucumber.datatable.DataTable;
@@ -60,19 +64,36 @@ public class ProductBehaviourTest {
     table.asMaps().forEach(element -> {
       final var index = element.get("index");
       body
-        .jsonPath("$[" + index + "].internalId").isEqualTo(element.get("internalId"))
-        .jsonPath("$[" + index + "].salesUnits").isEqualTo(element.get("salesUnits"))
-        .jsonPath("$[" + index + "].stock['S']").isEqualTo(element.get("stock_S"))
-        .jsonPath("$[" + index + "].stock['M']").isEqualTo(element.get("stock_M"))
-        .jsonPath("$[" + index + "].stock['L']").isEqualTo(element.get("stock_L"))
-        .jsonPath("$[" + index + "].profitMargin").isEqualTo(element.get("profitMargin"))
-        .jsonPath("$[" + index + "].daysInStock").isEqualTo(element.get("daysInStock"));
+        .jsonPath("$[%s].internalId".formatted(index)).isEqualTo(element.get("internalId"))
+        .jsonPath("$[%s].salesUnits".formatted(index)).isEqualTo(element.get("salesUnits"))
+        .jsonPath("$[%s].stock['S']".formatted(index)).isEqualTo(element.get("stock_S"))
+        .jsonPath("$[%s].stock['M']".formatted(index)).isEqualTo(element.get("stock_M"))
+        .jsonPath("$[%s].stock['L']".formatted(index)).isEqualTo(element.get("stock_L"))
+        .jsonPath("$[%s].profitMargin".formatted(index)).isEqualTo(element.get("profitMargin"))
+        .jsonPath("$[%s].daysInStock".formatted(index)).isEqualTo(element.get("daysInStock"));
     });
   }
 
   @And("no body")
   public void noBody() {
     exchange.expectBody().jsonPath("$").doesNotExist();
+  }
+
+  @And("error body")
+  public void errorBody(final DataTable table) {
+    final var body = exchange.expectBody();
+
+    table.asMaps().forEach(element ->
+      body
+        .jsonPath("$.type").isEqualTo(element.get("type"))
+        .jsonPath("$.title").isEqualTo(element.get("title"))
+        .jsonPath("$.status").isEqualTo(element.get("status"))
+        .jsonPath("$.detail").isEqualTo(element.get("detail"))
+        .jsonPath("$.instance").value(value ->
+          assertThat(value.toString()).matches(element.get("instance")))
+        .jsonPath("$.errors").value(value ->
+          assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of()))
+    );
   }
 
   /*

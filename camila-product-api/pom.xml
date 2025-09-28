@@ -664,7 +664,7 @@
             <version>${jib-maven-plugin.version}</version>
             <configuration>
               <from>
-                <image>eclipse-temurin:24-jdk-alpine</image>
+                <image>eclipse-temurin:25-jdk-alpine</image>
               </from>
               <to>
                 <image>docker.io/library/${project.name}-serveless</image>
@@ -994,7 +994,7 @@
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.2.10</version>
+                  <version>6.2.11</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>

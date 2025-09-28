@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.5</version>
+    <version>3.5.6</version>
     <relativePath/>
   </parent>
 
@@ -69,26 +69,26 @@
 
   <properties>
     <!-- Java -->
-    <java.version>24</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Spring -->
     <spring-cloud.version>2025.0.0</spring-cloud.version>
-    <spring-boot-admin.version>3.5.2</spring-boot-admin.version>
+    <spring-boot-admin.version>3.5.5</spring-boot-admin.version>
 
     <!-- Observability -->
-    <opentelemetry.version>1.54.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.54.0-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry.version>1.54.1</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.54.1-alpha</opentelemetry-api-incubator.version>
 
     <!-- API -->
     <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
-    <netty-tcnative-boringssl-static.version>2.0.72.Final</netty-tcnative-boringssl-static.version>
-    <graphql-java.version>24.2</graphql-java.version>
+    <netty-tcnative-boringssl-static.version>2.0.73.Final</netty-tcnative-boringssl-static.version>
+    <graphql-java.version>24.3</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
-    <cucumber.version>7.28.0</cucumber.version>
+    <cucumber.version>7.29.0</cucumber.version>
     <testcontainers.version>1.21.3</testcontainers.version>
     <awaitility.version>4.3.0</awaitility.version>
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
@@ -111,27 +111,27 @@
     <io-grpc.version>1.75.0</io-grpc.version>
 
     <!-- Build Tools -->
-    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>11.0.1</checkstyle.version>
     <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.3</dependency-check-maven.version>
+    <dependency-check-maven.version>12.1.6</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <pitest-maven.version>1.20.2</pitest-maven.version>
-    <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
+    <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.9.4.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.6.0</spotbugs-maven-plugin.version>
     <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-    <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
-    <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
+    <versions-maven-plugin.version>2.19.1</versions-maven-plugin.version>
+    <sonar-maven-plugin.version>5.2.0.4988</sonar-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.2.11</git-changelog-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
@@ -315,7 +315,7 @@
               <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes#paketo-tiny-builder-for-building-oci-images -->
               <builder>paketobuildpacks/builder-jammy-base</builder>
               <env>
-                <BP_JVM_VERSION>24</BP_JVM_VERSION>
+                <BP_JVM_VERSION>25</BP_JVM_VERSION>
                 <BP_HEALTH_CHECKER>curl</BP_HEALTH_CHECKER>
                 <BP_JVM_TYPE>JRE</BP_JVM_TYPE>
                 <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
@@ -455,7 +455,7 @@
                     <version>[3.9.4,4.0.0)</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
-                    <version>[24,25)</version>
+                    <version>[25,29)</version>
                   </requireJavaVersion>
                 </rules>
               </configuration>

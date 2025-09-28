@@ -3,10 +3,10 @@ plugins {
   id 'java'
   id 'jacoco'
   id 'org.sonarqube' version '6.3.1.5724'
-  id 'org.springframework.boot' version '3.5.5' apply false
+  id 'org.springframework.boot' version '3.5.6' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.10.6' apply false
-  id 'com.github.spotbugs' version '6.2.4' apply false
+  id 'com.github.spotbugs' version '6.4.2' apply false
   id 'org.openapi.generator' version '7.15.0' apply false
   id 'org.openrewrite.rewrite' version '7.16.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
@@ -33,26 +33,26 @@ subprojects {
   apply plugin: 'io.freefair.lombok'
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
   }
 
   ext {
-    springBootVersion = '3.5.5'
-    springFrameworkVersion = '6.2.10'
+    springBootVersion = '3.5.6'
+    springFrameworkVersion = '6.2.11'
     springCloudVersion = '2025.0.0'
-    springBootAdminVersion = '3.5.2'
+    springBootAdminVersion = '3.5.5'
 
     // Observability
-    opentelemetryVersion = '1.54.0'
-    opentelemetryApiIncubatorVersion = '1.54.0-alpha'
+    opentelemetryVersion = '1.54.1'
+    opentelemetryApiIncubatorVersion = '1.54.1-alpha'
 
     // Database
     couchbaseJavaClientVersion = '3.9.0'
 
     // Testing
     testcontainersVersion = '1.21.3'
-    cucumberVersion = '7.28.2'
+    cucumberVersion = '7.29.0'
     junitPlatformSuiteVersion = '1.13.4'
     archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.4.0'
@@ -79,10 +79,10 @@ subprojects {
     flattenmavenpluginVersion = '1.6.0'
     pitestavenmavenpluginVersion = '1.15.8'
     jimgemavenPluginVersion = '3.4.2'
-    gitCommitIdMavenPluginVersion = '9.0.1'
-    mavenSitePluginVersion = '4.0.0-M13'
+    gitCommitIdMavenPluginVersion = '9.0.2'
+    mavenSitePluginVersion = '3.21.0'
     mavenCheckstylePluginVersion = '3.3.1'
-    mavenCompilerPluginVersion = '3.13.0'
+    mavenCompilerPluginVersion = '3.14.1'
     dependencyCheckMavenVersion = '9.2.1'
     checkstyleVersion = '10.23.0'
     mavenProjectInfoReportsPluginVersion = '3.5.0'

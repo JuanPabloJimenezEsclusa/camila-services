@@ -4,6 +4,7 @@ Feature: Consult sort products
     Given some metrics weights and page config
       | salesUnits | stock | profitMargin | daysInStock | page | size |
       | 1.0        | 0.0   | 0.0          | 0.0         | 0    | 10   |
+      | 1000       | 0     | 0            | 0           | 0    | 1000 |
     When  consult products sort and paginated
     Then  receive status
       | status |
@@ -21,6 +22,7 @@ Feature: Consult sort products
     Given some metrics weights and page config
       | salesUnits | stock | profitMargin | daysInStock | page | size |
       | 0.0        | 1.0   | 0.0          | 0.0         | 0    | 10   |
+      | 0.0        | 1000  | 0.0          | 0.0         | 0    | 1000 |
     When  consult products sort and paginated
     Then  receive status
       | status |
@@ -72,6 +74,7 @@ Feature: Consult sort products
     Given some metrics weights and page config
       | salesUnits | stock | profitMargin | daysInStock | page | size |
       | 0.5        | 0.5   | 0.5          | 0.5         | 0    | 10   |
+      | 0.5        | 0.5   | 0.5          | 0.5         | 0    | 1000 |
     When  consult products sort and paginated
     Then  receive status
       | status |
@@ -91,12 +94,16 @@ Feature: Consult sort products
       | 204    |
     And   no body
 
-  Scenario: Get products - ko - bad parameters
+  Scenario: Get products - ko - invalid parameters
     Given some metrics weights and page config
       | salesUnits | stock | profitMargin | daysInStock | page | size |
       | N          | N     | N            | N           | 0    | 1    |
+      | 0          | 0     | 0            | 0           | -1   | 1    |
+      | 0          | 0     | 0            | 0           | 0    | -1   |
     When  consult products sort and paginated
     Then  receive status
       | status |
       | 400    |
-    And   no body
+    And   error body
+      | type                       | title       | status | detail             | instance | errors |
+      | /problems/invalid-argument | BAD_REQUEST | 400    | Invalid parameters | ^.*?$$   |        |
