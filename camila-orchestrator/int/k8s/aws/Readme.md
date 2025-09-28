@@ -19,13 +19,21 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 
 ---
 
+<details>
+<summary><strong>Expand Dependencies</strong></summary>
+
 * Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
 * AWS CLI ~= [2.28.17](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
 * K9s ~= [v0.50.9](https://github.com/derailed/k9s/releases)
 
+</details>
+
 ## 🏗️ Architecture
 
 ---
+
+<details>
+<summary><strong>Expand Architecture</strong></summary>
 
 <p style="text-align: center">
 
@@ -37,9 +45,14 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 
 </p>
 
+</details>
+
 ## 🌐 Usage
 
 ---
+
+<details>
+<summary><strong>Expand Usage</strong></summary>
 
 ❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
@@ -83,11 +96,14 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 ./eks-stack-delete.sh
 ```
 
----
+</details>
 
 ## 🧪 Testing
 
 ---
+
+<details>
+<summary><strong>Expand Testing</strong></summary>
 
 | File                                                          | Description                                                 |
 |---------------------------------------------------------------|-------------------------------------------------------------|
@@ -99,9 +115,14 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
   <img src="images/camila-product-api-int-aws-swagger-example.gif" alt="camila-product-api-int-aws-swagger-example">
 </p>
 
+</details>
+
 ## 🔗 Links
 
 ---
+
+<details>
+<summary><strong>Expand Links</strong></summary>
 
 * API
   * [API Rest (Swagger-ui)](https://tech.jpje.xyz/product-int/api/webjars/swagger-ui/index.html#/)
@@ -122,3 +143,5 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview) (free tier)
   * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) (free tier)
+
+</details>

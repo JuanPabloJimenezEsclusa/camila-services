@@ -5,6 +5,8 @@ plugins {
 }
 
 description = 'Camila Service Config'
+group = 'com.camila.config'
+version = '1.0.0'
 
 dependencies {
   // Spring Boot

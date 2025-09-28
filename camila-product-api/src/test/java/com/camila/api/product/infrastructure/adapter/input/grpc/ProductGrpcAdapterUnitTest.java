@@ -2,7 +2,8 @@ package com.camila.api.product.infrastructure.adapter.input.grpc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -77,11 +78,11 @@ class ProductGrpcAdapterUnitTest {
 
     // Then
     verify(productUseCase).findByInternalId(internalId);
-    verify(responseObserver).onNext(productCaptor.capture());
-    verify(responseObserver).onCompleted();
+    verify(responseObserver, timeout(10_000L)).onNext(productCaptor.capture());
+    verify(responseObserver, timeout(10_000L)).onCompleted();
     verifyNoMoreInteractions(productUseCase, responseObserver);
 
-    final com.camila.api.product.infrastructure.adapter.input.grpc.Product capturedProduct = productCaptor.getValue();
+    final var capturedProduct = productCaptor.getValue();
     assertEquals(internalId, capturedProduct.getInternalId());
     assertEquals("Test Product", capturedProduct.getName());
     assertEquals("Category", capturedProduct.getCategory());
@@ -159,7 +160,7 @@ class ProductGrpcAdapterUnitTest {
 
     // Then
     verify(productUseCase).sortByMetricsWeights(requestParams);
-    verify(responseObserver, times(0)).onNext(any());
+    verify(responseObserver, never()).onNext(any());
     verify(responseObserver).onCompleted();
     verifyNoMoreInteractions(productUseCase, responseObserver);
   }

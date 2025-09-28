@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RandomDataGenerator {
   private static final long NUM_ITEMS = 100_000L;
 
-  private static final String DATA_GENERATED_JSON = "./camila-product-api/.operate/data/mongo/data-generated.script";
+  private static final String DATA_GENERATED_JSON = "./camila-product-api/.operate/data/mongo/data-generated.jsonl";
 
   private static final String LINE_TEMPLATE = """
       {"internalId":"%s", "name":"%s", "category":"%s", "salesUnits":%d, "stock":%s, "profitMargin":%.2f, "daysInStock":%d}

@@ -16,6 +16,9 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 
 ---
 
+<details>
+<summary><strong>Expand Context</strong></summary>
+
 ### Test Types
 
 | Type                  | Details                                                                                                                                                                                                                              |
@@ -28,9 +31,14 @@ This project implements a comprehensive test suite for the `camila-product-api` 
 | Behavioral Tests      | Utilize [Cucumber](https://cucumber.io/docs/guides/) to define scenarios that capture the desired behavior of the API from a user's perspective                                                                                      |
 | Benchmark Tests (jmh) | Leverage the [Java Microbenchmark Harness](https://github.com/openjdk/jmh) [JMH-T] to measure performance under controlled conditions                                                                                                |
 
+</details>
+
 ## 🏗️ Architecture
 
 ---
+
+<details>
+<summary><strong>Expand Architecture</strong></summary>
 
 ```txt
 📦api
@@ -55,9 +63,14 @@ This project implements a comprehensive test suite for the `camila-product-api` 
  ┗ 📜ProductApiApplicationTests.java
 ```
 
+</details>
+
 ## 🛠️ Usage
 
 ---
+
+<details>
+<summary><strong>Expand Usage</strong></summary>
 
 > [Contract Tests](#contract-tests)
   • [Unit and Architecture Tests](#unit-and-architecture-tests)
@@ -176,6 +189,8 @@ mvn sonar:sonar
 > Report: 
 >  - [site-project-info](./../../target/site/project-info.html)
 >  - [sonar-qube.io](https://sonarcloud.io/summary/overall?id=JuanPabloJimenezEsclusa_camila-services&branch=main)
+
+</details>
 
 ## 📝 Notes
 

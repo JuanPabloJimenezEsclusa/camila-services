@@ -5,10 +5,389 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] ci(gradle): improves build process**
+
+
+[8de127b42c78a29](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8de127b42c78a29) JuanPabloJimenezEsclusa *2025-09-28 14:40:29*
+
+**Merge pull request #106 from JuanPabloJimenezEsclusa/dependabot/gradle/org.graalvm.buildtools.native-0.11.1**
+
+ * chore(deps): bump org.graalvm.buildtools.native from 0.10.6 to 0.11.1
+
+[807d76c1d26d3a7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/807d76c1d26d3a7) Juan Pablo Jimenez Esclusa *2025-09-28 14:37:06*
+
+**[GH-32] docs: updates readme files**
+
+
+[084d178fca2da40](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/084d178fca2da40) JuanPabloJimenezEsclusa *2025-09-28 14:28:44*
+
+**chore(deps): bump org.graalvm.buildtools.native from 0.10.6 to 0.11.1**
+
+ * Bumps [org.graalvm.buildtools.native](https://github.com/graalvm/native-build-tools) from 0.10.6 to 0.11.1.
+ * - [Release notes](https://github.com/graalvm/native-build-tools/releases)
+ * - [Commits](https://github.com/graalvm/native-build-tools/compare/0.10.6...0.11.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.graalvm.buildtools.native
+ * dependency-version: 0.11.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[bac661c68b636f1](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bac661c68b636f1) dependabot[bot] *2025-09-28 14:16:44*
+
+**chore(deps): bump com.couchbase.client:java-client from 3.9.0 to 3.9.1 (#111)**
+
+ * Bumps [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) from 3.9.0 to 3.9.1.
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.9.0...3.9.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.9.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[ba7906766f304fe](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ba7906766f304fe) dependabot[bot] *2025-09-28 14:15:08*
+
+**Merge pull request #116 from JuanPabloJimenezEsclusa/dependabot/maven/org.springframework.boot-spring-boot-configuration-processor-3.5.6**
+
+ * chore(deps): bump org.springframework.boot:spring-boot-configuration-processor from 3.5.5 to 3.5.6
+
+[7e8a8d3300d497b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7e8a8d3300d497b) Juan Pablo Jimenez Esclusa *2025-09-28 13:30:21*
+
+**chore(deps): bump io.freefair.lombok from 8.14.2 to 9.0.0**
+
+ * Bumps io.freefair.lombok from 8.14.2 to 9.0.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[9f9f63afd1b40a2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9f9f63afd1b40a2) dependabot[bot] *2025-09-28 13:21:09*
+
+**chore(deps): bump org.awaitility:awaitility from 4.2.2 to 4.3.0**
+
+ * Bumps [org.awaitility:awaitility](https://github.com/awaitility/awaitility) from 4.2.2 to 4.3.0.
+ * - [Changelog](https://github.com/awaitility/awaitility/blob/master/changelog.txt)
+ * - [Commits](https://github.com/awaitility/awaitility/compare/awaitility-4.2.2...awaitility-4.3.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.awaitility:awaitility
+ * dependency-version: 4.3.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[079e2fe4739fc6c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/079e2fe4739fc6c) dependabot[bot] *2025-09-28 13:21:09*
+
+**chore(deps): bump com.google.errorprone:error_prone_core**
+
+ * Bumps [com.google.errorprone:error_prone_core](https://github.com/google/error-prone) from 2.38.0 to 2.42.0.
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.38.0...v2.42.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.42.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[b2eef05c38d0ef5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b2eef05c38d0ef5) dependabot[bot] *2025-09-28 13:21:08*
+
+**chore(deps): bump org.instancio:instancio-junit from 5.4.0 to 5.5.1**
+
+ * Bumps [org.instancio:instancio-junit](https://github.com/instancio/instancio) from 5.4.0 to 5.5.1.
+ * - [Release notes](https://github.com/instancio/instancio/releases)
+ * - [Commits](https://github.com/instancio/instancio/compare/instancio-parent-5.4.0...instancio-parent-5.5.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.instancio:instancio-junit
+ * dependency-version: 5.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[4805f21d03ef47a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4805f21d03ef47a) dependabot[bot] *2025-09-28 13:21:08*
+
+**chore(deps): bump org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0**
+
+ * Bumps org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.apache.commons:commons-lang3
+ * dependency-version: 3.19.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[13afac61e7ce524](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/13afac61e7ce524) dependabot[bot] *2025-09-28 13:21:08*
+
+**chore(deps): bump com.graphql-java:graphql-java from 24.2 to 24.3**
+
+ * Bumps [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) from 24.2 to 24.3.
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v24.2...v24.3)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;24.3&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[ea455c9144bd00e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ea455c9144bd00e) dependabot[bot] *2025-09-28 13:21:07*
+
+**chore(deps): bump com.google.protobuf:protobuf-java**
+
+ * Bumps [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) from 4.32.0 to 4.32.1.
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Changelog](https://github.com/protocolbuffers/protobuf/blob/main/protobuf_release.bzl)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.32.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[72caa8c1b0a2c64](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/72caa8c1b0a2c64) dependabot[bot] *2025-09-28 13:21:07*
+
+**chore(deps): bump grafana/grafana in /camila-orchestrator/dev/compose**
+
+ * Bumps grafana/grafana from 12.1.1 to 12.2.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: grafana/grafana
+ * dependency-version: 12.2.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[ff5a5e4d04c419a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ff5a5e4d04c419a) dependabot[bot] *2025-09-28 13:21:06*
+
+**chore(deps): bump org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0**
+
+ * Bumps org.apache.commons:commons-lang3 from 3.18.0 to 3.19.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.apache.commons:commons-lang3
+ * dependency-version: 3.19.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[74e521ca2a9cec8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/74e521ca2a9cec8) dependabot[bot] *2025-09-28 13:21:06*
+
+**chore(deps): bump com.google.cloud.tools:jib-maven-plugin**
+
+ * Bumps [com.google.cloud.tools:jib-maven-plugin](https://github.com/GoogleContainerTools/jib) from 3.4.2 to 3.4.6.
+ * - [Release notes](https://github.com/GoogleContainerTools/jib/releases)
+ * - [Commits](https://github.com/GoogleContainerTools/jib/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.cloud.tools:jib-maven-plugin
+ * dependency-version: 3.4.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[fd039e8c9afc456](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fd039e8c9afc456) dependabot[bot] *2025-09-28 13:21:05*
+
+**chore(deps): bump org.openrewrite.rewrite from 7.16.0 to 7.17.0**
+
+ * Bumps org.openrewrite.rewrite from 7.16.0 to 7.17.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.17.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[d45dbda5546b20e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d45dbda5546b20e) dependabot[bot] *2025-09-28 13:21:05*
+
+**chore(deps): bump com.couchbase.client:java-client from 3.9.0 to 3.9.1**
+
+ * Bumps [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) from 3.9.0 to 3.9.1.
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.9.0...3.9.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.9.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[36939d1bdbcebf6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/36939d1bdbcebf6) dependabot[bot] *2025-09-28 13:21:05*
+
+**chore(deps): bump org.bouncycastle:bcprov-jdk18on from 1.80 to 1.82**
+
+ * Bumps [org.bouncycastle:bcprov-jdk18on](https://github.com/bcgit/bc-java) from 1.80 to 1.82.
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.bouncycastle:bcprov-jdk18on
+ * dependency-version: &#x27;1.82&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[3a7f5d56363022a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3a7f5d56363022a) dependabot[bot] *2025-09-28 13:21:04*
+
+**chore(deps): bump com.h3xstream.findsecbugs:findsecbugs-plugin**
+
+ * Bumps [com.h3xstream.findsecbugs:findsecbugs-plugin](https://github.com/find-sec-bugs/find-sec-bugs) from 1.13.0 to 1.14.0.
+ * - [Release notes](https://github.com/find-sec-bugs/find-sec-bugs/releases)
+ * - [Changelog](https://github.com/find-sec-bugs/find-sec-bugs/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/find-sec-bugs/find-sec-bugs/compare/version-1.13.0...version-1.14.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.h3xstream.findsecbugs:findsecbugs-plugin
+ * dependency-version: 1.14.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[0e32a0056468a23](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0e32a0056468a23) dependabot[bot] *2025-09-28 13:21:04*
+
+**chore(deps): bump org.springframework.boot:spring-boot-configuration-processor**
+
+ * Bumps [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) from 3.5.5 to 3.5.6.
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.5...v3.5.6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 3.5.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[a5e4c93cf31690a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a5e4c93cf31690a) dependabot[bot] *2025-09-28 13:21:03*
+
+**chore(deps): bump org.bouncycastle:bcpkix-jdk18on from 1.81 to 1.82**
+
+ * Bumps [org.bouncycastle:bcpkix-jdk18on](https://github.com/bcgit/bc-java) from 1.81 to 1.82.
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.bouncycastle:bcpkix-jdk18on
+ * dependency-version: &#x27;1.82&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[4ee7876a1ebe6cb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4ee7876a1ebe6cb) dependabot[bot] *2025-09-28 13:21:03*
+
+**chore(deps): bump org.openapitools:openapi-generator-maven-plugin**
+
+ * Bumps org.openapitools:openapi-generator-maven-plugin from 7.15.0 to 7.16.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openapitools:openapi-generator-maven-plugin
+ * dependency-version: 7.16.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[df49ece23ad5d63](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/df49ece23ad5d63) dependabot[bot] *2025-09-28 13:21:02*
+
+**chore(deps): bump org.pitest:pitest-maven from 1.20.2 to 1.20.3**
+
+ * Bumps [org.pitest:pitest-maven](https://github.com/hcoles/pitest) from 1.20.2 to 1.20.3.
+ * - [Release notes](https://github.com/hcoles/pitest/releases)
+ * - [Commits](https://github.com/hcoles/pitest/compare/1.20.2...1.20.3)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.pitest:pitest-maven
+ * dependency-version: 1.20.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[ca175fa918f2167](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ca175fa918f2167) dependabot[bot] *2025-09-28 13:21:02*
+
+**chore(deps): bump com.puppycrawl.tools:checkstyle from 11.0.1 to 11.1.0**
+
+ * Bumps [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) from 11.0.1 to 11.1.0.
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-11.0.1...checkstyle-11.1.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 11.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[71166bb19855249](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/71166bb19855249) dependabot[bot] *2025-09-28 13:21:02*
+
+**chore(deps): bump org.bouncycastle:bctls-jdk18on from 1.81 to 1.82**
+
+ * Bumps [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) from 1.81 to 1.82.
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.82&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[03e649f1d12a046](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/03e649f1d12a046) dependabot[bot] *2025-09-28 12:59:42*
+
+**Merge pull request #90 from JuanPabloJimenezEsclusa/dependabot/maven/org.apache.maven.plugins-maven-compiler-plugin-3.14.1**
+
+ * chore(deps): bump org.apache.maven.plugins:maven-compiler-plugin from 3.14.0 to 3.14.1
+
+[86897abed3bd15f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/86897abed3bd15f) Juan Pablo Jimenez Esclusa *2025-09-28 12:56:42*
+
+**[GH-32] ci: updates actions**
+
+
+[527477db9f3915e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/527477db9f3915e) JuanPabloJimenezEsclusa *2025-09-28 12:42:05*
+
+**[GH-32] chore: upgrade java 25**
+
+
+[a2e2db4637514c4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a2e2db4637514c4) JuanPabloJimenezEsclusa *2025-09-28 11:57:01*
+
 **[GH-32] chore: upgrades spring boot version**
 
 
-[b28bb17045244b6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b28bb17045244b6) JuanPabloJimenezEsclusa *2025-09-28 00:15:39*
+[b8e345685cfc413](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b8e345685cfc413) JuanPabloJimenezEsclusa *2025-09-28 11:57:00*
 
 **chore(deps): bump org.apache.maven.plugins:maven-compiler-plugin**
 
@@ -24,12 +403,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[aecee3d38bfd909](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/aecee3d38bfd909) dependabot[bot] *2025-09-28 00:15:39*
-
-**[GH-32] refactor(cache): moves from driving to driven**
-
-
-[9bad5bf97d44898](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9bad5bf97d44898) JuanPabloJimenezEsclusa *2025-09-28 00:14:49*
+[869499563b991be](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/869499563b991be) dependabot[bot] *2025-09-28 11:57:00*
 
 **chore(deps): bump org.springframework.boot from 3.5.5 to 3.5.6**
 
@@ -43,7 +417,12 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[b9f5b73cea2eba6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b9f5b73cea2eba6) dependabot[bot] *2025-09-28 00:01:48*
+[68d8263bfb9bd8d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/68d8263bfb9bd8d) dependabot[bot] *2025-09-28 11:56:59*
+
+**[GH-32] refactor(cache): moves from driving to driven**
+
+
+[40ab0857fcc3b78](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/40ab0857fcc3b78) JuanPabloJimenezEsclusa *2025-09-28 11:56:59*
 
 **chore(deps): bump com.github.spotbugs from 6.2.4 to 6.4.2**
 
@@ -57,7 +436,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[fc3d57e4b83a3f6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fc3d57e4b83a3f6) dependabot[bot] *2025-09-28 00:01:47*
+[f421ee5c3cae55f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f421ee5c3cae55f) dependabot[bot] *2025-09-28 11:56:58*
 
 **chore(deps): bump opentelemetryVersion from 1.54.0 to 1.54.1**
 
@@ -131,7 +510,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[f2149e378569d43](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f2149e378569d43) dependabot[bot] *2025-09-28 00:01:46*
+[0e7c42b4c8314f2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0e7c42b4c8314f2) dependabot[bot] *2025-09-28 11:56:58*
 
 **chore(deps): bump org.bouncycastle:bctls-jdk18on from 1.81 to 1.82**
 
@@ -147,7 +526,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[47c58071407a7ee](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/47c58071407a7ee) dependabot[bot] *2025-09-28 00:01:46*
+[bd0bc00a473e57a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bd0bc00a473e57a) dependabot[bot] *2025-09-28 11:56:57*
 
 **chore(deps): bump org.sonarsource.scanner.maven:sonar-maven-plugin**
 
@@ -163,7 +542,23 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[c57b51024ba6689](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c57b51024ba6689) dependabot[bot] *2025-09-28 00:01:45*
+[6f85b7340b318bf](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6f85b7340b318bf) dependabot[bot] *2025-09-28 11:56:57*
+
+**chore(deps): bump org.codehaus.mojo:flatten-maven-plugin**
+
+ * Bumps [org.codehaus.mojo:flatten-maven-plugin](https://github.com/mojohaus/flatten-maven-plugin) from 1.7.2 to 1.7.3.
+ * - [Release notes](https://github.com/mojohaus/flatten-maven-plugin/releases)
+ * - [Commits](https://github.com/mojohaus/flatten-maven-plugin/compare/1.7.2...1.7.3)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.codehaus.mojo:flatten-maven-plugin
+ * dependency-version: 1.7.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[1d11093a14025a3](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/1d11093a14025a3) dependabot[bot] *2025-09-28 11:56:57*
 
 **chore(deps): bump opentelemetry.version from 1.54.0 to 1.54.1**
 
@@ -237,23 +632,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[fac68094a9d2602](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fac68094a9d2602) dependabot[bot] *2025-09-28 00:01:44*
-
-**chore(deps): bump org.codehaus.mojo:flatten-maven-plugin**
-
- * Bumps [org.codehaus.mojo:flatten-maven-plugin](https://github.com/mojohaus/flatten-maven-plugin) from 1.7.2 to 1.7.3.
- * - [Release notes](https://github.com/mojohaus/flatten-maven-plugin/releases)
- * - [Commits](https://github.com/mojohaus/flatten-maven-plugin/compare/1.7.2...1.7.3)
- * ---
- * updated-dependencies:
- * - dependency-name: org.codehaus.mojo:flatten-maven-plugin
- * dependency-version: 1.7.3
- * dependency-type: direct:production
- * update-type: version-update:semver-patch
- * ...
- * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
-
-[f86b003f0fc93eb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f86b003f0fc93eb) dependabot[bot] *2025-09-28 00:01:44*
+[ecbd92dd8d01061](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ecbd92dd8d01061) dependabot[bot] *2025-09-28 11:56:56*
 
 **chore(deps-dev): bump cucumber.version from 7.28.0 to 7.29.0**
 
@@ -295,7 +674,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[53e94f65729f3a5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/53e94f65729f3a5) dependabot[bot] *2025-09-28 00:01:43*
+[ec9553103bb1977](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ec9553103bb1977) dependabot[bot] *2025-09-28 11:56:56*
 
 **chore(deps): update hashicorp/aws requirement from ~> 6.13.0 to ~> 6.14.0**
 
@@ -311,21 +690,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[faa9ee1e5dcef3d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/faa9ee1e5dcef3d) dependabot[bot] *2025-09-28 00:01:42*
-
-**chore(deps): bump elasticsearch in /camila-orchestrator/dev/compose**
-
- * Bumps elasticsearch from 9.1.3 to 9.1.4.
- * ---
- * updated-dependencies:
- * - dependency-name: elasticsearch
- * dependency-version: 9.1.4
- * dependency-type: direct:production
- * update-type: version-update:semver-patch
- * ...
- * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
-
-[11a41d6eec67632](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/11a41d6eec67632) dependabot[bot] *2025-09-28 00:01:42*
+[002dc8e0afbdb36](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/002dc8e0afbdb36) dependabot[bot] *2025-09-28 11:56:56*
 
 **chore(deps): bump kibana in /camila-orchestrator/dev/compose**
 
@@ -339,7 +704,34 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[d1f45aec405b1fb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d1f45aec405b1fb) dependabot[bot] *2025-09-28 00:01:41*
+[e123dd3b71a4054](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e123dd3b71a4054) dependabot[bot] *2025-09-28 11:56:55*
+
+**chore(deps): bump elasticsearch in /camila-orchestrator/dev/compose**
+
+ * Bumps elasticsearch from 9.1.3 to 9.1.4.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[88a15840b081c8e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/88a15840b081c8e) dependabot[bot] *2025-09-28 11:56:55*
+
+**chore(deps): bump prom/prometheus in /camila-orchestrator/dev/compose**
+
+ * Bumps prom/prometheus from v3.5.0 to v3.6.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.6.0
+ * dependency-type: direct:production
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[81f125f6361acee](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/81f125f6361acee) dependabot[bot] *2025-09-28 11:56:54*
 
 **chore(deps): bump mongodb/mongodb-community-server**
 
@@ -353,20 +745,23 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[dec1a4acead02ae](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dec1a4acead02ae) dependabot[bot] *2025-09-28 00:01:40*
+[46c72709bf576b4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/46c72709bf576b4) dependabot[bot] *2025-09-28 11:56:54*
 
-**chore(deps): bump prom/prometheus in /camila-orchestrator/dev/compose**
+**chore(deps): bump actions/setup-node from 4 to 5**
 
- * Bumps prom/prometheus from v3.5.0 to v3.6.0.
+ * Bumps [actions/setup-node](https://github.com/actions/setup-node) from 4 to 5.
+ * - [Release notes](https://github.com/actions/setup-node/releases)
+ * - [Commits](https://github.com/actions/setup-node/compare/v4...v5)
  * ---
  * updated-dependencies:
- * - dependency-name: prom/prometheus
- * dependency-version: v3.6.0
+ * - dependency-name: actions/setup-node
+ * dependency-version: &#x27;5&#x27;
  * dependency-type: direct:production
+ * update-type: version-update:semver-major
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[77824e3b9c7709d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/77824e3b9c7709d) dependabot[bot] *2025-09-28 00:01:40*
+[789dce0b2d992c5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/789dce0b2d992c5) dependabot[bot] *2025-09-28 09:26:23*
 
 **Merge pull request #97 from JuanPabloJimenezEsclusa/feature/GH-7-continous-refactoring**
 

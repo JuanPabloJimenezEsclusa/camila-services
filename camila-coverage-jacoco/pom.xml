@@ -10,7 +10,7 @@
     <version>1.0.0</version>
   </parent>
 
-  <groupId>edu.ignacio.poc.testing</groupId>
+  <groupId>com.camila.testing</groupId>
   <artifactId>camila-coverage-jacoco</artifactId>
   <version>1.0.0</version>
   <name>camila-coverage-jacoco</name>

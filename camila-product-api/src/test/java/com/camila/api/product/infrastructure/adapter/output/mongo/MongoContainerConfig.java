@@ -16,6 +16,9 @@ import org.bson.Document;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * The type Mongo container config.
+ */
 @Slf4j
 public abstract class MongoContainerConfig {
 
@@ -27,7 +30,7 @@ public abstract class MongoContainerConfig {
 
   private static final DockerImageName MONGO_IMAGE = DockerImageName
     .parse("mongodb/mongodb-community-server")
-    .withTag("8.0.13-ubi9");
+    .withTag("8.2.0-ubi9");
 
   private static final MongoDBContainer container = new MongoDBContainer(MONGO_IMAGE)
     .withStartupTimeout(Duration.ofMinutes(1L))

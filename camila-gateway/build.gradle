@@ -6,6 +6,7 @@ plugins {
   id 'org.springdoc.openapi-gradle-plugin'
 }
 
+description = 'Camila Service Gateway'
 group = 'com.camila.gateway'
 version = '1.0.0'
 
@@ -29,7 +30,7 @@ dependencies {
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
   // API Documentation
-  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}" {
+  implementation(group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: "${springdocOpenapiVersion}") {
     exclude group: 'org.apache.commons', module: 'commons-lang3'
   }
 
@@ -54,7 +55,7 @@ tasks.named('test') {
 }
 
 jacoco {
-  toolVersion = '0.8.13'
+  toolVersion = "${jacocoVersion}"
 }
 
 jacocoTestReport {
@@ -80,4 +81,28 @@ openApi {
   apiDocsUrl = "http://localhost:8080/v3/api-docs"
   outputDir = file("$buildDir/docs")
   outputFileName = "openapi.json"
+}
+
+// Process Maven-style property placeholders in resources (like @project.name@, @project.version@)
+// This ensures compatibility between Maven and Gradle builds
+processResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
+    }
+  }
+}
+
+processTestResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
+    }
+  }
 }

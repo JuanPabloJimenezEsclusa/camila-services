@@ -105,7 +105,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductRestAdapterITCase extends CouchbaseContainerConfig {
 
-  private static final String SORT_PRODUCTS_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
+  private static final String SORT_PRODUCTS_URI = "/products?salesUnits="
+    + "{salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
   private static final SecureRandom random = new SecureRandom();
 
   @Autowired

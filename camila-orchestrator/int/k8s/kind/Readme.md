@@ -19,18 +19,31 @@ Built on [Kind](https://kind.sigs.k8s.io/) (Kubernetes IN Docker), this environm
 
 ---
 
+<details>
+<summary><strong>Expand Architecture</strong></summary>
+
 This setup uses Kind to create a local Kubernetes cluster inside Docker containers, providing a lightweight development environment with all the functionality of Kubernetes.
+
+</details>
 
 ## ⚙️ Dependencies
 
 ---
 
-* Kind ~= [0.29.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
-* K9s ~= [v0.50.9](https://github.com/derailed/k9s/releases)
+<details>
+<summary><strong>Expand Dependencies</strong></summary>
+
+* Kind ~= [0.30.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+* K9s ~= [v0.50.x](https://github.com/derailed/k9s/releases)
+
+</details>
 
 ## 🚀 Setup
 
 ---
+
+<details>
+<summary><strong>Expand Setup</strong></summary>
 
 ### 📝 Hosts Configuration
 
@@ -106,9 +119,14 @@ Use the combined script to set up everything at once:
 ./run-cluster-with-api-serveless.sh
 ```
 
+</details>
+
 ## 🔍 Usage Examples
 
 ---
+
+<details>
+<summary><strong>Expand Usage Examples</strong></summary>
 
 ```bash
 # Test DNS resolution from inside the cluster
@@ -117,16 +135,26 @@ kubectl run -it --rm \
   --image=busybox -- nslookup mongo-nodeport-svc.mongodb.svc.cluster.local
 ```
 
+</details>
+
 ## 🌐 Links
 
 ---
 
+<details>
+<summary><strong>Expand Links</strong></summary>
+
 - [Product API](http://localhost:8080/product-int/api/swagger-ui.html)
 - [Product API (Serverless)](http://camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io/product-int/api/swagger-ui/index.html)
+
+</details>
 
 ## ❓ Troubleshooting
 
 ---
+
+<details>
+<summary><strong>Expand Troubleshooting</strong></summary>
 
 ### Registry Connection Issues
 
@@ -144,9 +172,14 @@ kubectl run -it --rm \
   --image=busybox -- nslookup mongo-nodeport-svc.mongodb.svc.cluster.local
 ```
 
+</details>
+
 ## 📝 Notes
 
 ---
+
+<details>
+<summary><strong>Expand Notes</strong></summary>
 
 ### 🔍 List Node Images
 
@@ -173,3 +206,5 @@ docker exec -it kind-cluster-worker3 bash -c "crictl images"
 |                | [API/serveless/delete-serveless.sh](API/serveless/delete-serveless.sh) | Delete serverless API              |
 | **Combined**   | [run-cluster-with-api.sh](run-cluster-with-api.sh)                     | Run full setup with standard API   |
 |                | [run-cluster-with-api-serveless.sh](run-cluster-with-api-serveless.sh) | Run full setup with serverless API |
+
+</details>
