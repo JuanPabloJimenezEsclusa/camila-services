@@ -5,6 +5,380 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] chore: upgrades spring boot version**
+
+
+[b28bb17045244b6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b28bb17045244b6) JuanPabloJimenezEsclusa *2025-09-28 00:15:39*
+
+**chore(deps): bump org.apache.maven.plugins:maven-compiler-plugin**
+
+ * Bumps [org.apache.maven.plugins:maven-compiler-plugin](https://github.com/apache/maven-compiler-plugin) from 3.14.0 to 3.14.1.
+ * - [Release notes](https://github.com/apache/maven-compiler-plugin/releases)
+ * - [Commits](https://github.com/apache/maven-compiler-plugin/compare/maven-compiler-plugin-3.14.0...maven-compiler-plugin-3.14.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.apache.maven.plugins:maven-compiler-plugin
+ * dependency-version: 3.14.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[aecee3d38bfd909](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/aecee3d38bfd909) dependabot[bot] *2025-09-28 00:15:39*
+
+**[GH-32] refactor(cache): moves from driving to driven**
+
+
+[9bad5bf97d44898](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9bad5bf97d44898) JuanPabloJimenezEsclusa *2025-09-28 00:14:49*
+
+**chore(deps): bump org.springframework.boot from 3.5.5 to 3.5.6**
+
+ * Bumps org.springframework.boot from 3.5.5 to 3.5.6.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 3.5.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[b9f5b73cea2eba6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b9f5b73cea2eba6) dependabot[bot] *2025-09-28 00:01:48*
+
+**chore(deps): bump com.github.spotbugs from 6.2.4 to 6.4.2**
+
+ * Bumps com.github.spotbugs from 6.2.4 to 6.4.2.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.4.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[fc3d57e4b83a3f6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fc3d57e4b83a3f6) dependabot[bot] *2025-09-28 00:01:47*
+
+**chore(deps): bump opentelemetryVersion from 1.54.0 to 1.54.1**
+
+ * Bumps &#x60;opentelemetryVersion&#x60; from 1.54.0 to 1.54.1.
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[f2149e378569d43](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f2149e378569d43) dependabot[bot] *2025-09-28 00:01:46*
+
+**chore(deps): bump org.bouncycastle:bctls-jdk18on from 1.81 to 1.82**
+
+ * Bumps [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) from 1.81 to 1.82.
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.82&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[47c58071407a7ee](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/47c58071407a7ee) dependabot[bot] *2025-09-28 00:01:46*
+
+**chore(deps): bump org.sonarsource.scanner.maven:sonar-maven-plugin**
+
+ * Bumps [org.sonarsource.scanner.maven:sonar-maven-plugin](https://github.com/SonarSource/sonar-scanner-maven) from 5.1.0.4751 to 5.2.0.4988.
+ * - [Release notes](https://github.com/SonarSource/sonar-scanner-maven/releases)
+ * - [Commits](https://github.com/SonarSource/sonar-scanner-maven/compare/5.1.0.4751...5.2.0.4988)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.sonarsource.scanner.maven:sonar-maven-plugin
+ * dependency-version: 5.2.0.4988
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[c57b51024ba6689](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c57b51024ba6689) dependabot[bot] *2025-09-28 00:01:45*
+
+**chore(deps): bump opentelemetry.version from 1.54.0 to 1.54.1**
+
+ * Bumps &#x60;opentelemetry.version&#x60; from 1.54.0 to 1.54.1.
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.54.0 to 1.54.1
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.54.0...v1.54.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.54.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[fac68094a9d2602](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fac68094a9d2602) dependabot[bot] *2025-09-28 00:01:44*
+
+**chore(deps): bump org.codehaus.mojo:flatten-maven-plugin**
+
+ * Bumps [org.codehaus.mojo:flatten-maven-plugin](https://github.com/mojohaus/flatten-maven-plugin) from 1.7.2 to 1.7.3.
+ * - [Release notes](https://github.com/mojohaus/flatten-maven-plugin/releases)
+ * - [Commits](https://github.com/mojohaus/flatten-maven-plugin/compare/1.7.2...1.7.3)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.codehaus.mojo:flatten-maven-plugin
+ * dependency-version: 1.7.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[f86b003f0fc93eb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f86b003f0fc93eb) dependabot[bot] *2025-09-28 00:01:44*
+
+**chore(deps-dev): bump cucumber.version from 7.28.0 to 7.29.0**
+
+ * Bumps &#x60;cucumber.version&#x60; from 7.28.0 to 7.29.0.
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.28.0 to 7.29.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.28.0...v7.29.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.28.0 to 7.29.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.28.0...v7.29.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.28.0 to 7.29.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.28.0...v7.29.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.28.0 to 7.29.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.28.0...v7.29.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.29.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.29.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.29.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.29.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[53e94f65729f3a5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/53e94f65729f3a5) dependabot[bot] *2025-09-28 00:01:43*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.13.0 to ~> 6.14.0**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.13.0...v6.14.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.14.0
+ * dependency-type: direct:production
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[faa9ee1e5dcef3d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/faa9ee1e5dcef3d) dependabot[bot] *2025-09-28 00:01:42*
+
+**chore(deps): bump elasticsearch in /camila-orchestrator/dev/compose**
+
+ * Bumps elasticsearch from 9.1.3 to 9.1.4.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[11a41d6eec67632](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/11a41d6eec67632) dependabot[bot] *2025-09-28 00:01:42*
+
+**chore(deps): bump kibana in /camila-orchestrator/dev/compose**
+
+ * Bumps kibana from 9.1.3 to 9.1.4.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: kibana
+ * dependency-version: 9.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[d1f45aec405b1fb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d1f45aec405b1fb) dependabot[bot] *2025-09-28 00:01:41*
+
+**chore(deps): bump mongodb/mongodb-community-server**
+
+ * Bumps mongodb/mongodb-community-server from 8.0.13-ubi9 to 8.2.0-ubi9.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: mongodb/mongodb-community-server
+ * dependency-version: 8.2.0-ubi9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[dec1a4acead02ae](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dec1a4acead02ae) dependabot[bot] *2025-09-28 00:01:40*
+
+**chore(deps): bump prom/prometheus in /camila-orchestrator/dev/compose**
+
+ * Bumps prom/prometheus from v3.5.0 to v3.6.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.6.0
+ * dependency-type: direct:production
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[77824e3b9c7709d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/77824e3b9c7709d) dependabot[bot] *2025-09-28 00:01:40*
+
+**Merge pull request #97 from JuanPabloJimenezEsclusa/feature/GH-7-continous-refactoring**
+
+ * [GH-32] continous refactoring
+
+[64daada14a8495c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/64daada14a8495c) Juan Pablo Jimenez Esclusa *2025-09-27 23:21:27*
+
+**[GH-32] docs(javadoc): improves comments and build process**
+
+
+[b45c8a28ec6d22d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b45c8a28ec6d22d) JuanPabloJimenezEsclusa *2025-09-27 20:56:15*
+
 **[GH-32] refactor(cache): moves from driving to driven**
 
 
