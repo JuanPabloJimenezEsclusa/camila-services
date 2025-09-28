@@ -120,7 +120,7 @@
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <pitest-maven.version>1.20.2</pitest-maven.version>
+    <pitest-maven.version>1.20.3</pitest-maven.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.15.0</openapi-generator-maven-plugin.version>
