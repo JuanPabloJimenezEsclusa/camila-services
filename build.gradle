@@ -10,7 +10,7 @@ plugins {
   id 'org.openapi.generator' version '7.15.0' apply false
   id 'org.openrewrite.rewrite' version '7.16.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
-  id "io.freefair.lombok" version "8.14.2" apply false
+  id "io.freefair.lombok" version "9.0.0" apply false
 }
 
 allprojects {
