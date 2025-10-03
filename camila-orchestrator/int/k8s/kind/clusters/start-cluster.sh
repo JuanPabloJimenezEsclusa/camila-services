@@ -61,10 +61,11 @@ echo -e "${SEPARATOR} 🚀 install knative. ${SEPARATOR}"
 # https://knative.dev/blog/articles/set-up-a-local-knative-environment-with-kind/
 # https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#prerequisites
 
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.18.0/serving-crds.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.18.0/serving-core.yaml
-kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-v1.18.0/kourier.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.18.0/serving-hpa.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-crds.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-core.yaml
+kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-v1.19.5/kourier.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-default-domain.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-hpa.yaml
 
 ## By default, the Kourier service is set to be of type LoadBalancer. On local machines, this type doesn’t work
 kubectl patch svc kourier \

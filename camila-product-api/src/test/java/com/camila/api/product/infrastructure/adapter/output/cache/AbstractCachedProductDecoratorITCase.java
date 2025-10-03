@@ -53,10 +53,14 @@ public abstract class AbstractCachedProductDecoratorITCase {
   private static Stream<Arguments> sortParametersScenarios() {
     // weights, offset, limit
     return Stream.of(
-      Arguments.of(Named.of("Empty map", new AppliedWeights(0f,0f,0f,0f)), 0, 10),
-      Arguments.of(Named.of("Single parameter", new AppliedWeights(1.0f,0f,0f,0f)), 0, 10),
-      Arguments.of(Named.of("Multiple parameters", new AppliedWeights(0.5f,0.3f,0.2f,0f)), 0, 10),
-      Arguments.of(Named.of("With custom pagination", new AppliedWeights(0.5f,0f,0f,0f)), 1, 10)
+      Arguments.of(Named.of("Empty map",
+        new AppliedWeights(0f, 0f, 0f, 0f)), 0, 10),
+      Arguments.of(Named.of("Single parameter",
+        new AppliedWeights(1.0f, 0f, 0f, 0f)), 0, 10),
+      Arguments.of(Named.of("Multiple parameters",
+        new AppliedWeights(0.5f, 0.3f, 0.2f, 0f)), 0, 10),
+      Arguments.of(Named.of("With custom pagination",
+        new AppliedWeights(0.5f, 0f, 0f, 0f)), 1, 10)
     );
   }
 

@@ -26,6 +26,9 @@ import org.testcontainers.shaded.okhttp3.OkHttpClient;
 import org.testcontainers.shaded.okhttp3.Request;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * The type Couchbase container config.
+ */
 @Slf4j
 public abstract class CouchbaseContainerConfig {
   private static final String BUCKET_NAME = "camila-product-bucket";

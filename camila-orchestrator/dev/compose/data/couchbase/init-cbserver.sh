@@ -114,7 +114,7 @@ main() {
   -c localhost:8091 \
   -u "${COUCHBASE_ADMINISTRATOR_USERNAME}" \
   -p "${COUCHBASE_ADMINISTRATOR_PASSWORD}" \
-  -d "file:///opt/couchbase/init/sample-data.script"  \
+  -d "file:///opt/couchbase/init/sample-data.jsonl"  \
   -b "${COUCHBASE_BUCKET}" \
   --scope-collection-exp "${COUCHBASE_BUCKET_SCOPE}.${COUCHBASE_BUCKET_COLLECTION}" \
   -g "#UUID#"

@@ -7,6 +7,9 @@ import java.util.UUID;
 import com.redis.testcontainers.RedisContainer;
 import org.testcontainers.utility.DockerImageName;
 
+/**
+ * The type Redis container config.
+ */
 class RedisContainerConfig {
 
   private static final String REDIS_PASSWORD = "camila";
@@ -29,6 +32,9 @@ class RedisContainerConfig {
 
   private RedisContainerConfig() { }
 
+  /**
+   * Init.
+   */
   static void init() {
     container.start();
     updateDataSourceProps();

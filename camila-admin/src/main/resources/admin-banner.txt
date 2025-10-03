@@ -5,4 +5,3 @@
   \_/ \_/ \_/ \_/ \_/   \_/ \_/ \_/
  ${spring.application.name}
  🔖  Spring-boot: ${spring-boot.formatted-version}
- 📦  Commit: ${git.commit.id.full}

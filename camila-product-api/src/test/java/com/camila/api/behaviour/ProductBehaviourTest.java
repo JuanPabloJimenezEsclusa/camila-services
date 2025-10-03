@@ -27,7 +27,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   properties = {"repository.technology=mongo"}
 )
 public class ProductBehaviourTest {
-  private static final String SORT_PRODUCT_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
+  private static final String SORT_PRODUCT_URI = "/products?salesUnits="
+    + "{salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
   private static List<String> parameters = List.of();
   private static WebTestClient.ResponseSpec exchange = null;
 

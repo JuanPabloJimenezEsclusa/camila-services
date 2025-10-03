@@ -111,7 +111,7 @@ class ProductRSocketAdapterITCase extends MongoContainerConfig {
   @Order(4)
   void sortByMetricsKo() {
     var message = """
-      { }
+      {}
       """;
 
     assert requester != null;

@@ -16,6 +16,9 @@ This environment is based on `docker-compose` and is designed for development pu
 
 ---
 
+<details>
+<summary><strong>Expand Usage</strong></summary>
+
 ### Using Scripts
 
 For the local environment to function correctly, you need to modify the `/etc/hosts` file to map the IP address `127.0.0.1` to the hostnames of the services defined in the `docker-compose` file.
@@ -61,9 +64,14 @@ docker-compose logs fluentd elasticsearch kibana --follow
 docker-compose down
 ```
 
+</details>
+
 ## 🔗 Links
 
 ---
+
+<details>
+<summary><strong>Expand Links</strong></summary>
 
 * **Databases:**
   * [Couchbase database UI](http://localhost:8091/ui/index.html) (Administrator/password)
@@ -96,3 +104,5 @@ docker-compose down
   * [Elasticsearch access](http://localhost:9200/) (Login: elastic/changeme)
 * **Kibana (Search Engine Visualization):**
   * [Kibana dashboard](http://localhost:5601/app/kibana_overview)
+
+</details>

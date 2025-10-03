@@ -19,14 +19,22 @@ Based on `AWS Cloud Provider`
 
 ---
 
+<details>
+<summary><strong>Expand Dependencies</strong></summary>
+
 * Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
 * AWS CLI ~= [2.28.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
 * JQ ~= [1.8.x](https://github.com/jqlang/jq)
 * Terraform ~= [1.13.x](https://developer.hashicorp.com/terraform/install#linux)
 
+</details>
+
 ## 🏗️ Architecture
 
 ---
+
+<details>
+<summary><strong>Expand Architecture</strong></summary>
 
 <p style="text-align: center">
 
@@ -48,9 +56,14 @@ Based on `AWS Cloud Provider`
 
 </p>
 
+</details>
+
 ## 🌐 Usage
 
 ---
+
+<details>
+<summary><strong>Expand Usage</strong></summary>
 
 ❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
@@ -130,11 +143,14 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 ./terraform/destroy-aws-plan.sh
 ```
 
----
+</details>
 
 ## 🧪 Testing
 
 ---
+
+<details>
+<summary><strong>Expand Testing</strong></summary>
 
 | File                                                                                     | Description                                                 |
 |------------------------------------------------------------------------------------------|-------------------------------------------------------------|
@@ -172,9 +188,14 @@ docker run --rm -it \
   546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0
 ```
 
+</details>
+
 ## 🔗 Links
 
 ---
+
+<details>
+<summary><strong>Expand Links</strong></summary>
 
 * API
   * [API Rest (Swagger-ui)](https://tech.jpje.xyz/product/api/webjars/swagger-ui/index.html#/)
@@ -200,3 +221,5 @@ docker run --rm -it \
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview) (free tier)
   * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) (free tier)
+
+</details>

@@ -4,6 +4,8 @@ plugins {
 }
 
 description = 'camila-coverage-jacoco'
+group = 'com.camila.testing'
+version = '1.0.0'
 
 bootJar {
   enabled = false
@@ -22,7 +24,7 @@ dependencies {
 }
 
 jacoco {
-  toolVersion = '0.8.13'
+  toolVersion = "${jacocoVersion}"
 }
 
 task jacocoAggregatedReport(type: JacocoReport) {

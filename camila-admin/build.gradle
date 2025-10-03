@@ -5,6 +5,8 @@ plugins {
 }
 
 description = 'Camila Service Admin'
+group = 'com.camila.admin'
+version = '1.0.0'
 
 dependencies {
   // Spring Boot
@@ -25,4 +27,28 @@ dependencies {
   // Testing
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
+}
+
+// Process Maven-style property placeholders in resources (like @project.name@, @project.version@)
+// This ensures compatibility between Maven and Gradle builds
+processResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
+    }
+  }
+}
+
+processTestResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
+    }
+  }
 }
