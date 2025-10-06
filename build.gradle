@@ -59,7 +59,7 @@ subprojects {
     // Use Cucumber 7.20.1 which is compatible with JUnit Platform 1.12.2
     cucumberVersion = '7.30.0'
     // Keep JUnit Platform aligned with Spring Boot-managed JUnit 5 (5.12.2 -> platform 1.12.2)
-    junitPlatformSuiteVersion = '1.12.2'
+    junitPlatformSuiteVersion = '6.0.0'
     archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.5.1'
     awaitilityVersion = '4.3.0'
