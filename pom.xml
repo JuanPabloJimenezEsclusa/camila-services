@@ -94,7 +94,7 @@
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <instancio-junit.version>5.5.1</instancio-junit.version>
     <jmh.version>1.37</jmh.version>
-    <junit-platform-suite.version>1.13.4</junit-platform-suite.version>
+    <junit-platform-suite.version>1.14.0</junit-platform-suite.version>
 
     <!-- Quality -->
     <chaos-monkey-spring-boot.version>3.2.2</chaos-monkey-spring-boot.version>
