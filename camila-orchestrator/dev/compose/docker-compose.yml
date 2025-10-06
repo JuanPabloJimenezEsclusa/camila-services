@@ -364,7 +364,7 @@ services:
       camila_product_network:
   ## Security (Authn/Authz)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.3
+    image: quay.io/keycloak/keycloak:26.4
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
