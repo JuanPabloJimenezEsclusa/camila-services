@@ -2,6 +2,15 @@ global:
   scrape_interval: 15s # Scrape targets every 15 seconds
   scrape_timeout: 15s # Timeout after 15 seconds
 
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+rule_files:
+  - "/etc/prometheus/rules/*.yml"
+
 scrape_configs:
   - job_name: "camila-product-api"
     metrics_path: '/product-dev/api/actuator/prometheus'
@@ -21,3 +30,14 @@ scrape_configs:
         labels:
           application: 'camila-operations'
           group: 'first-group'
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          alias: 'cadvisor'
+  - job_name: 'node-exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          alias: 'node-exporter'

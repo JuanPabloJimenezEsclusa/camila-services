@@ -5,10 +5,42 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] ci(gradle): improves build process**
+**chore(deps): bump docker/login-action from 3.5.0 to 3.6.0 (#122)**
+
+ * Bumps [docker/login-action](https://github.com/docker/login-action) from 3.5.0 to 3.6.0.
+ * - [Release notes](https://github.com/docker/login-action/releases)
+ * - [Commits](https://github.com/docker/login-action/compare/184bdaa0721073962dff0199f1fb9940f07167d1...5e57cd118135c172c3672efd75eb46360885c0ef)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: docker/login-action
+ * dependency-version: 3.6.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[243c150d4e028ff](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/243c150d4e028ff) dependabot[bot] *2025-10-03 14:57:41*
+
+**chore(deps): bump org.openapi.generator from 7.15.0 to 7.16.0 (#121)**
+
+ * Bumps org.openapi.generator from 7.15.0 to 7.16.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openapi.generator
+ * dependency-version: 7.16.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[dcbf34b7f0cf8fb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dcbf34b7f0cf8fb) dependabot[bot] *2025-10-03 14:44:09*
+
+**[GH-32] ci(gradle): improves build process (#123)**
 
 
-[8de127b42c78a29](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8de127b42c78a29) JuanPabloJimenezEsclusa *2025-09-28 14:40:29*
+[4ebcd75ada6f99d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4ebcd75ada6f99d) Juan Pablo Jimenez Esclusa *2025-10-03 14:31:42*
 
 **Merge pull request #106 from JuanPabloJimenezEsclusa/dependabot/gradle/org.graalvm.buildtools.native-0.11.1**
 

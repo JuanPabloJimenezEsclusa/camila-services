@@ -1,0 +1,38 @@
+{
+  "uid": "rate_limiter_overview",
+  "title": "Rate Limiter Overview",
+  "schemaVersion": 27,
+  "version": 1,
+  "refresh": "15s",
+  "timezone": "browser",
+  "tags": ["rate-limiter","gateway"],
+  "templating": {
+    "list": [
+      { "name": "instance", "type": "query", "label": "Instance", "query": "label_values(jvm_info,instance)", "datasource": {"type":"prometheus","uid":"PBFA97CFB590B2093"}, "refresh": 2 }
+    ]
+  },
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "429 Responses (rate)",
+      "datasource": {"type":"prometheus","uid":"PBFA97CFB590B2093"},
+      "targets": [ { "expr": "sum(rate(http_server_requests_seconds_count{status=\"429\"}[1m])) by (uri)", "refId": "A" } ],
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 0}
+    },
+    {
+      "type": "timeseries",
+      "title": "Fallback Invocations",
+      "datasource": {"type":"prometheus","uid":"PBFA97CFB590B2093"},
+      "targets": [ { "expr": "increase(gateway_fallback_invocations_total[5m])", "refId": "A" } ],
+      "gridPos": {"h": 6, "w": 24, "x": 0, "y": 8}
+    },
+    {
+      "type": "timeseries",
+      "title": "Redis P95 Latency (ms)",
+      "datasource": {"type":"prometheus","uid":"PBFA97CFB590B2093"},
+      "targets": [ { "expr": "histogram_quantile(0.95, sum(rate(redis_command_duration_seconds_bucket[5m])) by (le)) * 1000", "refId": "A" } ],
+      "gridPos": {"h": 6, "w": 24, "x": 0, "y": 14}
+    }
+  ]
+}
+

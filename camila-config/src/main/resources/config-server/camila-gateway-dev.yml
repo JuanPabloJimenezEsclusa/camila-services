@@ -10,11 +10,11 @@ info:
       - "pro"
 
 gateway:
-  replenishRate: 2000
-  burstCapacity: 2000
+  replenishRate: 250
+  burstCapacity: 500
   requestedTokens: 1
   fallback:
-    message: |
+    message: >-
       Gateway is currently unable to handle the request due to a temporary overloading or maintenance of the server. 
       Please try again later. If the problem persists, please contact the system administrator. 
       The error code is: 502

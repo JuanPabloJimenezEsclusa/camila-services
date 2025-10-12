@@ -3,6 +3,7 @@
 > [Summary](#-summary)
   • [Usage](#-usage)
   • [Links](#-links)
+  • [How to Validate the Changes](#-how-to-validate-the-changes)
 
 ## 📜 Summary
 
@@ -94,8 +95,12 @@ docker-compose down
 * **Keycloak (Authentication):**
   * [Keycloak admin console](http://keycloak:9191/admin/master/console) (Login: admin/admin1234)
   * [Keycloak OpenID configuration](http://keycloak:9191/realms/camila-realm/.well-known/openid-configuration)
+* **Cadvisor (Monitoring):**
+  * [Cadvisor dashboard](http://localhost:8880/containers)
 * **Prometheus (Monitoring):**
   * [Prometheus monitoring dashboard](http://localhost:9090)
+  * [Node Exporter metrics](http://localhost:9100/metrics)
+  * [Alertmanager UI](http://localhost:9093)
 * **Grafana (Monitoring Visualization):**
   * [Grafana dashboard](http://localhost:3000) (Login: admin/admin)
 * **Zipkin (Distributed Tracing):**
@@ -104,5 +109,22 @@ docker-compose down
   * [Elasticsearch access](http://localhost:9200/) (Login: elastic/changeme)
 * **Kibana (Search Engine Visualization):**
   * [Kibana dashboard](http://localhost:5601/app/kibana_overview)
+* **Utilities:**
+  * [Mailpit](http://localhost:8025/)
+
+</details>
+
+## 🧪 How to Validate the Changes
+
+---
+
+<details>
+<summary><strong>Expand Links</strong></summary>
+
+```bash
+# During the test, use this to check circuit breaker status (should remain CLOSED)
+curl -Ls http://localhost:8090/actuator/health \
+  | jq '.components.circuitBreakers.details.fallbackCircuitBreaker.details'
+```
 
 </details>
