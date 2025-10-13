@@ -11,9 +11,6 @@ spring:
   profiles:
     active:
       - ${SPRING_PROFILES_ACTIVE:loc}
-  config:
-    import: "optional:configserver:${CONFIG_SERVER_URI:}"
-  # https://cloud.spring.io/spring-cloud-gateway/reference/html/
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -23,24 +20,10 @@ spring:
       timeout: 20000ms
       lettuce:
         pool:
-          max-active: 16
-          max-idle: 8
-          min-idle: 4
+          max-active: 256      # Aumentado para soportar alta concurrencia
+          max-idle: 64         # Aumentado para reutilizar conexiones
+          min-idle: 16         # Mantener pool caliente
   cloud:
-    config:
-      enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
-      discovery:
-        enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${SPRING_PROFILES_ACTIVE}
-      name: ${spring.application.name}
-      allow-override: true
     loadbalancer:
       health-check:
         initial-delay: 5s
@@ -48,8 +31,7 @@ spring:
       retry:
         backoff:
           enabled: true
-    discovery:
-      enabled: true
+    # https://cloud.spring.io/spring-cloud-gateway/reference/html/
     gateway.server.webflux:
       metrics:
         enabled: true
@@ -65,34 +47,37 @@ spring:
               allowedHeaders: '*'
               maxAge: 30
           filters:
-            - name: RemoveRequestHeader
+            - name: RemoveRequestHeader     # Remove hop-by-hop headers
               args:
                 name: Cookie
-            - name: TokenRelay
-            - name: RequestRateLimiter
-              # https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/gatewayfilter-factories/requestratelimiter-factory.html#redis-ratelimiter
+            - name: TokenRelay              # Relay OAuth2 token to downstream services
+            - name: RequestRateLimiter      # Rate limiting using Redis
               args:
                 key-resolver: '#{@userKeyResolver}'
-                redis-rate-limiter.replenishRate: ${gateway.replenishRate:1000}
-                redis-rate-limiter.burstCapacity: ${gateway.burstCapacity:2000}
+                redis-rate-limiter.enable: true
+                redis-rate-limiter.automaticExpirationAfter: ${gateway.automaticExpirationAfter:10s}
+                redis-rate-limiter.replenishRate: ${gateway.replenishRate:200}    # 200 tokens/seconds
+                redis-rate-limiter.burstCapacity: ${gateway.burstCapacity:400}    # peak of 400 tokens
                 redis-rate-limiter.requestedTokens: ${gateway.requestedTokens:1}
-            - name: CircuitBreaker
+            - name: Retry                   # Retry on specific HTTP status codes
+              args:
+                retries: 1  # Only 1 retry to avoid cascading failures
+                statuses: INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
+                methods: GET, POST, HEAD, OPTIONS
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 200ms
+                  factor: 2
+                  basedOnPreviousValue: false
+            - name: CircuitBreaker          # Circuit breaker pattern
               args:
                 name: fallbackCircuitBreaker
                 fallbackUri: forward:/fallback
-                # ReactiveResilience4JCircuitBreakerFactory.java (review)
-                minimumNumberOfCalls: 100
-            - name: Retry
+            - name: DedupeResponseHeader    # Dedupe CORS headers
               args:
-                retries: 3
-                statuses: BAD_REQUEST, INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT
-                methods: GET, POST, HEAD, OPTIONS
-                backoff:
-                  firstBackoff: 10ms
-                  maxBackoff: 50ms
-                  factor: 2
-                  basedOnPreviousValue: false
-            - name: RequestSize
+                name: Access-Control-Allow-Credentials
+                strategy: RETAIN_FIRST  # RETAIN_FIRST or RETAIN_LAST
+            - name: RequestSize             # Limit request size to prevent abuse
               args:
                 maxSize: 10000
       globalcors:
@@ -116,15 +101,16 @@ spring:
       filter:
         request-rate-limiter:
           enabled: true
-        circuit-breaker:
-          enabled: true
         retry:
+          enabled: true
+        circuit-breaker:
           enabled: true
         fallback-headers:
           enabled: true
+        request-size:
+          enabled: true
       default-filters:
         - TokenRelay
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_FIRST
   main:
     web-application-type: reactive
     lazy-initialization: true
@@ -133,11 +119,14 @@ spring:
 resilience4j:
   circuitbreaker:
     configs:
+      # ReactiveResilience4JCircuitBreakerFactory.java (review)
       default:
-        slidingWindowSize: 1000
-        permittedNumberOfCallsInHalfOpenState: 100
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10
+        minimumNumberOfCalls: 150                 # require almost N calls to evaluate
+        permittedNumberOfCallsInHalfOpenState: 20 # number of calls when half-open
+        slidingWindowSize: 50                     # number of calls to consider for the failure rate
+        slidingWindowType: COUNT_BASED            # COUNT_BASED or TIME_BASED
+        waitDurationInOpenState: 10s              # time to wait before attempting to close the circuit
+        failureRateThreshold: 50                  # % of failures to open the circuit
         registerHealthIndicator: true
     instances:
       fallbackCircuitBreaker:
@@ -145,10 +134,20 @@ resilience4j:
   timelimiter:
     configs:
       default:
-        timeoutDuration: 120s
+        timeoutDuration: 30s       # Timeout for backend call
+        cancelRunningFuture: true  # Cancel the call if timeout occurs
     instances:
       fallbackCircuitBreaker:
         baseConfig: default
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 5000  # Max concurrent calls
+        maxWaitDuration: 500ms    # Max wait time to acquire a thread
+    instances:
+      productServiceBulkhead:
+        baseConfig: default
+        maxConcurrentCalls: 5000
 
 info:
   app:
@@ -251,6 +250,31 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
+---
+###### Local/Integration properties ######
+spring:
+  config:
+    activate:
+      on-profile: "loc|dev"
+    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+  cloud:
+    config:
+      enabled: true
+      retry:
+        max-attempts: 10
+        max-interval: 10000
+        initial-interval: 1000
+        multiplier: 1.1
+      discovery:
+        enabled: true
+        service-id: "camila-config"
+      label: main
+      profile: ${SPRING_PROFILES_ACTIVE}
+      name: ${spring.application.name}
+      allow-override: true
+    discovery:
+      enabled: true
+
 # discovery
 eureka:
   client:
@@ -271,7 +295,7 @@ eureka:
 spring:
   config:
     activate:
-      on-profile: "!loc"
+      on-profile: "dev"
   security:
     oauth2:
       client:
@@ -291,3 +315,15 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}"
             scope: profile, openid, email, roles, web-origins, camila/read, camila/write
+
+---
+###### Test properties ######
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false

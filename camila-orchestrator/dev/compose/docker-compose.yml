@@ -92,7 +92,9 @@ services:
     env_file:
       - .env
     environment:
-      JVM_OPTIONS: "-Xms500m -Xmx2000m"
+      - JVM_OPTIONS=
+      - JAVA_TOOL_OPTIONS=
+      - JAVA_OPTS=-Xms1024m -Xmx1536m -XX:+UseG1GC -XX:+UseContainerSupport
     ports:
       - "5015:5005"
       - "8090:8090"
@@ -285,7 +287,7 @@ services:
     image: redislabs/redisinsight:latest
     container_name: camila-redisinsight
     hostname: redisinsight
-    restart: "on-failure"
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -376,8 +378,9 @@ services:
     env_file:
       - .env
     environment:
+      JVM_OPTIONS: ""
       JAVA_TOOL_OPTIONS: ""
-      JAVA_OPTS: "${JAVA_OPTS} -Xms1024m -Xmx2048m -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC"
+      JAVA_OPTS: "-Xms1024m -Xmx1700m -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC -XX:+UseContainerSupport"
     ports:
       - "9191:9191"
     expose:
@@ -408,7 +411,7 @@ services:
     image: prom/prometheus:v3.6.0
     container_name: prometheus
     hostname: prometheus
-    restart: "on-failure"
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -422,6 +425,7 @@ services:
       - 9090
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerting:/etc/prometheus/rules
     healthcheck:
       test: ps aux | grep prometheus || exit 1
       interval: 5s
@@ -430,16 +434,90 @@ services:
       start_period: 5s
     networks:
       camila_product_network:
-  grafana:
-    image: grafana/grafana:12.2.0
-    container_name: grafana
-    hostname: grafana
-    restart: "on-failure"
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: node-exporter
+    hostname: node-exporter
+    restart: unless-stopped
     deploy:
       resources:
         limits:
           memory: "512m"
           cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    links:
+      - prometheus
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($|/)'
+    ports:
+      - "9100:9100"
+    networks:
+      camila_product_network:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.0
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8880:8080"
+    networks:
+      camila_product_network:
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    container_name: alertmanager
+    hostname: alertmanager
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - ./monitoring/alertmanager:/etc/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - "9093:9093"
+    depends_on:
+      mailpit:
+        condition: service_healthy
+    links:
+      - mailpit
+    networks:
+      camila_product_network:
+  grafana:
+    image: grafana/grafana:12.2.0
+    container_name: grafana
+    hostname: grafana
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "1204m"
+          cpus: "2"
     env_file:
       - .env
     ports:
@@ -466,7 +544,7 @@ services:
     image: openzipkin/zipkin:3.5.1
     container_name: zipkin
     hostname: zipkin
-    restart: "on-failure"
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -564,6 +642,34 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
       retries: 5
+    networks:
+      camila_product_network:
+  ## Utilities
+  mailpit:
+    # https://mailpit.axllent.org/
+    image: axllent/mailpit:v1.27.10
+    container_name: mailpit
+    hostname: mailpit
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          memory: "256m"
+          cpus: "0.5"
+    env_file:
+      - .env
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    expose:
+      - 1025
+      - 8025
+    healthcheck:
+      test: ps aux | grep mailpit || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
 
