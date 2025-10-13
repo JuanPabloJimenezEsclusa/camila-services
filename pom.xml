@@ -104,7 +104,7 @@
     <commons-lang3.version>3.19.0</commons-lang3.version>
 
     <!-- Database -->
-    <couchbase-java-client.version>3.9.1</couchbase-java-client.version>
+    <couchbase-java-client.version>3.9.2</couchbase-java-client.version>
 
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
