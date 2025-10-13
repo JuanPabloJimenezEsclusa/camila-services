@@ -250,7 +250,7 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.2.1-alpine
+    image: redis:8.2.2-alpine
     container_name: camila-redis-product-db
     hostname: redis
     restart: "on-failure"
