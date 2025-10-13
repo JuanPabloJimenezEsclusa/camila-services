@@ -461,7 +461,7 @@ services:
     networks:
       camila_product_network:
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.0
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
     container_name: cadvisor
     hostname: cadvisor
     restart: unless-stopped
