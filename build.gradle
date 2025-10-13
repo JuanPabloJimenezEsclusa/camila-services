@@ -51,7 +51,7 @@ subprojects {
     opentelemetryApiIncubatorVersion = '1.54.1-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.9.1'
+    couchbaseJavaClientVersion = '3.9.2'
 
     // Testing
     testcontainersVersion = '1.21.3'
