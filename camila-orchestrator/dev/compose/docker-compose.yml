@@ -174,7 +174,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.2.0-ubi9
+    image: mongodb/mongodb-community-server:8.2.1-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: "on-failure"
@@ -250,7 +250,7 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.2.1-alpine
+    image: redis:8.2.2-alpine
     container_name: camila-redis-product-db
     hostname: redis
     restart: "on-failure"
@@ -364,7 +364,7 @@ services:
       camila_product_network:
   ## Security (Authn/Authz)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.3
+    image: quay.io/keycloak/keycloak:26.4
     command: |
       start-dev --hostname keycloak --http-port 9191 --import-realm
     container_name: keycloak
