@@ -80,7 +80,7 @@ dependencies {
   implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
 
   // API Documentation
-  implementation(group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: "${springdocOpenapiVersion}") {
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {
     exclude group: 'org.apache.commons', module: 'commons-lang3'
   }
 
@@ -125,7 +125,6 @@ dependencies {
   }
   testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
   testImplementation "org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}"
-  // Provide JUnit Platform engine at test runtime to satisfy older/newer Cucumber engine expectations
   testImplementation "org.junit.platform:junit-platform-engine:${junitPlatformSuiteVersion}"
 
   // Testcontainers

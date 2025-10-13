@@ -56,9 +56,8 @@ subprojects {
     // Testing
     testcontainersVersion = '1.21.3'
     testcontainersRedis = '2.2.4'
-    // Use Cucumber 7.20.1 which is compatible with JUnit Platform 1.12.2
     cucumberVersion = '7.30.0'
-    // Keep JUnit Platform aligned with Spring Boot-managed JUnit 5 (5.12.2 -> platform 1.12.2)
+    junitVersion = '6.0.0'
     junitPlatformSuiteVersion = '6.0.0'
     archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.5.1'
@@ -102,6 +101,7 @@ subprojects {
       mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
       mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
       mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+      mavenBom "org.junit:junit-bom:${junitVersion}"
     }
 
     dependencies {
@@ -121,6 +121,13 @@ subprojects {
 
       // Provide jspecify annotations to all subprojects so @NullMarked is available at compile time
       dependency "org.jspecify:jspecify:${jspecifyVersion}"
+
+      // Pin junit-platform artifacts (ensure Cucumber engine finds required classes)
+      dependency "org.junit.platform:junit-platform-engine:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-commons:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-launcher:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}"
+      dependency "org.junit.jupiter:junit-jupiter:${junitVersion}"
     }
   }
 

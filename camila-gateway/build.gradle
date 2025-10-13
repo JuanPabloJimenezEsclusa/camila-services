@@ -30,7 +30,7 @@ dependencies {
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
   // API Documentation
-  implementation(group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: "${springdocOpenapiVersion}") {
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {
     exclude group: 'org.apache.commons', module: 'commons-lang3'
   }
 
