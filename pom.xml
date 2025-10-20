@@ -89,7 +89,7 @@
 
     <!-- Testing -->
     <cucumber.version>7.30.0</cucumber.version>
-    <testcontainers.version>1.21.3</testcontainers.version>
+    <testcontainers.version>2.0.1</testcontainers.version>
     <awaitility.version>4.3.0</awaitility.version>
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <instancio-junit.version>5.5.1</instancio-junit.version>
