@@ -408,7 +408,7 @@ services:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v3.6.0
+    image: prom/prometheus:v3.7.3
     container_name: prometheus
     hostname: prometheus
     restart: unless-stopped
@@ -461,7 +461,7 @@ services:
     networks:
       camila_product_network:
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.52.0
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
     container_name: cadvisor
     hostname: cadvisor
     restart: unless-stopped
@@ -509,7 +509,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:12.2.0
+    image: grafana/grafana:12.2.1
     container_name: grafana
     hostname: grafana
     restart: unless-stopped
@@ -562,7 +562,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.1.4
+    image: elasticsearch:9.2.0
     container_name: elasticsearch
     hostname: elasticsearch
     restart: "no"
@@ -619,7 +619,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:9.1.4
+    image: kibana:9.2.0
     container_name: kibana
     hostname: kibana
     restart: "no"

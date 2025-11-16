@@ -78,7 +78,7 @@
     <spring-boot-admin.version>3.5.5</spring-boot-admin.version>
 
     <!-- Observability -->
-    <opentelemetry.version>1.54.1</opentelemetry.version>
+    <opentelemetry.version>1.55.0</opentelemetry.version>
     <opentelemetry-api-incubator.version>1.54.1-alpha</opentelemetry-api-incubator.version>
 
     <!-- API -->
@@ -109,7 +109,7 @@
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
     <protobuf-java.version>4.32.1</protobuf-java.version>
-    <io-grpc.version>1.75.0</io-grpc.version>
+    <io-grpc.version>1.76.0</io-grpc.version>
 
     <!-- Build Tools -->
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
@@ -117,11 +117,11 @@
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>11.1.0</checkstyle.version>
     <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.6</dependency-check-maven.version>
+    <dependency-check-maven.version>12.1.8</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <pitest-maven.version>1.20.5</pitest-maven.version>
+    <pitest-maven.version>1.21.0</pitest-maven.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.16.0</openapi-generator-maven-plugin.version>
