@@ -48,7 +48,7 @@ subprojects {
 
     // Observability
     opentelemetryVersion = '1.54.1'
-    opentelemetryApiIncubatorVersion = '1.54.1-alpha'
+    opentelemetryApiIncubatorVersion = '1.55.0-alpha'
 
     // Database
     couchbaseJavaClientVersion = '3.9.2'
