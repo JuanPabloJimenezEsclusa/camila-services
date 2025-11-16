@@ -58,7 +58,7 @@ subprojects {
     testcontainersRedis = '2.2.4'
     cucumberVersion = '7.31.0'
     junitVersion = '6.0.0'
-    junitPlatformSuiteVersion = '6.0.0'
+    junitPlatformSuiteVersion = '6.0.1'
     archunitJunit5Version = '1.4.1'
     instancioJunitVersion = '5.5.1'
     awaitilityVersion = '4.3.0'
