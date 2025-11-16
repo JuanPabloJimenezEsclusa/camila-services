@@ -3,10 +3,10 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.2.1-ubi9
+    image: mongodb/mongodb-community-server:8.2.2-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
@@ -41,10 +41,10 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:7.6.7
+    image: couchbase/server:8.0.0
     container_name: camila-couchbase-product-db
     hostname: couchbase
-    restart: "on-failure"
+    restart: on-failure:5
     stdin_open: true
     tty: true
     entrypoint: [""]
@@ -83,10 +83,10 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.2.2-alpine
+    image: redis:8.4.0-alpine
     container_name: camila-redis-product-db
     hostname: redis
-    restart: "on-failure"
+    restart: on-failure:5
     command: redis-server --save 20 1 --loglevel warning --requirepass camila
     deploy:
       resources:
@@ -120,7 +120,7 @@ services:
     image: redislabs/redisinsight:latest
     container_name: camila-redisinsight
     hostname: redisinsight
-    restart: "on-failure"
+    restart: on-failure:1
     deploy:
       resources:
         limits:

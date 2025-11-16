@@ -45,83 +45,61 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @AutoConfigureWebTestClient(timeout = "10s")
-@WebFluxTest(properties = {
-  "spring.main.lazy-initialization=true",
-  "repository.technology=couchbase"
-})
+@WebFluxTest(properties = {"spring.main.lazy-initialization=true", "repository.technology=couchbase"})
 @ImportAutoConfiguration(exclude = {
-  // GraphQL
-  GraphQlWebFluxAutoConfiguration.class,
-  GraphQlWebFluxSecurityAutoConfiguration.class,
-  // gRPC
-  GrpcClientAutoConfiguration.class,
-  GrpcClientHealthAutoConfiguration.class,
-  GrpcServerFactoryAutoConfiguration.class,
-  LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
-  // WebSocket
-  WebSocketReactiveAutoConfiguration.class,
-  // RSocket
-  RSocketServerAutoConfiguration.class,
-  RSocketStrategiesAutoConfiguration.class,
-  RSocketMessagingAutoConfiguration.class,
-  RSocketRequesterAutoConfiguration.class,
-  // mongo
-  MongoReactiveDataAutoConfiguration.class,
-  MongoReactiveRepositoriesAutoConfiguration.class,
-  MongoReactiveAutoConfiguration.class
-})
+		// GraphQL
+		GraphQlWebFluxAutoConfiguration.class, GraphQlWebFluxSecurityAutoConfiguration.class,
+		// gRPC
+		GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+		GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
+		// WebSocket
+		WebSocketReactiveAutoConfiguration.class,
+		// RSocket
+		RSocketServerAutoConfiguration.class, RSocketStrategiesAutoConfiguration.class,
+		RSocketMessagingAutoConfiguration.class, RSocketRequesterAutoConfiguration.class,
+		// mongo
+		MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
+		MongoReactiveAutoConfiguration.class})
 @Import({
-  // Framework adapter input layer
-  ProductRestAdapter.class,
-  ProductDTOMapperImpl.class,
-  RestExceptionHandler.class,
-  // Security
-  LocalSecurityConfig.class,
-  // Application layer
-  DefaultProductUseCase.class,
-  // Framework adapter output layer
-  CouchbaseConfig.class,
-  ProductCouchbaseAdapter.class,
-  ProductCouchbaseMapperImpl.class
-})
+		// Framework adapter input layer
+		ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
+		// Security
+		LocalSecurityConfig.class,
+		// Application layer
+		DefaultProductUseCase.class,
+		// Framework adapter output layer
+		CouchbaseConfig.class, ProductCouchbaseAdapter.class, ProductCouchbaseMapperImpl.class})
 @DisplayName("[IT][RestExceptionHandler] Exception Handler Integration Tests")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
 
-  @Autowired
-  private WebTestClient webTestClient;
+	@Autowired
+	private WebTestClient webTestClient;
 
-  private static final Random random = new SecureRandom();
+	private static final Random random = new SecureRandom();
 
-  private static Stream<Arguments> exceptionTestCases() {
-    return Stream.of(
-      Arguments.of(Named.of("Should return 200 OK", "/products/4"), HttpStatus.OK),
-      Arguments.of(Named.of("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
-      Arguments.of(Named.of("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
-      Arguments.of(Named.of("Should return 417 EXPECTATION_FAILED", "/products/test"), HttpStatus.EXPECTATION_FAILED),
-      Arguments.of(Named.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"), HttpStatus.INTERNAL_SERVER_ERROR)
-    );
-  }
+	private static Stream<Arguments> exceptionTestCases() {
+		return Stream.of(Arguments.of(Named.of("Should return 200 OK", "/products/4"), HttpStatus.OK),
+				Arguments.of(Named.of("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
+				Arguments.of(Named.of("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
+				Arguments.of(Named.of("Should return 417 EXPECTATION_FAILED", "/products/test"),
+						HttpStatus.EXPECTATION_FAILED),
+				Arguments.of(Named.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"),
+						HttpStatus.INTERNAL_SERVER_ERROR));
+	}
 
-  private static String generateRandomString() {
-    return random.ints(10, 0, 36)
-      .mapToObj(i -> Integer.toString(i, 36))
-      .collect(Collectors.joining())
-      .toUpperCase(Locale.ROOT);
-  }
+	private static String generateRandomString() {
+		return random.ints(10, 0, 36).mapToObj(i -> Integer.toString(i, 36)).collect(Collectors.joining())
+				.toUpperCase(Locale.ROOT);
+	}
 
-  @ParameterizedTest(name = "{index}: {0}")
-  @MethodSource("exceptionTestCases")
-  @DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
-  @Order(6)
-  void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint,
-                                                    final HttpStatus expectedStatus) {
-    webTestClient.get()
-      .uri(endpoint)
-      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("X-Trace-Id", generateRandomString())
-      .header("X-Api-Version", "1.0.0")
-      .exchange()
-      .expectStatus().isEqualTo(expectedStatus);
-  }
+	@ParameterizedTest(name = "{index}: {0}")
+	@MethodSource("exceptionTestCases")
+	@DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
+	@Order(6)
+	void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
+		this.webTestClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+				.header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
+				.isEqualTo(expectedStatus);
+	}
 }

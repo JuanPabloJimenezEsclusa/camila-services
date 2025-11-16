@@ -199,7 +199,7 @@ Resources:
     Type: AWS::EKS::Cluster
     Properties:
       Name: !Ref ClusterName
-      Version: '1.33'
+      Version: '1.34'
       RoleArn: !GetAtt EKSClusterRole.Arn
       UpgradePolicy:
         SupportType: STANDARD
@@ -276,7 +276,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: vpc-cni
-      AddonVersion: v1.20.2-eksbuild.1
+      AddonVersion: v1.20.4-eksbuild.1
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -294,7 +294,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: kube-proxy
-      AddonVersion: v1.33.3-eksbuild.6
+      AddonVersion: v1.34.1-eksbuild.2
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 

@@ -3,14 +3,14 @@ plugins {
   id 'java'
   id 'jacoco'
   id 'org.sonarqube' version '7.0.1.6134'
-  id 'org.springframework.boot' version '3.5.7' apply false
+  id 'org.springframework.boot' version '3.5.8' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.11.2' apply false
-  id 'com.github.spotbugs' version '6.4.4' apply false
+  id 'com.github.spotbugs' version '6.4.5' apply false
   id 'org.openapi.generator' version '7.17.0' apply false
   id 'org.openrewrite.rewrite' version '7.19.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
-  id "io.freefair.lombok" version "9.0.0" apply false
+  id "io.freefair.lombok" version "9.1.0" apply false
 }
 
 allprojects {
@@ -38,7 +38,7 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '3.5.7'
+    springBootVersion = '3.5.8'
     springFrameworkVersion = '6.2.11'
     springCloudVersion = '2025.0.0'
     springBootAdminVersion = '3.5.6'
@@ -51,10 +51,10 @@ subprojects {
     opentelemetryApiIncubatorVersion = '1.55.0-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.9.2'
+    couchbaseJavaClientVersion = '3.10.0'
 
     // Testing
-    testcontainersVersion = '2.0.1'
+    testcontainersVersion = '2.0.2'
     testcontainersRedis = '2.2.4'
     cucumberVersion = '7.31.0'
     junitVersion = '6.0.1'
@@ -63,7 +63,7 @@ subprojects {
     instancioJunitVersion = '5.5.1'
     awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
-    jacocoVersion = '0.8.13'
+    jacocoVersion = '0.8.14'
 
     // API Documentation
     springdocOpenapiVersion = '2.8.13'
@@ -82,17 +82,16 @@ subprojects {
     chaosMonkeySpringBootVersion = '3.2.2'
 
     // Plugins
-    flattenmavenpluginVersion = '1.6.0'
-    pitestavenmavenpluginVersion = '1.15.8'
-    jimgemavenPluginVersion = '3.4.2'
+    flattenmavenpluginVersion = '1.7.3'
+    pitestavenmavenpluginVersion = '1.21.0'
+    jimgemavenPluginVersion = '3.4.6'
     gitCommitIdMavenPluginVersion = '9.0.2'
     mavenSitePluginVersion = '3.21.0'
-    mavenCheckstylePluginVersion = '3.3.1'
+    mavenCheckstylePluginVersion = '3.6.0'
     mavenCompilerPluginVersion = '3.14.1'
-    dependencyCheckMavenVersion = '9.2.1'
-    checkstyleVersion = '10.23.0'
-    mavenProjectInfoReportsPluginVersion = '3.5.0'
-    chaosMonkeySpringBootVersion = '3.2.0'
+    dependencyCheckMavenVersion = '12.1.9'
+    checkstyleVersion = '11.1.0'
+    mavenProjectInfoReportsPluginVersion = '3.9.0'
   }
 
   dependencyManagement {

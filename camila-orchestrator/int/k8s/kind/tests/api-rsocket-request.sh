@@ -14,7 +14,7 @@ cd "$(dirname "$0")"
 
 RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"ws://localhost:7000/product-int/api/rsocket"}"
 RSOCKET_ENDPOINT="products.request-response-findByInternalId"
-REQUEST_DATA='{ "internalId": "1000" }'
+REQUEST_DATA='{ "internalId": "6" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "${SEPARATOR} 🔌 REQUEST (findByInternalId) ${SEPARATOR}"
 echo -e "📝 Response file: ${RESPONSE_FILE}"

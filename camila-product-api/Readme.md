@@ -36,7 +36,7 @@ Microservice example. Implements a product API with the following features:
 * Spring-boot ~= [3.5.x](https://spring.io/projects/spring-boot#learn)
 * Spring-cloud ~= [2025.0.x](https://spring.io/projects/spring-cloud#learn)
 * MongoDB ~= [8.x](https://www.mongodb.com/docs/manual/release-notes/)
-* Couchbase ~= [7.x](https://docs.couchbase.com/server/current/release-notes/relnotes.html)
+* Couchbase ~= [8.x](https://docs.couchbase.com/server/current/release-notes/relnotes.html)
 * Redis ~= [8.x](https://redis.io/open-source/)
 * Native Image compilation
   * GraalVM ~= [25+37.1](https://www.graalvm.org/release-notes/JDK_25/)

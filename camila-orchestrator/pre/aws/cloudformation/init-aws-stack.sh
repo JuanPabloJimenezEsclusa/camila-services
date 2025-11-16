@@ -39,6 +39,14 @@ __validate_url_format() {
   fi
 }
 
+__build_project() {
+  export SPRING_PROFILES_ACTIVE=pre
+  mvn spring-boot:build-image \
+    -Dmaven.build.cache.enabled=false \
+    -Dmaven.test.skip=true \
+    -f ../../../../camila-product-api/pom.xml
+}
+
 __create_ecr_repository() {
   aws ecr describe-repositories --repository-names "${ECR_REPOSITORY_NAME}" >/dev/null 2>&1 || \
     aws ecr create-repository --repository-name "${ECR_REPOSITORY_NAME}"
@@ -52,6 +60,7 @@ __login_to_ecr() {
 __build_and_push_image() {
   # Check if the Docker image exists locally
   if ! docker inspect "${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}" >/dev/null 2>&1; then
+    echo "Docker image ${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG} not found locally."
     # If the image doesn't exist locally, try to pull it from the GitHub package
     docker pull "${GITHUB_ECR_REGISTRY_ID}/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
     docker tag "${GITHUB_ECR_REGISTRY_ID}/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}" "${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
@@ -114,6 +123,8 @@ main() {
   __validate_url_format "${COUCHBASE_CONNECTION}"
   __validate_url_format "${MONGO_URI}"
 
+  echo -e "${SEPARATOR} 🏗️ Build project. ${SEPARATOR}"
+  __build_project
   echo -e "${SEPARATOR} 📦 Create ECR repository if it doesn't exist. ${SEPARATOR}"
   __create_ecr_repository
   echo -e "${SEPARATOR} 🔑 Login to ECR. ${SEPARATOR}"
