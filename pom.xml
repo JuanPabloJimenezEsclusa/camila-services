@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.6</version>
+    <version>3.5.7</version>
     <relativePath/>
   </parent>
 
@@ -83,7 +83,7 @@
 
     <!-- API -->
     <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
-    <netty-tcnative-boringssl-static.version>2.0.73.Final</netty-tcnative-boringssl-static.version>
+    <netty-tcnative-boringssl-static.version>2.0.74.Final</netty-tcnative-boringssl-static.version>
     <graphql-java.version>24.3</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
