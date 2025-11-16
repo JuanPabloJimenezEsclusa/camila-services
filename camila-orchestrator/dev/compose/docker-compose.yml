@@ -509,7 +509,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:12.2.0
+    image: grafana/grafana:12.2.1
     container_name: grafana
     hostname: grafana
     restart: unless-stopped
