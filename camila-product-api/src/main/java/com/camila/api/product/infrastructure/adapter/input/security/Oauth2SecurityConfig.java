@@ -19,57 +19,48 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableReactiveMethodSecurity
 @Profile("dev|pre")
 class Oauth2SecurityConfig {
-  private static final String[] PERMITTED = {
-    "/",
-    "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**",
-    "/actuator/**",
-    "/graphiql/**",
-    "/rsocket/**",
-    "/ProductService/**"};
-  private static final String[] PRODUCT_ENDPOINTS = {
-    "/products", "/products/**",
-    "/graphql/**",
-    "/ws/**"};
+	private static final String[] PERMITTED = {"/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**",
+			"/actuator/**", "/graphiql/**", "/rsocket/**", "/ProductService/**"};
+	private static final String[] PRODUCT_ENDPOINTS = {"/products", "/products/**", "/graphql/**", "/ws/**"};
 
-  @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
-  private String trustedIssuers;
+	@Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+	private String trustedIssuers;
 
-  /**
-   * Security web filter chain.
-   *
-   * @param http the http
-   * @return the security web filter chain
-   */
-  @Bean
-  SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
-    var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(trustedIssuers);
-    return http
-      .cors(ServerHttpSecurity.CorsSpec::disable)
-      .csrf(ServerHttpSecurity.CsrfSpec::disable)
-      // delegamos la autenticación al servicio SSO (keycloak)
-      .oauth2ResourceServer(resourceServer -> resourceServer.authenticationManagerResolver(authenticationManagerResolver))
-      // comprobamos la autorización
-      .authorizeExchange(exchanges -> exchanges
-        .pathMatchers(PERMITTED).permitAll()
-        .pathMatchers(HttpMethod.GET, PRODUCT_ENDPOINTS).hasAuthority(Authority.READ.getScope())
-        .pathMatchers(HttpMethod.POST, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
-        .pathMatchers(HttpMethod.PUT, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
-        .pathMatchers(HttpMethod.DELETE, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
-        .anyExchange().denyAll())
-      .build();
-  }
+	/**
+	 * Security web filter chain.
+	 *
+	 * @param http
+	 *            the http
+	 * @return the security web filter chain
+	 */
+	@Bean
+	SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
+		final var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver
+				.fromTrustedIssuers(this.trustedIssuers);
+		return http.cors(ServerHttpSecurity.CorsSpec::disable).csrf(ServerHttpSecurity.CsrfSpec::disable)
+				// delegamos la autenticación al servicio SSO (keycloak)
+				.oauth2ResourceServer(
+						resourceServer -> resourceServer.authenticationManagerResolver(authenticationManagerResolver))
+				// comprobamos la autorización
+				.authorizeExchange(exchanges -> exchanges.pathMatchers(PERMITTED).permitAll()
+						.pathMatchers(HttpMethod.GET, PRODUCT_ENDPOINTS).hasAuthority(Authority.READ.getScope())
+						.pathMatchers(HttpMethod.POST, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
+						.pathMatchers(HttpMethod.PUT, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
+						.pathMatchers(HttpMethod.DELETE, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
+						.anyExchange().denyAll())
+				.build();
+	}
 
-  private enum Authority {
-    READ("SCOPE_camila/read"),
-    WRITE("SCOPE_camila/write");
-    private final String scope;
+	private enum Authority {
+		READ("SCOPE_camila/read"), WRITE("SCOPE_camila/write");
+		private final String scope;
 
-    Authority(String scope) {
-      this.scope = scope;
-    }
+		Authority(String scope) {
+			this.scope = scope;
+		}
 
-    public String getScope() {
-      return this.scope;
-    }
-  }
+		String getScope() {
+			return this.scope;
+		}
+	}
 }
