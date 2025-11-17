@@ -117,7 +117,7 @@
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>11.1.0</checkstyle.version>
     <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.8</dependency-check-maven.version>
+    <dependency-check-maven.version>12.1.9</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
