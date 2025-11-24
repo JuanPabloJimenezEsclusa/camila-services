@@ -7,6 +7,10 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "io.opentelemetry.*"
+    groups:
+      maven-dependencies:
+        patterns:
+          - "*"
     open-pull-requests-limit: 15
 
   - package-ecosystem: "gradle"
@@ -15,24 +19,39 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "io.opentelemetry.*"
+    groups:
+      gradle-dependencies:
+        patterns:
+          - "*"
     open-pull-requests-limit: 15
 
   - package-ecosystem: "docker"
     directory: "/camila-orchestrator/dev/compose/monitoring/fluentd/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 5
+    groups:
+      infrastructure-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "docker-compose"
     directory: "/camila-orchestrator/dev/compose/"
     schedule:
       interval: "weekly"
+    groups:
+      infrastructure-dependencies:
+        patterns:
+          - "*"
     open-pull-requests-limit: 5
 
   - package-ecosystem: "terraform"
     directory: "/camila-orchestrator/pre/aws/terraform/templates/"
     schedule:
       interval: "weekly"
+    groups:
+      infrastructure-dependencies:
+        patterns:
+          - "*"
     open-pull-requests-limit: 5
 
   - package-ecosystem: "github-actions"
@@ -40,5 +59,7 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 9 * * *"
-    open-pull-requests-limit: 5
-
+    groups:
+      github-actions-dependencies:
+        patterns:
+          - "*"
