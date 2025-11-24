@@ -20,7 +20,7 @@ baseProjectPath="../../../"
 
 # Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-24.0.1+9.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
 
 __buildProjects() {
   if [[ "${buildProjects:-}" == "true" ]]; then
@@ -41,9 +41,9 @@ __buildProjects() {
 __initServices() {
   cd "${workspace}"
   # init services
-  docker-compose --file docker-compose.yml up -d --build --force-recreate
+  docker compose --file docker-compose.yml up -d --build --force-recreate
   # show services status
-  docker-compose --file docker-compose.yml ps
+  docker compose --file docker-compose.yml ps
 }
 
 main() {

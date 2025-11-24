@@ -5,6 +5,13 @@ GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/health HTTP/2
 Accept: application/json
 Content-Type: application/json
 
+### Rest - Info
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/actuator/info HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/info HTTP/2
+Accept: application/json
+Content-Type: application/json
+
 ### Rest - findById (SSE)
 # https://tech.jpje.xyz/product/api/swagger-ui.html
 #GET https://jpje.net/products/99999 HTTP/2

@@ -1,5 +1,7 @@
 FROM fluent/fluentd:v1.19-debian
 
+ARG FLUENTD_VERSION=1.19
+
 USER root
 
 # https://github.com/uken/fluent-plugin-elasticsearch

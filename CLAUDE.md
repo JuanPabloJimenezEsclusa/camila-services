@@ -66,7 +66,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Gradle Build Tool Upgrades
 - **JUnit Platform Suite**: 6.0.0+ (test framework)
 - **Cucumber**: 7.20.1 → 7.30.0 (BDD framework)
-- **Spring Boot**: 3.5.7 (stable release)
+- **Spring Boot**: 3.5.8 (stable release)
 - **GraalVM Native Tools**: 0.11.2 (native compilation)
 - **OpenAPI Generator**: 7.17.0 (API spec generation)
 

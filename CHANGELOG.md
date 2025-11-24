@@ -5,6 +5,283 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**Merge remote-tracking branch 'origin/dependabot/gradle/junitVersion-6.0.1' into consolidate/all-dependabot-updates**
+
+ * # Conflicts:
+ * #	build.gradle
+
+[7d712a72c9af2ab](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7d712a72c9af2ab) JuanPabloJimenezEsclusa *2025-11-22 18:53:21*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/com.google.cloud.tools.jib-3.5.0' into consolidate/all-dependabot-updates**
+
+
+[ee9e285d05f4321](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ee9e285d05f4321) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/cucumberVersion-7.31.0' into consolidate/all-dependabot-updates**
+
+
+[d3e952ed06b4085](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d3e952ed06b4085) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/github_actions/actions/checkout-6' into consolidate/all-dependabot-updates**
+
+
+[a4b3fa795ed8f26](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a4b3fa795ed8f26) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/com.github.spotbugs-6.4.5' into consolidate/all-dependabot-updates**
+
+
+[853edc237bcfa31](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/853edc237bcfa31) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/de.codecentric-spring-boot-admin-dependencies-3.5.6' into consolidate/all-dependabot-updates**
+
+
+[5e6e1259a8d1b82](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5e6e1259a8d1b82) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/com.couchbase.client-java-client-3.10.0' into consolidate/all-dependabot-updates**
+
+
+[5d89fd21e67b4e8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5d89fd21e67b4e8) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/io.freefair.lombok-9.1.0' into consolidate/all-dependabot-updates**
+
+
+[52c0d10a4178cd6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/52c0d10a4178cd6) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**Merge remote-tracking branch 'origin/dependabot/gradle/junitPlatformSuiteVersion-6.0.1' into consolidate/all-dependabot-updates**
+
+
+[4139f28a18c57ff](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4139f28a18c57ff) JuanPabloJimenezEsclusa *2025-11-22 18:52:25*
+
+**fix: Update netty-tcnative-boringssl-static to 2.0.74.Final for Spring Boot 3.5.7 compatibility**
+
+ * - Resolve RequireUpperBoundDeps enforcer rule violation
+ * - netty-tcnative-boringssl-static: 2.0.73.Final -&gt; 2.0.74.Final
+ * - Aligns pom.xml with Spring Boot 3.5.7 managed dependencies
+ * - All 178 tests verified passing with updated Spring version
+ * 🤖 Generated with Claude Code
+ * Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+
+[db044eacccd1c44](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/db044eacccd1c44) JuanPabloJimenezEsclusa *2025-11-22 18:48:18*
+
+**refactor: Docker Compose Infrastructure Improvements**
+
+
+[7a4103c179e3b1f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7a4103c179e3b1f) JuanPabloJimenezEsclusa *2025-11-22 18:48:18*
+
+**chore(deps): bump actions/checkout from 5 to 6**
+
+ * Bumps [actions/checkout](https://github.com/actions/checkout) from 5 to 6.
+ * - [Release notes](https://github.com/actions/checkout/releases)
+ * - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/actions/checkout/compare/v5...v6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/checkout
+ * dependency-version: &#x27;6&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[79bf64f9d7c0c44](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/79bf64f9d7c0c44) dependabot[bot] *2025-11-21 09:27:06*
+
+**chore(deps): bump io.freefair.lombok from 9.0.0 to 9.1.0**
+
+ * Bumps io.freefair.lombok from 9.0.0 to 9.1.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[0230729a16fd443](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0230729a16fd443) dependabot[bot] *2025-11-17 14:40:15*
+
+**chore(deps): bump junitPlatformSuiteVersion from 6.0.0 to 6.0.1**
+
+ * Bumps &#x60;junitPlatformSuiteVersion&#x60; from 6.0.0 to 6.0.1.
+ * Updates &#x60;org.junit.platform:junit-platform-engine&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * Updates &#x60;org.junit.platform:junit-platform-commons&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * Updates &#x60;org.junit.platform:junit-platform-launcher&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * Updates &#x60;org.junit.platform:junit-platform-suite&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.junit.platform:junit-platform-engine
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: org.junit.platform:junit-platform-commons
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: org.junit.platform:junit-platform-launcher
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: org.junit.platform:junit-platform-suite
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[2bcf6a0e195e02e](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2bcf6a0e195e02e) dependabot[bot] *2025-11-17 14:39:59*
+
+**chore(deps): bump com.github.spotbugs from 6.4.2 to 6.4.5**
+
+ * Bumps com.github.spotbugs from 6.4.2 to 6.4.5.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.4.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[85ba06f68f315ef](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/85ba06f68f315ef) dependabot[bot] *2025-11-17 14:39:47*
+
+**chore(deps): bump com.google.cloud.tools.jib from 3.4.5 to 3.5.0**
+
+ * Bumps com.google.cloud.tools.jib from 3.4.5 to 3.5.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.cloud.tools.jib
+ * dependency-version: 3.5.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[41e78499f2da27a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/41e78499f2da27a) dependabot[bot] *2025-11-17 14:39:45*
+
+**chore(deps): bump com.couchbase.client:java-client from 3.9.1 to 3.10.0**
+
+ * Bumps [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) from 3.9.1 to 3.10.0.
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.9.1...3.10.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.10.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[b75734855ffda90](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b75734855ffda90) dependabot[bot] *2025-11-17 14:39:41*
+
+**chore(deps): bump junitVersion from 6.0.0 to 6.0.1**
+
+ * Bumps &#x60;junitVersion&#x60; from 6.0.0 to 6.0.1.
+ * Updates &#x60;org.junit:junit-bom&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * Updates &#x60;org.junit.jupiter:junit-jupiter&#x60; from 6.0.0 to 6.0.1
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.0...r6.0.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.junit:junit-bom
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * - dependency-name: org.junit.jupiter:junit-jupiter
+ * dependency-version: 6.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[d963852e8cd01c5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d963852e8cd01c5) dependabot[bot] *2025-11-17 14:39:25*
+
+**chore(deps): bump cucumberVersion from 7.30.0 to 7.31.0**
+
+ * Bumps &#x60;cucumberVersion&#x60; from 7.30.0 to 7.31.0.
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.30.0 to 7.31.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.30.0...v7.31.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.30.0 to 7.31.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.30.0...v7.31.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.30.0 to 7.31.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.30.0...v7.31.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.30.0 to 7.31.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.30.0...v7.31.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.31.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.31.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.31.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.31.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[a9d430f331456d5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a9d430f331456d5) dependabot[bot] *2025-11-17 14:39:18*
+
+**chore(deps): bump de.codecentric:spring-boot-admin-dependencies**
+
+ * Bumps [de.codecentric:spring-boot-admin-dependencies](https://github.com/codecentric/spring-boot-admin) from 3.5.5 to 3.5.6.
+ * - [Release notes](https://github.com/codecentric/spring-boot-admin/releases)
+ * - [Commits](https://github.com/codecentric/spring-boot-admin/compare/3.5.5...3.5.6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: de.codecentric:spring-boot-admin-dependencies
+ * dependency-version: 3.5.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[646ffaed06e73bf](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/646ffaed06e73bf) dependabot[bot] *2025-11-17 14:39:04*
+
+**Merge pull request #185 from JuanPabloJimenezEsclusa/consolidate/all-dependabot-updates**
+
+ * [GH-32] Consolidate/all dependabot updates
+
+[c9a8d69dcb6782c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c9a8d69dcb6782c) Juan Pablo Jimenez Esclusa *2025-11-16 20:15:23*
+
+**docs: Update documentation with new dependency versions (November 2025)**
+
+ * - Update CLAUDE.md with Testing Framework versions (JUnit 6.0.0, Cucumber 7.30.0, Pitest 1.21.0, Testcontainers 2.0.1)
+ * - Add new section documenting November 2025 dependency updates
+ * - Update Readme.md technology badges with latest versions
+ * - Generate updated CHANGELOG with all merged dependabot commits
+ * - Include Maven and Gradle dependency updates in documentation
+ * All 178 tests passing (68 unit + 110 integration tests)
+ * Build validated with error-prone, quality-check, checkstyle, and spotbugs profiles.
+ * 🤖 Generated with Claude Code
+ * Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;
+
+[581c241861c11ab](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/581c241861c11ab) JuanPabloJimenezEsclusa *2025-11-16 19:16:56*
+
 **Merge remote-tracking branch 'origin/dependabot/maven/io-grpc.version-1.76.0' into consolidate/all-dependabot-updates**
 
  * # Conflicts:

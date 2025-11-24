@@ -15,6 +15,38 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
+ECR_REPOSITORY_NAME="${ECR_REPOSITORY_NAME:-camila-product-api}"
+ECR_REGISTRY_ID="${ECR_REGISTRY_ID:-546053716955.dkr.ecr}"
+ECR_REGION="${ECR_REGION:-eu-west-1}"
+ECR_IMAGE_TAG="${ECR_IMAGE_TAG:-1.0.0}"
+
+__build_project() {
+  echo -e "${SEPARATOR} 🔨 Compile and build the project. ${SEPARATOR}"
+  export SPRING_PROFILES_ACTIVE=int
+  mvn spring-boot:build-image \
+    -Dmaven.build.cache.enabled=false \
+    -Dmaven.test.skip=true \
+    -f ../../../../../camila-product-api/pom.xml
+}
+
+__create_ecr_repository() {
+  echo -e "${SEPARATOR} 🛠️ Create ECR repository if not exists. ${SEPARATOR}"
+  aws ecr describe-repositories --repository-names "${ECR_REPOSITORY_NAME}" >/dev/null 2>&1 || \
+    aws ecr create-repository --repository-name "${ECR_REPOSITORY_NAME}"
+}
+
+__login_to_ecr() {
+  echo -e "${SEPARATOR} 🔐 Login to ECR. ${SEPARATOR}"
+  aws ecr get-login-password --region "${ECR_REGION}" | \
+    docker login --username AWS --password-stdin "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com"
+}
+
+__tag_and_push_image() {
+  echo -e "${SEPARATOR} 📦 Tag and push the image to ECR. ${SEPARATOR}"
+  docker tag "${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}" "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
+  docker push "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
+}
+
 __set_mongodb_uri_secret() {
   echo -e "${SEPARATOR} 🛠️ Set MongoDB URI secret. ${SEPARATOR}"
   MONGO_URI_BASE64="$(echo "${MONGO_URI}" | tr -d '\n\r'  | base64 -w 0)"
@@ -110,6 +142,10 @@ __update_alb_controller_with_original_alb_dns_name() {
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
+  __build_project
+  __create_ecr_repository
+  __login_to_ecr
+  __tag_and_push_image
   __set_mongodb_uri_secret
   __set_couchbase_password_secret
   __set_environment_variables
