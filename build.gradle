@@ -66,7 +66,7 @@ subprojects {
     jacocoVersion = '0.8.14'
 
     // API Documentation
-    springdocOpenapiVersion = '2.8.13'
+    springdocOpenapiVersion = '2.8.14'
     graphqlJavaVersion = '24.3'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
