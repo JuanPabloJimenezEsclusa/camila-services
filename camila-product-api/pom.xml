@@ -430,7 +430,7 @@
             <path>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.5.8</version>
+              <version>4.0.0</version>
             </path>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -987,7 +987,7 @@
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.5.8</version>
+                  <version>4.0.0</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>
