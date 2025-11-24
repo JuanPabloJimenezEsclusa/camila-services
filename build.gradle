@@ -38,7 +38,7 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '3.5.8'
+    springBootVersion = '4.0.0'
     springFrameworkVersion = '6.2.11'
     springCloudVersion = '2025.0.0'
     springBootAdminVersion = '3.5.6'
