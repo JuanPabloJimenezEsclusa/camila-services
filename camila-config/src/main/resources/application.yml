@@ -1,6 +1,10 @@
 spring:
   application:
     name: "@project.name@"
+  # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
+  threads:
+    virtual:
+      enabled: true
   banner:
     # https://www.ascii-art-generator.org/
     location: classpath:/config-banner.txt
@@ -67,6 +71,14 @@ management:
     git:
       enabled: true
       mode: full
+    os:
+      enabled: true
+    process:
+      enabled: true
+    build:
+      enabled: true
+    java:
+      enabled: true
   zipkin:
     tracing:
       endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}

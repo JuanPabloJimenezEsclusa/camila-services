@@ -9,8 +9,10 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoCo
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.convert.CustomConversions;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.repository.config.EnableReactiveCouchbaseRepositories;
 
@@ -66,10 +68,19 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
     return bucketName;
   }
 
+  @Bean
+  @Override
+  public CustomConversions customConversions() {
+    return super.customConversions();
+  }
+
   @Override
   protected void configureEnvironment(final ClusterEnvironment.Builder builder) {
-    builder.securityConfig(securityBuilder ->
-      securityBuilder.enableTls(Boolean.parseBoolean(sslEnabled))
+    builder
+      // Disable DNS SRV resolution to avoid timeouts when no SRV record exists
+      .ioConfig(io -> io.enableDnsSrv(false))
+      // keep existing security TLS configuration
+      .securityConfig(securityBuilder -> securityBuilder.enableTls(Boolean.parseBoolean(sslEnabled))
         .build());
   }
 }

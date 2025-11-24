@@ -13,7 +13,7 @@
   <groupId>com.camila.api</groupId>
   <artifactId>camila-product-api</artifactId>
   <name>camila-product-api</name>
-  <description>REST API for Camila Product Service</description>
+  <description>Camila Product Service (API)</description>
 
   <dependencies>
     <!-- Spring Boot Core -->
@@ -80,6 +80,10 @@
       <artifactId>java-client</artifactId>
       <version>${couchbase-java-client.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+    </dependency>
 
     <!-- Spring Boot Communication -->
     <dependency>
@@ -131,6 +135,14 @@
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
 
+    <!-- Http 2 -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-tcnative-boringssl-static</artifactId>
+      <version>${netty-tcnative-boringssl-static.version}</version>
+      <classifier>${os.detected.classifier}</classifier>
+    </dependency>
+
     <!-- GraphQL -->
     <dependency>
       <groupId>com.graphql-java</groupId>
@@ -167,6 +179,14 @@
           <groupId>com.google.guava</groupId>
           <artifactId>guava</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-services</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -195,6 +215,12 @@
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
       <version>${springdoc-openapi.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Utilities -->
@@ -205,7 +231,10 @@
     <dependency>
       <groupId>org.jspecify</groupId>
       <artifactId>jspecify</artifactId>
-      <version>${jspecify.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
     </dependency>
 
     <!-- Development Tools -->
@@ -252,12 +281,6 @@
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
       <version>${awaitility.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
-      <version>${de.flapdoodle.embed.mongo.spring3x.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -329,12 +352,31 @@
     <!-- Testcontainers -->
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
+      <artifactId>testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <version>${testcontainers-junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <version>${testcontainers.mongodb.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>couchbase</artifactId>
+      <version>${testcontainers.couchbase.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.redis</groupId>
+      <artifactId>testcontainers-redis</artifactId>
+      <version>${testcontainers-redis.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -388,7 +430,7 @@
             <path>
               <groupId>org.springframework.boot</groupId>
               <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>3.5.0</version>
+              <version>3.5.8</version>
             </path>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -440,55 +482,6 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-prepare-agent-integration</id>
-            <goals>
-              <goal>prepare-agent-integration</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>merge-results</id>
-            <goals>
-              <goal>merge</goal>
-            </goals>
-            <phase>verify</phase>
-            <configuration>
-              <fileSets>
-                <fileSet>
-                  <directory>${project.build.directory}</directory>
-                  <includes>
-                    <include>*.exec</include>
-                  </includes>
-                </fileSet>
-              </fileSets>
-              <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
-            </configuration>
-          </execution>
-          <execution>
-            <id>report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-            <phase>verify</phase>
-            <configuration>
-              <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
-              <excludes>
-                <exclude>**/input/grpc/**</exclude>
-                <exclude>*/input/rest/api/**</exclude>
-                <exclude>**/input/rest/dto/**</exclude>
-                <exclude>**/input/security/*Config**</exclude>
-                <exclude>**/*MapperImpl**</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
 
       <!-- Versioning -->
@@ -586,17 +579,17 @@
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcpkix-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.82</version>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bcprov-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.82</version>
         </dependency>
         <dependency>
           <groupId>org.bouncycastle</groupId>
           <artifactId>bctls-jdk18on</artifactId>
-          <version>1.78.1</version>
+          <version>1.82</version>
         </dependency>
       </dependencies>
       <build>
@@ -680,7 +673,7 @@
             <version>${jib-maven-plugin.version}</version>
             <configuration>
               <from>
-                <image>eclipse-temurin:21-jdk-alpine</image>
+                <image>eclipse-temurin:25-jdk-alpine</image>
               </from>
               <to>
                 <image>docker.io/library/${project.name}-serveless</image>
@@ -737,7 +730,7 @@
                 <plugin>
                   <groupId>com.h3xstream.findsecbugs</groupId>
                   <artifactId>findsecbugs-plugin</artifactId>
-                  <version>1.13.0</version>
+                  <version>1.14.0</version>
                 </plugin>
               </plugins>
             </configuration>
@@ -836,6 +829,7 @@
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
               <failOnError>false</failOnError>
+              <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
             </configuration>
             <executions>
               <execution>
@@ -874,6 +868,19 @@
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven-javadoc-plugin.version}</version>
+            <configuration>
+              <source>${java.version}</source>
+              <encoding>${project.reporting.outputEncoding}</encoding>
+              <additionalJOptions>-Xdoclint:none</additionalJOptions>
+              <failOnError>false</failOnError>
+              <show>package</show>
+              <doclint>none</doclint>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
             <version>${maven-pmd-plugin.version}</version>
             <configuration>
@@ -895,6 +902,7 @@
             <reportSets>
               <reportSet>
                 <reports>
+                  <report>index</report>
                   <report>summary</report>
                   <report>dependencies</report>
                   <report>plugins</report>
@@ -942,6 +950,12 @@
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
             <version>${dependency-check-maven.version}</version>
+            <configuration>
+              <skipProvidedScope>true</skipProvidedScope>
+              <skipRuntimeScope>true</skipRuntimeScope>
+              <failOnError>false</failOnError>
+              <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
+            </configuration>
             <reportSets>
               <reportSet>
                 <reports>
@@ -966,14 +980,14 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>${maven-compiler-plugin.version}</version>
             <configuration>
-              <source>21</source>
-              <target>21</target>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
               <encoding>UTF-8</encoding>
               <annotationProcessorPaths>
                 <path>
                   <groupId>org.springframework.boot</groupId>
                   <artifactId>spring-boot-configuration-processor</artifactId>
-                  <version>3.5.0</version>
+                  <version>3.5.8</version>
                 </path>
                 <path>
                   <groupId>org.mapstruct</groupId>
@@ -989,12 +1003,12 @@
                 <path>
                   <groupId>org.springframework</groupId>
                   <artifactId>spring-context-indexer</artifactId>
-                  <version>6.2.5</version>
+                  <version>6.2.11</version>
                 </path>
                 <path>
                   <groupId>com.google.errorprone</groupId>
                   <artifactId>error_prone_core</artifactId>
-                  <version>2.38.0</version>
+                  <version>2.44.0</version>
                 </path>
                 <path>
                   <groupId>org.openjdk.jmh</groupId>
@@ -1116,7 +1130,7 @@
                 <dependency>
                   <groupId>org.pitest</groupId>
                   <artifactId>pitest-junit5-plugin</artifactId>
-                  <version>1.2.2</version>
+                  <version>1.2.3</version>
                 </dependency>
               </dependencies>
             </plugin>

@@ -14,7 +14,7 @@ public class ProductException extends RuntimeException {
    *
    * @param cause the cause of the exception, typically another throwable
    */
-  public ProductException(Throwable cause) {
+  public ProductException(final Throwable cause) {
     super(cause);
   }
 }

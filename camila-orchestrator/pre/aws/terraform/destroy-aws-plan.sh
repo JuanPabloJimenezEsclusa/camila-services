@@ -14,7 +14,7 @@ COUCHBASE_USERNAME="${COUCHBASE_USERNAME:-}"
 COUCHBASE_PASSWORD="${COUCHBASE_PASSWORD:-}"
 MONGO_URI="${MONGO_URI:-}"
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 

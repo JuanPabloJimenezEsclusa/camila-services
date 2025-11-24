@@ -27,7 +27,7 @@ import org.springframework.data.mongodb.core.aggregation.VariableOperators;
  * The type Product sorter helper.
  */
 @Slf4j
-class ProductSorterHelper {
+final class ProductSorterHelper {
   private ProductSorterHelper() {
   }
 
@@ -125,7 +125,7 @@ class ProductSorterHelper {
       .valueOf(ArithmeticOperators.Divide.valueOf(divisor).divideBy(dividend))
       .multiplyBy(weight);
 
-    log.debug(stockByWeights.toString());
+    log.debug("Stock by weights: {}", stockByWeights);
     return stockByWeights;
   }
 }

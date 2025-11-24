@@ -26,4 +26,4 @@ docker run -it --rm \
   -e "MONGODB_INITDB_ROOT_USERNAME=${mongoUser}" \
   -e "MONGODB_INITDB_ROOT_PASSWORD=${mongoPassword}" \
   -v mongo-data:/data/db \
-  mongodb/mongodb-community-server:8.0.8-ubi9
+  mongodb/mongodb-community-server:8.2.1-ubi9

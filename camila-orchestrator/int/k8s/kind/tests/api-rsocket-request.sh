@@ -14,7 +14,7 @@ cd "$(dirname "$0")"
 
 RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"ws://localhost:7000/product-int/api/rsocket"}"
 RSOCKET_ENDPOINT="products.request-response-findByInternalId"
-REQUEST_DATA='{ "internalId": "1000" }'
+REQUEST_DATA='{ "internalId": "6" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "${SEPARATOR} 🔌 REQUEST (findByInternalId) ${SEPARATOR}"
 echo -e "📝 Response file: ${RESPONSE_FILE}"
@@ -38,7 +38,7 @@ rm "${RESPONSE_FILE}"
 ###################
 
 RSOCKET_ENDPOINT="products.request-stream-sortByMetricsWeights"
-REQUEST_DATA='{ "salesUnits": "0.001", "stock": "0.999", "page": "0", "size": "10" }'
+REQUEST_DATA='{ "salesUnits": "0.001", "stock": "0.997", "profitMargin": "0.001", "daysInStock": "0.001", "page": "0", "size": "10" }'
 RESPONSE_FILE=$(mktemp)
 echo -e "${SEPARATOR} 🔌 REQUEST (sortByMetricsWeights) ${SEPARATOR}"
 echo -e "📝 Response file: ${RESPONSE_FILE}"

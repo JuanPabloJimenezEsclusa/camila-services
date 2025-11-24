@@ -1,19 +1,19 @@
 /**
- * Use cases belong to the domain layer for several fundamental reasons:
+ * Use cases belong to the domain layer for several fundamental reasons.  <br><br>
  * 1. Business logic orchestration - Use cases coordinate domain entities and services
- *    to fulfill specific business operations.
+ *    to fulfill specific business operations. <br>
  * 2. Primary ports representation - Use cases serve as primary (driving)
- *    ports that define how external components interact with your domain.
+ *    ports that define how external components interact with your domain. <br>
  * 3. Technology independence - Interface contains no implementation details,
- *    keeping it free from infrastructure concerns.
+ *    keeping it free from infrastructure concerns. <br>
  * 4. Dependency control - By placing use cases in the domain, you ensure that the domain controls
- *    how it's used rather than adapting to external needs.
+ *    how it's used rather than adapting to external needs. <br>
  * 5. Business process encapsulation - Use cases represent complete business processes
- *    defined using domain vocabulary.
- * 6. Single responsibility - Each use case addresses a specific business capability.
- * 7. Testing isolation - Domain use cases can be tested independently of infrastructure concerns.
+ *    defined using domain vocabulary. <br>
+ * 6. Single responsibility - Each use case addresses a specific business capability. <br>
+ * 7. Testing isolation - Domain use cases can be tested independently of infrastructure concerns. <br>
  * 8. Stable API boundary - Use cases provide a stable interface that changes only
- *    when business requirements change, not when external systems change.
+ *    when business requirements change, not when external systems change. <br>
  */
 @NullMarked
 package com.camila.api.product.domain.usecase;

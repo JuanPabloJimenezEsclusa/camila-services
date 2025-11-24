@@ -20,8 +20,7 @@ COUCHBASE_USERNAME="${COUCHBASE_USERNAME:-}"
 COUCHBASE_PASSWORD="${COUCHBASE_PASSWORD:-}"
 MONGO_URI="${MONGO_URI:-}"
 
-# Function to validate environment variables
-validate_env_var() {
+__validate_env_var() {
   local var_name="${1}"
   local var_value="${2}"
 
@@ -31,8 +30,7 @@ validate_env_var() {
   fi
 }
 
-# Function to validate URL format (basic check)
-validate_url_format() {
+__validate_url_format() {
   local url="$1"
 
   if ! [[ "$url" =~ ^(couchbases|mongodb\+srv):// ]]; then
@@ -41,22 +39,28 @@ validate_url_format() {
   fi
 }
 
-# Create ECR repository if it doesn't exist
-create_ecr_repository() {
+__build_project() {
+  export SPRING_PROFILES_ACTIVE=pre
+  mvn spring-boot:build-image \
+    -Dmaven.build.cache.enabled=false \
+    -Dmaven.test.skip=true \
+    -f ../../../../camila-product-api/pom.xml
+}
+
+__create_ecr_repository() {
   aws ecr describe-repositories --repository-names "${ECR_REPOSITORY_NAME}" >/dev/null 2>&1 || \
     aws ecr create-repository --repository-name "${ECR_REPOSITORY_NAME}"
 }
 
-# Login to ECR
-login_to_ecr() {
+__login_to_ecr() {
   aws ecr get-login-password --region "${ECR_REGION}" | \
     docker login --username AWS --password-stdin "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com"
 }
 
-# Build and push Docker image to ECR
-build_and_push_image() {
+__build_and_push_image() {
   # Check if the Docker image exists locally
   if ! docker inspect "${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}" >/dev/null 2>&1; then
+    echo "Docker image ${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG} not found locally."
     # If the image doesn't exist locally, try to pull it from the GitHub package
     docker pull "${GITHUB_ECR_REGISTRY_ID}/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
     docker tag "${GITHUB_ECR_REGISTRY_ID}/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}" "${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
@@ -67,8 +71,7 @@ build_and_push_image() {
   docker push "${ECR_REGISTRY_ID}.${ECR_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${ECR_IMAGE_TAG}"
 }
 
-# Create secrets stack
-create_secret_stack() {
+__create_secret_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation create-stack \
@@ -87,8 +90,7 @@ create_secret_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Create ecs stack
-create_ecs_stack() {
+__create_ecs_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation create-stack \
@@ -107,30 +109,32 @@ create_ecs_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
   echo -e "${SEPARATOR} 📝 Validate required environment variables. ${SEPARATOR}"
-  validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
-  validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
-  validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
-  validate_env_var "MONGO_URI" "${MONGO_URI}"
+  __validate_env_var "COUCHBASE_CONNECTION" "${COUCHBASE_CONNECTION}"
+  __validate_env_var "COUCHBASE_USERNAME" "${COUCHBASE_USERNAME}"
+  __validate_env_var "COUCHBASE_PASSWORD" "${COUCHBASE_PASSWORD}"
+  __validate_env_var "MONGO_URI" "${MONGO_URI}"
 
   echo -e "${SEPARATOR} ✅ Validate URL formats. ${SEPARATOR}"
-  validate_url_format "${COUCHBASE_CONNECTION}"
-  validate_url_format "${MONGO_URI}"
+  __validate_url_format "${COUCHBASE_CONNECTION}"
+  __validate_url_format "${MONGO_URI}"
 
+  echo -e "${SEPARATOR} 🏗️ Build project. ${SEPARATOR}"
+  __build_project
   echo -e "${SEPARATOR} 📦 Create ECR repository if it doesn't exist. ${SEPARATOR}"
-  create_ecr_repository
+  __create_ecr_repository
   echo -e "${SEPARATOR} 🔑 Login to ECR. ${SEPARATOR}"
-  login_to_ecr
+  __login_to_ecr
   echo -e "${SEPARATOR} 🐳 Build and push Docker image to ECR. ${SEPARATOR}"
-  build_and_push_image
+  __build_and_push_image
   echo -e "${SEPARATOR} 🤫 Create secrets stack. ${SEPARATOR}"
-  create_secret_stack
+  __create_secret_stack
   echo -e "${SEPARATOR} ☁️ Create ecs stack. ${SEPARATOR}"
-  create_ecs_stack
+  __create_ecs_stack
 
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }

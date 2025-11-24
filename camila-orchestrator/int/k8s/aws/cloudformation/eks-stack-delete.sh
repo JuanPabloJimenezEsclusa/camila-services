@@ -9,7 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-delete_connector_provider() {
+__delete_connector_provider() {
   echo "Init ${FUNCNAME:-} ..."
 
   # Get OpenIDConnectArn
@@ -23,7 +23,7 @@ delete_connector_provider() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-delete_eks_stack() {
+__delete_eks_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   # Delete eks stack
@@ -40,14 +40,14 @@ delete_eks_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
   echo -e "${SEPARATOR} 🗑️ Delete connector provider. ${SEPARATOR}"
-  delete_connector_provider
+  __delete_connector_provider
   echo -e "${SEPARATOR}  🗑️ Delete eks stack. ${SEPARATOR}"
-  delete_eks_stack
+  __delete_eks_stack
 
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }

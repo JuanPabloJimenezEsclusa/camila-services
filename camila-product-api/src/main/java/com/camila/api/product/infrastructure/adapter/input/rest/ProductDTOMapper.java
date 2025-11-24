@@ -2,13 +2,18 @@ package com.camila.api.product.infrastructure.adapter.input.rest;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.infrastructure.adapter.input.rest.dto.ProductDTO;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 /**
  * The interface Product dto mapper.
  */
-@Mapper(componentModel = "spring")
+@Mapper(
+  componentModel = MappingConstants.ComponentModel.SPRING,
+  injectionStrategy = InjectionStrategy.CONSTRUCTOR
+)
 public interface ProductDTOMapper {
   /**
    * To product dto product dto.

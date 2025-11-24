@@ -186,7 +186,7 @@ resource "aws_route_table_association" "private_b" {
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint
 resource "aws_vpc_endpoint" "ecr_api" {
   vpc_id             = aws_vpc.main.id
-  service_name       = "com.amazonaws.${data.aws_region.current.name}.ecr.api"
+  service_name       = "com.amazonaws.${data.aws_region.current.region}.ecr.api"
   vpc_endpoint_type  = "Interface"
   subnet_ids         = [aws_subnet.private_a.id, aws_subnet.private_b.id]
   security_group_ids = [aws_security_group.ecs_service_sg.id, aws_security_group.lb_sg.id]
@@ -200,7 +200,7 @@ resource "aws_vpc_endpoint" "ecr_api" {
 # it's necessary to see the image into the ECR private repository
 resource "aws_vpc_endpoint" "ecr_dkr" {
   vpc_id             = aws_vpc.main.id
-  service_name       = "com.amazonaws.${data.aws_region.current.name}.ecr.dkr"
+  service_name       = "com.amazonaws.${data.aws_region.current.region}.ecr.dkr"
   vpc_endpoint_type  = "Interface"
   subnet_ids         = [aws_subnet.private_a.id, aws_subnet.private_b.id]
   security_group_ids = [aws_security_group.ecs_service_sg.id, aws_security_group.lb_sg.id]
@@ -239,7 +239,7 @@ resource "aws_iam_policy" "vpc_flow_log_policy" {
           "logs:DescribeLogGroups",
           "logs:DescribeLogStreams"
         ]
-        Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/vpc/camila-product-vpc:*"
+        Resource = "arn:aws:logs:${data.aws_region.current.region}:${data.aws_caller_identity.current.account_id}:log-group:/vpc/camila-product-vpc:*"
       }
     ]
   })
@@ -364,7 +364,7 @@ resource "aws_ecs_task_definition" "main" {
       logDriver = "awslogs"
       options = {
         awslogs-group         = aws_cloudwatch_log_group.ecs_log_group.id
-        awslogs-region        = data.aws_region.current.name
+        awslogs-region        = data.aws_region.current.region
         awslogs-stream-prefix = "ecs"
       }
     }
@@ -380,8 +380,8 @@ resource "aws_ecs_task_definition" "main" {
       { name = "JVM_OPTIONS", value = "-Xms512m -Xmx1024m" },
       { name = "SPRING_PROFILES_ACTIVE", value = "pre" },
       { name = "SERVER_URL", value = "https://${var.domain_name}" },
-      { name = "SECURITY_ISSUER_URI", value = "https://cognito-idp.${data.aws_region.current.name}.amazonaws.com/${var.user_pool_id}" },
-      { name = "SECURITY_DOMAIN_URI", value = "https://camila-realm.auth.${data.aws_region.current.name}.amazoncognito.com" },
+      { name = "SECURITY_ISSUER_URI", value = "https://cognito-idp.${data.aws_region.current.region}.amazonaws.com/${var.user_pool_id}" },
+      { name = "SECURITY_DOMAIN_URI", value = "https://camila-realm.auth.${data.aws_region.current.region}.amazoncognito.com" },
       { name = "repository.technology", value = var.repository_technology },
       { name = "spring.couchbase.connection-string", value = var.couchbase_connection },
       { name = "spring.couchbase.username", value = var.couchbase_username },

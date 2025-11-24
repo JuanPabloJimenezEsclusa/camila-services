@@ -1,7 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
 import static org.instancio.Select.field;
-import static org.mockito.Mockito.anyMap;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -37,7 +36,6 @@ import reactor.core.publisher.Mono;
 @Import({
   RestExceptionHandler.class,
   LocalSecurityConfig.class,
-  QueryParametersValidator.class,
   ProductDTOMapperImpl.class
 })
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter [component] test")
@@ -45,9 +43,6 @@ class ProductRestAdapterComponentITCase {
 
   @Autowired
   private WebTestClient webClient;
-
-  @MockitoSpyBean
-  private QueryParametersValidator queryParametersValidator;
 
   @MockitoBean
   private ProductUseCase productUseCase;
@@ -93,7 +88,9 @@ class ProductRestAdapterComponentITCase {
   void shouldFindProductById() {
     // Given
     final var internalId = "1";
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(product));
 
     // When & Then
@@ -106,7 +103,6 @@ class ProductRestAdapterComponentITCase {
     verify(productUseCase).findByInternalId(internalId);
     verify(productDTOMapper).toProductDTO(product);
     verifyNoMoreInteractions(productUseCase, productDTOMapper);
-    verifyNoInteractions(queryParametersValidator);
   }
 
   @Test
@@ -125,7 +121,7 @@ class ProductRestAdapterComponentITCase {
 
     verify(productUseCase).findByInternalId(internalId);
     verifyNoMoreInteractions(productUseCase);
-    verifyNoInteractions(queryParametersValidator, productDTOMapper);
+    verifyNoInteractions(productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> with salesUnits={0}, stock={1}")
@@ -135,13 +131,16 @@ class ProductRestAdapterComponentITCase {
                                           final String profitMargin, final String daysInStock) {
     // Given
     final var uri = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}";
+    final var internalId = "1";
     final var requestParams = Map.of(
       "salesUnits", salesUnits,
       "stock", stock,
       "profitMargin", profitMargin,
       "daysInStock", daysInStock
     );
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product));
 
     // When & Then
@@ -150,12 +149,11 @@ class ProductRestAdapterComponentITCase {
       .exchange()
       .expectStatus().isOk()
       .expectBody()
-      .jsonPath("$[0].id").isEqualTo("1");
+      .jsonPath("$[0].internalId").isEqualTo(internalId);
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
+    verifyNoMoreInteractions(productUseCase, productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> with page={0}, size={1}")
@@ -163,11 +161,14 @@ class ProductRestAdapterComponentITCase {
   @DisplayName("Should sort products with pagination parameters")
   void shouldSortProductsWithPaginationParams(final String page, final String size) {
     // Given
+    final var internalId = "1";
     final var requestParams = Map.of(
       "page", page,
       "size", size
     );
-    final var product = Instancio.of(Product.class).set(field(Product::id), "1").create();
+    final var product = Instancio.of(Product.class)
+      .set(field(Product::internalId), internalId)
+      .create();
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product));
 
     // When & Then
@@ -176,12 +177,11 @@ class ProductRestAdapterComponentITCase {
       .exchange()
       .expectStatus().isOk()
       .expectBody()
-      .jsonPath("$[0].id").isEqualTo("1");
+      .jsonPath("$[0].internalId").isEqualTo(internalId);
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
+    verifyNoMoreInteractions(productUseCase, productDTOMapper);
   }
 
   @Test
@@ -204,9 +204,8 @@ class ProductRestAdapterComponentITCase {
       .expectStatus().isOk()
       .expectBody().json("[]");
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase);
+    verifyNoMoreInteractions(productUseCase);
     verifyNoInteractions(productDTOMapper);
   }
 
@@ -224,8 +223,6 @@ class ProductRestAdapterComponentITCase {
     .exchange()
     .expectStatus().is4xxClientError();
 
-    verify(queryParametersValidator).validate(anyMap());
-    verifyNoMoreInteractions(queryParametersValidator);
     verifyNoInteractions(productUseCase, productDTOMapper);
   }
 }

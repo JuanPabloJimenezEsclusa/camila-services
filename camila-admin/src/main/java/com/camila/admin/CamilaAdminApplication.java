@@ -13,7 +13,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAdminServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class CamilaAdminApplication {
+@SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for proxying
+class CamilaAdminApplication {
+
+  private CamilaAdminApplication() {}
 
   /**
    * The entry point of application.

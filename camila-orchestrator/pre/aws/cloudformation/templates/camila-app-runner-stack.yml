@@ -110,7 +110,7 @@ Resources:
               - Name: SPRING_PROFILES_ACTIVE
                 Value: "pre"
               - Name: SERVER_URL
-                Value: "https://poc.jpje-kops.xyz"
+                Value: "https://tech.jpje.xyz"
               - Name: SECURITY_ISSUER_URI
                 Value: !Join
                   - "/"

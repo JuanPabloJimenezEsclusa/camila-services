@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import com.camila.api.product.domain.model.Product;
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ import reactor.test.StepVerifier;
 )
 @DisplayName("[IT][ProductRSocketAdapter] Product rsocket adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductRSocketAdapterITCase {
+class ProductRSocketAdapterITCase extends MongoContainerConfig {
 
   @Nullable
   private static RSocketRequester requester;
@@ -110,7 +111,7 @@ class ProductRSocketAdapterITCase {
   @Order(4)
   void sortByMetricsKo() {
     var message = """
-      { }
+      {}
       """;
 
     assert requester != null;

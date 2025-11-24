@@ -8,19 +8,12 @@ import java.util.Map;
 /**
  * Represents the criteria for sorting products.
  */
-public class ProductSortCriteria {
+public record ProductSortCriteria(
+  List<MetricWeight> metricWeights,
+  int page,
+  int size) {
   private static final String DEFAULT_PAGE_NUMBER = "0";
   private static final String DEFAULT_PAGE_SIZE = "10";
-
-  private final List<MetricWeight> metricWeights;
-  private final int page;
-  private final int size;
-
-  private ProductSortCriteria(final List<MetricWeight> metricWeights, final int page, final int size) {
-    this.metricWeights = metricWeights;
-    this.page = page;
-    this.size = size;
-  }
 
   /**
    * Factory method to create a ProductSortCriteria instance from request parameters.
@@ -56,7 +49,7 @@ public class ProductSortCriteria {
             throw new IllegalArgumentException("Weight for %s must be non-negative".formatted(entry.getKey()));
           }
           map.put(metric, weight);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
           throw new IllegalArgumentException("Invalid weight value for %s".formatted(entry.getKey()));
         }
       }, HashMap::putAll);
@@ -72,18 +65,9 @@ public class ProductSortCriteria {
   private static int parseIntParam(final String value, final String paramName) {
     try {
       return Integer.parseInt(value);
-    } catch (NumberFormatException e) {
+    } catch (NumberFormatException _) {
       throw new IllegalArgumentException("Invalid %s parameter: %s".formatted(paramName, value));
     }
-  }
-
-  /**
-   * Gets the list of metric weights.
-   *
-   * @return A list of MetricWeight objects
-   */
-  public List<MetricWeight> getMetricWeights() {
-    return metricWeights;
   }
 
   /**
@@ -91,7 +75,7 @@ public class ProductSortCriteria {
    *
    * @return The offset as a long value
    */
-  public long getOffset() {
+  public long offset() {
     return (long) page * size;
   }
 
@@ -100,7 +84,7 @@ public class ProductSortCriteria {
    *
    * @return The page size as a long value
    */
-  public long getLimit() {
+  public long limit() {
     return size;
   }
 }

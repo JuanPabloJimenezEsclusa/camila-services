@@ -19,14 +19,22 @@ Based on `AWS Cloud Provider`
 
 ---
 
-* Docker ~= 27.3.0
-* AWS CLI >= 2.27.22
-* JQ >= 1.7
-* Terraform >= 1.12.1
+<details>
+<summary><strong>Expand Dependencies</strong></summary>
+
+* Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
+* AWS CLI ~= [2.28.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* JQ ~= [1.8.x](https://github.com/jqlang/jq)
+* Terraform ~= [1.13.x](https://developer.hashicorp.com/terraform/install#linux)
+
+</details>
 
 ## 🏗️ Architecture
 
 ---
+
+<details>
+<summary><strong>Expand Architecture</strong></summary>
 
 <p style="text-align: center">
 
@@ -48,9 +56,14 @@ Based on `AWS Cloud Provider`
 
 </p>
 
+</details>
+
 ## 🌐 Usage
 
 ---
+
+<details>
+<summary><strong>Expand Usage</strong></summary>
 
 ❗ This infrastructure incurs costs. Avoid keeping it running if it's not in use.
 
@@ -130,16 +143,20 @@ export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=tr
 ./terraform/destroy-aws-plan.sh
 ```
 
----
+</details>
 
 ## 🧪 Testing
 
 ---
 
+<details>
+<summary><strong>Expand Testing</strong></summary>
+
 | File                                                                                     | Description                                                 |
 |------------------------------------------------------------------------------------------|-------------------------------------------------------------|
 | [tests/api-requests.http](tests/api-requests.http)                                       | API request tests (REST, GraphQL, Websocket, RSocket, GRPC) |
 | [tests/http-client.env.json](tests/http-client.env.json)                                 | Security configurations for the tests                       |
+| [tests/api-rsocket-request.sh](tests/api-rsocket-request.sh)                             | API RSocket tests                                           |
 | [tests/cli-curl-client-credentials-tests.sh](tests/cli-curl-client-credentials-tests.sh) | Oauth2 (grant type: client credentials) tests via CLI       |
 | [tests/cli-curl-code_authorization-tests.sh](tests/cli-curl-code_authorization-tests.sh) | Oauth2 (grant type: code authorization) tests via CLI       |
 
@@ -171,12 +188,17 @@ docker run --rm -it \
   546053716955.dkr.ecr.eu-west-1.amazonaws.com/camila-product-api:1.0.0
 ```
 
+</details>
+
 ## 🔗 Links
 
 ---
 
+<details>
+<summary><strong>Expand Links</strong></summary>
+
 * API
-  * [API Rest (Swagger-ui)](https://poc.jpje-kops.xyz/product/api/webjars/swagger-ui/index.html#/)
+  * [API Rest (Swagger-ui)](https://tech.jpje.xyz/product/api/webjars/swagger-ui/index.html#/)
 
 * AWS UI
   * [AWS Cognito (User Pool)](https://eu-west-1.console.aws.amazon.com/cognito/v2/idp/user-pools?region=eu-west-1) 💰
@@ -194,7 +216,10 @@ docker run --rm -it \
   * [AWS API Gateway](https://eu-west-1.console.aws.amazon.com/apigateway/main/apis?region=eu-west-1) 💰💰💰
   * [AWS WAF](https://us-east-1.console.aws.amazon.com/wafv2/homev2/web-acls?region=eu-west-1) 💰
   * [APP Runner](https://eu-west-1.console.aws.amazon.com/apprunner/home?region=eu-west-1#/services) 💰
+  * [AWS Route 53](https://eu-west-1.console.aws.amazon.com/route53/v2/hostedzones) 💰
 
 * Databases
   * [Mongo Atlas](https://cloud.mongodb.com/v2/665f45371f34d90e0237aca0#/overview) (free tier)
   * [Couchbase Capella](https://cloud.couchbase.com/databases?oid=6436d8a0-3909-4aea-8ff7-1673510b6c11) (free tier)
+
+</details>

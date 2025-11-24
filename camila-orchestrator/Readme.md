@@ -15,14 +15,14 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
 
 ---
 
-* [docker-compose >= v2.35.0](https://docs.docker.com/compose/install/standalone/)
-* [Kubernetes >= 1.33.0](https://kubernetes.io/releases/)
-* [Kind >= 0.27.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * Linux operating system
 
 ## 🏗️ Architecture
 
 ---
+
+<details>
+<summary><strong>Expand Architecture</strong></summary>
 
 ```txt
 📦camila-orchestrator
@@ -42,9 +42,14 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
      ┗ 📂terraform
 ```
 
+</details>
+
 ## 🛠️ Usage
 
 ---
+
+<details>
+<summary><strong>Expand Usage</strong></summary>
 
 ### Environments
 
@@ -54,3 +59,5 @@ This project provides Infrastructure as Code (IaC) configurations to deploy the 
 | [INT (K8s - Kind)](./int/k8s/kind/) | Orchestration in `k8s` and `Kind` using either deployments or serverless `knative` |
 | [INT (K8s - AWS)](./int/k8s/aws/)   | Orchestration in `k8s` and `AWS EKS`                                               |
 | [PRE (AWS)](./pre/aws/)             | Orchestration in `AWS` using `AWS CloudFormation` or `Terraform`                   |
+
+</details>

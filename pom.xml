@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.6</version>
+    <version>3.5.8</version>
     <relativePath/>
   </parent>
 
@@ -15,7 +15,12 @@
   <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>camila-services</name>
-  <description>camila-services</description>
+  <description>Camila Services - Microservices Architecture</description>
+  <url>https://github.com/JuanPabloJimenezEsclusa/camila-services</url>
+
+  <organization>
+    <name>JPJE Innovation Inc</name>
+  </organization>
 
   <modules>
     <module>camila-product-api</module>
@@ -23,6 +28,7 @@
     <module>camila-gateway</module>
     <module>camila-admin</module>
     <module>camila-config</module>
+    <module>camila-coverage-jacoco</module>
   </modules>
 
   <scm>
@@ -38,6 +44,11 @@
   </issueManagement>
 
   <distributionManagement>
+    <site>
+      <id>camila-services</id>
+      <name>Camila Service</name>
+      <url>file:./target/report/camila-services</url>
+    </site>
     <repository>
       <id>github</id>
       <name>camila-services</name>
@@ -48,72 +59,94 @@
     </repository>
   </distributionManagement>
 
+  <developers>
+    <developer>
+      <name>Juan Pablo Jimenez Esclusa</name>
+      <email>juan.pablo.jimenez.esclusa@gmail.com</email>
+      <organization>${project.organization.name}</organization>
+    </developer>
+  </developers>
+
   <properties>
     <!-- Java -->
-    <java.version>21</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Spring -->
-    <spring-cloud.version>2024.0.1</spring-cloud.version>
-    <spring-boot-admin.version>3.4.6</spring-boot-admin.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
+    <spring-boot-admin.version>3.5.6</spring-boot-admin.version>
 
     <!-- Observability -->
-    <opentelemetry.version>1.50.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.50.0-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry.version>1.56.0</opentelemetry.version>
+    <opentelemetry-api-incubator.version>1.56.0-alpha</opentelemetry-api-incubator.version>
 
     <!-- API -->
-    <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
-    <graphql-java.version>23.1</graphql-java.version>
-    <graphql-java-extended-scalars.version>22.0</graphql-java-extended-scalars.version>
+    <springdoc-openapi.version>2.8.14</springdoc-openapi.version>
+    <netty-tcnative-boringssl-static.version>2.0.74.Final</netty-tcnative-boringssl-static.version>
+    <graphql-java.version>24.3</graphql-java.version>
+    <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
-    <cucumber.version>7.22.2</cucumber.version>
-    <testcontainers.version>1.21.0</testcontainers.version>
+    <cucumber.version>7.31.0</cucumber.version>
+
+    <testcontainers.version>2.0.2</testcontainers.version>
+    <testcontainers-junit-jupiter.version>2.0.2</testcontainers-junit-jupiter.version>
+    <testcontainers.mongodb.version>1.21.3</testcontainers.mongodb.version>
+    <testcontainers.couchbase.version>1.21.3</testcontainers.couchbase.version>
+    <testcontainers-redis.version>2.2.4</testcontainers-redis.version>
+
     <awaitility.version>4.3.0</awaitility.version>
-    <de.flapdoodle.embed.mongo.spring3x.version>4.20.0</de.flapdoodle.embed.mongo.spring3x.version>
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
-    <instancio-junit.version>5.4.1</instancio-junit.version>
+    <instancio-junit.version>5.5.1</instancio-junit.version>
     <jmh.version>1.37</jmh.version>
-    <junit-platform-suite.version>1.12.2</junit-platform-suite.version>
+    <junit-platform-suite.version>6.0.1</junit-platform-suite.version>
+    <okhttp.version>5.2.1</okhttp.version>
 
     <!-- Quality -->
     <chaos-monkey-spring-boot.version>3.2.2</chaos-monkey-spring-boot.version>
     <jspecify.version>1.0.0</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
+    <commons-lang3.version>3.20.0</commons-lang3.version>
 
     <!-- Database -->
-    <couchbase-java-client.version>3.8.1</couchbase-java-client.version>
+    <couchbase-java-client.version>3.10.0</couchbase-java-client.version>
 
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.31.0</protobuf-java.version>
-    <io-grpc.version>1.63.0</io-grpc.version>
+    <protobuf-java.version>4.33.0</protobuf-java.version>
+    <io-grpc.version>1.76.0</io-grpc.version>
 
     <!-- Build Tools -->
-    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
-    <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
+    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+    <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>10.23.1</checkstyle.version>
-    <jib-maven-plugin.version>3.4.2</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.1</dependency-check-maven.version>
-    <maven-pmd-plugin.version>3.26.0</maven-pmd-plugin.version>
+    <checkstyle.version>12.1.2</checkstyle.version>
+    <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
+    <dependency-check-maven.version>12.1.9</dependency-check-maven.version>
+    <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-    <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <pitest-maven.version>1.19.1</pitest-maven.version>
-    <flatten-maven-plugin.version>1.7.0</flatten-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+    <pitest-maven.version>1.22.0</pitest-maven.version>
+    <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.13.0</openapi-generator-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.9.3.0</spotbugs-maven-plugin.version>
-    <rewrite-maven-plugin.version>6.6.1</rewrite-maven-plugin.version>
-    <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
-    <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
-    <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
-    <git-changelog-maven-plugin.version>2.2.5</git-changelog-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.17.0</openapi-generator-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.8.1</spotbugs-maven-plugin.version>
+    <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
+    <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+    <versions-maven-plugin.version>2.19.1</versions-maven-plugin.version>
+    <sonar-maven-plugin.version>5.3.0.6276</sonar-maven-plugin.version>
+    <git-changelog-maven-plugin.version>2.2.11</git-changelog-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
+
+    <!-- Site reports -->
+    <inceptionYear>2023</inceptionYear>
+    <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
+    <currentYear>${maven.build.timestamp}</currentYear>
 
     <!-- Sonar -->
     <sonar.organization>juanpablojimenezesclusa</sonar.organization>
@@ -124,9 +157,9 @@
     <sonar.java.cpd.reportPaths>${project.build.directory}/cpd.xml</sonar.java.cpd.reportPaths>
     <sonar.java.pmd.reportPaths>${project.build.directory}/pmd.xml</sonar.java.pmd.reportPaths>
     <sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
-    <sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/camila-coverage-jacoco/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
-    <sonar.branch.name>main</sonar.branch.name>
+    <sonar.branch.name>develop</sonar.branch.name>
   </properties>
 
   <dependencyManagement>
@@ -203,6 +236,18 @@
         <version>${couchbase-java-client.version}</version>
       </dependency>
 
+      <!-- Utilities -->
+      <dependency>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>${jspecify.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
       <!-- Testing -->
       <dependency>
         <groupId>org.testcontainers</groupId>
@@ -210,6 +255,44 @@
         <version>${testcontainers.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <!-- JUnit Platform - Force version alignment -->
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-engine</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-commons</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite-api</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite-commons</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-suite-engine</artifactId>
+        <version>${junit-platform-suite.version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -239,7 +322,7 @@
               <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.4-Release-Notes#paketo-tiny-builder-for-building-oci-images -->
               <builder>paketobuildpacks/builder-jammy-base</builder>
               <env>
-                <BP_JVM_VERSION>21</BP_JVM_VERSION>
+                <BP_JVM_VERSION>25</BP_JVM_VERSION>
                 <BP_HEALTH_CHECKER>curl</BP_HEALTH_CHECKER>
                 <BP_JVM_TYPE>JRE</BP_JVM_TYPE>
                 <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
@@ -319,11 +402,39 @@
               </goals>
             </execution>
             <execution>
+              <id>merge-results</id>
+              <goals>
+                <goal>merge</goal>
+              </goals>
+              <phase>verify</phase>
+              <configuration>
+                <fileSets>
+                  <fileSet>
+                    <directory>${project.build.directory}</directory>
+                    <includes>
+                      <include>*.exec</include>
+                    </includes>
+                  </fileSet>
+                </fileSets>
+                <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+              </configuration>
+            </execution>
+            <execution>
               <id>report</id>
               <goals>
                 <goal>report</goal>
               </goals>
               <phase>verify</phase>
+              <configuration>
+                <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+                <excludes>
+                  <exclude>**/input/grpc/**</exclude>
+                  <exclude>*/input/rest/api/**</exclude>
+                  <exclude>**/input/rest/dto/**</exclude>
+                  <exclude>**/input/security/*Config**</exclude>
+                  <exclude>**/*MapperImpl**</exclude>
+                </excludes>
+              </configuration>
             </execution>
           </executions>
         </plugin>
@@ -343,18 +454,15 @@
                   <requireUpperBoundDeps>
                     <excludes>
                       <exclude>org.apache.httpcomponents:httpclient</exclude>
-                      <exclude>com.google.j2objc:j2objc-annotations</exclude>
-                      <exlucde>org.glassfish.hk2:hk2-api</exlucde>
-                      <exlucde>com.google.errorprone:error_prone_annotations</exlucde>
-                      <exlucde>io.zipkin.reporter2:zipkin-sender-okhttp3</exlucde>
-                      <exlucde>io.zipkin.reporter2:zipkin-reporter</exlucde>
+                      <exclude>com.google.errorprone:error_prone_annotations</exclude>
+                      <exclude>org.jetbrains.kotlin:kotlin-stdlib</exclude>
                     </excludes>
                   </requireUpperBoundDeps>
                   <requireMavenVersion>
                     <version>[3.9.4,4.0.0)</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
-                    <version>[21,25)</version>
+                    <version>[25,29)</version>
                   </requireJavaVersion>
                 </rules>
               </configuration>
@@ -378,6 +486,54 @@
                   <arg>loopback</arg>
                 </gpgArguments>
               </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <source>${java.version}</source>
+            <encoding>${project.reporting.outputEncoding}</encoding>
+            <additionalJOptions>-Xdoclint:none</additionalJOptions>
+            <useStandardDocletOptions>true</useStandardDocletOptions>
+            <failOnError>false</failOnError>
+            <show>package</show>
+            <doclint>none</doclint>
+            <windowtitle>${project.name} ${project.version} API</windowtitle>
+            <doctitle><![CDATA[<h1>${project.name} API Documentation</h1><h3>${project.description}</h3>]]></doctitle>
+            <header><![CDATA[<b>${project.name}</b> v${project.version}]]></header>
+            <bottom><![CDATA[Copyright &#169; ${inceptionYear}–${currentYear} | ${project.organization.name}. | All rights reserved.]]></bottom>
+            <groups>
+              <group>
+                <title>Admin</title>
+                <packages>com.camila.admin*</packages>
+              </group>
+              <group>
+                <title>Config</title>
+                <packages>com.camila.config*</packages>
+              </group>
+              <group>
+                <title>Discovery</title>
+                <packages>com.camila.discovery*</packages>
+              </group>
+              <group>
+                <title>Gateway</title>
+                <packages>com.camila.gateway*</packages>
+              </group>
+              <group>
+                <title>API</title>
+                <packages>com.camila.api*</packages>
+              </group>
+            </groups>
+          </configuration>
+          <executions>
+            <execution>
+              <id>aggregate-javadocs</id>
+              <goals>
+                <goal>aggregate</goal>
+              </goals>
             </execution>
           </executions>
         </plugin>
@@ -411,6 +567,15 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
           <version>${maven-site-plugin.version}</version>
+          <configuration>
+            <generateSitemap>true</generateSitemap>
+            <attributes>
+              <reporting.outputEncoding>${project.reporting.outputEncoding}</reporting.outputEncoding>
+              <project.build.sourceEncoding>${project.build.sourceEncoding}</project.build.sourceEncoding>
+              <currentYear>${currentYear}</currentYear>
+              <inceptionYear>${inceptionYear}</inceptionYear>
+            </attributes>
+          </configuration>
         </plugin>
 
         <!-- API Generation -->
@@ -495,10 +660,13 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>${maven-javadoc-plugin.version}</version>
         <configuration>
-          <configLocation>src/main/resources/checkstyle.xml</configLocation>
+          <source>${java.version}</source>
+          <encoding>${project.reporting.outputEncoding}</encoding>
+          <additionalJOptions>-Xdoclint:none</additionalJOptions>
+          <failOnError>false</failOnError>
         </configuration>
       </plugin>
     </plugins>

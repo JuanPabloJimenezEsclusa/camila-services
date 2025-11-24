@@ -33,9 +33,6 @@ import reactor.test.StepVerifier;
 class ProductRestAdapterUnitTest {
 
   @Mock
-  private QueryParametersValidator queryParametersValidator;
-
-  @Mock
   private ProductUseCase productUseCase;
 
   @Mock
@@ -73,7 +70,6 @@ class ProductRestAdapterUnitTest {
     verify(productUseCase).findByInternalId(internalId);
     verify(productDTOMapper).toProductDTO(expectedProduct);
     verifyNoMoreInteractions(productUseCase, productDTOMapper);
-    verifyNoInteractions(queryParametersValidator);
   }
 
   @Test
@@ -90,7 +86,7 @@ class ProductRestAdapterUnitTest {
 
     verify(productUseCase).findByInternalId(internalId);
     verifyNoMoreInteractions(productUseCase);
-    verifyNoInteractions(queryParametersValidator, productDTOMapper);
+    verifyNoInteractions(productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, stock={3}, page={4}, size={5}")
@@ -108,12 +104,11 @@ class ProductRestAdapterUnitTest {
       "page", page,
       "size", size
     );
-    final var productDTO1 = Instancio.of(ProductDTO.class).set(field(ProductDTO::getId), "1").create();
-    final var productDTO2 = Instancio.of(ProductDTO.class).set(field(ProductDTO::getId), "1").create();
+    final var productDTO1 = Instancio.of(ProductDTO.class).create();
+    final var productDTO2 = Instancio.of(ProductDTO.class).create();
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
 
-    when(queryParametersValidator.validate(requestParams)).thenReturn(Mono.just(requestParams));
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
     when(productDTOMapper.toProductDTO(product1)).thenReturn(productDTO1);
     when(productDTOMapper.toProductDTO(product2)).thenReturn(productDTO2);
@@ -125,11 +120,10 @@ class ProductRestAdapterUnitTest {
       .expectNext(productDTO2)
       .verifyComplete();
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
     verify(productDTOMapper).toProductDTO(product1);
     verify(productDTOMapper).toProductDTO(product2);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase, productDTOMapper);
+    verifyNoMoreInteractions(productUseCase, productDTOMapper);
   }
 
   @Test
@@ -145,7 +139,6 @@ class ProductRestAdapterUnitTest {
       "size", "10"
     );
 
-    when(queryParametersValidator.validate(requestParams)).thenReturn(Mono.just(requestParams));
     when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
 
     // When & Then
@@ -153,9 +146,8 @@ class ProductRestAdapterUnitTest {
       .as(StepVerifier::create)
       .verifyComplete();
 
-    verify(queryParametersValidator).validate(requestParams);
     verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(queryParametersValidator, productUseCase);
+    verifyNoMoreInteractions(productUseCase);
     verifyNoInteractions(productDTOMapper);
   }
 }

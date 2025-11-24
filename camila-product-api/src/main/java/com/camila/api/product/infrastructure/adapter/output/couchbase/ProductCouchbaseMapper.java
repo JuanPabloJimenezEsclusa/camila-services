@@ -1,13 +1,18 @@
 package com.camila.api.product.infrastructure.adapter.output.couchbase;
 
 import com.camila.api.product.domain.model.Product;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 /**
  * The interface Product couchbase mapper.
  */
-@Mapper(componentModel = "spring")
+@Mapper(
+  componentModel = MappingConstants.ComponentModel.SPRING,
+  injectionStrategy = InjectionStrategy.CONSTRUCTOR
+)
 public interface ProductCouchbaseMapper {
   /**
    * To product.

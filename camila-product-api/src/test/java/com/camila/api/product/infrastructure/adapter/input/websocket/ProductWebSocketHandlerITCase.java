@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.net.URI;
-import java.time.Duration;
 
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ import reactor.core.publisher.Mono;
 )
 @DisplayName("[IT][ProductWebSocketHandler] Product websocket handler test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductWebSocketHandlerITCase {
+class ProductWebSocketHandlerITCase extends MongoContainerConfig {
 
   @Nullable
   private static WebSocketClient webSocketClient;

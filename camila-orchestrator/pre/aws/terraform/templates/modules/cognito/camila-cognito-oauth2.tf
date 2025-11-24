@@ -86,7 +86,7 @@ resource "aws_cognito_user_pool_client" "camila_client" {
   ]
 
   logout_urls = [
-    "https://${var.camila-realm}.auth.${data.aws_region.current.name}.amazoncognito.com/logout"
+    "https://${var.camila-realm}.auth.${data.aws_region.current.region}.amazoncognito.com/logout"
   ]
 }
 
@@ -120,7 +120,7 @@ resource "aws_cognito_user_pool_client" "camila_client_credentials" {
   ]
 
   logout_urls = [
-    "https://${var.camila-realm}.auth.${data.aws_region.current.name}.amazoncognito.com/logout"
+    "https://${var.camila-realm}.auth.${data.aws_region.current.region}.amazoncognito.com/logout"
   ]
 }
 

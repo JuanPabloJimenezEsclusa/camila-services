@@ -23,10 +23,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(RuntimeException.class)
   public StatusException handleRuntimeException(final RuntimeException ex) {
     var status = Status.INTERNAL.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) RuntimeException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) RuntimeException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 
@@ -36,10 +39,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(ProductException.class)
   public StatusException handleProductException(final ProductException ex) {
     var status = Status.FAILED_PRECONDITION.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) ProductException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) ProductException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 
@@ -49,10 +55,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(DataAccessException.class)
   public StatusException handleDataAccessException(final DataAccessException ex) {
     var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) DataAccessException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) DataAccessException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 
@@ -62,10 +71,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(ConstraintViolationException.class)
   public StatusException handleConstraintViolationException(final ConstraintViolationException ex) {
     var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) ConstraintViolationException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) ConstraintViolationException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 
@@ -75,10 +87,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(MethodArgumentNotValidException.class)
   public StatusException handleMethodArgumentNotValidException(final MethodArgumentNotValidException ex) {
     var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) MethodArgumentNotValidException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) MethodArgumentNotValidException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 
@@ -88,10 +103,13 @@ public class GrpcExceptionAdvice {
    * @param ex the ex
    * @return the status exception
    */
+  @SuppressWarnings("unused")
   @GrpcExceptionHandler(IllegalArgumentException.class)
   public StatusException handleIllegalArgumentException(final IllegalArgumentException ex) {
     var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) IllegalArgumentException: ", ex);
+    if (log.isDebugEnabled()) {
+      log.debug("(GrpcExceptionAdvice) IllegalArgumentException: {}", ex.getMessage());
+    }
     return status.asException();
   }
 }

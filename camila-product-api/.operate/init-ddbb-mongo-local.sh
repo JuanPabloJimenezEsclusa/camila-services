@@ -14,7 +14,7 @@ mongoImportScript="mongoimport \
   --uri mongodb://${mongoImportUser}:${mongoImportPassword}@localhost:27017/camila-db \
   --type json \
   --collection products \
-  --file /data/mongo/data-generated.script"
+  --file /data/mongo/data-generated.jsonl"
 
 cd "$(dirname "$0")/.."
 
@@ -25,5 +25,5 @@ docker cp .operate/data/ mongodb:/
 docker exec -it mongodb bash -c "${mongoShellScript}"
 
 # importar N registros
-# para regenerar 'data-generated.script' utilizar: 'RandomDataGenerator.java'
+# para regenerar 'data-generated.jsonl' utilizar: 'RandomDataGenerator.java'
 docker exec -it mongodb bash -c "${mongoImportScript}"

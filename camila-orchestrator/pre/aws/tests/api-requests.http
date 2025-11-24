@@ -1,29 +1,36 @@
 ### Rest - Actuator
-# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-#GET https://poc.jpje-kops.xyz/product/api/actuator/health HTTP/2
-GET https://jpje.net/actuator/health
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/actuator/health
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/health HTTP/2
+Accept: application/json
+Content-Type: application/json
+
+### Rest - Info
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/actuator/info HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/info HTTP/2
 Accept: application/json
 Content-Type: application/json
 
 ### Rest - findById (SSE)
-# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-#GET https://poc.jpje-kops.xyz/product/api/products/63255 HTTP/2
-GET https://jpje.net/products/99999 HTTP/2
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/products/99999 HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products/63255 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
-# https://poc.jpje-kops.xyz/product/api/swagger-ui.html
-#GET https://poc.jpje-kops.xyz/product/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
-GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products?salesUnits=0.001&stock=0.999&page=0&size=100 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Graphql - findById
-#GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
-GRAPHQL https://jpje.net/graphql
+#GRAPHQL https://jpje.net/graphql
+GRAPHQL {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/graphql
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 query findById($internalId: ID) {
@@ -37,8 +44,8 @@ query findById($internalId: ID) {
 }
 
 ### Graphql - sortProducts
-#GRAPHQL https://poc.jpje-kops.xyz/product/api/graphql
-GRAPHQL https://jpje.net/graphql
+#GRAPHQL https://jpje.net/graphql
+GRAPHQL {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/graphql
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
@@ -63,7 +70,7 @@ query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $w
 }
 
 ### Websockt
-WEBSOCKET wss://poc.jpje-kops.xyz/product/api/ws/products
+WEBSOCKET {{apiSocketProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/ws/products
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
@@ -84,7 +91,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### RSocket request rsponse with websocket - findByInternalId
 RSOCKET products.request-response-findByInternalId
-Host: wss://poc.jpje-kops.xyz:7001/product/api/rsocket
+Host: {{apiSocketProtocol}}{{apiHost}}:7001{{apiPath}}/rsocket
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
@@ -93,7 +100,7 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### RSocket request stream with websocket - SortProducts
 RSOCKET products.request-stream-sortByMetricsWeights
-Host: wss://poc.jpje-kops.xyz:7001/product/api/rsocket
+Host: {{apiSocketProtocol}}{{apiHost}}:7001{{apiPath}}/rsocket
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 {
@@ -104,14 +111,14 @@ Authorization: Bearer {{$auth.token("auth-id")}}
 }
 
 ### GRPC - findByInternalId
-GRPC grpcs://poc.jpje-kops.xyz:50051/product.ProductService/GetProductByInternalId
+GRPC {{apiGrpcProtocol}}{{apiHost}}:50051/product.ProductService/GetProductByInternalId
 
 {
   "internalId": "1000"
 }
 
 ### GRPC - SortProducts
-GRPC grpcs://poc.jpje-kops.xyz:50051/product.ProductService/SortByMetricsWeights
+GRPC {{apiGrpcProtocol}}{{apiHost}}:50051/product.ProductService/SortByMetricsWeights
 
 {
   "requestParams": {

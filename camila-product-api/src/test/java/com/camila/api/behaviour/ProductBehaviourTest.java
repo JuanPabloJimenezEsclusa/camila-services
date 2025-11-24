@@ -1,7 +1,12 @@
 package com.camila.api.behaviour;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,13 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SuppressWarnings("java:S2187")
 @CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+  properties = {"repository.technology=mongo"}
+)
 public class ProductBehaviourTest {
-  private static final String SORT_PRODUCT_URI = "/products?salesUnits={salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
+  private static final String SORT_PRODUCT_URI = "/products?salesUnits="
+    + "{salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
   private static List<String> parameters = List.of();
   private static WebTestClient.ResponseSpec exchange = null;
 
@@ -50,28 +60,49 @@ public class ProductBehaviourTest {
 
   @And("^get sorted data$")
   public void getSortedData(final DataTable table) {
-    var body = exchange.expectBody();
+    final var body = exchange.expectBody();
 
     table.asMaps().forEach(element -> {
-      var index = element.get("index");
+      final var index = element.get("index");
       body
-        .jsonPath("$[" + index + "].internalId").isEqualTo(element.get("internalId"))
-        .jsonPath("$[" + index + "].salesUnits").isEqualTo(element.get("salesUnits"))
-        .jsonPath("$[" + index + "].stock['S']").isEqualTo(element.get("stock_S"))
-        .jsonPath("$[" + index + "].stock['M']").isEqualTo(element.get("stock_M"))
-        .jsonPath("$[" + index + "].stock['L']").isEqualTo(element.get("stock_L"))
-        .jsonPath("$[" + index + "].profitMargin").isEqualTo(element.get("profitMargin"))
-        .jsonPath("$[" + index + "].daysInStock").isEqualTo(element.get("daysInStock"));
+        .jsonPath("$[%s].internalId".formatted(index)).isEqualTo(element.get("internalId"))
+        .jsonPath("$[%s].salesUnits".formatted(index)).isEqualTo(element.get("salesUnits"))
+        .jsonPath("$[%s].stock['S']".formatted(index)).isEqualTo(element.get("stock_S"))
+        .jsonPath("$[%s].stock['M']".formatted(index)).isEqualTo(element.get("stock_M"))
+        .jsonPath("$[%s].stock['L']".formatted(index)).isEqualTo(element.get("stock_L"))
+        .jsonPath("$[%s].profitMargin".formatted(index)).isEqualTo(element.get("profitMargin"))
+        .jsonPath("$[%s].daysInStock".formatted(index)).isEqualTo(element.get("daysInStock"));
     });
-  }
-
-  @And("empty body")
-  public void emptyBody() {
-    exchange.expectBody().jsonPath("$").isEmpty();
   }
 
   @And("no body")
   public void noBody() {
     exchange.expectBody().jsonPath("$").doesNotExist();
+  }
+
+  @And("error body")
+  public void errorBody(final DataTable table) {
+    final var body = exchange.expectBody();
+
+    table.asMaps().forEach(element ->
+      body
+        .jsonPath("$.type").isEqualTo(element.get("type"))
+        .jsonPath("$.title").isEqualTo(element.get("title"))
+        .jsonPath("$.status").isEqualTo(element.get("status"))
+        .jsonPath("$.detail").isEqualTo(element.get("detail"))
+        .jsonPath("$.instance").value(value ->
+          assertThat(value.toString()).matches(element.get("instance")))
+        .jsonPath("$.errors").value(value ->
+          assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of()))
+    );
+  }
+
+  /*
+    When spring context init, it will start a mongo container.
+    This class is used to force the initialization of the MongoContainerConfig class.
+    Without this, the mongo container will not start.
+   */
+  @Component
+  public static class TestContainerConfig extends MongoContainerConfig {
   }
 }

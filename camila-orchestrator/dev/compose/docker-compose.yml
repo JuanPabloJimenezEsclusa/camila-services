@@ -6,12 +6,12 @@ services:
     image: docker.io/library/camila-config:1.0.0
     container_name: camila-config
     hostname: config
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
           memory: "1024m"
-          cpus: "2"
+          cpus: "1"
     env_file:
       - .env
     environment:
@@ -36,7 +36,7 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
         ipv4_address: 172.18.0.254
@@ -44,7 +44,7 @@ services:
     image: docker.io/library/camila-discovery:1.0.0
     container_name: camila-discovery
     hostname: discovery
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
@@ -76,21 +76,25 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   gateway:
     image: docker.io/library/camila-gateway:1.0.0
     container_name: camila-gateway
     hostname: gateway
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
-          memory: "1024m"
-          cpus: "2"
+          memory: "2048m"
+          cpus: "4"
     env_file:
       - .env
+    environment:
+      - JVM_OPTIONS=
+      - JAVA_TOOL_OPTIONS=
+      - JAVA_OPTS=-Xms1024m -Xmx1536m -XX:+UseG1GC -XX:+UseContainerSupport
     ports:
       - "5015:5005"
       - "8090:8090"
@@ -103,16 +107,19 @@ services:
       discovery:
         condition: service_healthy
       keycloak:
-        condition: service_started
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     healthcheck:
       test: ps aux | grep java || exit 1
       interval: 5s
       timeout: 2s
-      retries: 3
-      start_period: 5s
+      retries: 5
+      start_period: 60s  # gateway needs more time to start for keycloak
     links:
       - discovery
       - keycloak
+      - redis
     volumes:
       - camila_gateway_tmp:/tmp
     logging:
@@ -121,19 +128,19 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   admin:
     image: docker.io/library/camila-admin:1.0.0
     container_name: camila-admin
     hostname: admin
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
           memory: "1024m"
-          cpus: "2"
+          cpus: "1"
     env_file:
       - .env
     ports:
@@ -162,15 +169,15 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.0.8-ubi9
+    image: mongodb/mongodb-community-server:8.2.2-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
-    restart: "on-failure"
+    restart: on-failure:5
     deploy:
       resources:
         limits:
@@ -199,14 +206,14 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:7.6.5
+    image: couchbase/server:8.0.0
     container_name: camila-couchbase-product-db
     hostname: couchbase
-    restart: "on-failure"
+    restart: on-failure:5
     stdin_open: true
     tty: true
     entrypoint: [""]
@@ -239,13 +246,72 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
+    networks:
+      camila_product_network:
+  redis:
+    image: redis:8.4.0-alpine
+    container_name: camila-redis-product-db
+    hostname: redis
+    restart: on-failure:3
+    command: redis-server --save 20 1 --loglevel warning --requirepass camila
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "1"
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    volumes:
+      - camila_product_redis_data:/data
+    healthcheck:
+      test: ps aux | grep redis-server || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: "docker.{{.Name}}"
+    networks:
+      camila_product_network:
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: camila-redisinsight
+    hostname: redisinsight
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "1024m"
+          cpus: "1"
+    env_file:
+      - .env
+    ports:
+      - "5540:5540"
+    expose:
+      - 5540
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentd:24224
+        fluentd-async: "true"
+        fluentd-async-reconnect-interval: 10s
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   ## Microservices
   backend-product:
     image: docker.io/library/camila-product-api:1.0.0
-    restart: "on-failure"
+    restart: unless-stopped
     hostname: backend-product
     env_file:
       - .env
@@ -261,9 +327,9 @@ services:
       - "7000-7002:7000"
       - "6565-6567:6565"
     expose:
-      - 8080-8082
-      - 7000-7002
-      - 6565-6567
+      - 8080
+      - 7000
+      - 6565
     depends_on:
       config:
         condition: service_healthy
@@ -293,24 +359,28 @@ services:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   ## Security (Authn/Authz)
   keycloak:
-    image: quay.io/keycloak/keycloak:26.2
+    image: quay.io/keycloak/keycloak:26.4
     command: |
-      start-dev --hostname keycloak --http-port 9191 --import-realm
+      start-dev --hostname keycloak --http-port 9191 --import-realm --log-level=WARN
     container_name: keycloak
     hostname: keycloak
     deploy:
       resources:
         limits:
-          memory: "1024m"
+          memory: "2048m"
           cpus: "2"
-    restart: "on-failure"
+    restart: on-failure:5
     env_file:
       - .env
+    environment:
+      JVM_OPTIONS: ""
+      JAVA_TOOL_OPTIONS: ""
+      JAVA_OPTS: "-Xms1024m -Xmx1700m -XX:MetaspaceSize=96m -XX:MaxMetaspaceSize=256m -XX:+UseG1GC -XX:+UseContainerSupport"
     ports:
       - "9191:9191"
     expose:
@@ -319,21 +389,29 @@ services:
       - ./authorization:/opt/keycloak/data/import
       - keycloak_config:/opt/keycloak/config
       - keycloak_data:/opt/keycloak/data
+    healthcheck:
+      test: [
+        'CMD-SHELL',
+        '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { java.net.URI uri = java.net.URI.create(args[0]); System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)uri.toURL().openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://0.0.0.0:9000/health/live'
+      ]
+      interval: 30s
+      timeout: 5s
+      retries: 20
     logging:
       driver: fluentd
       options:
         fluentd-address: fluentd:24224
         fluentd-async: "true"
         fluentd-async-reconnect-interval: 10s
-        tag: docker.app
+        tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v3.3.0
+    image: prom/prometheus:v3.7.3
     container_name: prometheus
     hostname: prometheus
-    restart: "on-failure"
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -347,23 +425,98 @@ services:
       - 9090
     volumes:
       - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerting:/etc/prometheus/rules
     healthcheck:
       test: ps aux | grep prometheus || exit 1
       interval: 5s
       timeout: 2s
       retries: 3
-      start_period: 5s
+      start_period: 15s
     networks:
       camila_product_network:
-  grafana:
-    image: grafana/grafana:11.6.0
-    container_name: grafana
-    hostname: grafana
-    restart: "on-failure"
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: node-exporter
+    hostname: node-exporter
+    restart: unless-stopped
     deploy:
       resources:
         limits:
           memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    links:
+      - prometheus
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($|/)'
+    ports:
+      - "9100:9100"
+    networks:
+      camila_product_network:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.1
+    container_name: cadvisor
+    hostname: cadvisor
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "8880:8080"
+    networks:
+      camila_product_network:
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    container_name: alertmanager
+    hostname: alertmanager
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    volumes:
+      - ./monitoring/alertmanager:/etc/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - "9093:9093"
+    depends_on:
+      mailpit:
+        condition: service_healthy
+    links:
+      - mailpit
+    networks:
+      camila_product_network:
+  grafana:
+    image: grafana/grafana:12.2.1
+    container_name: grafana
+    hostname: grafana
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "1204m"
           cpus: "1"
     env_file:
       - .env
@@ -382,16 +535,16 @@ services:
       interval: 5s
       timeout: 2s
       retries: 3
-      start_period: 5s
+      start_period: 15s
     networks:
       camila_product_network:
   ## Tracing
   zipkin:
     # https://github.com/openzipkin/zipkin#quick-start
-    image: openzipkin/zipkin:3.5.0
+    image: openzipkin/zipkin:3.5.1
     container_name: zipkin
     hostname: zipkin
-    restart: "on-failure"
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -409,10 +562,10 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:8.18.0
+    image: elasticsearch:9.2.0
     container_name: elasticsearch
     hostname: elasticsearch
-    restart: "no"
+    restart: on-failure:1
     deploy:
       resources:
         limits:
@@ -424,7 +577,7 @@ services:
       - xpack.security.enabled=false
       - cluster.name=elasticsearch
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx1000m"
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx2000m"
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -438,10 +591,14 @@ services:
     networks:
       camila_product_network:
   fluentd:
-    build: ./monitoring/fluentd/.
+    build:
+      context: ./monitoring/fluentd/
+      dockerfile: Dockerfile
+      args:
+        FLUENTD_VERSION: "1.19"
     container_name: fluentd
     hostname: fluentd
-    restart: "no"
+    restart: on-failure:1
     deploy:
       resources:
         limits:
@@ -457,14 +614,21 @@ services:
     links:
       - elasticsearch
     volumes:
-      - ./monitoring/fluentd:/fluentd
+      - ./monitoring/fluentd/fluent.conf:/fluentd/etc/fluent.conf:ro
       - fluentd_logs:/fluentd/log
+      - fluentd_buffer:/fluentd/buffer
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       camila_product_network:
   kibana:
-    image: kibana:8.18.0
+    image: kibana:9.2.0
     container_name: kibana
     hostname: kibana
     restart: "no"
@@ -472,7 +636,7 @@ services:
       resources:
         limits:
           memory: "2048m"
-          cpus: "2"
+          cpus: "1"
     env_file:
       - .env
     ports:
@@ -480,12 +644,41 @@ services:
     expose:
       - 5601
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     links:
       - elasticsearch
     healthcheck:
       test: ["CMD", "curl", "-s", "-f", "http://localhost:5601/login"]
       retries: 5
+    networks:
+      camila_product_network:
+  ## Utilities
+  mailpit:
+    # https://mailpit.axllent.org/
+    image: axllent/mailpit:v1.27.10
+    container_name: mailpit
+    hostname: mailpit
+    restart: on-failure:1
+    deploy:
+      resources:
+        limits:
+          memory: "256m"
+          cpus: "0.5"
+    env_file:
+      - .env
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    expose:
+      - 1025
+      - 8025
+    healthcheck:
+      test: ps aux | grep mailpit || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 5s
     networks:
       camila_product_network:
 
@@ -497,6 +690,11 @@ volumes:
       device: tmpfs
   camila_product_couchbase_data:
     name: camila_product_couchbase_data
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+  camila_product_redis_data:
+    name: camila_product_redis_data
     driver_opts:
       type: tmpfs
       device: tmpfs
@@ -547,9 +745,25 @@ volumes:
       device: tmpfs
   fluentd_logs:
     name: fluentd_logs
+    driver: local
     driver_opts:
-      type: tmpfs
-      device: tmpfs
+      type: none
+      o: bind
+      device: ./data/fluentd/logs
+  fluentd_buffer:
+    name: fluentd_buffer
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/fluentd/buffer
+  fluentd_config:
+    name: fluentd_config
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/fluentd/config
 
 networks:
   camila_product_network:

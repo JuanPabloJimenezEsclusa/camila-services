@@ -89,7 +89,7 @@ Resources:
         - "camila/read"
         - "camila/write"
       CallbackURLs:
-        - "https://poc.jpje-kops.xyz/callback"
+        - "https://tech.jpje.xyz/callback"
         - "https://oauth.pstmn.io/v1/callback"
       LogoutURLs:
         - "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"
@@ -122,7 +122,7 @@ Resources:
         - "camila/read"
         - "camila/write"
       CallbackURLs:
-        - "https://poc.jpje-kops.xyz/callback"
+        - "https://tech.jpje.xyz/callback"
         - "https://oauth.pstmn.io/v1/callback"
       LogoutURLs:
         - "https://camila-realm.auth.eu-west-1.amazoncognito.com/logout"

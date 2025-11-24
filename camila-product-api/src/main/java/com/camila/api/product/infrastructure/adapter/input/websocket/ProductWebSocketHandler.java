@@ -19,24 +19,17 @@ import reactor.core.publisher.Mono;
  * The type Product web socket handler.
  */
 @Component
-public class ProductWebSocketHandler implements WebSocketHandler {
+record ProductWebSocketHandler(
+  ProductUseCase productUseCase,
+  ObjectMapper objectMapper
+) implements WebSocketHandler {
 
   private static final String DEFAULT_WEIGHT = "0.0000000001";
   private static final String DEFAULT_PAGE = "0";
   private static final String DEFAULT_SIZE = "25";
 
-  private final ProductUseCase productUseCase;
-  private final ObjectMapper objectMapper;
-
-  /**
-   * Instantiates a new Product web socket handler.
-   *
-   * @param productUseCase the product user case
-   * @param objectMapper the object mapper
-   */
-  ProductWebSocketHandler(final ProductUseCase productUseCase, final ObjectMapper objectMapper) {
-    this.productUseCase = productUseCase;
-    this.objectMapper = objectMapper;
+  private static String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName, final String defaultValue) {
+    return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asText).orElse(defaultValue);
   }
 
   @Override
@@ -50,7 +43,7 @@ public class ProductWebSocketHandler implements WebSocketHandler {
 
   private Flux<String> handleMessage(final String message) {
     try {
-      var jsonNode = objectMapper.readTree(message);
+      var jsonNode = this.objectMapper.readTree(message);
       var method = jsonNode.get("method").asText("1");
       return switch (SocketMethod.valueOf(method)) {
         case SocketMethod.FIND_BY_INTERNAL_ID -> handleFindByInternalId(jsonNode);
@@ -62,7 +55,7 @@ public class ProductWebSocketHandler implements WebSocketHandler {
   }
 
   private Flux<String> handleFindByInternalId(final JsonNode jsonNode) {
-    return productUseCase
+    return this.productUseCase
       .findByInternalId(jsonNode.get("internalId").asText())
       .flatMapMany(this::convertProductToString)
       .switchIfEmpty(Flux.just("Product not found"));
@@ -77,24 +70,20 @@ public class ProductWebSocketHandler implements WebSocketHandler {
       "page", getNodeTextOrDefault(jsonNode, "page", DEFAULT_PAGE),
       "size", getNodeTextOrDefault(jsonNode, "size", DEFAULT_SIZE)
     );
-    return productUseCase.sortByMetricsWeights(requestParams)
+    return this.productUseCase.sortByMetricsWeights(requestParams)
       .flatMap(this::convertProductToString)
       .switchIfEmpty(Flux.just("No products found"));
   }
 
   private Flux<String> convertProductToString(final Product product) {
     try {
-      return Flux.just(objectMapper.writeValueAsString(product));
+      return Flux.just(this.objectMapper.writeValueAsString(product));
     } catch (JsonProcessingException e) {
       return Flux.just("Error converting product to string: " + e.getMessage());
     }
   }
 
-  private String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName, final String defaultValue) {
-    return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asText).orElse(defaultValue);
-  }
-
-  enum SocketMethod {
+  private enum SocketMethod {
     FIND_BY_INTERNAL_ID,
     SORT_PRODUCTS
   }

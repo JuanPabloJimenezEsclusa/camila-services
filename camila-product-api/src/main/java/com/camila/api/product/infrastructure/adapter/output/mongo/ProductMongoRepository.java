@@ -17,6 +17,6 @@ public interface ProductMongoRepository extends ReactiveCrudRepository<ProductMo
    * @param internalId the internal id
    * @return the mono
    */
-  @Query(value = "{ 'internalId' : ?0 }")
+  @Query("{ 'internalId' : ?0 }")
   Mono<ProductMongoEntity> findByInternalId(String internalId);
 }

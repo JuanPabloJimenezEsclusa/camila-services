@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Example of usage: ./start.sh buildProjects=true
+
 set -o errexit # Exit on error. Append "|| true" if you expect an error.
 set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
@@ -9,26 +11,39 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
+parameter="${1:-"buildProjects=false"}"
+eval "${parameter}"
+echo "buildProjects: ${buildProjects:-}"
+
 workspace="$(pwd)"
 baseProjectPath="../../../"
 
 # Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-21.0.1+12.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
 
 __buildProjects() {
-  # root project workspace path
-  cd "${workspace}/${baseProjectPath}"
-  # compile and build the project
-  mvn clean spring-boot:build-image -Dmaven.test.skip=true -Dmaven.build.cache.enabled=false -f ./pom.xml
+  if [[ "${buildProjects:-}" == "true" ]]; then
+    echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
+    # root project workspace path
+    cd "${workspace}/${baseProjectPath}"
+    # compile and build the project
+    mvn clean spring-boot:build-image \
+      -Dmaven.test.skip=true \
+      -Dmaven.build.cache.enabled=false \
+      --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api \
+      -f ./pom.xml
+  else
+    echo -e "🚧 Skip build projects"
+  fi
 }
 
 __initServices() {
   cd "${workspace}"
   # init services
-  docker-compose --file docker-compose.yml up -d --build --force-recreate
+  docker compose --file docker-compose.yml up -d --build --force-recreate
   # show services status
-  docker-compose --file docker-compose.yml ps
+  docker compose --file docker-compose.yml ps
 }
 
 main() {

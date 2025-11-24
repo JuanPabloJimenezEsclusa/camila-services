@@ -9,8 +9,7 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
-# Delete app runner stack
-delete_app_runner_stack() {
+__delete_app_runner_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation delete-stack \
@@ -25,8 +24,7 @@ delete_app_runner_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Delete secrets stack
-delete_secrets_stack() {
+__delete_secrets_stack() {
   echo "Init ${FUNCNAME:-} ..."
 
   aws cloudformation delete-stack \
@@ -42,14 +40,14 @@ delete_secrets_stack() {
   echo "End ${FUNCNAME:-} successfully!"
 }
 
-# Main script
+# Main function
 main() {
   echo "Init ${0##*/} (${FUNCNAME:-})"
 
   echo -e "${SEPARATOR} 🗑️ Delete app runner stack. ${SEPARATOR}"
-  delete_app_runner_stack
+  __delete_app_runner_stack
   echo -e "${SEPARATOR} 🗑️ Delete secrets stack. ${SEPARATOR}"
-  delete_secrets_stack
+  __delete_secrets_stack
 
   echo "Done ${0##*/} (${FUNCNAME:-})"
 }

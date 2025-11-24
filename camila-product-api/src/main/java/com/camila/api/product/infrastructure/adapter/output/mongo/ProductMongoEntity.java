@@ -28,14 +28,7 @@ public record ProductMongoEntity(
 
   /**
    * Instantiates a new Product mongo entity.
-   *
-   * @param id         the id
-   * @param internalId the internal id
-   * @param name       the name
-   * @param category   the category
-   * @param salesUnits the sales units
-   * @param stock      the stock
-   */
+   */ // NOPMD
   public ProductMongoEntity {
     Objects.requireNonNull(id);
     Objects.requireNonNull(internalId);

@@ -10,7 +10,7 @@ import com.camila.api.product.domain.model.Metrics;
 /**
  * The type Product weight resolver.
  */
-public class ProductWeightResolver {
+public final class ProductWeightResolver {
 
   public static final double DEFAULT_WEIGHT = 0.0000000001;
 
@@ -31,7 +31,7 @@ public class ProductWeightResolver {
       .collect(Collectors.toMap(
         MetricWeight::metric,
         MetricWeight::weight,
-        (existing, replacement) -> existing)
+        (existing, _) -> existing)
       );
 
     return new AppliedWeights(

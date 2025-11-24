@@ -1,7 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
 import java.time.Duration;
-import java.util.Map;
 
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
@@ -13,6 +12,7 @@ import reactor.core.scheduler.Schedulers;
  */
 @GrpcService
 class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
+  private static final long TIMEOUT_IN_SECONDS = 30L;
   private final ProductUseCase productUseCase;
 
   /**
@@ -24,34 +24,7 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
     this.productUseCase = productUseCase;
   }
 
-  @Override
-  public void getProductByInternalId(final ProductInternalId request,
-                                     final StreamObserver<Product> responseObserver) {
-    var domainProduct = productUseCase.findByInternalId(request.getInternalId());
-    domainProduct
-      .subscribeOn(Schedulers.boundedElastic())
-      .timeout(Duration.ofMillis(5_000L))
-      .subscribe(
-        product -> responseObserver.onNext(convertToGrpcProduct(product)),
-        responseObserver::onError,
-        responseObserver::onCompleted);
-  }
-
-  @Override
-  public void sortByMetricsWeights(final SortByMetricsWeightsRequest request,
-                                   final StreamObserver<Product> responseObserver) {
-    Map<String, String> requestParams = request.getRequestParamsMap();
-    var domainProducts = productUseCase.sortByMetricsWeights(requestParams);
-    domainProducts
-      .subscribeOn(Schedulers.boundedElastic())
-      .timeout(Duration.ofMillis(30_000L))
-      .subscribe(
-        product -> responseObserver.onNext(convertToGrpcProduct(product)),
-        responseObserver::onError,
-        responseObserver::onCompleted);
-  }
-
-  private Product convertToGrpcProduct(final com.camila.api.product.domain.model.Product product) {
+  private static Product convertToGrpcProduct(final com.camila.api.product.domain.model.Product product) {
     return Product.newBuilder()
       .setId(product.id())
       .setInternalId(product.internalId())
@@ -62,5 +35,29 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
       .setProfitMargin(product.profitMargin())
       .setDaysInStock(product.daysInStock())
       .build();
+  }
+
+  @Override
+  public void getProductByInternalId(final ProductInternalId request,
+                                     final StreamObserver<Product> responseObserver) {
+    this.productUseCase.findByInternalId(request.getInternalId())
+      .subscribeOn(Schedulers.boundedElastic())
+      .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
+      .subscribe(
+        product -> responseObserver.onNext(convertToGrpcProduct(product)),
+        responseObserver::onError,
+        responseObserver::onCompleted);
+  }
+
+  @Override
+  public void sortByMetricsWeights(final SortByMetricsWeightsRequest request,
+                                   final StreamObserver<Product> responseObserver) {
+    this.productUseCase.sortByMetricsWeights(request.getRequestParamsMap())
+      .subscribeOn(Schedulers.boundedElastic())
+      .timeout(Duration.ofSeconds(TIMEOUT_IN_SECONDS))
+      .subscribe(
+        product -> responseObserver.onNext(convertToGrpcProduct(product)),
+        responseObserver::onError,
+        responseObserver::onCompleted);
   }
 }

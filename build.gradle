@@ -1,15 +1,16 @@
 plugins {
+  // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
-  id 'org.sonarqube' version '6.2.0.5505'
-  id 'org.springframework.boot' version '3.4.5' apply false
-  id 'io.spring.dependency-management' version '1.1.6' apply false
-  id 'org.graalvm.buildtools.native' version '0.10.6' apply false
-  id 'com.github.spotbugs' version '6.0.7' apply false
-  id 'org.openapi.generator' version '7.12.0' apply false
-  id 'org.openrewrite.rewrite' version '6.6.1' apply false
-  id 'org.springdoc.openapi-gradle-plugin' version '1.8.0' apply false
-  id "io.freefair.lombok" version "8.13.1" apply false
+  id 'org.sonarqube' version '7.0.1.6134'
+  id 'org.springframework.boot' version '3.5.8' apply false
+  id 'io.spring.dependency-management' version '1.1.7' apply false
+  id 'org.graalvm.buildtools.native' version '0.11.3' apply false
+  id 'com.github.spotbugs' version '6.4.5' apply false
+  id 'org.openapi.generator' version '7.17.0' apply false
+  id 'org.openrewrite.rewrite' version '7.20.0' apply false
+  id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
+  id "io.freefair.lombok" version "9.1.0" apply false
 }
 
 allprojects {
@@ -32,37 +33,42 @@ subprojects {
   apply plugin: 'io.freefair.lombok'
 
   java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
   }
 
   ext {
-    springBootVersion = '3.4.5'
-    springFrameworkVersion = '6.2.5'
-    springCloudVersion = '2024.0.1'
-    springBootAdminVersion = '3.2.1'
+    springBootVersion = '4.0.0'
+    springFrameworkVersion = '6.2.11'
+    springCloudVersion = '2025.0.0'
+    springBootAdminVersion = '3.5.6'
+
+    // jakarta
+    javaxAnnotationApiVersion = '1.3.2'
 
     // Observability
-    opentelemetryVersion = '1.49.0'
-    opentelemetryApiIncubatorVersion = '1.49.0-alpha'
+    opentelemetryVersion = '1.56.0'
+    opentelemetryApiIncubatorVersion = '1.55.0-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.8.0'
+    couchbaseJavaClientVersion = '3.10.0'
 
     // Testing
-    testcontainersVersion = '1.20.6'
-    cucumberVersion = '7.22.0'
-    junitPlatformSuiteVersion = '1.12.2'
-    archunitJunit5Version = '1.4.0'
-    instancioJunitVersion = '5.4.0'
-    awaitilityVersion = '4.2.2'
+    testcontainersVersion = '2.0.2'
+    testcontainersRedis = '2.2.4'
+    cucumberVersion = '7.32.0'
+    junitVersion = '6.0.1'
+    junitPlatformSuiteVersion = '6.0.1'
+    archunitJunit5Version = '1.4.1'
+    instancioJunitVersion = '5.5.1'
+    awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
-    flapdoodleEmbedMongoSpring3xVersion = '4.20.0'
+    jacocoVersion = '0.8.14'
 
     // API Documentation
-    springdocOpenapiVersion = '2.8.8'
-    graphqlJavaVersion = '23.1'
-    graphqlJavaExtendedScalarsVersion = '22.0'
+    springdocOpenapiVersion = '2.8.14'
+    graphqlJavaVersion = '24.3'
+    graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
     protobufJavaVersion = '3.25.3'
@@ -71,20 +77,21 @@ subprojects {
     // Tools
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
-    jspecifyVersion = '0.3.0'
-    chaosMonkeySpringBootVersion = '3.1.0'
+    jspecifyVersion = '1.0.0'
+    commonsLang3 = '3.19.0'
+    chaosMonkeySpringBootVersion = '3.2.2'
 
     // Plugins
-    flattenmavenpluginVersion = '1.6.0'
-    pitestavenmavenpluginVersion = '1.15.8'
-    jimgemavenPluginVersion = '3.4.2'
-    gitCommitIdMavenPluginVersion = '9.0.1'
-    mavenSitePluginVersion = '4.0.0-M13'
-    mavenCheckstylePluginVersion = '3.3.1'
-    mavenCompilerPluginVersion = '3.13.0'
-    dependencyCheckMavenVersion = '9.2.1'
-    checkstyleVersion = '10.23.0'
-    mavenProjectInfoReportsPluginVersion = '3.5.0'
+    flattenmavenpluginVersion = '1.7.3'
+    pitestavenmavenpluginVersion = '1.21.0'
+    jimgemavenPluginVersion = '3.4.6'
+    gitCommitIdMavenPluginVersion = '9.0.2'
+    mavenSitePluginVersion = '3.21.0'
+    mavenCheckstylePluginVersion = '3.6.0'
+    mavenCompilerPluginVersion = '3.14.1'
+    dependencyCheckMavenVersion = '12.1.9'
+    checkstyleVersion = '11.1.0'
+    mavenProjectInfoReportsPluginVersion = '3.9.0'
     chaosMonkeySpringBootVersion = '3.2.0'
   }
 
@@ -94,6 +101,7 @@ subprojects {
       mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
       mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
       mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+      mavenBom "org.junit:junit-bom:${junitVersion}"
     }
 
     dependencies {
@@ -110,7 +118,21 @@ subprojects {
 
       // Couchbase
       dependency "com.couchbase.client:java-client:${couchbaseJavaClientVersion}"
+
+      // Provide jspecify annotations to all subprojects so @NullMarked is available at compile time
+      dependency "org.jspecify:jspecify:${jspecifyVersion}"
+
+      // Pin junit-platform artifacts (ensure Cucumber engine finds required classes)
+      dependency "org.junit.platform:junit-platform-engine:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-commons:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-launcher:${junitPlatformSuiteVersion}"
+      dependency "org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}"
+      dependency "org.junit.jupiter:junit-jupiter:${junitVersion}"
     }
+  }
+
+  dependencies {
+    compileOnly "org.jspecify:jspecify:${jspecifyVersion}"
   }
 
   checkstyle {
@@ -128,8 +150,33 @@ subprojects {
     exclude '**/benchmark/**'
   }
 
+  tasks.withType(Test) {
+    // Default to JUnit Platform so JUnit 5 tests are discovered across subprojects
+    useJUnitPlatform()
+    // Don't fail the build when test discovery finds no tests (some modules have test sources but
+    // use custom suites or only integration tests). The unitTest task still enforces discovery.
+    failOnNoDiscoveredTests = false
+
+    // Disable Eureka/discovery during unit tests to avoid background HTTP calls to localhost:8761
+    // Tests that require discovery can explicitly enable it via system properties.
+    systemProperty 'eureka.client.enabled', 'false'
+    systemProperty 'spring.cloud.discovery.enabled', 'false'
+
+    // Prevent Eureka Server auto-configuration in tests (avoids missing ApplicationInfoManager bean)
+    // This excludes the server auto-configuration classes so tests that start the whole context
+    // won't attempt to create Eureka server beans locally.
+    def excluded = 'org.springframework.cloud.netflix.eureka.server.EurekaServerAutoConfiguration'
+    // If there are other server classes to exclude, comma-separate them
+    systemProperty 'spring.autoconfigure.exclude', excluded
+  }
+
   tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    // If you run gradle ... -PerrorProne the build will enable stricter compiler flags
+    if (project.hasProperty('errorProne')) {
+      options.compilerArgs += ['-Xlint:all', '-Werror']
+      println "ErrorProne mode enabled for project ${project.name}"
+    }
   }
 
   bootJar {
@@ -161,34 +208,32 @@ subprojects {
     dependsOn tasks.named('unitTest')
   }
 
+  // Replace the existing registration block for jacocoAllTestReport with a provider variable so we can
+  // configure the root aggregation dependency without forcing task creation in other projects.
   tasks.register('jacocoAllTestReport', JacocoReport) {
     executionData fileTree(project.buildDir).include("/jacoco/*.exec")
     reports {
       xml.required = true
       html.required = true
     }
-    afterEvaluate {
-      classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: [
-          '**/input/grpc/**',
-          '**/input/rest/api/**',
-          '**/input/rest/dto/**',
-          '**/input/security/*Config**',
-          '**/*MapperImpl**'
-        ])
-      }))
-    }
-  }
-}
 
-sonar {
-  properties {
-    property "sonar.organization", "juanpablojimenezesclusa"
-    property "sonar.host.url", "https://sonarcloud.io"
-    property "sonar.projectKey", "JuanPabloJimenezEsclusa_camila-services"
-    property "sonar.scm.exclusions.disabled", "true"
-    property "sonar.coverage.jacoco.xmlReportPaths", "camila-product-api/build/reports/jacoco/test/jacocoTestReport.xml"
-    property "sonar.exclusions", "**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**"
+    // Configure classDirectories lazily using sourceSets to avoid using project.afterEvaluate
+    def jacocoExcludes = [
+      '**/input/grpc/**',
+      '**/input/rest/api/**',
+      '**/input/rest/dto/**',
+      '**/input/security/*Config**',
+      '**/*MapperImpl**'
+    ]
+    classDirectories.setFrom(files({
+      // Collect class directories from the main sourceSet and apply the exclude filter lazily
+      project.sourceSets.main.output.classesDirs.files.collect { dir ->
+        fileTree(dir: dir, exclude: jacocoExcludes)
+      }
+    }))
+  }.configure { reportTask ->
+    // Attach the subproject jacoco report task as a dependency of the root aggregate task
+    rootProject.tasks.named('aggregateJacoco') { dependsOn reportTask }
   }
 }
 
@@ -199,3 +244,72 @@ task emptyJar(type: Jar) {
 
 jar.enabled = false
 artifacts.archives emptyJar
+
+// Root aggregation task for jacoco reports from subprojects. Each subproject will attach its
+// own jacocoAllTestReport provider to this task without forcing cross-project evaluation.
+tasks.register('aggregateJacoco') {
+  group = 'verification'
+  description = 'Aggregate jacocoAllTestReport from subprojects'
+}
+
+// Sonar token helper: read from project property 'sonar.token' or environment variable SONAR_TOKEN
+// This is used to decide whether to run Sonar analysis and to provide credentials to the plugin.
+ext.sonarToken = findProperty('sonar.token') ?: System.getenv('SONAR_TOKEN')
+
+sonar {
+  properties {
+    property "sonar.organization", "juanpablojimenezesclusa"
+    property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.projectKey", "JuanPabloJimenezEsclusa_camila-services"
+    property "sonar.scm.exclusions.disabled", "true"
+    property "sonar.coverage.jacoco.xmlReportPaths", "camila-product-api/build/reports/jacoco/test/jacocoTestReport.xml"
+    property "sonar.exclusions", "**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**"
+    property "sonar.branch.name", "develop"
+
+    // Only set token property if we actually have it; otherwise don't configure it here
+    if (rootProject.ext.sonarToken) {
+      property "sonar.token", rootProject.ext.sonarToken
+      // sonar.login is commonly used by Sonar; set it too for compatibility
+      property "sonar.login", rootProject.ext.sonarToken
+    }
+  }
+}
+
+// Composite task to run build + quality checks. Use -PerrorProne and -PqualityCheck to enable extra steps.
+tasks.register('qualityBuild') {
+  group = 'verification'
+  description = 'Runs clean, build and optional quality checks. Opt-in flags: -PerrorProne -PqualityCheck'
+  dependsOn 'clean', 'build', 'aggregateJacoco'
+
+  doFirst {
+    println "Starting qualityBuild. Flags: errorProne=${project.hasProperty('errorProne')}, qualityCheck=${project.hasProperty('qualityCheck')}"
+  }
+
+  // If user requests qualityCheck, run Sonar analysis (prefer 'sonar' task; fall back to 'sonarqube')
+  if (project.hasProperty('qualityCheck')) {
+    def sonarTaskName = tasks.findByName('sonar') ? 'sonar' : 'sonarqube'
+
+    if (rootProject.ext.sonarToken) {
+      dependsOn sonarTaskName
+    } else {
+      // Don't fail the build when token is missing; print an informative message instead.
+      doFirst {
+        println "Skipping Sonar analysis: set the project property 'sonar.token' or env var SONAR_TOKEN to enable."
+      }
+    }
+  }
+}
+
+// Wire jacocoAllTestReport dependencies after all projects are evaluated to avoid touching
+// subproject evaluation state during root project configuration (prevents "cannot be executed in the current context").
+gradle.projectsEvaluated {
+  def quality = tasks.named('qualityBuild')
+  def jacocoProviders = subprojects.collect { p ->
+    // findByName won't realize the task; if it exists, get a provider to depend on
+    p.tasks.findByName('jacocoAllTestReport') != null ? p.tasks.named('jacocoAllTestReport') : null
+  }.findAll { it != null }
+
+  if (!jacocoProviders.isEmpty()) {
+    quality.configure { dependsOn jacocoProviders }
+  }
+}

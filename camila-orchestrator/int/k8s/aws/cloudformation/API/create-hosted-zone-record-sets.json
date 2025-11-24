@@ -4,7 +4,7 @@
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "poc.jpje-kops.xyz",
+        "Name": "tech.jpje.xyz",
         "Type": "A",
         "AliasTarget": {
           "HostedZoneId": "Z32O12XQLNTSW2",

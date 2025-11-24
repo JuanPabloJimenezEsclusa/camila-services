@@ -1,0 +1,31 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'mailpit:1025'
+  smtp_from: 'alertmanager@camila.local'
+  smtp_require_tls: false
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'email-notifications'
+
+receivers:
+- name: 'email-notifications'
+  email_configs:
+  - to: 'juan.pablo.jimenez.esclusa@gmail.com'
+    from: 'alertmanager@camila.local'
+    smarthost: 'mailpit:1025'
+    require_tls: false
+    html: |
+      <h2>Camila Services Alert: {{ .GroupLabels.alertname }}</h2>
+      <p><strong>Status:</strong> {{ .Status }}</p>
+      
+      {{ range .Alerts }}
+      <h3>{{ .Annotations.summary }}</h3>
+      <p>{{ .Annotations.description }}</p>
+      <p><strong>Instance:</strong> {{ .Labels.instance }}</p>
+      <p><strong>Severity:</strong> {{ .Labels.severity }}</p>
+      <p><strong>Started:</strong> {{ .StartsAt }}</p>
+      {{ end }}

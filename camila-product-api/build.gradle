@@ -6,9 +6,10 @@ plugins {
   id 'org.openapi.generator'
   id 'org.springdoc.openapi-gradle-plugin'
   id 'com.google.protobuf' version '0.9.5'
-  id 'com.google.cloud.tools.jib' version '3.4.2'
+  id 'com.google.cloud.tools.jib' version '3.5.1'
 }
 
+description = 'Camila Service Product API'
 group = 'com.camila.api'
 version = '1.0.0'
 
@@ -33,6 +34,7 @@ dependencies {
   // Spring Boot Data
   implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
   implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+  implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
   implementation('org.springframework.boot:spring-boot-starter-data-couchbase') {
     exclude group: 'com.couchbase.client', module: 'java-client'
   }
@@ -75,15 +77,17 @@ dependencies {
   implementation "io.grpc:grpc-netty:${grpcVersion}"
   implementation "io.grpc:grpc-protobuf:${grpcVersion}"
   implementation "io.grpc:grpc-stub:${grpcVersion}"
-  // Workaround for @javax.annotation.Generated
-  implementation 'javax.annotation:javax.annotation-api:1.3.1'
+  implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
 
   // API Documentation
-  implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}"
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {
+    exclude group: 'org.apache.commons', module: 'commons-lang3'
+  }
 
   // Utilities
   implementation 'com.github.ben-manes.caffeine:caffeine'
   implementation "org.jspecify:jspecify:${jspecifyVersion}"
+  implementation "org.apache.commons:commons-lang3:${commonsLang3}"
 
   // Development Tools
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -102,7 +106,6 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
   testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
-  testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:${flapdoodleEmbedMongoSpring3xVersion}"
   testImplementation "com.tngtech.archunit:archunit-junit5:${archunitJunit5Version}"
   testImplementation "org.instancio:instancio-junit:${instancioJunitVersion}"
 
@@ -116,13 +119,19 @@ dependencies {
   // Cucumber
   testImplementation "io.cucumber:cucumber-core:${cucumberVersion}"
   testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
-  testImplementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+  // exclude junit-platform-engine transitive from Cucumber (it requests a different platform version)
+  testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}") {
+    exclude group: 'org.junit.platform', module: 'junit-platform-engine'
+  }
   testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
   testImplementation "org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}"
+  testImplementation "org.junit.platform:junit-platform-engine:${junitPlatformSuiteVersion}"
 
   // Testcontainers
   testImplementation 'org.testcontainers:junit-jupiter'
+  testImplementation 'org.testcontainers:mongodb'
   testImplementation 'org.testcontainers:couchbase'
+  testImplementation "com.redis:testcontainers-redis:${testcontainersRedis}"
 
   // gRPC Testing
   testImplementation("net.devh:grpc-client-spring-boot-starter:${grpcServerSpringBootStarterVersion}") {
@@ -131,7 +140,9 @@ dependencies {
 }
 
 tasks.named('test') {
-  useJUnitPlatform()
+  useJUnitPlatform {
+    exclude "**/*Behaviour**"
+  }
 }
 
 protobuf {
@@ -171,7 +182,7 @@ openApiGenerate {
 }
 
 jacoco {
-  toolVersion = '0.8.13'
+  toolVersion = "${jacocoVersion}"
 }
 
 jacocoTestReport {
@@ -202,16 +213,16 @@ configurations {
 // Profile equivalents - configure with Gradle properties or system properties
 if (project.hasProperty('native') || System.getProperty('native') == 'true') {
   dependencies {
-    implementation 'org.bouncycastle:bcpkix-jdk18on:1.78.1'
-    implementation 'org.bouncycastle:bcprov-jdk18on:1.78.1'
-    implementation 'org.bouncycastle:bctls-jdk18on:1.78.1'
+    implementation 'org.bouncycastle:bcpkix-jdk18on:1.82'
+    implementation 'org.bouncycastle:bcprov-jdk18on:1.82'
+    implementation 'org.bouncycastle:bctls-jdk18on:1.82'
   }
 }
 
 if (project.hasProperty('jib') || System.getProperty('jib') == 'true') {
   jib {
     from {
-      image = 'eclipse-temurin:21-jdk-alpine'
+      image = 'eclipse-temurin:25-jdk-alpine'
     }
     to {
       image = "docker.io/library/${project.name}-serveless"
@@ -242,6 +253,30 @@ sourceSets {
   main {
     java {
       srcDir "$buildDir/generated/openapi/src/main/java"
+    }
+  }
+}
+
+// Process Maven-style property placeholders in resources (like @project.name@, @project.version@)
+// This ensures compatibility between Maven and Gradle builds
+processResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
+    }
+  }
+}
+
+processTestResources {
+  filesMatching(['application*.yml', 'application*.yaml']) {
+    filter { line ->
+      line.replace('@project.name@', project.name)
+          .replace('@project.version@', project.version.toString())
+          .replace('@project.artifactId@', project.name)
+          .replace('@project.groupId@', project.group.toString())
     }
   }
 }

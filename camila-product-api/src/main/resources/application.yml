@@ -2,6 +2,10 @@
 spring:
   application:
     name: "@project.name@"
+  # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
+  threads:
+    virtual:
+      enabled: true
   banner:
     # https://www.ascii-art-generator.org/
     location: classpath:/api-banner.txt
@@ -11,8 +15,8 @@ spring:
       enabled: false
   couchbase:
     connection-string: couchbase://localhost:11207
-    username: Administrator
-    password: password
+    username: ${COUCHBASE_USER:Administrator}
+    password: ${COUCHBASE_PASS:password}
     env:
       ssl:
         enabled: false
@@ -22,7 +26,7 @@ spring:
       scope-name: product
     mongodb:
       # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
-      uri: "mongodb://camilauser:camilauser@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
       authentication-database: camila-db
       ssl:
         enabled: false
@@ -126,14 +130,6 @@ management:
 logging:
   charset:
     console: UTF-8
-  structured:
-    format:
-      console: ecs
-    ecs:
-      service:
-        name: "${info.app.name}"
-        version: "${info.app.version}"
-        environment: "${spring.profiles.active}"
   level:
     root: INFO
     com.camila.api.product: DEBUG
@@ -142,21 +138,18 @@ logging:
     org.springframework: INFO
     org.springframework.web: WARN
     org.springframework.data: WARN
+    org.springframework.cache: TRACE
     org.springframework.context: WARN
     org.mongodb: WARN
     com.mongodb: WARN
     com.couchbase: WARN
+    io.lettuce: WARN
     org.springframework.boot: INFO
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: INFO
     org.springframework.boot.web.embedded.netty: WARN
     net.devh.boot.grpc.server: WARN
     io.grpc.netty: WARN
     reactor: WARN
-
-de:
-  flapdoodle:
-    mongodb:
-      embedded:
-        version: 8.0.5
 
 server:
   port: ${PORT:8080}
@@ -257,8 +250,16 @@ spring:
       enabled: false
   security:
     user:
-      name: camila
-      password: camila
+      name: ${BASIC_AUTH_USER:camila}
+      password: ${BASIC_AUTH_PASS:camila}
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+    healthcheck:
+      enabled: false
 
 ---
 ###### Enable config|discovery feature on remote deploy ######
@@ -284,6 +285,26 @@ spring:
       profile: ${SPRING_PROFILES_ACTIVE:dev}
       name: ${spring.application.name}
       allow-override: true
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USER:default}
+      password: ${REDIS_PASSWORD:camila}
+      timeout: 20000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+  cache:
+    type: redis
+    cache-names: findByInternalId,sortedProducts
+    redis:
+      time-to-live: 120s
+      cache-null-values: true
+      use-key-prefix: true
+      key-prefix: camila-product
   # Enable keycloak security
   security:
     oauth2:
@@ -349,7 +370,7 @@ spring:
       on-profile: "int"
   data:
     mongodb:
-      uri: "mongodb://camilauser:camilauser@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
+      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
       authentication-database: camila-db
   rsocket:
     server:
@@ -423,6 +444,16 @@ openapi:
 
 # Enable logging for all levels
 logging:
+  # https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.structured
+  structured:
+    format:
+      # https://www.elastic.co/docs/reference/ecs
+      console: ecs
+    ecs:
+      service:
+        name: "${info.app.name}"
+        version: "${info.app.version}"
+        environment: "${spring.profiles.active}"
   level:
     reactor: ERROR
     org.hibernate.validator: ERROR
@@ -447,13 +478,37 @@ spring:
       on-profile: "local-compose"
   couchbase:
     connection-string: couchbase
+    username: ${COUCHBASE_USER:Administrator}
+    password: ${COUCHBASE_PASS:password}
+    env:
+      ssl:
+        enabled: false
   data:
     mongodb:
-      uri: "mongodb://camilauser:camilauser@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
       auto-index-creation: true
       uuid-representation: JAVA_LEGACY
       ssl:
         enabled: false
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USER:default}
+      password: ${REDIS_PASSWORD:camila}
+      timeout: 20000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+  cache:
+    type: redis
+    cache-names: findByInternalId,sortedProducts
+    redis:
+      time-to-live: 120s
+      cache-null-values: true
+      use-key-prefix: true
+      key-prefix: camila-product
   # https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose
   docker:
     compose:
@@ -469,7 +524,7 @@ spring:
         timeout: 15s
       readiness:
         timeout: 2m
-        wait: only_if_started
+        wait: always
       profiles:
         active: "docker-compose"
       file: "${user.dir}/../camila-orchestrator/dev/compose/docker-compose-spring-boot.yml"
@@ -494,10 +549,12 @@ logging:
     org.springframework: WARN
     org.springframework.web: WARN
     org.springframework.data: WARN
+    org.springframework.cache: TRACE
     org.springframework.context: WARN
     org.mongodb: WARN
     com.mongodb: WARN
     com.couchbase: WARN
+    io.lettuce: WARN
     org.springframework.boot: WARN
     org.springframework.boot.actuate: WARN
     org.springframework.boot.docker: WARN
