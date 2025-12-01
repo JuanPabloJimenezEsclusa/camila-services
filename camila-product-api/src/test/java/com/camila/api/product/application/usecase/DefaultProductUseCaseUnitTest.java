@@ -1,5 +1,7 @@
 package com.camila.api.product.application.usecase;
 
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
@@ -18,7 +20,6 @@ import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.port.ProductRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,45 +47,43 @@ class DefaultProductUseCaseUnitTest {
   private static Stream<Arguments> validProductIds() {
     // internalId
     return Stream.of(
-      Arguments.of(Named.of("Standard ID", "123")),
-      Arguments.of(Named.of("ID with special chars", "ABC-123")),
-      Arguments.of(Named.of("ID with leading zeros", "00000")),
-      Arguments.of(Named.of("Long ID", "9999999999"))
-    );
+      arguments(named("Standard ID", "123")),
+      arguments(named("ID with special chars", "ABC-123")),
+      arguments(named("ID with leading zeros", "00000")),
+      arguments(named("Long ID", "9999999999")));
   }
 
   private static Stream<Arguments> sortScenarios() {
     // requestParams, expectedOffset, expectedLimit
     return Stream.of(
-      Arguments.of(
-        Named.of("Default pagination values",
-        Map.of("salesUnits", "0.38", "stock", "0.60", "profitMargin", "0.01", "daysInStock", "0.01")),
-        0L, 10L
-      ),
-      Arguments.of(
-        Named.of("Custom pagination values",
-        Map.of("salesUnits", "0.75", "stock", "0.23", "profitMargin", "0.01", "daysInStock", "0.01", "page", "2", "size", "5")),
-        10L, 5L
-      ),
-      Arguments.of(Named.of("Filtering unknown metrics", Map.of("salesUnits", "1", "unknown", "1", "invalidMetric", "1")), 0L, 10L),
-      Arguments.of(Named.of("Empty parameters", Map.of()), 0L, 10L),
-      Arguments.of(Named.of("With page parameter only", Map.of("page", "3")), 30L, 10L),
-      Arguments.of(Named.of("With size parameter only", Map.of("size", "25")), 0L, 25L),
-      Arguments.of(Named.of("Zero page with custom size", Map.of("page", "0", "size", "15")), 0L, 15L)
-    );
+      arguments(named("Default pagination values",
+          Map.of("salesUnits", "0.38", "stock", "0.60", "profitMargin", "0.01", "daysInStock", "0.01")),
+        0L, 10L),
+      arguments(named("Custom pagination values",
+          Map.of("salesUnits", "0.75", "stock", "0.23", "profitMargin", "0.01", "daysInStock", "0.01",
+            "page", "2", "size", "5")),
+        10L, 5L),
+      arguments(named("Filtering unknown metrics",
+        Map.of("salesUnits", "1", "unknown", "1", "invalidMetric", "1")), 0L, 10L),
+      arguments(named("Empty parameters", Map.of()), 0L, 10L),
+      arguments(named("With page parameter only", Map.of("page", "3")), 30L, 10L),
+      arguments(named("With size parameter only", Map.of("size", "25")), 0L, 25L),
+      arguments(named("Zero page with custom size", Map.of("page", "0", "size", "15")), 0L, 15L));
   }
 
   private static Stream<Arguments> invalidSortParams() {
     // requestParams, expectedError
     return Stream.of(
-      Arguments.of(Named.of("Invalid page parameter", Map.of("page", "invalid")), "Invalid page parameter: invalid"),
-      Arguments.of(Named.of("Negative page parameter", Map.of("page", "-1")), "Page number cannot be negative"),
-      Arguments.of(Named.of("Invalid size parameter", Map.of("size", "nan")), "Invalid size parameter: nan"),
-      Arguments.of(Named.of("Zero size parameter", Map.of("size", "0")), "Page size must be greater than zero"),
-      Arguments.of(Named.of("Negative size parameter", Map.of("size", "-10")), "Page size must be greater than zero"),
-      Arguments.of(Named.of("Negative metric weight", Map.of("salesUnits", "-1")), "Weight for salesUnits must be non-negative"),
-      Arguments.of(Named.of("Invalid metric weight", Map.of("profitMargin", "abc")), "Invalid weight value for profitMargin")
-    );
+      arguments(named("Invalid page parameter", Map.of("page", "invalid")), "Invalid page parameter: invalid"),
+      arguments(named("Negative page parameter", Map.of("page", "-1")), "Page number cannot be negative"),
+      arguments(named("Invalid size parameter", Map.of("size", "nan")), "Invalid size parameter: nan"),
+      arguments(named("Zero size parameter", Map.of("size", "0")), "Page size must be greater than zero"),
+      arguments(named("Negative size parameter", Map.of("size", "-10")),
+        "Page size must be greater than zero"),
+      arguments(named("Negative metric weight", Map.of("salesUnits", "-1")),
+        "Weight for salesUnits must be non-negative"),
+      arguments(named("Invalid metric weight", Map.of("profitMargin", "abc")),
+        "Invalid weight value for profitMargin"));
   }
 
   @ParameterizedTest(name = "{index}: {0}")
@@ -93,17 +92,15 @@ class DefaultProductUseCaseUnitTest {
   void shouldFindProductByInternalId(final String internalId) {
     // Given: A valid product ID and repository will return a product
     final var expectedProduct = Instancio.of(Product.class).create();
-    when(productRepository.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
+    when(this.productRepository.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
 
     // When: Finding product by internal ID
     // Then: Should return the expected product
-    productUseCase.findByInternalId(internalId)
-      .as(StepVerifier::create)
-      .expectNext(expectedProduct)
+    this.productUseCase.findByInternalId(internalId).as(StepVerifier::create).expectNext(expectedProduct)
       .verifyComplete();
 
-    verify(productRepository).findByInternalId(internalId);
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @ParameterizedTest
@@ -112,16 +109,14 @@ class DefaultProductUseCaseUnitTest {
   @DisplayName("Should handle empty or null internal ID")
   void shouldHandleEmptyOrNullInternalId(final String internalId) {
     // Given: Repository returns empty when ID is blank or null
-    when(productRepository.findByInternalId(internalId)).thenReturn(Mono.empty());
+    when(this.productRepository.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When: Finding product with blank/null ID
     // Then: Should return empty mono
-    productUseCase.findByInternalId(internalId)
-      .as(StepVerifier::create)
-      .verifyError(NotFoundException.class);
+    this.productUseCase.findByInternalId(internalId).as(StepVerifier::create).verifyError(NotFoundException.class);
 
-    verify(productRepository).findByInternalId(internalId);
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @Test
@@ -129,41 +124,38 @@ class DefaultProductUseCaseUnitTest {
   void shouldHandleExceptionWhenFindingProductById() {
     // Given: Repository throws an exception
     final String internalId = "invalid";
-    when(productRepository.findByInternalId(internalId))
+    when(this.productRepository.findByInternalId(internalId))
       .thenReturn(Mono.error(new RuntimeException("Test exception")));
 
     // When: Finding product by internal ID
     // Then: Should wrap exception in ProductException
-    productUseCase.findByInternalId(internalId)
-      .as(StepVerifier::create)
-      .expectErrorMatches(throwable ->
-        throwable instanceof ProductException
-          && throwable.getCause().getMessage().equals("Test exception"))
+    this.productUseCase.findByInternalId(internalId).as(StepVerifier::create)
+      .expectErrorMatches(throwable -> throwable instanceof ProductException
+        && throwable.getCause().getMessage().equals("Test exception"))
       .verify();
 
-    verify(productRepository).findByInternalId(internalId);
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @ParameterizedTest(name = "{index}: {0}")
   @MethodSource("sortScenarios")
   @DisplayName("Should sort products by metrics weights with various parameters")
-  void shouldSortProductsByMetricsWeights(final Map<String, String> requestParams,
-                                          final long expectedOffset, final long expectedLimit) {
+  void shouldSortProductsByMetricsWeights(final Map<String, String> requestParams, final long expectedOffset,
+                                          final long expectedLimit) {
     // Given: Request parameters and expected results
     final var product = Instancio.of(Product.class).create();
-    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset), eq(expectedLimit)))
-      .thenReturn(Flux.just(product));
+    when(this.productRepository.sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset),
+      eq(expectedLimit))).thenReturn(Flux.just(product));
 
     // When: Sorting products
     // Then: Should return expected products
-    productUseCase.sortByMetricsWeights(requestParams)
-      .as(StepVerifier::create)
-      .expectNext(product)
+    this.productUseCase.sortByMetricsWeights(requestParams).as(StepVerifier::create).expectNext(product)
       .verifyComplete();
 
-    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset), eq(expectedLimit));
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(expectedOffset),
+      eq(expectedLimit));
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @ParameterizedTest(name = "{index}: {0}")
@@ -173,14 +165,12 @@ class DefaultProductUseCaseUnitTest {
     // Given: Invalid request parameters
     // When: Sorting products with invalid parameters
     // Then: Should throw exception with appropriate message
-    productUseCase.sortByMetricsWeights(requestParams)
-      .as(StepVerifier::create)
-      .expectErrorMatches(throwable ->
-        throwable instanceof IllegalArgumentException
-          && throwable.getMessage().equals(expectedError))
+    this.productUseCase.sortByMetricsWeights(requestParams).as(StepVerifier::create)
+      .expectErrorMatches(throwable -> throwable instanceof IllegalArgumentException
+        && throwable.getMessage().equals(expectedError))
       .verify();
 
-    verifyNoInteractions(productRepository);
+    verifyNoInteractions(this.productRepository);
   }
 
   @Test
@@ -188,17 +178,16 @@ class DefaultProductUseCaseUnitTest {
   void shouldHandleExceptionWhenNoProductsMatchSortCriteria() {
     // Given: Repository returns empty flux
     final var requestParams = Map.of("salesUnits", "1.0");
-    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
+    when(this.productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
       .thenReturn(Flux.empty());
 
     // When: Sorting products
     // Then: Should return empty flux
-    productUseCase.sortByMetricsWeights(requestParams)
-      .as(StepVerifier::create)
+    this.productUseCase.sortByMetricsWeights(requestParams).as(StepVerifier::create)
       .verifyError(NotFoundException.class);
 
-    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @Test
@@ -206,20 +195,18 @@ class DefaultProductUseCaseUnitTest {
   void shouldHandleExceptionWhenSortingProducts() {
     // Given: Repository throws an exception
     final var requestParams = Map.of("salesUnits", "1");
-    when(productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
+    when(this.productRepository.sortByMetricsWeights(any(AppliedWeights.class), anyLong(), anyLong()))
       .thenReturn(Flux.error(new RuntimeException("Test exception")));
 
     // When: Sorting products
     // Then: Should wrap exception in ProductException
-    productUseCase.sortByMetricsWeights(requestParams)
-      .as(StepVerifier::create)
-      .expectErrorMatches(throwable ->
-        throwable instanceof ProductException
-          && throwable.getCause().getMessage().equals("Test exception"))
+    this.productUseCase.sortByMetricsWeights(requestParams).as(StepVerifier::create)
+      .expectErrorMatches(throwable -> throwable instanceof ProductException
+        && throwable.getCause().getMessage().equals("Test exception"))
       .verify();
 
-    verify(productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
-    verifyNoMoreInteractions(productRepository);
+    verify(this.productRepository).sortByMetricsWeights(any(AppliedWeights.class), eq(0L), eq(10L));
+    verifyNoMoreInteractions(this.productRepository);
   }
 
   @Test
@@ -228,6 +215,6 @@ class DefaultProductUseCaseUnitTest {
     // Given: A new instance of DefaultProductUseCase
     // When: No methods are called
     // Then: No interactions with repository
-    verifyNoInteractions(productRepository);
+    verifyNoInteractions(this.productRepository);
   }
 }

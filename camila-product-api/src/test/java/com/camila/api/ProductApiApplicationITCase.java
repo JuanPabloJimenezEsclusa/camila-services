@@ -1,7 +1,8 @@
 package com.camila.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,8 @@ class ProductApiApplicationITCase extends MongoContainerConfig {
   @Test
   @DisplayName("[ProductApiApplication] context loaded")
   void contextLoads() {
-    Assertions.assertNotNull(applicationContext);
-  }
 
-  @Test
-  @DisplayName("[ProductApiApplication] main method starts application")
-  void mainMethodStartsApplication() {
-    ProductApiApplication.main(new String[]{});
-    Assertions.assertTrue(true);
+    assertThat(this.applicationContext).isNotNull()
+      .satisfies(ctx -> assertThat(ctx.getBean("productApiApplication")).isNotNull());
   }
 }

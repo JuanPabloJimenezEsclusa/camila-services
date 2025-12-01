@@ -50,22 +50,22 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
 
   @Override
   public String getConnectionString() {
-    return connectionString;
+    return this.connectionString;
   }
 
   @Override
   public String getUserName() {
-    return username;
+    return this.username;
   }
 
   @Override
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   @Override
   public String getBucketName() {
-    return bucketName;
+    return this.bucketName;
   }
 
   @Bean
@@ -80,7 +80,6 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
       // Disable DNS SRV resolution to avoid timeouts when no SRV record exists
       .ioConfig(io -> io.enableDnsSrv(false))
       // keep existing security TLS configuration
-      .securityConfig(securityBuilder -> securityBuilder.enableTls(Boolean.parseBoolean(sslEnabled))
-        .build());
+      .securityConfig(securityBuilder -> securityBuilder.enableTls(Boolean.parseBoolean(this.sslEnabled)).build());
   }
 }

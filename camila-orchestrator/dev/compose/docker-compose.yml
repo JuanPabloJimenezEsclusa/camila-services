@@ -227,9 +227,11 @@ services:
       - .env
     ports:
       - "8091-8096:8091-8096"
-      - "11210-11211:11210-11211"
+      - "11207:11207"
+      - "11210:11210"
     expose:
       - 8091
+      - 11207
       - 11210
     volumes:
       - camila_product_couchbase_data:/opt/couchbase/var

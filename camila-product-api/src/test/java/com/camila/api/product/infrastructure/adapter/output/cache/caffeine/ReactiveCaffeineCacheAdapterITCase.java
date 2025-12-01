@@ -1,5 +1,7 @@
 package com.camila.api.product.infrastructure.adapter.output.cache.caffeine;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -30,56 +32,44 @@ class ReactiveCaffeineCacheAdapterITCase {
 
   private static Stream<Arguments> putGetScenarios() {
     return Stream.of(
-      Arguments.of("plain-string", "k1", "hello", String.class, true, "hello"),
-      Arguments.of("completion-stage", "k2", CompletableFuture.completedFuture("async"), String.class, true, "async"),
-      Arguments.of("wrong-type", "k3", "abc", Integer.class, false, null),
-      Arguments.of("missing-key", "k4", SKIP_PUT, String.class, false, null),
-      Arguments.of("list-value", "k5", List.of(1, 2), List.class, true, List.of(1, 2))
-    );
+      arguments("plain-string", "k1", "hello", String.class, true, "hello"),
+      arguments("completion-stage", "k2", CompletableFuture.completedFuture("async"), String.class, true, "async"),
+      arguments("wrong-type", "k3", "abc", Integer.class, false, null),
+      arguments("missing-key", "k4", SKIP_PUT, String.class, false, null),
+      arguments("list-value", "k5", List.of(1, 2), List.class, true, List.of(1, 2)));
   }
 
   @ParameterizedTest(name = "{0}")
   @MethodSource("putGetScenarios")
   @DisplayName("Should handle put/get scenarios")
-  void shouldHandlePutGetScenarios(final String name,
-                                   final String key,
-                                   final Object storedValue,
-                                   final Class<?> requestedType,
-                                   final boolean expectPresent,
-                                   final Object expectedValue) {
+  void shouldHandlePutGetScenarios(final String name, final String key, final Object storedValue,
+                                   final Class<?> requestedType, final boolean expectPresent, final Object expectedValue) {
     // Given
     final var cacheName = "test-%s".formatted(name);
 
     if (!Objects.equals(storedValue, SKIP_PUT)) {
       // When (put)
-      this.reactiveCaffeineCacheAdapter.put(cacheName, key, storedValue)
-        .as(StepVerifier::create)
+      this.reactiveCaffeineCacheAdapter.put(cacheName, key, storedValue).as(StepVerifier::create)
         .verifyComplete();
     }
 
     // Then (get)
-    final Mono<Object> cacheValue = this.reactiveCaffeineCacheAdapter.get(cacheName, key, requestedType.asSubclass(Object.class));
+    final Mono<Object> cacheValue = this.reactiveCaffeineCacheAdapter.get(cacheName, key,
+      requestedType.asSubclass(Object.class));
     if (expectPresent) {
-      cacheValue
-        .as(StepVerifier::create)
-        .expectNextMatches(v -> Objects.equals(v, expectedValue))
+      cacheValue.as(StepVerifier::create).expectNextMatches(v -> Objects.equals(v, expectedValue))
         .verifyComplete();
     } else {
-      cacheValue
-        .as(StepVerifier::create)
-        .verifyComplete();
+      cacheValue.as(StepVerifier::create).verifyComplete();
     }
 
     if (expectedValue instanceof List<?> expectedList) {
       // When (putList)
       this.reactiveCaffeineCacheAdapter.putList(cacheName, "%s-list".formatted(key), expectedList)
-        .as(StepVerifier::create)
-        .verifyComplete();
+        .as(StepVerifier::create).verifyComplete();
       // Then (getList)
       this.reactiveCaffeineCacheAdapter.getList(cacheName, "%s-list".formatted(key), Integer.class)
-        .as(StepVerifier::create)
-        .expectNextMatches(l -> Objects.equals(l, expectedList))
-        .verifyComplete();
+        .as(StepVerifier::create).expectNextMatches(l -> Objects.equals(l, expectedList)).verifyComplete();
     }
   }
 }

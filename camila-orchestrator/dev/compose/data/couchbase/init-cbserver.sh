@@ -4,9 +4,24 @@
 # https://github.com/couchbase/docker/blob/master/enterprise/couchbase-server/7.0.3/Dockerfile#L82
 # https://github.com/couchbaselabs/couchbase-docker-compose.git
 
+set -o errexit # Exit on error. Append "|| true" if you expect an error.
+set -o errtrace # Exit on error inside any functions or subshells.
+set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
+
+
 # Fix locale warning by setting a safe default locale
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
+
+COUCHBASE_ADMINISTRATOR_USERNAME="${COUCHBASE_ADMINISTRATOR_USERNAME:-admin}"
+COUCHBASE_ADMINISTRATOR_PASSWORD="${COUCHBASE_ADMINISTRATOR_PASSWORD:-password}"
+COUCHBASE_RAM_SIZE="${COUCHBASE_RAM_SIZE:-512}"
+COUCHBASE_INDEX_RAM_SIZE="${COUCHBASE_INDEX_RAM_SIZE:-256}"
+COUCHBASE_BUCKET="${COUCHBASE_BUCKET:-camila-product-bucket}"
+COUCHBASE_BUCKET_RAMSIZE="${COUCHBASE_BUCKET_RAMSIZE:-256}"
+COUCHBASE_BUCKET_SCOPE="${COUCHBASE_BUCKET_SCOPE:-product}"
+COUCHBASE_BUCKET_COLLECTION="${COUCHBASE_BUCKET_COLLECTION:-products}"
 
 /entrypoint.sh couchbase-server &
 

@@ -21,6 +21,7 @@ import reactor.core.publisher.Mono;
 @Controller
 @Validated
 class ProductGraphqlAdapter {
+
   private final ProductUseCase productUseCase;
 
   /**
@@ -33,10 +34,10 @@ class ProductGraphqlAdapter {
   }
 
   /**
-   * Find by id mono.
+   * Find by id.
    *
    * @param internalId the internal id
-   * @return the mono
+   * @return the Product mono
    */
   @QueryMapping
   public Mono<Product> findById(@Argument(name = "internalId") final String internalId) {
@@ -44,15 +45,15 @@ class ProductGraphqlAdapter {
   }
 
   /**
-   * Sort products flux.
+   * Sort products.
    *
-   * @param salesUnits the sales units
-   * @param stock the stock
+   * @param salesUnits   the sales units
+   * @param stock        the stock
    * @param profitMargin the profitMargin
-   * @param daysInStock the daysInStock
-   * @param page the page
-   * @param size the size
-   * @return the flux
+   * @param daysInStock  the daysInStock
+   * @param page         the page
+   * @param size         the size
+   * @return the Product flux
    */
   @QueryMapping
   public Flux<Product> sortProducts(
@@ -62,14 +63,10 @@ class ProductGraphqlAdapter {
     @Argument(name = "daysInStock") @Valid @Min(0L) @Max(1L) @PositiveOrZero final Float daysInStock,
     @Argument(name = "page") @Valid @Min(0L) @Max(1000L) @PositiveOrZero final Integer page,
     @Argument(name = "size") @Valid @Min(0L) @Max(1000L) @PositiveOrZero final Integer size) {
-    var requestParams = Map.of(
-      "salesUnits", salesUnits.toString(),
-      "stock", stock.toString(),
-      "profitMargin", profitMargin.toString(),
-      "daysInStock", daysInStock.toString(),
-      "page", page.toString(),
-      "size", size.toString()
-    );
+
+    final var requestParams = Map.of("salesUnits", salesUnits.toString(), "stock", stock.toString(), "profitMargin",
+      profitMargin.toString(), "daysInStock", daysInStock.toString(), "page", page.toString(), "size",
+      size.toString());
     return this.productUseCase.sortByMetricsWeights(requestParams);
   }
 }

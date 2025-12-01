@@ -33,7 +33,7 @@ public class RSocketTestClient {
    *
    * @param args the input arguments
    */
-  public static void main(String[] args) {
+  static void main(String[] args) {
     final var rsocketStrategies = getrSocketStrategies();
     final var requester = getrSocketRequester(rsocketStrategies);
 

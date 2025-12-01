@@ -3,6 +3,7 @@ package com.camila.api.product.infrastructure.adapter.input.websocket;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -56,30 +57,28 @@ class ProductWebSocketHandlerUnitTest {
   private static Stream<Arguments> sortProductsParams() {
     // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of("0.0", "1.0", "0.0", "0.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "0.0", "0.0", "2", "50"),
-      Arguments.of("0.3", "0.7", "0.0", "0.0", "5", "15")
-    );
+      arguments("0.0", "1.0", "0.0", "0.0", "0", "10"),
+      arguments("0.5", "0.5", "0.5", "0.5", "1", "20"),
+      arguments("0.8", "0.2", "0.0", "0.0", "2", "50"),
+      arguments("0.3", "0.7", "0.0", "0.0", "5", "15"));
   }
 
   @BeforeEach
   void setUp() {
-    handler = new ProductWebSocketHandler(productUseCase, objectMapper);
-    inputMessage = mock(WebSocketMessage.class);
-    capturedResponses = new ArrayList<>();
-    completed = new AtomicBoolean(false);
+    this.handler = new ProductWebSocketHandler(this.productUseCase, this.objectMapper);
+    this.inputMessage = mock(WebSocketMessage.class);
+    this.capturedResponses = new ArrayList<>();
+    this.completed = new AtomicBoolean(false);
 
     // Setup session behaviors that are common to all tests
-    when(session.send(any())).thenAnswer(invocation -> {
+    when(this.session.send(any())).thenAnswer(invocation -> {
       final Flux<WebSocketMessage> flux = invocation.getArgument(0);
-      flux.doOnNext(msg -> capturedResponses.add(msg.getPayloadAsText()))
-        .doOnComplete(() -> completed.set(true))
-        .subscribe();
+      flux.doOnNext(msg -> this.capturedResponses.add(msg.getPayloadAsText()))
+        .doOnComplete(() -> this.completed.set(true)).subscribe();
       return Mono.empty();
     });
 
-    when(session.textMessage(anyString())).thenAnswer(invocation -> {
+    when(this.session.textMessage(anyString())).thenAnswer(invocation -> {
       final var msg = mock(WebSocketMessage.class);
       when(msg.getPayloadAsText()).thenReturn(invocation.getArgument(0));
       return msg;
@@ -91,15 +90,15 @@ class ProductWebSocketHandlerUnitTest {
   void shouldHandleWebSocketSessionWithJsonProcessingException() throws Exception {
     // Given
     final var inputPayload = "{invalid json}";
-    setupInputMessage(inputPayload);
+    this.setupInputMessage(inputPayload);
 
     // When
-    executeHandlerAndAwaitCompletion();
+    this.executeHandlerAndAwaitCompletion();
 
     // Then
-    verify(objectMapper).readTree(inputPayload);
-    assertThat(capturedResponses).hasSize(1);
-    assertThat(capturedResponses.getFirst()).startsWith("Error converting request to Json:");
+    verify(this.objectMapper).readTree(inputPayload);
+    assertThat(this.capturedResponses).hasSize(1);
+    assertThat(this.capturedResponses.getFirst()).startsWith("Error converting request to Json:");
   }
 
   @Test
@@ -115,17 +114,17 @@ class ProductWebSocketHandlerUnitTest {
       }
       """.formatted(internalId);
 
-    setupInputMessage(inputPayload);
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(mockProduct));
+    this.setupInputMessage(inputPayload);
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(mockProduct));
 
     // When
-    executeHandlerAndAwaitCompletion();
+    this.executeHandlerAndAwaitCompletion();
 
     // Then
-    verify(productUseCase).findByInternalId(internalId);
-    verify(objectMapper).writeValueAsString(mockProduct);
-    assertThat(capturedResponses).hasSize(1);
-    assertThat(capturedResponses.getFirst()).isEqualTo(objectMapper.writeValueAsString(mockProduct));
+    verify(this.productUseCase).findByInternalId(internalId);
+    verify(this.objectMapper).writeValueAsString(mockProduct);
+    assertThat(this.capturedResponses).hasSize(1);
+    assertThat(this.capturedResponses.getFirst()).isEqualTo(this.objectMapper.writeValueAsString(mockProduct));
   }
 
   @Test
@@ -140,24 +139,23 @@ class ProductWebSocketHandlerUnitTest {
       }
       """.formatted(internalId);
 
-    setupInputMessage(inputPayload);
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
+    this.setupInputMessage(inputPayload);
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When
-    executeHandlerAndAwaitCompletion();
+    this.executeHandlerAndAwaitCompletion();
 
     // Then
-    verify(productUseCase).findByInternalId(internalId);
-    assertThat(capturedResponses).hasSize(1);
-    assertThat(capturedResponses.getFirst()).isEqualTo("Product not found");
+    verify(this.productUseCase).findByInternalId(internalId);
+    assertThat(this.capturedResponses).hasSize(1);
+    assertThat(this.capturedResponses.getFirst()).isEqualTo("Product not found");
   }
 
   @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, daysInStock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should handle sort products message with different parameters")
-  void shouldHandleSortProductsMessage(final String salesUnits, final String stock,
-                                       final String profitMargin, final String daysInStock,
-                                       final String page, final String size) throws Exception {
+  void shouldHandleSortProductsMessage(final String salesUnits, final String stock, final String profitMargin,
+                                       final String daysInStock, final String page, final String size) throws Exception {
     // Given
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
@@ -172,27 +170,21 @@ class ProductWebSocketHandlerUnitTest {
         "size": "%s"
       }
       """.formatted(salesUnits, stock, profitMargin, daysInStock, page, size);
-    final var expectedParams = Map.of(
-      "salesUnits", salesUnits,
-      "stock", stock,
-      "profitMargin", profitMargin,
-      "daysInStock", daysInStock,
-      "page", page,
-      "size", size
-    );
+    final var expectedParams = Map.of("salesUnits", salesUnits, "stock", stock, "profitMargin", profitMargin,
+      "daysInStock", daysInStock, "page", page, "size", size);
 
-    setupInputMessage(inputPayload);
-    when(productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.just(product1, product2));
+    this.setupInputMessage(inputPayload);
+    when(this.productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.just(product1, product2));
 
     // When
-    executeHandlerAndAwaitCompletion();
+    this.executeHandlerAndAwaitCompletion();
 
     // Then
-    verify(productUseCase).sortByMetricsWeights(expectedParams);
-    verify(objectMapper).writeValueAsString(product1);
-    verify(objectMapper).writeValueAsString(product2);
-    assertThat(capturedResponses).hasSize(2)
-      .containsExactly(objectMapper.writeValueAsString(product1), objectMapper.writeValueAsString(product2));
+    verify(this.productUseCase).sortByMetricsWeights(expectedParams);
+    verify(this.objectMapper).writeValueAsString(product1);
+    verify(this.objectMapper).writeValueAsString(product2);
+    assertThat(this.capturedResponses).hasSize(2).containsExactly(this.objectMapper.writeValueAsString(product1),
+      this.objectMapper.writeValueAsString(product2));
   }
 
   @Test
@@ -204,34 +196,28 @@ class ProductWebSocketHandlerUnitTest {
         "method": "SORT_PRODUCTS"
       }
       """;
-    final var expectedParams = Map.of(
-      "salesUnits", "0.0000000001",
-      "stock", "0.0000000001",
-      "profitMargin", "0.0000000001",
-      "daysInStock", "0.0000000001",
-      "page", "0",
-      "size", "25"
-    );
+    final var expectedParams = Map.of("salesUnits", "0.0000000001", "stock", "0.0000000001", "profitMargin",
+      "0.0000000001", "daysInStock", "0.0000000001", "page", "0", "size", "25");
 
-    setupInputMessage(inputPayload);
-    when(productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.empty());
+    this.setupInputMessage(inputPayload);
+    when(this.productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.empty());
 
     // When
-    executeHandlerAndAwaitCompletion();
+    this.executeHandlerAndAwaitCompletion();
 
     // Then
-    verify(productUseCase).sortByMetricsWeights(expectedParams);
-    assertThat(capturedResponses).hasSize(1);
-    assertThat(capturedResponses.getFirst()).isEqualTo("No products found");
+    verify(this.productUseCase).sortByMetricsWeights(expectedParams);
+    assertThat(this.capturedResponses).hasSize(1);
+    assertThat(this.capturedResponses.getFirst()).isEqualTo("No products found");
   }
 
   private void setupInputMessage(final String payload) {
-    when(inputMessage.getPayloadAsText(StandardCharsets.UTF_8)).thenReturn(payload);
-    when(session.receive()).thenReturn(Flux.just(inputMessage));
+    when(this.inputMessage.getPayloadAsText(StandardCharsets.UTF_8)).thenReturn(payload);
+    when(this.session.receive()).thenReturn(Flux.just(this.inputMessage));
   }
 
   private void executeHandlerAndAwaitCompletion() {
-    handler.handle(session).subscribe();
-    await().atMost(2, SECONDS).untilTrue(completed);
+    this.handler.handle(this.session).subscribe();
+    await().atMost(2, SECONDS).untilTrue(this.completed);
   }
 }

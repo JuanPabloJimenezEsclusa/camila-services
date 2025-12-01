@@ -1,5 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.rsocket;
 
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -42,11 +43,10 @@ class ProductRSocketAdapterUnitTest {
   private static Stream<Arguments> sortProductsParams() {
     // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of("0.0", "1.0", "0.0", "0.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "0.5", "0.5", "1", "20"),
-      Arguments.of("0.5", "0.3", "0.1", "0.1", "2", "50"),
-      Arguments.of("0.0", "0.5", "0.3", "0.2", "5", "15")
-    );
+      arguments("0.0", "1.0", "0.0", "0.0", "0", "10"),
+      arguments("0.5", "0.5", "0.5", "0.5", "1", "20"),
+      arguments("0.5", "0.3", "0.1", "0.1", "2", "50"),
+      arguments("0.0", "0.5", "0.3", "0.2", "5", "15"));
   }
 
   @Test
@@ -59,17 +59,15 @@ class ProductRSocketAdapterUnitTest {
       """.formatted(internalId);
     final var expectedProduct = Instancio.of(Product.class).create();
 
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
 
     // When & Then
-    productRSocketAdapter.findByInternalId(message)
-      .as(StepVerifier::create)
-      .expectNext(expectedProduct)
+    this.productRSocketAdapter.findByInternalId(message).as(StepVerifier::create).expectNext(expectedProduct)
       .verifyComplete();
 
-    verify(objectMapper).readTree(message);
-    verify(productUseCase).findByInternalId(internalId);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 
   @Test
@@ -79,13 +77,11 @@ class ProductRSocketAdapterUnitTest {
     final var message = "{}";
 
     // When & Then
-    productRSocketAdapter.findByInternalId(message)
-      .as(StepVerifier::create)
-      .expectError(IllegalArgumentException.class)
-      .verify();
+    this.productRSocketAdapter.findByInternalId(message).as(StepVerifier::create)
+      .expectError(IllegalArgumentException.class).verify();
 
-    verify(objectMapper).readTree(message);
-    verifyNoInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verifyNoInteractions(this.productUseCase);
   }
 
   @Test
@@ -97,25 +93,22 @@ class ProductRSocketAdapterUnitTest {
         {"internalId":"%s"}
       """.formatted(internalId);
 
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When & Then
-    productRSocketAdapter.findByInternalId(message)
-      .as(StepVerifier::create)
-      .expectError(IllegalArgumentException.class)
-      .verify();
+    this.productRSocketAdapter.findByInternalId(message).as(StepVerifier::create)
+      .expectError(IllegalArgumentException.class).verify();
 
-    verify(objectMapper).readTree(message);
-    verify(productUseCase).findByInternalId(internalId);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 
   @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, page={2}, size={3}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
-  void shouldSortProductsByMetricsWeights(final String salesUnits, final String stock,
-                                          final String profitMargin, final String daysInStock,
-                                          final String page, final String size) throws Exception {
+  void shouldSortProductsByMetricsWeights(final String salesUnits, final String stock, final String profitMargin,
+                                          final String daysInStock, final String page, final String size) throws Exception {
     // Given
     final var message = """
         {
@@ -130,27 +123,18 @@ class ProductRSocketAdapterUnitTest {
 
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
-    final var expectedParams = Map.of(
-      "salesUnits", salesUnits,
-      "stock", stock,
-      "profitMargin", profitMargin,
-      "daysInStock", daysInStock,
-      "page", page,
-      "size", size
-    );
+    final var expectedParams = Map.of("salesUnits", salesUnits, "stock", stock, "profitMargin", profitMargin,
+      "daysInStock", daysInStock, "page", page, "size", size);
 
-    when(productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.just(product1, product2));
+    when(this.productUseCase.sortByMetricsWeights(expectedParams)).thenReturn(Flux.just(product1, product2));
 
     // When & Then
-    productRSocketAdapter.sortByMetricsWeights(message)
-      .as(StepVerifier::create)
-      .expectNext(product1)
-      .expectNext(product2)
-      .verifyComplete();
+    this.productRSocketAdapter.sortByMetricsWeights(message).as(StepVerifier::create).expectNext(product1)
+      .expectNext(product2).verifyComplete();
 
-    verify(objectMapper).readTree(message);
-    verify(productUseCase).sortByMetricsWeights(expectedParams);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verify(this.productUseCase).sortByMetricsWeights(expectedParams);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 
   @Test
@@ -166,13 +150,11 @@ class ProductRSocketAdapterUnitTest {
       """;
 
     // When & Then
-    productRSocketAdapter.sortByMetricsWeights(message)
-      .as(StepVerifier::create)
-      .expectError(IllegalArgumentException.class)
-      .verify();
+    this.productRSocketAdapter.sortByMetricsWeights(message).as(StepVerifier::create)
+      .expectError(IllegalArgumentException.class).verify();
 
-    verify(objectMapper).readTree(message);
-    verifyNoInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verifyNoInteractions(this.productUseCase);
   }
 
   @Test
@@ -189,12 +171,10 @@ class ProductRSocketAdapterUnitTest {
       """;
 
     // When & Then
-    productRSocketAdapter.sortByMetricsWeights(message)
-      .as(StepVerifier::create)
-      .expectError(IllegalArgumentException.class)
-      .verify();
+    this.productRSocketAdapter.sortByMetricsWeights(message).as(StepVerifier::create)
+      .expectError(IllegalArgumentException.class).verify();
 
-    verify(objectMapper).readTree(message);
-    verifyNoInteractions(productUseCase);
+    verify(this.objectMapper).readTree(message);
+    verifyNoInteractions(this.productUseCase);
   }
 }

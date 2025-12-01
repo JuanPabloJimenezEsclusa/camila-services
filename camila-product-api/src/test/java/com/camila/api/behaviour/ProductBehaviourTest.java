@@ -1,6 +1,7 @@
 package com.camila.api.behaviour;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SuppressWarnings("java:S2187")
 @CucumberContextConfiguration
 @SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {"repository.technology=mongo"}
-)
+  webEnvironment = RANDOM_PORT,
+  properties = {"repository.technology=mongo"})
 public class ProductBehaviourTest {
   private static final String SORT_PRODUCT_URI = "/products?salesUnits="
     + "{salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
@@ -48,9 +48,8 @@ public class ProductBehaviourTest {
 
   @When("^consult products sort and paginated$")
   public void consultProductsSortAndPaginated() {
-    exchange = webClient.get().uri(SORT_PRODUCT_URI, parameters.toArray())
-      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .exchange();
+    exchange = this.webClient.get().uri(SORT_PRODUCT_URI, parameters.toArray())
+      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).exchange();
   }
 
   @Then("^receive status$")
@@ -64,8 +63,7 @@ public class ProductBehaviourTest {
 
     table.asMaps().forEach(element -> {
       final var index = element.get("index");
-      body
-        .jsonPath("$[%s].internalId".formatted(index)).isEqualTo(element.get("internalId"))
+      body.jsonPath("$[%s].internalId".formatted(index)).isEqualTo(element.get("internalId"))
         .jsonPath("$[%s].salesUnits".formatted(index)).isEqualTo(element.get("salesUnits"))
         .jsonPath("$[%s].stock['S']".formatted(index)).isEqualTo(element.get("stock_S"))
         .jsonPath("$[%s].stock['M']".formatted(index)).isEqualTo(element.get("stock_M"))
@@ -84,23 +82,17 @@ public class ProductBehaviourTest {
   public void errorBody(final DataTable table) {
     final var body = exchange.expectBody();
 
-    table.asMaps().forEach(element ->
-      body
-        .jsonPath("$.type").isEqualTo(element.get("type"))
-        .jsonPath("$.title").isEqualTo(element.get("title"))
-        .jsonPath("$.status").isEqualTo(element.get("status"))
-        .jsonPath("$.detail").isEqualTo(element.get("detail"))
-        .jsonPath("$.instance").value(value ->
-          assertThat(value.toString()).matches(element.get("instance")))
-        .jsonPath("$.errors").value(value ->
-          assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of()))
-    );
+    table.asMaps().forEach(element -> body.jsonPath("$.type").isEqualTo(element.get("type")).jsonPath("$.title")
+      .isEqualTo(element.get("title")).jsonPath("$.status").isEqualTo(element.get("status"))
+      .jsonPath("$.detail").isEqualTo(element.get("detail")).jsonPath("$.instance")
+      .value(value -> assertThat(value.toString()).matches(element.get("instance"))).jsonPath("$.errors")
+      .value(value -> assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of())));
   }
 
   /*
-    When spring context init, it will start a mongo container.
-    This class is used to force the initialization of the MongoContainerConfig class.
-    Without this, the mongo container will not start.
+   * When spring context init, it will start a mongo container. This class is used
+   * to force the initialization of the MongoContainerConfig class. Without this,
+   * the mongo container will not start.
    */
   @Component
   public static class TestContainerConfig extends MongoContainerConfig {

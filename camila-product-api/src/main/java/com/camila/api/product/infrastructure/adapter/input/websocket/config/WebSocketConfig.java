@@ -19,6 +19,7 @@ import reactor.netty.http.server.WebsocketServerSpec;
 @Configuration
 @EnableWebFlux
 public class WebSocketConfig {
+
   /**
    * Handler adapter web socket handler adapter.
    *
@@ -26,7 +27,7 @@ public class WebSocketConfig {
    */
   @Bean
   WebSocketHandlerAdapter handlerAdapter() {
-    return new WebSocketHandlerAdapter(webSocketService());
+    return new WebSocketHandlerAdapter(this.webSocketService());
   }
 
   /**
@@ -36,9 +37,8 @@ public class WebSocketConfig {
    */
   @Bean
   WebSocketService webSocketService() {
-    return new HandshakeWebSocketService(
-      new ReactorNettyRequestUpgradeStrategy(WebsocketServerSpec.builder()
-        .maxFramePayloadLength(Integer.MAX_VALUE)));
+    return new HandshakeWebSocketService(new ReactorNettyRequestUpgradeStrategy(
+      WebsocketServerSpec.builder().maxFramePayloadLength(Integer.MAX_VALUE)));
   }
 
   /**

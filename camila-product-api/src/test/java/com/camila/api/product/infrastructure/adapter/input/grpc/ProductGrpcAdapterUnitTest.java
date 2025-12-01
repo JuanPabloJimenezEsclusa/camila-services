@@ -1,6 +1,7 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.timeout;
@@ -47,11 +48,10 @@ class ProductGrpcAdapterUnitTest {
   private static Stream<Arguments> sortProductsParams() {
     // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of(1.0, 1.0, 1.0, 1.0, 0, 10),
-      Arguments.of(0.7, 0.3, 0.0, 0.0, 0, 20),
-      Arguments.of(0.25, 0.25, 0.50, 0.0, 5, 15),
-      Arguments.of(0.25, 0.75, 0.0, 0.0, 2, 25)
-    );
+      arguments(1.0, 1.0, 1.0, 1.0, 0, 10),
+      arguments(0.7, 0.3, 0.0, 0.0, 0, 20),
+      arguments(0.25, 0.25, 0.50, 0.0, 5, 15),
+      arguments(0.25, 0.75, 0.0, 0.0, 2, 25));
   }
 
   private static Product createDomainProduct(final String internalId, final String name, final String category) {
@@ -60,8 +60,8 @@ class ProductGrpcAdapterUnitTest {
     final var profitMargin = 0.5D;
     final var daysInStock = 45;
 
-    return new Product("id_" + internalId, internalId, name, category,
-      salesUnits, stock, profitMargin, daysInStock);
+    return new Product("id_" + internalId, internalId, name, category, salesUnits, stock, profitMargin,
+      daysInStock);
   }
 
   @Test
@@ -71,18 +71,18 @@ class ProductGrpcAdapterUnitTest {
     final var internalId = "123";
     final var request = ProductInternalId.newBuilder().setInternalId(internalId).build();
     final var domainProduct = createDomainProduct(internalId, "Test Product", "Category");
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(domainProduct));
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(domainProduct));
 
     // When
-    productGrpcAdapter.getProductByInternalId(request, responseObserver);
+    this.productGrpcAdapter.getProductByInternalId(request, this.responseObserver);
 
     // Then
-    verify(productUseCase).findByInternalId(internalId);
-    verify(responseObserver, timeout(10_000L)).onNext(productCaptor.capture());
-    verify(responseObserver, timeout(10_000L)).onCompleted();
-    verifyNoMoreInteractions(productUseCase, responseObserver);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verify(this.responseObserver, timeout(10_000L)).onNext(this.productCaptor.capture());
+    verify(this.responseObserver, timeout(10_000L)).onCompleted();
+    verifyNoMoreInteractions(this.productUseCase, this.responseObserver);
 
-    final var capturedProduct = productCaptor.getValue();
+    final var capturedProduct = this.productCaptor.getValue();
     assertEquals(internalId, capturedProduct.getInternalId());
     assertEquals("Test Product", capturedProduct.getName());
     assertEquals("Category", capturedProduct.getCategory());
@@ -96,100 +96,78 @@ class ProductGrpcAdapterUnitTest {
     final var internalId = "123";
     final var request = ProductInternalId.newBuilder().setInternalId(internalId).build();
     final var exception = new RuntimeException("Product not found");
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.error(exception));
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.error(exception));
 
     // When
-    productGrpcAdapter.getProductByInternalId(request, responseObserver);
+    this.productGrpcAdapter.getProductByInternalId(request, this.responseObserver);
 
     // Then
-    verify(productUseCase).findByInternalId(internalId);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 
   @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, stock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
-  void shouldSortProductsByMetricsWeights(final Double salesUnits, final Double stock,
-                                          final Double profitMargin, final Double daysInStock,
-                                          final Integer page, final Integer size) {
+  void shouldSortProductsByMetricsWeights(final Double salesUnits, final Double stock, final Double profitMargin,
+                                          final Double daysInStock, final Integer page, final Integer size) {
     // Given
-    final var requestParams = Map.of(
-      "salesUnits", salesUnits.toString(),
-      "stock", stock.toString(),
-      "profitMargin", profitMargin.toString(),
-      "daysInStock", daysInStock.toString(),
-      "page", page.toString(),
-      "size", size.toString()
-    );
+    final var requestParams = Map.of("salesUnits", salesUnits.toString(), "stock", stock.toString(), "profitMargin",
+      profitMargin.toString(), "daysInStock", daysInStock.toString(), "page", page.toString(), "size",
+      size.toString());
 
     final var request = SortByMetricsWeightsRequest.newBuilder().putAllRequestParams(requestParams).build();
     final var product1 = createDomainProduct("1", "Product 1", "Category 1");
     final var product2 = createDomainProduct("2", "Product 2", "Category 2");
 
-    when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
+    when(this.productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
 
     // When
-    productGrpcAdapter.sortByMetricsWeights(request, responseObserver);
+    this.productGrpcAdapter.sortByMetricsWeights(request, this.responseObserver);
 
     // Then
-    verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 
   @Test
   @DisplayName("Should handle empty results when sorting products")
   void shouldHandleEmptyResultsWhenSortingProducts() {
     // Given
-    final var requestParams = Map.of(
-      "salesUnits", "0.6",
-      "stock", "0.4",
-      "profitMargin", "0.0",
-      "daysInStock", "0.0",
-      "page", "0",
-      "size", "10"
-    );
+    final var requestParams = Map.of("salesUnits", "0.6", "stock", "0.4", "profitMargin", "0.0", "daysInStock",
+      "0.0", "page", "0", "size", "10");
 
-    final var request = SortByMetricsWeightsRequest.newBuilder()
-      .putAllRequestParams(requestParams)
-      .build();
+    final var request = SortByMetricsWeightsRequest.newBuilder().putAllRequestParams(requestParams).build();
 
-    when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
+    when(this.productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
 
     // When
-    productGrpcAdapter.sortByMetricsWeights(request, responseObserver);
+    this.productGrpcAdapter.sortByMetricsWeights(request, this.responseObserver);
 
     // Then
-    verify(productUseCase).sortByMetricsWeights(requestParams);
-    verify(responseObserver, never()).onNext(any());
-    verify(responseObserver).onCompleted();
-    verifyNoMoreInteractions(productUseCase, responseObserver);
+    verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    verify(this.responseObserver, never()).onNext(any());
+    verify(this.responseObserver).onCompleted();
+    verifyNoMoreInteractions(this.productUseCase, this.responseObserver);
   }
 
   @Test
   @DisplayName("Should handle error when sorting products")
   void shouldHandleErrorWhenSortingProducts() {
     // Given
-    final var requestParams = Map.of(
-      "salesUnits", "0.6",
-      "stock", "0.4",
-      "profitMargin", "0.0",
-      "daysInStock", "0.0",
-      "page", "0",
-      "size", "10"
-    );
+    final var requestParams = Map.of("salesUnits", "0.6", "stock", "0.4", "profitMargin", "0.0", "daysInStock",
+      "0.0", "page", "0", "size", "10");
 
-    final var request = SortByMetricsWeightsRequest.newBuilder()
-      .putAllRequestParams(requestParams)
-      .build();
+    final var request = SortByMetricsWeightsRequest.newBuilder().putAllRequestParams(requestParams).build();
 
     final var exception = new RuntimeException("Database error");
-    when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.error(exception));
+    when(this.productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.error(exception));
 
     // When
-    productGrpcAdapter.sortByMetricsWeights(request, responseObserver);
+    this.productGrpcAdapter.sortByMetricsWeights(request, this.responseObserver);
 
     // Then
-    verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(productUseCase);
+    verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    verifyNoMoreInteractions(this.productUseCase);
   }
 }
