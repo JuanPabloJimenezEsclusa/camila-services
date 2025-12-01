@@ -2,8 +2,8 @@ plugins {
   // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
-  id 'org.sonarqube' version '7.2.0.6526'
-  id 'org.springframework.boot' version '4.0.0' apply false
+  id 'org.sonarqube' version '7.1.0.6387'
+  id 'org.springframework.boot' version '3.5.8' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.11.3' apply false
   id 'com.github.spotbugs' version '6.4.7' apply false
@@ -40,7 +40,7 @@ subprojects {
   ext {
     springBootVersion = '4.0.0'
     springFrameworkVersion = '6.2.11'
-    springCloudVersion = '2025.1.0'
+    springCloudVersion = '2025.0.0'
     springBootAdminVersion = '3.5.6'
 
     // jakarta
@@ -66,7 +66,7 @@ subprojects {
     jacocoVersion = '0.8.14'
 
     // API Documentation
-    springdocOpenapiVersion = '3.0.0'
+    springdocOpenapiVersion = '2.8.14'
     graphqlJavaVersion = '25.0'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
