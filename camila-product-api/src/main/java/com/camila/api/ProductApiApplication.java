@@ -12,12 +12,13 @@ import reactor.core.publisher.Hooks;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ProductApiApplication {
+
   /**
    * The entry point of application.
    *
    * @param args the input arguments
    */
-  public static void main(String[] args) {
+  static void main(String[] args) {
     SpringApplication.run(ProductApiApplication.class, args);
   }
 

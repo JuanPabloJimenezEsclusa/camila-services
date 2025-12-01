@@ -1,6 +1,7 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
 import static org.instancio.Select.field;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -44,11 +45,10 @@ class ProductRestAdapterUnitTest {
   private static Stream<Arguments> sortProductsParams() {
     // salesUnits, stock, profitMargin, daysInStock, page, size
     return Stream.of(
-      Arguments.of("0.0", "1.0", "0.0", "0.0", "0", "10"),
-      Arguments.of("0.5", "0.5", "0.5", "0.5", "1", "20"),
-      Arguments.of("0.8", "0.2", "0.0", "0.0", "2", "50"),
-      Arguments.of("0.3", "0.7", "0.0", "0.0", "5", "15")
-    );
+      arguments("0.0", "1.0", "0.0", "0.0", "0", "10"),
+      arguments("0.5", "0.5", "0.5", "0.5", "1", "20"),
+      arguments("0.8", "0.2", "0.0", "0.0", "2", "50"),
+      arguments("0.3", "0.7", "0.0", "0.0", "5", "15"));
   }
 
   @Test
@@ -58,18 +58,16 @@ class ProductRestAdapterUnitTest {
     final var internalId = "123";
     final var expectedProductDTO = Instancio.of(ProductDTO.class).set(field(ProductDTO::getId), "1").create();
     final var expectedProduct = Instancio.of(Product.class).create();
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
-    when(productDTOMapper.toProductDTO(expectedProduct)).thenReturn(expectedProductDTO);
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(expectedProduct));
+    when(this.productDTOMapper.toProductDTO(expectedProduct)).thenReturn(expectedProductDTO);
 
     // When & Then
-    productRestAdapter.findById(internalId, "", "", any())
-      .as(StepVerifier::create)
-      .expectNext(expectedProductDTO)
-      .verifyComplete();
+    this.productRestAdapter.findById(internalId, "", "", any()).as(StepVerifier::create)
+      .expectNext(expectedProductDTO).verifyComplete();
 
-    verify(productUseCase).findByInternalId(internalId);
-    verify(productDTOMapper).toProductDTO(expectedProduct);
-    verifyNoMoreInteractions(productUseCase, productDTOMapper);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verify(this.productDTOMapper).toProductDTO(expectedProduct);
+    verifyNoMoreInteractions(this.productUseCase, this.productDTOMapper);
   }
 
   @Test
@@ -77,77 +75,59 @@ class ProductRestAdapterUnitTest {
   void shouldReturnEmptyMonoWhenProductNotFound() {
     // Given
     final var internalId = "non-existent";
-    when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
+    when(this.productUseCase.findByInternalId(internalId)).thenReturn(Mono.empty());
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.findById(internalId, "", "", any()))
-      .as(StepVerifier::create)
+    Objects.requireNonNull(this.productRestAdapter.findById(internalId, "", "", any())).as(StepVerifier::create)
       .verifyComplete();
 
-    verify(productUseCase).findByInternalId(internalId);
-    verifyNoMoreInteractions(productUseCase);
-    verifyNoInteractions(productDTOMapper);
+    verify(this.productUseCase).findByInternalId(internalId);
+    verifyNoMoreInteractions(this.productUseCase);
+    verifyNoInteractions(this.productDTOMapper);
   }
 
   @ParameterizedTest(name = "{index} -> salesUnits={0}, stock={1}, profitMargin={2}, stock={3}, page={4}, size={5}")
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
-  void shouldSortProducts(final String salesUnits, final String stock,
-                          final String profitMargin, final String daysInStock,
-                          final String page, final String size) {
+  void shouldSortProducts(final String salesUnits, final String stock, final String profitMargin,
+                          final String daysInStock, final String page, final String size) {
     // Given
-    final var requestParams = Map.of(
-      "salesUnits", salesUnits,
-      "stock", stock,
-      "profitMargin", profitMargin,
-      "daysInStock", daysInStock,
-      "page", page,
-      "size", size
-    );
+    final var requestParams = Map.of("salesUnits", salesUnits, "stock", stock, "profitMargin", profitMargin,
+      "daysInStock", daysInStock, "page", page, "size", size);
     final var productDTO1 = Instancio.of(ProductDTO.class).create();
     final var productDTO2 = Instancio.of(ProductDTO.class).create();
     final var product1 = Instancio.of(Product.class).create();
     final var product2 = Instancio.of(Product.class).create();
 
-    when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
-    when(productDTOMapper.toProductDTO(product1)).thenReturn(productDTO1);
-    when(productDTOMapper.toProductDTO(product2)).thenReturn(productDTO2);
+    when(this.productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.just(product1, product2));
+    when(this.productDTOMapper.toProductDTO(product1)).thenReturn(productDTO1);
+    when(this.productDTOMapper.toProductDTO(product2)).thenReturn(productDTO2);
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, "", "", any()))
-      .as(StepVerifier::create)
-      .expectNext(productDTO1)
-      .expectNext(productDTO2)
-      .verifyComplete();
+    Objects.requireNonNull(this.productRestAdapter.sortProducts(requestParams, "", "", any()))
+      .as(StepVerifier::create).expectNext(productDTO1).expectNext(productDTO2).verifyComplete();
 
-    verify(productUseCase).sortByMetricsWeights(requestParams);
-    verify(productDTOMapper).toProductDTO(product1);
-    verify(productDTOMapper).toProductDTO(product2);
-    verifyNoMoreInteractions(productUseCase, productDTOMapper);
+    verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    verify(this.productDTOMapper).toProductDTO(product1);
+    verify(this.productDTOMapper).toProductDTO(product2);
+    verifyNoMoreInteractions(this.productUseCase, this.productDTOMapper);
   }
 
   @Test
   @DisplayName("Should return empty Flux when no products match sorting criteria")
   void shouldReturnEmptyFluxWhenNoProductsMatchSortingCriteria() {
     // Given
-    final var requestParams = Map.of(
-      "salesUnits", "0.25",
-      "stock", "0.25",
-      "profitMargin", "0.25",
-      "daysInStock", "0.25",
-      "page", "0",
-      "size", "10"
-    );
+    final var requestParams = Map.of("salesUnits", "0.25", "stock", "0.25", "profitMargin", "0.25", "daysInStock",
+      "0.25", "page", "0", "size", "10");
 
-    when(productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
+    when(this.productUseCase.sortByMetricsWeights(requestParams)).thenReturn(Flux.empty());
 
     // When & Then
-    Objects.requireNonNull(productRestAdapter.sortProducts(requestParams, "", "", any()))
-      .as(StepVerifier::create)
-      .verifyComplete();
+    Objects.requireNonNull(this.productRestAdapter.sortProducts(requestParams, "", "", any()))
+      .as(StepVerifier::create).verifyComplete();
 
-    verify(productUseCase).sortByMetricsWeights(requestParams);
-    verifyNoMoreInteractions(productUseCase);
-    verifyNoInteractions(productDTOMapper);
+    verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    verifyNoMoreInteractions(this.productUseCase);
+    verifyNoInteractions(this.productDTOMapper);
   }
 }

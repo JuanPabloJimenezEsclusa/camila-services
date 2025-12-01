@@ -15,15 +15,13 @@ public record ReactiveRedisCacheAdapter(
   @Override
   public <T> Mono<T> get(final String cacheName, final String key, final Class<T> type) {
     final String fullKey = key(cacheName, key);
-    return redisOps.opsForValue().get(fullKey)
+    return this.redisOps.opsForValue().get(fullKey)
       .doOnNext(v -> log.info("Retrieved value from Redis cache: {} = {}", fullKey, v))
       .flatMap(v -> {
         try {
           return Mono.just(type.cast(v));
         } catch (ClassCastException e) {
-          if (log.isWarnEnabled()) {
-            log.warn("Error retrieving from cache: {}", e.getMessage());
-          }
+          log.warn("Error retrieving from cache", e);
           return Mono.empty();
         }
       })

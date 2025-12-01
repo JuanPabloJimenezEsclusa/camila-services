@@ -27,12 +27,11 @@ class FallbackAdapter {
   /**
    * Instantiates a new Fallback adapter.
    *
-   * @param meterRegistry the meter registry
+   * @param meterRegistry   the meter registry
    * @param fallbackMessage the fallback message
    */
   FallbackAdapter(final MeterRegistry meterRegistry,
-                  @Value("${gateway.fallback.message:Circuit-breaker-fallback}")
-                  final String fallbackMessage) {
+                  @Value("${gateway.fallback.message:Circuit-breaker-fallback}") final String fallbackMessage) {
     this.fallbackCounter = meterRegistry.counter("gateway.fallback.invocations", "endpoint", "/fallback");
     this.fallbackMessage = fallbackMessage;
   }
@@ -46,18 +45,18 @@ class FallbackAdapter {
   @GetMapping("/fallback")
   ResponseEntity<Mono<FallbackResponse>> fallback(final ServerHttpRequest request) {
     try {
-      fallbackCounter.increment();
+      this.fallbackCounter.increment();
     } catch (final Exception e) {
       log.warn("Failed to increment fallback metric", e);
     }
 
     if (log.isWarnEnabled()) {
-      log.warn("Fallback invoked: method={} path={} remote={} headers={}",
-          request.getMethod(), request.getPath(), request.getRemoteAddress(), request.getHeaders().toSingleValueMap());
+      log.warn("Fallback invoked: method={} path={} remote={} headers={}", request.getMethod(), request.getPath(),
+        request.getRemoteAddress(), request.getHeaders().toSingleValueMap());
     }
 
     return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
-      .body(Mono.just(new FallbackResponse("Service Unavailable", fallbackMessage)));
+      .body(Mono.just(new FallbackResponse("Service Unavailable", this.fallbackMessage)));
   }
 
   /**

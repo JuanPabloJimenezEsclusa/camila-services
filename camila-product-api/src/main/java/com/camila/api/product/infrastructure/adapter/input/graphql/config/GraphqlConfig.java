@@ -13,8 +13,7 @@ public class GraphqlConfig {
 
   /**
    * Configures the runtime wiring for GraphQL.
-   * This method registers custom scalars, such as the JSON scalar, to extend the
-   * GraphQL schema capabilities.
+   * This method registers custom scalars, such as the JSON scalar, to extend the GraphQL schema capabilities.
    *
    * @return the RuntimeWiringConfigurer bean used to customize the GraphQL runtime wiring
    */

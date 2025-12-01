@@ -29,7 +29,7 @@ Microservice example. Implements a product API with the following features:
 <summary><strong>Expand Dependencies</strong></summary>
 
 * JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
-* Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
 * Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
 * Gradle ~= [9.1.0](https://gradle.org/releases/#9.1.0)
 * Spring ~= [6.x](https://spring.io/projects/spring-framework#learn)

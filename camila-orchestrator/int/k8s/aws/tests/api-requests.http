@@ -19,7 +19,7 @@ Accept: text/event-stream
 Content-Type: application/json
 
 ### Rest - sortProducts (ndjson)
-GET https://tech.jpje.xyz/product-int/api/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+GET https://tech.jpje.xyz/product-int/api/products?salesUnits=0.999&stock=0.001&page=0&size=100 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 

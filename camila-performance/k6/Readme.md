@@ -15,8 +15,8 @@ Performance testing project using K6
 
 ---
 
-* [K6 ~0.57](https://grafana.com/docs/k6/next/release-notes/)
-* [Docker ~28](https://docs.docker.com/engine/release-notes/28/)
+* K6 ~= [0.57.x](https://grafana.com/docs/k6/next/release-notes/)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
 
 ## 🏗️ Architecture
 

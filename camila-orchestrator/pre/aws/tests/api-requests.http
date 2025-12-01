@@ -1,6 +1,7 @@
 ### Rest - Actuator
 # https://tech.jpje.xyz/product/api/swagger-ui.html
 #GET https://jpje.net/actuator/health
+# NOTE: Remember allow IP address in mongodb atlas and couchbase capella
 GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/health HTTP/2
 Accept: application/json
 Content-Type: application/json

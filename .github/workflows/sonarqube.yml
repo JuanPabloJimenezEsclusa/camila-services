@@ -10,12 +10,17 @@ concurrency:
   group: sonarqube-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  MAVEN_OPTS: "-Xmx2048m"
+  MAVEN_CLI_OPTS: "-B -ntp -e"
+
 jobs:
   build:
     if: github.event.pull_request.draft == false
-    name: Build and analyze
+    name: SonarQube Code Analysis
     environment: pro
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Configure GPG Key
         run: |
@@ -23,35 +28,119 @@ jobs:
         env:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
       - name: Set up JDK 25
         uses: actions/setup-java@v5
         with:
           java-version: '25'
           distribution: 'corretto'
           cache: maven
+
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
       - name: Enable Testcontainers reuse
         run: |
           echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
+
       - name: Build and analyze
+        id: sonarqube-analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         run: |
-          mvn -B verify sonar:sonar -f pom.xml
+          mvn ${{ env.MAVEN_CLI_OPTS }} verify sonar:sonar -f pom.xml
+
+      - name: Upload SonarQube Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonarqube-reports
+          path: |
+            target/.sonar/
+            **/target/sonar/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Generate SonarQube Analysis Summary
+        if: always()
+        run: |
+          echo "## 📊 SonarQube Code Analysis Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -d "target/.sonar" ]; then
+            echo "### ✅ SonarQube Analysis Completed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Analysis Type:** Code Quality & Security" >> $GITHUB_STEP_SUMMARY
+            echo "**Report Location:** \`target/.sonar/\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "📈 **Key Metrics:**" >> $GITHUB_STEP_SUMMARY
+            echo "- Code Coverage Analysis" >> $GITHUB_STEP_SUMMARY
+            echo "- Security Vulnerabilities Scan" >> $GITHUB_STEP_SUMMARY
+            echo "- Code Smells Detection" >> $GITHUB_STEP_SUMMARY
+            echo "- Technical Debt Assessment" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ No SonarQube Analysis Reports Generated" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Analysis Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment PR with SonarQube Results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            const reportsPath = 'target/.sonar';
+            let comment = '## 📊 SonarQube Code Analysis Results\n\n';
+            
+            if (fs.existsSync(reportsPath)) {
+              comment += '✅ **Code analysis has been completed**\n\n';
+              comment += '**Analysis Coverage:**\n';
+              comment += '- Code Quality Metrics\n';
+              comment += '- Security Vulnerabilities\n';
+              comment += '- Code Smells & Technical Debt\n';
+              comment += '- Coverage Analysis\n';
+              comment += '- Duplication Detection\n\n';
+              comment += '📊 **View detailed analysis:**\n';
+              comment += '- Full reports available in artifacts\n';
+              comment += '- Download from workflow run details\n\n';
+            } else {
+              comment += '⚠️ **No SonarQube analysis reports were generated**\n\n';
+            }
+            
+            comment += '---\n';
+            comment += '_SonarQube provides comprehensive code quality analysis covering maintainability, reliability, and security._\n';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Check SonarQube Analysis Status
+        if: failure() && steps.sonarqube-analysis.conclusion == 'failure'
+        run: |
+          echo "❌ SonarQube analysis failed!"
+          echo "Please review the build output and SonarQube reports."
+          exit 1

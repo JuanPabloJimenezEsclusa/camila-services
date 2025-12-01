@@ -2,6 +2,7 @@ package com.camila.api.product.infrastructure.adapter.input.websocket;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.net.URI;
 
@@ -26,10 +27,7 @@ import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {"repository.technology=mongo"}
-)
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"repository.technology=mongo"})
 @DisplayName("[IT][ProductWebSocketHandler] Product websocket handler test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductWebSocketHandlerITCase extends MongoContainerConfig {
@@ -52,8 +50,8 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
 
   @BeforeEach
   void setUp() {
-    assertNotNull(objectMapper);
-    uri = URI.create("ws://localhost:%d/product-dev/api/ws/products".formatted(randomPort));
+    assertNotNull(this.objectMapper);
+    this.uri = URI.create("ws://localhost:%d/product-dev/api/ws/products".formatted(this.randomPort));
   }
 
   @Test
@@ -68,24 +66,21 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
       """;
 
     assert webSocketClient != null;
-    webSocketClient.execute(uri,
-        session -> session.send(
-          Mono.just(session.textMessage(findByInternalIdRequest))
-        ).thenMany(session.receive()
-          .take(1)
-          .map(WebSocketMessage::getPayloadAsText)
-        ).flatMap(message -> {
-          log.info("Received findByInternalI: {}", message);
-          try {
-            var jsonNode = objectMapper.readTree(message);
-            assertEquals(1, jsonNode.get("internalId").asInt());
-            assertEquals("SHIRT", jsonNode.get("category").asText());
-            assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asText());
-          } catch (JsonProcessingException e) {
-            log.trace("Error parsing json", e);
-          }
-          return Mono.empty();
-        }).then())
+    webSocketClient.execute(this.uri,
+        session -> session.send(Mono.just(session.textMessage(findByInternalIdRequest)))
+          .thenMany(session.receive().take(1).map(WebSocketMessage::getPayloadAsText))
+          .flatMap(message -> {
+            log.info("Received findByInternalI: {}", message);
+            try {
+              final var jsonNode = this.objectMapper.readTree(message);
+              assertEquals(1, jsonNode.get("internalId").asInt());
+              assertEquals("SHIRT", jsonNode.get("category").asText());
+              assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asText());
+            } catch (final JsonProcessingException e) {
+              log.trace("Error parsing json", e);
+            }
+            return Mono.empty();
+          }).then())
       .subscribe();
   }
 
@@ -106,24 +101,18 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
       """;
 
     assert webSocketClient != null;
-    webSocketClient.execute(uri,
-        session -> session.send(
-          Mono.just(session.textMessage(sortProductsRequest))
-        ).thenMany(session.receive()
-          .take(1)
-          .map(WebSocketMessage::getPayloadAsText)
-        ).flatMap(message -> {
-          log.info("Received sortProducts: {}", message);
-          try {
-            var jsonNode = objectMapper.readTree(message);
-            assertEquals(5, jsonNode.get("internalId").asInt());
-            assertEquals("SHIRT", jsonNode.get("category").asText());
-            assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
-          } catch (JsonProcessingException e) {
-            log.trace("Error parsing json", e);
-          }
-          return Mono.empty();
-        }).then())
-      .subscribe();
+    webSocketClient.execute(this.uri, session -> session.send(Mono.just(session.textMessage(sortProductsRequest)))
+      .thenMany(session.receive().take(1).map(WebSocketMessage::getPayloadAsText)).flatMap(message -> {
+        log.info("Received sortProducts: {}", message);
+        try {
+          final var jsonNode = this.objectMapper.readTree(message);
+          assertEquals(5, jsonNode.get("internalId").asInt());
+          assertEquals("SHIRT", jsonNode.get("category").asText());
+          assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
+        } catch (final JsonProcessingException e) {
+          log.trace("Error parsing json", e);
+        }
+        return Mono.empty();
+      }).then()).subscribe();
   }
 }

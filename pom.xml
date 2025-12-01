@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.0.0</version>
+    <version>3.5.8</version>
     <relativePath/>
   </parent>
 
@@ -82,7 +82,7 @@
     <opentelemetry-api-incubator.version>1.56.0-alpha</opentelemetry-api-incubator.version>
 
     <!-- API -->
-    <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
+    <springdoc-openapi.version>2.8.14</springdoc-openapi.version>
     <netty-tcnative-boringssl-static.version>2.0.74.Final</netty-tcnative-boringssl-static.version>
     <graphql-java.version>25.0</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
@@ -250,6 +250,11 @@
 
       <!-- Testing -->
       <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp-jvm</artifactId>
+        <version>${okhttp.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
         <version>${testcontainers.version}</version>
@@ -308,7 +313,6 @@
             <!-- https://github.com/spring-projects/spring-boot/issues/38532#issuecomment-1825427641 -->
             <!-- https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.2-Release-Notes#nested-jar-support -->
             <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#container-images -->
-            <loaderImplementation>CLASSIC</loaderImplementation>
             <layers>
               <enabled>true</enabled>
             </layers>
@@ -455,14 +459,15 @@
                     <excludes>
                       <exclude>org.apache.httpcomponents:httpclient</exclude>
                       <exclude>com.google.errorprone:error_prone_annotations</exclude>
-                      <exclude>org.jetbrains.kotlin:kotlin-stdlib</exclude>
+                      <exclude>org.glassfish.hk2:hk2-api</exclude>
+                      <exclude>org.glassfish.jersey.inject:jersey-hk2</exclude>
                     </excludes>
                   </requireUpperBoundDeps>
                   <requireMavenVersion>
                     <version>[3.9.4,4.0.0)</version>
                   </requireMavenVersion>
                   <requireJavaVersion>
-                    <version>[25,29)</version>
+                    <version>[25,30)</version>
                   </requireJavaVersion>
                 </rules>
               </configuration>

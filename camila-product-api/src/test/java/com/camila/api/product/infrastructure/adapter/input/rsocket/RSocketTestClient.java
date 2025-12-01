@@ -30,10 +30,8 @@ public class RSocketTestClient {
 
   /**
    * The entry point of application.
-   *
-   * @param args the input arguments
    */
-  public static void main(String[] args) {
+  static void main() {
     final var rsocketStrategies = getrSocketStrategies();
     final var requester = getrSocketRequester(rsocketStrategies);
 
@@ -58,7 +56,7 @@ public class RSocketTestClient {
   }
 
   private static void getProductsSortByWeights(final RSocketRequester requester) {
-    logWithElapsedTime(requester, rsocketRequester -> {
+    logWithElapsedTime(requester, _ -> {
       final var future = new CompletableFuture<>();
       final var message = """
         {
@@ -93,7 +91,7 @@ public class RSocketTestClient {
   }
 
   private static void getProductByInternalId(final RSocketRequester requester) {
-    logWithElapsedTime(requester, rsocketRequester -> {
+    logWithElapsedTime(requester, _ -> {
       final var future = new CompletableFuture<>();
       final var message = """
         {
