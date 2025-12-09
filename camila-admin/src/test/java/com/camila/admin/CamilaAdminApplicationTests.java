@@ -1,6 +1,7 @@
 package com.camila.admin;
 
-import org.junit.jupiter.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +12,14 @@ import org.springframework.context.ApplicationContext;
 @DisplayName("[IT][CamilaAdminApplication] Spring boot smoke test")
 class CamilaAdminApplicationTests {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+	@Autowired
+	private ApplicationContext applicationContext;
 
-  @Test
-  @DisplayName("[CamilaAdminApplication] context loaded")
-  void contextLoads() {
-    Assertions.assertNotNull(applicationContext);
-  }
-
-  @Test
-  @DisplayName("[CamilaAdminApplication] main method starts application")
-  void mainMethodStartsApplication() {
-    CamilaAdminApplication.main(new String[]{});
-    Assertions.assertTrue(true);
-  }
+	@Test
+	@DisplayName("[CamilaAdminApplication] context loaded")
+	void contextLoads() {
+		assertThat(this.applicationContext)
+      .isNotNull()
+      .satisfies(ctx -> assertThat(ctx.containsBean("camilaAdminApplication")).isTrue());
+	}
 }

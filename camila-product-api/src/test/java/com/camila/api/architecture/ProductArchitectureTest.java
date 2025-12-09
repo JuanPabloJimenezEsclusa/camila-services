@@ -87,31 +87,28 @@ class ProductArchitectureTest {
 					HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_INPUT.path,
 					// Basis dependencies
 					"java..", "org.jspecify..", "com.fasterxml.jackson..", "org.slf4j..", "org.mapstruct..", "lombok..",
-					"jakarta.validation..", "jakarta.annotation..",
+					"jakarta.(validation|annotation)..",
 					// Reactive dependencies
-					"reactor.core..", "reactor.util.context..", "org.reactivestreams..",
+					"reactor.(core|util.context)..", "org.reactivestreams..",
 					// Spring dependencies
-					"org.springframework.web..", "org.springframework.stereotype..", "org.springframework.context..",
-					"org.springframework.dao..", "org.springframework.graphql..", "org.springframework.core..",
-					"org.springframework.lang..", "org.springframework.messaging..", "org.springframework.http..",
-					"org.springframework.data.domain..", "org.springframework.validation.annotation..",
+					"org.springframework.(web|stereotype|context|dao|graphql|core|lang|messaging|http)..",
+					"org.springframework.(data.domain|validation.annotation)..",
 					// GRAPHQL
-					"graphql.schema..", "graphql.scalars..",
+					"graphql.(schema|scalars)..",
 					// GRPC
 					"io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..",
 					// REST
 					"io.swagger.v3..", "com.google.common.util.concurrent..",
 					// RSocket
-					"org.springframework.util..", "org.springframework.web.util.pattern..",
+					"org.springframework.(util|web.util.pattern)..",
 					// WebSocket
 					"reactor.netty.http.server..",
 					// Security
-					"org.springframework.security.config..", "org.springframework.security.web..",
-					"org.springframework.security.oauth2.server..",
+					"org.springframework.security.(config|web|oauth2.server)..",
 					// Testing dependencies
 					"org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-					"org.awaitility..", "org.springframework.test..", "org.springframework.boot.test..",
-					"org.springframework.cloud..", "org.springframework.boot.autoconfigure..",
+					"org.awaitility..", "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
+					"org.springframework.cloud..",
 					// AOT
 					"org.springframework.aot.generate..", "org.springframework.beans.factory..");
 
@@ -123,23 +120,21 @@ class ProductArchitectureTest {
 					HEXAGONAL_LAYERS.INFRASTRUCTURE_ADAPTER_OUTPUT.path,
 					// Basis dependencies
 					"java..", "reactor.core..", "org.jspecify..", "org.slf4j..", "org.mapstruct..", "lombok..",
-					"com.fasterxml.jackson.core..", "com.fasterxml.jackson.databind..", "jakarta.annotation..",
+					"com.fasterxml.jackson.(core|databind)..", "jakarta.annotation..",
 					// Spring dependencies
-					"org.springframework.context..", "org.springframework.stereotype..", "org.springframework.boot..",
-					"org.springframework.core.io..", "org.springframework.core.type..",
-					"org.springframework.core.env..", "org.springframework.cache..",
+					"org.springframework.(context|stereotype|cache)..", "org.springframework.core.(io|type|env)..",
+					"org.springframework.boot..",
 					// Cache
 					"com.github.benmanes.caffeine..", "org.springframework.data.redis..",
 					// MongoDB
-					"org.bson..", "com.mongodb.client..", "org.springframework.data.mongodb..",
-					"org.springframework.data.repository..", "org.springframework.data.domain..",
+					"org.bson..", "com.mongodb.client..", "org.springframework.data.(domain|mongodb|repository)..",
 					// Couchbase
-					"com.couchbase.client..", "com.github.dockerjava.api..", "org.springframework.data.couchbase..",
-					"org.springframework.data.annotation..", "org.springframework.data.convert..",
+					"com.couchbase.client..", "com.github.dockerjava.api..",
+					"org.springframework.data.(annotation|couchbase|convert)..",
 					// Testing dependencies
 					"org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
 					"org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..",
-					"com.redis.testcontainers..",
+					"com.redis.testcontainers..", "okhttp3",
 					// AOT
 					"org.springframework.aot.generate..", "org.springframework.beans.factory..");
 

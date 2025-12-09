@@ -227,9 +227,11 @@ services:
       - .env
     ports:
       - "8091-8096:8091-8096"
-      - "11210-11211:11210-11211"
+      - "11207:11207"
+      - "11210:11210"
     expose:
       - 8091
+      - 11207
       - 11210
     volumes:
       - camila_product_couchbase_data:/opt/couchbase/var
@@ -408,7 +410,7 @@ services:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v3.7.3
+    image: prom/prometheus:v3.8.0
     container_name: prometheus
     hostname: prometheus
     restart: unless-stopped
@@ -562,7 +564,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.2.1
+    image: elasticsearch:9.2.2
     container_name: elasticsearch
     hostname: elasticsearch
     restart: on-failure:1
@@ -628,7 +630,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:9.2.1
+    image: kibana:9.2.2
     container_name: kibana
     hostname: kibana
     restart: "no"
@@ -656,7 +658,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.27.11
+    image: axllent/mailpit:v1.28.0
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1

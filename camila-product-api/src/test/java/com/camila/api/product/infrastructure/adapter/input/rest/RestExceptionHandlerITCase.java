@@ -1,5 +1,8 @@
 package com.camila.api.product.infrastructure.adapter.input.rest;
 
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 import java.security.SecureRandom;
 import java.util.Locale;
 import java.util.Random;
@@ -17,7 +20,6 @@ import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration
 import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -47,59 +49,58 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @AutoConfigureWebTestClient(timeout = "10s")
 @WebFluxTest(properties = {"spring.main.lazy-initialization=true", "repository.technology=couchbase"})
 @ImportAutoConfiguration(exclude = {
-		// GraphQL
-		GraphQlWebFluxAutoConfiguration.class, GraphQlWebFluxSecurityAutoConfiguration.class,
-		// gRPC
-		GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
-		GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
-		// WebSocket
-		WebSocketReactiveAutoConfiguration.class,
-		// RSocket
-		RSocketServerAutoConfiguration.class, RSocketStrategiesAutoConfiguration.class,
-		RSocketMessagingAutoConfiguration.class, RSocketRequesterAutoConfiguration.class,
-		// mongo
-		MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
-		MongoReactiveAutoConfiguration.class})
+  // GraphQL
+  GraphQlWebFluxAutoConfiguration.class, GraphQlWebFluxSecurityAutoConfiguration.class,
+  // gRPC
+  GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+  GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
+  // WebSocket
+  WebSocketReactiveAutoConfiguration.class,
+  // RSocket
+  RSocketServerAutoConfiguration.class, RSocketStrategiesAutoConfiguration.class,
+  RSocketMessagingAutoConfiguration.class, RSocketRequesterAutoConfiguration.class,
+  // mongo
+  MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
+  MongoReactiveAutoConfiguration.class})
 @Import({
-		// Framework adapter input layer
-		ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
-		// Security
-		LocalSecurityConfig.class,
-		// Application layer
-		DefaultProductUseCase.class,
-		// Framework adapter output layer
-		CouchbaseConfig.class, ProductCouchbaseAdapter.class, ProductCouchbaseMapperImpl.class})
+  // Framework adapter input layer
+  ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
+  // Security
+  LocalSecurityConfig.class,
+  // Application layer
+  DefaultProductUseCase.class,
+  // Framework adapter output layer
+  CouchbaseConfig.class, ProductCouchbaseAdapter.class, ProductCouchbaseMapperImpl.class})
 @DisplayName("[IT][RestExceptionHandler] Exception Handler Integration Tests")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
 
-	@Autowired
-	private WebTestClient webTestClient;
+  @Autowired
+  private WebTestClient webTestClient;
 
-	private static final Random random = new SecureRandom();
+  private static final Random random = new SecureRandom();
 
-	private static Stream<Arguments> exceptionTestCases() {
-		return Stream.of(Arguments.of(Named.of("Should return 200 OK", "/products/4"), HttpStatus.OK),
-				Arguments.of(Named.of("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
-				Arguments.of(Named.of("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
-				Arguments.of(Named.of("Should return 417 EXPECTATION_FAILED", "/products/test"),
-						HttpStatus.EXPECTATION_FAILED),
-				Arguments.of(Named.of("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"),
-						HttpStatus.INTERNAL_SERVER_ERROR));
-	}
+  private static Stream<Arguments> exceptionTestCases() {
+    return Stream.of(
+      arguments(named("Should return 200 OK", "/products/4"), HttpStatus.OK),
+      arguments(named("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
+      arguments(named("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
+      arguments(named("Should return 417 EXPECTATION_FAILED", "/products/test"), HttpStatus.EXPECTATION_FAILED),
+      arguments(named("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"), HttpStatus.INTERNAL_SERVER_ERROR));
+  }
 
-	private static String generateRandomString() {
-		return random.ints(10, 0, 36).mapToObj(i -> Integer.toString(i, 36)).collect(Collectors.joining())
-				.toUpperCase(Locale.ROOT);
-	}
+  private static String generateRandomString() {
+    return random.ints(10, 0, 36).mapToObj(i -> Integer.toString(i, 36)).collect(Collectors.joining())
+      .toUpperCase(Locale.ROOT);
+  }
 
-	@ParameterizedTest(name = "{index}: {0}")
-	@MethodSource("exceptionTestCases")
-	@DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
-	@Order(6)
-	void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
-		this.webTestClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-				.header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
-				.isEqualTo(expectedStatus);
-	}
+  @ParameterizedTest(name = "{index}: {0}")
+  @MethodSource("exceptionTestCases")
+  @DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
+  @Order(6)
+  void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
+    this.webTestClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
+      .isEqualTo(expectedStatus);
+  }
 }

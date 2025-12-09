@@ -29,12 +29,11 @@ public class ProductMongoAdapter implements ProductRepository {
    * Instantiates a new Product mongo adapter.
    *
    * @param productMongoRepository the product mongo repository
-   * @param mongoOperations the mongo operations
-   * @param mapper the mapper
+   * @param mongoOperations        the mongo operations
+   * @param mapper                 the mapper
    */
   public ProductMongoAdapter(final ProductMongoRepository productMongoRepository,
-                             final ReactiveMongoOperations mongoOperations,
-                             final ProductMongoMapper mapper) {
+                             final ReactiveMongoOperations mongoOperations, final ProductMongoMapper mapper) {
     this.productMongoRepository = productMongoRepository;
     this.mongoOperations = mongoOperations;
     this.mapper = mapper;
@@ -42,24 +41,22 @@ public class ProductMongoAdapter implements ProductRepository {
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    return productMongoRepository.findByInternalId(internalId).map(mapper::toProduct)
+    return this.productMongoRepository.findByInternalId(internalId).map(this.mapper::toProduct)
       .doOnNext(product -> log.debug("find By Id: {}", product));
   }
 
   @Override
-  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset, final long limit) {
+  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset,
+                                            final long limit) {
     log.debug("Sorting products by metrics weights: {}", appliedWeights);
-    return mongoOperations.aggregate(
-        newAggregation(
-          ProductSorterHelper.buildWeightedScoreField(appliedWeights),
-          ProductSorterHelper.buildSortOperation(),
-          ProductSorterHelper.buildSkipOperation(offset),
-          ProductSorterHelper.buildLimitOperation(limit))
-          .withOptions(ProductSorterHelper.buildOptions()),
-        ProductMongoEntity.DOCUMENT_NAME,
-        ProductMongoEntity.class)
+    return this.mongoOperations
+      .aggregate(newAggregation(ProductSorterHelper.buildWeightedScoreField(appliedWeights),
+          ProductSorterHelper.buildSortOperation(), ProductSorterHelper.buildSkipOperation(offset),
+          ProductSorterHelper.buildLimitOperation(limit)).withOptions(ProductSorterHelper.buildOptions()),
+        ProductMongoEntity.DOCUMENT_NAME, ProductMongoEntity.class)
       .doOnNext(productEntity -> log.debug("Product sorted by metrics weights: {}", productEntity))
-      .doOnError(throwable -> log.debug("Throwable sorting products by metrics weights: {}", throwable.getMessage()))
-      .map(mapper::toProduct);
+      .doOnError(throwable -> log.debug("Throwable sorting products by metrics weights: {}",
+        throwable.getMessage()))
+      .map(this.mapper::toProduct);
   }
 }

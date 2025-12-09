@@ -61,8 +61,8 @@ class ProductRSocketAdapter {
    */
   @MessageMapping("request-response-findByInternalId")
   public Mono<Product> findByInternalId(final String message) {
-    return validateAndBuildFindRequest(message).flatMap(internalId ->
-      productUseCase.findByInternalId(internalId)
+    return this.validateAndBuildFindRequest(message)
+      .flatMap(internalId -> this.productUseCase.findByInternalId(internalId)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product not found")))
         .doOnNext(product -> log.info("findByInternalId.next: {}", product))
         .doOnError(throwable -> log.debug("findByInternalId.error: {}", throwable.getMessage())));
@@ -76,8 +76,8 @@ class ProductRSocketAdapter {
    */
   @MessageMapping("request-stream-sortByMetricsWeights")
   public Flux<Product> sortByMetricsWeights(final String message) {
-    return validateAndBuildSortRequest(message)
-      .flatMap(requestParams -> productUseCase.sortByMetricsWeights(requestParams)
+    return this.validateAndBuildSortRequest(message)
+      .flatMap(requestParams -> this.productUseCase.sortByMetricsWeights(requestParams)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product collection empty")))
         .doOnNext(product -> log.info("sortByMetricsWeights.next: {}", product))
         .doOnError(throwable -> log.debug("sortByMetricsWeights.error: {}", throwable.getMessage())));
@@ -96,7 +96,7 @@ class ProductRSocketAdapter {
 
   private Mono<String> validateAndBuildFindRequest(final String message) {
     try {
-      final var jsonNode = objectMapper.readTree(message);
+      final var jsonNode = this.objectMapper.readTree(message);
       return Mono.just(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText(DEFAULT_PAGE));
     } catch (final Exception e) {
       return Mono.error(e);
@@ -105,14 +105,13 @@ class ProductRSocketAdapter {
 
   private Flux<Map<String, String>> validateAndBuildSortRequest(final String message) {
     try {
-      final var jsonNode = objectMapper.readTree(message);
-      return Flux.just(Map.of(
-        SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText(DEFAULT_WEIGHT),
-        STOCK, validate(jsonNode, STOCK).get(STOCK).asText(DEFAULT_WEIGHT),
-        PROFIT_MARGIN, validate(jsonNode, PROFIT_MARGIN).get(PROFIT_MARGIN).asText(DEFAULT_WEIGHT),
-        DAYS_IN_STOCK, validate(jsonNode, DAYS_IN_STOCK).get(DAYS_IN_STOCK).asText(DEFAULT_WEIGHT),
-        PAGE, validate(jsonNode, PAGE).get(PAGE).asText(DEFAULT_PAGE),
-        SIZE, validate(jsonNode, SIZE).get(SIZE).asText(DEFAULT_SIZE)));
+      final var jsonNode = this.objectMapper.readTree(message);
+      return Flux.just(Map.of(SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText(DEFAULT_WEIGHT),
+        STOCK, validate(jsonNode, STOCK).get(STOCK).asText(DEFAULT_WEIGHT), PROFIT_MARGIN,
+        validate(jsonNode, PROFIT_MARGIN).get(PROFIT_MARGIN).asText(DEFAULT_WEIGHT), DAYS_IN_STOCK,
+        validate(jsonNode, DAYS_IN_STOCK).get(DAYS_IN_STOCK).asText(DEFAULT_WEIGHT), PAGE,
+        validate(jsonNode, PAGE).get(PAGE).asText(DEFAULT_PAGE), SIZE,
+        validate(jsonNode, SIZE).get(SIZE).asText(DEFAULT_SIZE)));
     } catch (final Exception e) {
       return Flux.error(e);
     }

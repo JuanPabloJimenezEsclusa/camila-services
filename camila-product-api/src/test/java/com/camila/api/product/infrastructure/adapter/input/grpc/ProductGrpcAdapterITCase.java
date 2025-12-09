@@ -3,6 +3,7 @@ package com.camila.api.product.infrastructure.adapter.input.grpc;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatException;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -17,15 +18,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(
-  webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {
-    "grpc.server.port=6565",
-    "grpc.client.product-service.address=static://localhost:6565",
-    "grpc.client.product-service.negotiation-type=plaintext",
-    "repository.technology=mongo"
-  }
-)
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
+  "grpc.server.port=6565",
+  "grpc.client.product-service.address=static://localhost:6565",
+  "grpc.client.product-service.negotiation-type=plaintext",
+  "repository.technology=mongo"
+})
 @DisplayName("[IT][ProductGrpcAdapter] Product grpc adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductGrpcAdapterITCase extends MongoContainerConfig {
@@ -34,7 +32,7 @@ class ProductGrpcAdapterITCase extends MongoContainerConfig {
 
   @BeforeEach
   void setUp() {
-    assertNotNull(blockingStub);
+    assertNotNull(this.blockingStub);
   }
 
   @Test
@@ -42,11 +40,9 @@ class ProductGrpcAdapterITCase extends MongoContainerConfig {
   @Order(5)
   void getProductByInternalIdOk() {
     // Given
-    final var request = ProductInternalId.newBuilder()
-      .setInternalId("1")
-      .build();
+    final var request = ProductInternalId.newBuilder().setInternalId("1").build();
     // When
-    final var product = blockingStub.getProductByInternalId(request);
+    final var product = this.blockingStub.getProductByInternalId(request);
     // Then
     assertThat(product).isNotNull();
     assertThat(product.getInternalId()).isEqualTo("1");
@@ -57,11 +53,9 @@ class ProductGrpcAdapterITCase extends MongoContainerConfig {
   @Order(5)
   void getProductByInternalIdKo() {
     // Given
-    final var request = ProductInternalId.newBuilder()
-      .setInternalId("100")
-      .build();
+    final var request = ProductInternalId.newBuilder().setInternalId("100").build();
     // When, Then
-    assertThatException().isThrownBy(() -> blockingStub.getProductByInternalId(request));
+    assertThatException().isThrownBy(() -> this.blockingStub.getProductByInternalId(request));
   }
 
   @Test
@@ -69,15 +63,11 @@ class ProductGrpcAdapterITCase extends MongoContainerConfig {
   @Order(5)
   void sortByMetricsWeightsOk() {
     // Given
-    final var request = SortByMetricsWeightsRequest.newBuilder()
-      .putAllRequestParams(Map.of(
-        "salesUnits", "0.0008",
-        "stock", "0.9990",
-        "profitMargin", "0.0001",
-        "daysInStock", "0.0001"))
+    final var request = SortByMetricsWeightsRequest.newBuilder().putAllRequestParams(
+        Map.of("salesUnits", "0.0008", "stock", "0.9990", "profitMargin", "0.0001", "daysInStock", "0.0001"))
       .build();
     // When
-    final Iterator<Product> productIterator = blockingStub.sortByMetricsWeights(request);
+    final Iterator<Product> productIterator = this.blockingStub.sortByMetricsWeights(request);
     // Then
     assertThat(productIterator.hasNext()).isTrue();
     productIterator.forEachRemaining(product -> {

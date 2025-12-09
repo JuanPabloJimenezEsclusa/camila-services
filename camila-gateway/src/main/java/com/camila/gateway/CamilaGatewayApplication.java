@@ -10,17 +10,18 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication(exclude = ReactiveUserDetailsServiceAutoConfiguration.class)
 @EnableDiscoveryClient
-@SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for proxying
+@SuppressWarnings("PMD.ClassWithOnlyPrivateConstructorsShouldBeFinal") // Because Spring requires a non-final class for
 class CamilaGatewayApplication {
 
-  private CamilaGatewayApplication() {}
+  private CamilaGatewayApplication() {
+  }
 
   /**
    * The entry point of application.
    *
    * @param args the input arguments
    */
-  public static void main(String[] args) {
+  static void main(String[] args) {
     SpringApplication.run(CamilaGatewayApplication.class, args);
   }
 }

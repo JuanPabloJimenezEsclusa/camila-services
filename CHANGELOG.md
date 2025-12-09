@@ -5,13 +5,463 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] build: grouping dependabot branches**
+**[GH-32] refactor: revert spring boot 4**
 
 
-[ec88636e8942893](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ec88636e8942893) JuanPabloJimenezEsclusa *2025-11-24 13:01:20*
+[dc8caf3ba651f1b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dc8caf3ba651f1b) JuanPabloJimenezEsclusa *2025-12-08 00:29:47*
 
-**chore(deps): bump org.springdoc:springdoc-openapi-starter-webflux-ui**
+**chore(deps): bump axllent/mailpit**
 
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: axllent/mailpit.
+ * Updates &#x60;axllent/mailpit&#x60; from v1.27.11 to v1.28.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.28.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[a0ae89fbb8aa59b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a0ae89fbb8aa59b) dependabot[bot] *2025-12-07 20:32:59*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.22.1 to ~> 6.23.0**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.23.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.22.1...v6.23.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.23.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[638e139e98aae89](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/638e139e98aae89) dependabot[bot] *2025-12-07 20:32:59*
+
+**chore(deps): bump the maven-dependencies group with 17 updates**
+
+ * Bumps the maven-dependencies group with 17 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-starter-parent](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;24.3&#x60; | &#x60;25.0&#x60; |
+ * | [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) | &#x60;4.33.0&#x60; | &#x60;4.33.1&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;3.0.0&#x60; |
+ * | [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | [io.cucumber:cucumber-core](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-java](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-junit-platform-engine](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-spring](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [com.google.cloud.tools:jib-maven-plugin](https://github.com/GoogleContainerTools/jib) | &#x60;3.4.6&#x60; | &#x60;3.5.1&#x60; |
+ * | [com.github.spotbugs:spotbugs-maven-plugin](https://github.com/spotbugs/spotbugs-maven-plugin) | &#x60;4.9.8.1&#x60; | &#x60;4.9.8.2&#x60; |
+ * | [org.codehaus.mojo:versions-maven-plugin](https://github.com/mojohaus/versions) | &#x60;2.19.1&#x60; | &#x60;2.20.0&#x60; |
+ * | [com.squareup.okhttp3:mockwebserver](https://github.com/square/okhttp) | &#x60;5.2.1&#x60; | &#x60;5.3.2&#x60; |
+ * | [com.squareup.okhttp3:okhttp](https://github.com/square/okhttp) | &#x60;5.2.1&#x60; | &#x60;5.3.2&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-starter-parent&#x60; from 3.5.8 to 4.0.0
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v4.0.0)
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 24.3 to 25.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v24.3...v25.0)
+ * Updates &#x60;com.google.protobuf:protobuf-java&#x60; from 4.33.0 to 4.33.1
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Changelog](https://github.com/protocolbuffers/protobuf/blob/main/protobuf_release.bzl)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 3.0.0
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v3.0.0)
+ * Updates &#x60;org.springframework.boot:spring-boot-configuration-processor&#x60; from 3.5.8 to 4.0.0
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v4.0.0)
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;com.google.cloud.tools:jib-maven-plugin&#x60; from 3.4.6 to 3.5.1
+ * - [Release notes](https://github.com/GoogleContainerTools/jib/releases)
+ * - [Commits](https://github.com/GoogleContainerTools/jib/commits)
+ * Updates &#x60;com.github.spotbugs:spotbugs-maven-plugin&#x60; from 4.9.8.1 to 4.9.8.2
+ * - [Release notes](https://github.com/spotbugs/spotbugs-maven-plugin/releases)
+ * - [Commits](https://github.com/spotbugs/spotbugs-maven-plugin/compare/spotbugs-maven-plugin-4.9.8.1...spotbugs-maven-plugin-4.9.8.2)
+ * Updates &#x60;org.codehaus.mojo:versions-maven-plugin&#x60; from 2.19.1 to 2.20.0
+ * - [Release notes](https://github.com/mojohaus/versions/releases)
+ * - [Changelog](https://github.com/mojohaus/versions/blob/master/ReleaseNotes.md)
+ * - [Commits](https://github.com/mojohaus/versions/compare/2.19.1...2.20.0)
+ * Updates &#x60;com.squareup.okhttp3:mockwebserver&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-starter-parent
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;25.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.33.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.cloud.tools:jib-maven-plugin
+ * dependency-version: 3.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.github.spotbugs:spotbugs-maven-plugin
+ * dependency-version: 4.9.8.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.codehaus.mojo:versions-maven-plugin
+ * dependency-version: 2.20.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:mockwebserver
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[5178270ee2033d0](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5178270ee2033d0) dependabot[bot] *2025-12-07 20:32:59*
+
+**chore(deps): bump the gradle-dependencies group across 1 directory with 12 updates**
+
+ * Bumps the gradle-dependencies group with 10 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.0.0&#x60; | &#x60;2025.1.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api-incubator](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.55.0-alpha&#x60; | &#x60;1.56.0-alpha&#x60; |
+ * | org.sonarqube | &#x60;7.0.1.6134&#x60; | &#x60;7.1.0.6387&#x60; |
+ * | org.springframework.boot | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | com.github.spotbugs | &#x60;6.4.5&#x60; | &#x60;6.4.7&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.20.0&#x60; | &#x60;7.21.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;3.0.0&#x60; |
+ * | org.apache.commons:commons-lang3 | &#x60;3.19.0&#x60; | &#x60;3.20.0&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;24.3&#x60; | &#x60;25.0&#x60; |
+ * | [org.bouncycastle:bcpkix-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.82&#x60; | &#x60;1.83&#x60; |
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.0.0 to 2025.1.0
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.0.0...v2025.1.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api-incubator&#x60; from 1.55.0-alpha to 1.56.0-alpha
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/commits)
+ * Updates &#x60;org.sonarqube&#x60; from 7.0.1.6134 to 7.1.0.6387
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.8 to 4.0.0
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.4.5 to 6.4.7
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.20.0 to 7.21.0
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 3.0.0
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v3.0.0)
+ * Updates &#x60;org.apache.commons:commons-lang3&#x60; from 3.19.0 to 3.20.0
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 24.3 to 25.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v24.3...v25.0)
+ * Updates &#x60;org.bouncycastle:bcpkix-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bcprov-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api-incubator
+ * dependency-version: 1.56.0-alpha
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.sonarqube
+ * dependency-version: 7.1.0.6387
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.4.7
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.21.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.apache.commons:commons-lang3
+ * dependency-version: 3.20.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;25.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcpkix-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcprov-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[c6784de1e834859](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c6784de1e834859) dependabot[bot] *2025-12-01 19:13:12*
+
+**chore(deps): bump the infrastructure-dependencies group (#219)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 6 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | prom/node-exporter | &#x60;v1.9.1&#x60; | &#x60;v1.10.2&#x60; |
+ * | prom/alertmanager | &#x60;v0.28.1&#x60; | &#x60;v0.29.0&#x60; |
+ * | grafana/grafana | &#x60;12.2.1&#x60; | &#x60;12.3.0&#x60; |
+ * | elasticsearch | &#x60;9.2.0&#x60; | &#x60;9.2.1&#x60; |
+ * | kibana | &#x60;9.2.0&#x60; | &#x60;9.2.1&#x60; |
+ * | axllent/mailpit | &#x60;v1.27.10&#x60; | &#x60;v1.27.11&#x60; |
+ * Updates &#x60;prom/node-exporter&#x60; from v1.9.1 to v1.10.2
+ * Updates &#x60;prom/alertmanager&#x60; from v0.28.1 to v0.29.0
+ * Updates &#x60;grafana/grafana&#x60; from 12.2.1 to 12.3.0
+ * Updates &#x60;elasticsearch&#x60; from 9.2.0 to 9.2.1
+ * Updates &#x60;kibana&#x60; from 9.2.0 to 9.2.1
+ * Updates &#x60;axllent/mailpit&#x60; from v1.27.10 to v1.27.11
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/node-exporter
+ * dependency-version: v1.10.2
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: prom/alertmanager
+ * dependency-version: v0.29.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: grafana/grafana
+ * dependency-version: 12.3.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.2.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.2.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.27.11
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[d56e6322a8993c8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d56e6322a8993c8) dependabot[bot] *2025-11-30 12:55:49*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.20.0 to ~> 6.22.1 (#222)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.22.1
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.20.0...v6.22.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.22.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[c7005a96ceceae4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c7005a96ceceae4) dependabot[bot] *2025-11-30 12:39:48*
+
+**Merge pull request #223 from JuanPabloJimenezEsclusa/main**
+
+ * Merge pull request #218
+
+[8dde73c37a2187d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8dde73c37a2187d) Juan Pablo Jimenez Esclusa *2025-11-24 14:57:52*
+
+**Merge pull request #218 from JuanPabloJimenezEsclusa/release/GH-32-continuous-improvement**
+
+ * [GH-32] release - continuous improvement
+
+[48f257c4783bb88](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/48f257c4783bb88) Juan Pablo Jimenez Esclusa *2025-11-24 14:46:13*
+
+**chore(deps): bump org.springdoc:springdoc-openapi-starter-webflux-ui from 2.8.13 to 2.8.14 (#203)**
+
+ * chore(deps): bump org.springdoc:springdoc-openapi-starter-webflux-ui
  * Bumps [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) from 2.8.13 to 2.8.14.
  * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
  * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
@@ -24,8 +474,13 @@ Changelog of camila-services.
  * update-type: version-update:semver-patch
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] build: grouping dependabot branches
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[7a81c23e6854bf4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7a81c23e6854bf4) dependabot[bot] *2025-11-24 12:54:45*
+[53de39cb52f8ac0](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/53de39cb52f8ac0) dependabot[bot] *2025-11-24 14:13:14*
 
 **chore(deps): bump org.springdoc:springdoc-openapi-starter-webflux-ui (#197)**
 

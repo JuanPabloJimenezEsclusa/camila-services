@@ -24,7 +24,7 @@ public class ProductCouchbaseAdapter implements ProductRepository {
    * Instantiates a new Product couchbase adapter.
    *
    * @param productCouchbaseRepository the product couchbase repository
-   * @param mapper the mapper
+   * @param mapper                     the mapper
    */
   public ProductCouchbaseAdapter(final ProductCouchbaseRepository productCouchbaseRepository,
                                  final ProductCouchbaseMapper mapper) {
@@ -34,19 +34,20 @@ public class ProductCouchbaseAdapter implements ProductRepository {
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    return productCouchbaseRepository.findByInternalId(internalId)
+    return this.productCouchbaseRepository.findByInternalId(internalId)
       .doOnNext(result -> log.debug("couchbase.adapter.findByInternalId: {}", result))
-      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.findByInternalId: {}", throwable.getMessage()))
-      .map(mapper::toProduct);
+      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.findByInternalId", throwable))
+      .map(this.mapper::toProduct);
   }
 
   @Override
-  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset, final long limit) {
-    return productCouchbaseRepository.sortByMetricsWeights(appliedWeights.salesUnitsWeight(),
-        appliedWeights.stockWeight(), appliedWeights.profitMarginWeight(), appliedWeights.daysInStockWeight(),
-        limit, offset)
+  public Flux<Product> sortByMetricsWeights(final AppliedWeights appliedWeights, final long offset,
+                                            final long limit) {
+    return this.productCouchbaseRepository
+      .sortByMetricsWeights(appliedWeights.salesUnitsWeight(), appliedWeights.stockWeight(),
+        appliedWeights.profitMarginWeight(), appliedWeights.daysInStockWeight(), limit, offset)
       .doOnNext(result -> log.debug("couchbase.adapter.sortByMetricsWeights: {}", result))
-      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.sortByMetricsWeights: {}", throwable.getMessage()))
-      .map(mapper::toProduct);
+      .doOnError(throwable -> log.debug("throwable -> couchbase.adapter.sortByMetricsWeights", throwable))
+      .map(this.mapper::toProduct);
   }
 }

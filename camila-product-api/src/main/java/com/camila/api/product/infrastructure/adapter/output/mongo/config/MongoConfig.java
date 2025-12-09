@@ -24,4 +24,5 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
   CouchbaseReactiveDataAutoConfiguration.class,
   CouchbaseReactiveRepositoriesAutoConfiguration.class
 })
-public class MongoConfig {}
+public class MongoConfig {
+}

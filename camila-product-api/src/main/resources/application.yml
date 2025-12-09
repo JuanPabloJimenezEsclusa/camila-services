@@ -13,13 +13,17 @@ spring:
     refresh:
       # https://github.com/spring-cloud/spring-cloud-release/wiki/AOT-transformations-and-native-image-support#refresh-scope
       enabled: false
+    loadbalancer:
+      enabled: false
   couchbase:
-    connection-string: couchbase://localhost:11207
-    username: ${COUCHBASE_USER:Administrator}
-    password: ${COUCHBASE_PASS:password}
+    connection-string: couchbase://couchbase:11207
+    username: ${COUCHBASE_USERNAME:Administrator}
+    password: ${COUCHBASE_PASSWORD:password}
     env:
       ssl:
         enabled: false
+      timeouts:
+        connect: 30s
   data:
     couchbase:
       bucket-name: camila-product-bucket
@@ -477,9 +481,9 @@ spring:
     activate:
       on-profile: "local-compose"
   couchbase:
-    connection-string: couchbase
-    username: ${COUCHBASE_USER:Administrator}
-    password: ${COUCHBASE_PASS:password}
+    connection-string: couchbase://couchbase:11207
+    username: ${COUCHBASE_USERNAME:Administrator}
+    password: ${COUCHBASE_PASSWORD:password}
     env:
       ssl:
         enabled: false
