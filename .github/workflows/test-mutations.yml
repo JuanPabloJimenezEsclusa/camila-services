@@ -10,6 +10,10 @@ concurrency:
   group: mutation-tests-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
 env:
   MAVEN_OPTS: "-Xmx2048m"
   MAVEN_CLI_OPTS: "-B -ntp -e"
