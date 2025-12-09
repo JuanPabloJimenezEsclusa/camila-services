@@ -12,8 +12,8 @@ cd "$(dirname "$0")"
 # Require install: https://github.com/making/rsc
 # Be careful, this is a not maintained project
 
-CLIENT_ID="1dmad5iclmo5ukvaoidmou6tl"
-CLIENT_SECRET="3rk0gl5fi434m1tjrsu2uf97q8fn7riu1ia77mbc07egd8v76me"
+CLIENT_ID="6qjo3b8rteisnmls4v6sm63iaf"
+CLIENT_SECRET="ck8lbeql6g16brcjt8r47i494pjid31sjki6pgujkdf6ia4ja7q"
 SCOPES="camila/read camila/write"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 RSOCKET_SERVER_URL="${RSOCKET_SERVER_URL:-"wss://tech.jpje.xyz:443/product/api/rsocket"}"

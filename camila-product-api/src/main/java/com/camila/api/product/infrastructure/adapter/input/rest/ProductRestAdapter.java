@@ -40,35 +40,31 @@ class ProductRestAdapter implements ProductsApi {
   /**
    * Instantiates a new Product rest adapter.
    *
-   * @param productUseCase the product use case
+   * @param productUseCase   the product use case
    * @param productDTOMapper the product dto mapper
    */
-  public ProductRestAdapter(final ProductUseCase productUseCase,
-                            final ProductDTOMapper productDTOMapper) {
+  public ProductRestAdapter(final ProductUseCase productUseCase, final ProductDTOMapper productDTOMapper) {
     this.productUseCase = productUseCase;
     this.productDTOMapper = productDTOMapper;
   }
 
   @Parameter(name = "internalId", description = "Internal product identifier", example = "1")
   @Override
-  public Mono<ProductDTO> findById(final String internalId,
-                                   final String acceptLanguage,
-                                   final String apiVersion,
+  public Mono<ProductDTO> findById(final String internalId, final String acceptLanguage, final String apiVersion,
                                    final ServerWebExchange exchange) {
-    return Mono.deferContextual(_ -> this.productUseCase.findByInternalId(internalId)
-        .map(productDTOMapper::toProductDTO))
+    return Mono
+      .deferContextual(
+        _ -> this.productUseCase.findByInternalId(internalId).map(this.productDTOMapper::toProductDTO))
       .doOnNext(_ -> log.info("find By Id: {}", internalId));
   }
 
   @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
   @Override
-  public Flux<ProductDTO> sortProducts(final Map<String, String> requestParams,
-                                       final String acceptLanguage,
-                                       final String apiVersion,
-                                       final ServerWebExchange exchange) {
+  public Flux<ProductDTO> sortProducts(final Map<String, String> requestParams, final String acceptLanguage,
+                                       final String apiVersion, final ServerWebExchange exchange) {
     return QueryParametersValidator.validate(requestParams)
       .flatMapMany(validParams -> this.productUseCase.sortByMetricsWeights(validParams)
-        .map(productDTOMapper::toProductDTO))
+        .map(this.productDTOMapper::toProductDTO))
       .doOnNext(_ -> log.info("find sort by: {}", requestParams));
   }
 }

@@ -19,16 +19,14 @@ import reactor.core.publisher.Mono;
  * The type Product web socket handler.
  */
 @Component
-record ProductWebSocketHandler(
-  ProductUseCase productUseCase,
-  ObjectMapper objectMapper
-) implements WebSocketHandler {
+record ProductWebSocketHandler(ProductUseCase productUseCase, ObjectMapper objectMapper) implements WebSocketHandler {
 
   private static final String DEFAULT_WEIGHT = "0.0000000001";
   private static final String DEFAULT_PAGE = "0";
   private static final String DEFAULT_SIZE = "25";
 
-  private static String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName, final String defaultValue) {
+  private static String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName,
+                                             final String defaultValue) {
     return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asText).orElse(defaultValue);
   }
 
@@ -43,48 +41,42 @@ record ProductWebSocketHandler(
 
   private Flux<String> handleMessage(final String message) {
     try {
-      var jsonNode = this.objectMapper.readTree(message);
-      var method = jsonNode.get("method").asText("1");
+      final var jsonNode = this.objectMapper.readTree(message);
+      final var method = jsonNode.get("method").asText("1");
       return switch (SocketMethod.valueOf(method)) {
-        case SocketMethod.FIND_BY_INTERNAL_ID -> handleFindByInternalId(jsonNode);
-        case SocketMethod.SORT_PRODUCTS -> handleSortProducts(jsonNode);
+        case SocketMethod.FIND_BY_INTERNAL_ID -> this.handleFindByInternalId(jsonNode);
+        case SocketMethod.SORT_PRODUCTS -> this.handleSortProducts(jsonNode);
       };
-    } catch (JsonProcessingException e) {
+    } catch (final JsonProcessingException e) {
       return Flux.just("Error converting request to Json:  " + e.getMessage());
     }
   }
 
   private Flux<String> handleFindByInternalId(final JsonNode jsonNode) {
-    return this.productUseCase
-      .findByInternalId(jsonNode.get("internalId").asText())
-      .flatMapMany(this::convertProductToString)
-      .switchIfEmpty(Flux.just("Product not found"));
+    return this.productUseCase.findByInternalId(jsonNode.get("internalId").asText())
+      .flatMapMany(this::convertProductToString).switchIfEmpty(Flux.just("Product not found"));
   }
 
   private Flux<String> handleSortProducts(final JsonNode jsonNode) {
-    var requestParams = Map.of(
-      "salesUnits", getNodeTextOrDefault(jsonNode, "salesUnits", DEFAULT_WEIGHT),
-      "stock", getNodeTextOrDefault(jsonNode, "stock", DEFAULT_WEIGHT),
-      "profitMargin", getNodeTextOrDefault(jsonNode, "profitMargin", DEFAULT_WEIGHT),
-      "daysInStock", getNodeTextOrDefault(jsonNode, "daysInStock", DEFAULT_WEIGHT),
-      "page", getNodeTextOrDefault(jsonNode, "page", DEFAULT_PAGE),
-      "size", getNodeTextOrDefault(jsonNode, "size", DEFAULT_SIZE)
-    );
-    return this.productUseCase.sortByMetricsWeights(requestParams)
-      .flatMap(this::convertProductToString)
+    final var requestParams = Map.of("salesUnits", getNodeTextOrDefault(jsonNode, "salesUnits", DEFAULT_WEIGHT),
+      "stock", getNodeTextOrDefault(jsonNode, "stock", DEFAULT_WEIGHT), "profitMargin",
+      getNodeTextOrDefault(jsonNode, "profitMargin", DEFAULT_WEIGHT), "daysInStock",
+      getNodeTextOrDefault(jsonNode, "daysInStock", DEFAULT_WEIGHT), "page",
+      getNodeTextOrDefault(jsonNode, "page", DEFAULT_PAGE), "size",
+      getNodeTextOrDefault(jsonNode, "size", DEFAULT_SIZE));
+    return this.productUseCase.sortByMetricsWeights(requestParams).flatMap(this::convertProductToString)
       .switchIfEmpty(Flux.just("No products found"));
   }
 
   private Flux<String> convertProductToString(final Product product) {
     try {
       return Flux.just(this.objectMapper.writeValueAsString(product));
-    } catch (JsonProcessingException e) {
+    } catch (final JsonProcessingException e) {
       return Flux.just("Error converting product to string: " + e.getMessage());
     }
   }
 
   private enum SocketMethod {
-    FIND_BY_INTERNAL_ID,
-    SORT_PRODUCTS
+    FIND_BY_INTERNAL_ID, SORT_PRODUCTS
   }
 }

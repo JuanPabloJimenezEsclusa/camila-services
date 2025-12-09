@@ -22,8 +22,9 @@ class RateLimitConfig {
   private final String rlPrefix;
   private final String envName;
 
-  RateLimitConfig(@Value("${rate.limiter.prefix:rl}") final String rlPrefix,
-                  @Value("${spring.profiles.active:default}") final String envName) {
+  RateLimitConfig(
+    @Value("${rate.limiter.prefix:rl}") final String rlPrefix,
+    @Value("${spring.profiles.active:default}") final String envName) {
     this.rlPrefix = rlPrefix;
     this.envName = envName;
   }
@@ -41,26 +42,22 @@ class RateLimitConfig {
     return exchange -> {
       final ServerHttpRequest request = exchange.getRequest();
 
-      final var fromXff = Mono
-        .justOrEmpty(request.getHeaders().getFirst("X-Forwarded-For"))
+      final var fromXff = Mono.justOrEmpty(request.getHeaders().getFirst("X-Forwarded-For"))
         .map(h -> h.split(",")[0].trim());
 
-      final var fromRemote = Mono
-        .justOrEmpty(request.getRemoteAddress())
+      final var fromRemote = Mono.justOrEmpty(request.getRemoteAddress())
         .map(addr -> addr.getAddress().getHostAddress());
 
-      final var resolvedKey = fromXff
-        .switchIfEmpty(fromRemote)
-        .switchIfEmpty(Mono.just("anonymous"));
+      final var resolvedKey = fromXff.switchIfEmpty(fromRemote).switchIfEmpty(Mono.just("anonymous"));
 
       final Mono<String> routeIdMono = Mono.defer(() -> {
         final Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
-        final String routeId = (route != null && route.getId() != null) ? route.getId() : "route";
+        final String routeId = route != null ? route.getId() : "route";
         return Mono.just(routeId);
       });
 
       return Mono.zip(routeIdMono, resolvedKey)
-        .map(tuple -> "%s-%s-%s-%s".formatted(rlPrefix, envName, tuple.getT1(), tuple.getT2()))
+        .map(tuple -> "%s-%s-%s-%s".formatted(this.rlPrefix, this.envName, tuple.getT1(), tuple.getT2()))
         .doOnNext(k -> log.info("RateLimiter key resolved: {} for path {}", k, request.getPath()));
     };
   }

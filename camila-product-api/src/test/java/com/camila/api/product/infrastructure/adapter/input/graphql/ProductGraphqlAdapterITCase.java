@@ -36,50 +36,39 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 @GraphQlTest(
   properties = {
     "spring.main.lazy-initialization=true",
-    "repository.technology=couchbase"
-  },
-  controllers = ProductGraphqlAdapter.class
-)
+    "repository.technology=couchbase"},
+  controllers = ProductGraphqlAdapter.class)
 /*
-  Slicing spring configuration.
-  Benefits:
-  - Faster test execution: Only loads necessary components
-  - Improved test isolation: Focus on specific layers/components
-  - Greater control: Clear definition of test boundaries
-  - Reduced complexity: Tests only load what they need
-*/
+ * Slicing spring configuration. Benefits:
+ * - Faster test execution: Only loads necessary components
+ * - Improved test isolation: Focus on specific layers/components
+ * - Greater control: Clear definition of test boundaries
+ * - Reduced complexity: Tests only load what they need
+ */
 @ImportAutoConfiguration(exclude = {
   // gRPC
-  GrpcClientAutoConfiguration.class,
-  GrpcClientHealthAutoConfiguration.class,
-  GrpcServerFactoryAutoConfiguration.class,
-  LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
+  GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+  GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
   // Security Components
-  ReactiveSecurityAutoConfiguration.class,
-  ReactiveUserDetailsServiceAutoConfiguration.class,
+  ReactiveSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,
   // mongo
-  MongoReactiveDataAutoConfiguration.class,
-  MongoReactiveRepositoriesAutoConfiguration.class,
-  MongoReactiveAutoConfiguration.class
-})
+  MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
+  MongoReactiveAutoConfiguration.class})
 @Import({
   // Slicing spring configuration
   // Framework adapter input layer
-  GraphqlConfig.class,
-  ProductGraphqlAdapter.class,
+  GraphqlConfig.class, ProductGraphqlAdapter.class,
   // Security
   LocalSecurityConfig.class,
   // Application layer
   DefaultProductUseCase.class,
   // Framework adapter output layer
-  CouchbaseConfig.class,
-  ProductCouchbaseAdapter.class,
-  ProductCouchbaseMapperImpl.class
-})
+  CouchbaseConfig.class, ProductCouchbaseAdapter.class, ProductCouchbaseMapperImpl.class})
 @AutoConfigureGraphQlTester
 @DisplayName("[IT][ProductGraphqlAdapter] Product graphql adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
+
   private static final String ERROR_EXPECTED_VALUE = "Variable 'salesUnits' has an invalid value: "
     + "Expected a Number input, but it was a 'String'";
 
@@ -98,11 +87,8 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
       }
       """;
 
-    graphQlTester.document(query)
-      .variable("internalId", "1")
-      .execute()
-      .path("data.findById.internalId").entity(String.class)
-      .satisfies(internalId -> assertThat(internalId).contains("1"));
+    this.graphQlTester.document(query).variable("internalId", "1").execute().path("data.findById.internalId")
+      .entity(String.class).satisfies(internalId -> assertThat(internalId).contains("1"));
   }
 
   @Test
@@ -124,20 +110,14 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
       }
       """;
 
-    graphQlTester.document(query)
-      .variable("salesUnits", 0.0008)
-      .variable("stock", 0.9990)
-      .variable("profitMargin", 0.0001)
-      .variable("daysInStock", 0.0001)
-      .variable("withDetails", false)
-      .execute()
-      .path("data.sortProducts[0].salesUnits").entity(Integer.class).isEqualTo(3)
+    this.graphQlTester.document(query).variable("salesUnits", 0.0008).variable("stock", 0.9990)
+      .variable("profitMargin", 0.0001).variable("daysInStock", 0.0001).variable("withDetails", false)
+      .execute().path("data.sortProducts[0].salesUnits").entity(Integer.class).isEqualTo(3)
       .path("data.sortProducts[0].stock.S").entity(Integer.class).isEqualTo(25)
       .path("data.sortProducts[0].stock.M").entity(Integer.class).isEqualTo(30)
       .path("data.sortProducts[0].stock.L").entity(Integer.class).isEqualTo(10)
-      .path("data.sortProducts[0].stock.XL").pathDoesNotExist()
-      .path("data.sortProducts").entityList(Product.class)
-      .satisfies(products -> assertThat(products).hasSize(6));
+      .path("data.sortProducts[0].stock.XL").pathDoesNotExist().path("data.sortProducts")
+      .entityList(Product.class).satisfies(products -> assertThat(products).hasSize(6));
   }
 
   @Test
@@ -158,15 +138,9 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
       }
       """;
 
-    graphQlTester.document(query)
-      .variable("salesUnits", 0.001)
-      .variable("stock", 0.997)
-      .variable("profitMargin", 0.001)
-      .variable("daysInStock", 0.001)
-      .variable("page", 0)
-      .variable("size", 2)
-      .execute()
-      .path("data.sortProducts[0].name").entity(String.class).isEqualTo("PLEATED T-SHIRT")
+    this.graphQlTester.document(query).variable("salesUnits", 0.001).variable("stock", 0.997)
+      .variable("profitMargin", 0.001).variable("daysInStock", 0.001).variable("page", 0).variable("size", 2)
+      .execute().path("data.sortProducts[0].name").entity(String.class).isEqualTo("PLEATED T-SHIRT")
       .path("data.sortProducts").entityList(Product.class)
       .satisfies(products -> assertThat(products).hasSize(2));
   }
@@ -176,23 +150,32 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
   @Order(2)
   void sortProductsWithPageOut() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float,
-          $daysInStock: Float, $page: Int, $size: Int!) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin,
-            daysInStock: $daysInStock, page: $page, size: $size) { id }
+      query sortProducts(
+          $salesUnits: Float,
+          $stock: Float,
+          $profitMargin: Float,
+          $daysInStock: Float,
+          $page: Int,
+          $size: Int!) {
+        sortProducts(
+          salesUnits: $salesUnits,
+          stock: $stock,
+          profitMargin: $profitMargin,
+          daysInStock: $daysInStock,
+          page: $page,
+          size: $size) { id }
       }
       """;
 
-    graphQlTester.document(query)
+    this.graphQlTester.document(query)
       .variable("salesUnits", 0.001)
       .variable("stock", 0.997)
       .variable("profitMargin", 0.001)
       .variable("daysInStock", 0.001)
       .variable("page", 1)
       .variable("size", 10)
-      .execute()
-      .errors().expect(responseError ->
-        Objects.requireNonNull(responseError.getMessage()).contains("INTERNAL_ERROR"));
+      .execute().errors()
+      .expect(responseError -> Objects.requireNonNull(responseError.getMessage()).contains("INTERNAL_ERROR"));
   }
 
   @Test
@@ -200,16 +183,18 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
   @Order(2)
   void sortProductsWithConstraintViolation() {
     final var query = """
-      query sortProducts($salesUnits: Float, $stock: Float) {
-        sortProducts(salesUnits: $salesUnits, stock: $stock) { id }
+      query sortProducts(
+          $salesUnits: Float,
+          $stock: Float) {
+        sortProducts(
+          salesUnits: $salesUnits,
+          stock: $stock) { id }
       }
       """;
 
-    graphQlTester.document(query)
+    this.graphQlTester.document(query)
       .variable("salesUnits", "X")
-      .variable("stock", "Y")
-      .execute()
-      .errors().expect(responseError -> Objects.requireNonNull(responseError.getMessage())
-        .contains(ERROR_EXPECTED_VALUE));
+      .variable("stock", "Y").execute().errors().expect(
+        responseError -> Objects.requireNonNull(responseError.getMessage()).contains(ERROR_EXPECTED_VALUE));
   }
 }

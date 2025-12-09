@@ -24,7 +24,7 @@ public class RSocketConfig {
   @Bean
   RSocketMessageHandler messageHandler() {
     final var handler = new RSocketMessageHandler();
-    handler.setRSocketStrategies(rsocketStrategies());
+    handler.setRSocketStrategies(this.rsocketStrategies());
     return handler;
   }
 
@@ -38,10 +38,8 @@ public class RSocketConfig {
     // https://cbor.io/
     // https://www.rfc-editor.org/info/rfc7049
     final var objectMapper = new ObjectMapper(new CBORFactory());
-    return RSocketStrategies.builder()
-      .encoders(encoders -> encoders.add(new Jackson2CborEncoder(objectMapper)))
+    return RSocketStrategies.builder().encoders(encoders -> encoders.add(new Jackson2CborEncoder(objectMapper)))
       .decoders(decoders -> decoders.add(new Jackson2CborDecoder(objectMapper)))
-      .routeMatcher(new PathPatternRouteMatcher())
-      .build();
+      .routeMatcher(new PathPatternRouteMatcher()).build();
   }
 }

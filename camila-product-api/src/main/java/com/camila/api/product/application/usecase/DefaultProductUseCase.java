@@ -23,7 +23,7 @@ public record DefaultProductUseCase(ProductRepository productRepository) impleme
 
   @Override
   public Mono<Product> findByInternalId(final String internalId) {
-    return productRepository.findByInternalId(internalId)
+    return this.productRepository.findByInternalId(internalId)
       .doOnNext(product -> log.debug("find By Id: {}", product))
       .onErrorResume(e -> Mono.error(new ProductException(e)))
       .switchIfEmpty(Mono.error(NotFoundException::new));
@@ -34,11 +34,11 @@ public record DefaultProductUseCase(ProductRepository productRepository) impleme
     try {
       final var criteria = ProductSortCriteria.fromRequestParams(requestParams);
       final var appliedWeights = ProductWeightResolver.resolve(criteria.metricWeights());
-      return productRepository.sortByMetricsWeights(appliedWeights, criteria.offset(), criteria.limit())
+      return this.productRepository.sortByMetricsWeights(appliedWeights, criteria.offset(), criteria.limit())
         .doOnNext(product -> log.debug("find sort by: {}", product))
         .onErrorResume(e -> Flux.error(new ProductException(e)))
         .switchIfEmpty(Flux.error(NotFoundException::new));
-    } catch (IllegalArgumentException e) {
+    } catch (final IllegalArgumentException e) {
       return Flux.error(e);
     }
   }

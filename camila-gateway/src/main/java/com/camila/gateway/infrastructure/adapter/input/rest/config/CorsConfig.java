@@ -15,8 +15,9 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 @Configuration
 // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
 class CorsConfig {
+
   private static UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
-    var corsConfig = new CorsConfiguration();
+    final var corsConfig = new CorsConfiguration();
     corsConfig.setAllowedOrigins(Collections.singletonList("*"));
     corsConfig.setAllowedMethods(Collections.singletonList("*"));
     corsConfig.setAllowedHeaders(Collections.singletonList("*"));
@@ -24,7 +25,7 @@ class CorsConfig {
     corsConfig.setAllowPrivateNetwork(true);
     corsConfig.setMaxAge(3600L);
 
-    var source = new UrlBasedCorsConfigurationSource();
+    final var source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfig);
     return source;
   }

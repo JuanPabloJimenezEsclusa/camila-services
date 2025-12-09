@@ -9,8 +9,7 @@ spring:
     # https://www.ascii-art-generator.org/
     location: classpath:/gateway-banner.txt
   profiles:
-    active:
-      - ${SPRING_PROFILES_ACTIVE:loc}
+    active: ${SPRING_PROFILES_ACTIVE:loc}
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -32,88 +31,107 @@ spring:
         backoff:
           enabled: true
     # https://cloud.spring.io/spring-cloud-gateway/reference/html/
-    gateway.server.webflux:
-      metrics:
-        enabled: true
-      routes:
-        - id: products
-          uri: ${PRODUCT_SERVER_URL:http://localhost:8080/}
-          predicates:
-            - Path=/product-*/api/**
-          metadata:
-            cors:
-              allowedOrigins: '*'
-              allowedMethods: '*'
-              allowedHeaders: '*'
-              maxAge: 30
-          filters:
-            - name: RemoveRequestHeader     # Remove hop-by-hop headers
-              args:
-                name: Cookie
-            - name: TokenRelay              # Relay OAuth2 token to downstream services
-            - name: RequestRateLimiter      # Rate limiting using Redis
-              args:
-                key-resolver: '#{@userKeyResolver}'
-                redis-rate-limiter.enable: true
-                redis-rate-limiter.automaticExpirationAfter: ${gateway.automaticExpirationAfter:10s}
-                redis-rate-limiter.replenishRate: ${gateway.replenishRate:200}    # 200 tokens/seconds
-                redis-rate-limiter.burstCapacity: ${gateway.burstCapacity:400}    # peak of 400 tokens
-                redis-rate-limiter.requestedTokens: ${gateway.requestedTokens:1}
-            - name: Retry                   # Retry on specific HTTP status codes
-              args:
-                retries: 1  # Only 1 retry to avoid cascading failures
-                statuses: INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
-                methods: GET, POST, HEAD, OPTIONS
-                backoff:
-                  firstBackoff: 50ms
-                  maxBackoff: 200ms
-                  factor: 2
-                  basedOnPreviousValue: false
-            - name: CircuitBreaker          # Circuit breaker pattern
-              args:
-                name: fallbackCircuitBreaker
-                fallbackUri: forward:/fallback
-            - name: DedupeResponseHeader    # Dedupe CORS headers
-              args:
-                name: Access-Control-Allow-Credentials
-                strategy: RETAIN_FIRST  # RETAIN_FIRST or RETAIN_LAST
-            - name: RequestSize             # Limit request size to prevent abuse
-              args:
-                maxSize: 10000
-      globalcors:
-        add-to-simple-url-handler-mapping: true
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedHeaders:
-              - "Origin"
-              - "Content-Type"
-              - "Accept"
-              - "Authorization"
-              - "Referer"
-            allowedMethods:
-              - POST
-              - GET
-              - OPTIONS
-      httpclient:
-        ssl:
-          use-insecure-trust-manager: true
-      filter:
-        request-rate-limiter:
-          enabled: true
-        retry:
-          enabled: true
-        circuit-breaker:
-          enabled: true
-        fallback-headers:
-          enabled: true
-        request-size:
-          enabled: true
-      default-filters:
-        - TokenRelay
+    gateway:
+      server:
+        webflux:
+          metrics:
+            enabled: true
+          routes:
+            - id: products
+              uri: ${PRODUCT_SERVER_URL:http://localhost:8080/}
+              predicates:
+                - Path=/product-*/api/**
+              metadata:
+                cors:
+                  allowed-origins: '*'
+                  allowed-methods: '*'
+                  allowed-headers: '*'
+                  max-age: 30
+              filters:
+                - name: RemoveRequestHeader     # Remove hop-by-hop headers
+                  args:
+                    name: Cookie
+                - name: TokenRelay              # Relay OAuth2 token to downstream services
+                - name: RequestRateLimiter      # Rate limiting using Redis
+                  args:
+                    key-resolver: '#{@userKeyResolver}'
+                    redis-rate-limiter.enable: true
+                    redis-rate-limiter.automaticExpirationAfter: ${gateway.automaticExpirationAfter:10s}
+                    redis-rate-limiter.replenishRate: ${gateway.replenishRate:200}    # 200 tokens/seconds
+                    redis-rate-limiter.burstCapacity: ${gateway.burstCapacity:400}    # peak of 400 tokens
+                    redis-rate-limiter.requestedTokens: ${gateway.requestedTokens:1}
+                - name: Retry                   # Retry on specific HTTP status codes
+                  args:
+                    retries: 1  # Only 1 retry to avoid cascading failures
+                    statuses: INTERNAL_SERVER_ERROR, BAD_GATEWAY, GATEWAY_TIMEOUT, SERVICE_UNAVAILABLE
+                    methods: GET, POST, HEAD, OPTIONS
+                    backoff:
+                      firstBackoff: 50ms
+                      maxBackoff: 200ms
+                      factor: 2
+                      basedOnPreviousValue: false
+                - name: CircuitBreaker          # Circuit breaker pattern
+                  args:
+                    name: fallbackCircuitBreaker
+                    fallbackUri: forward:/fallback
+                - name: DedupeResponseHeader    # Dedupe CORS headers
+                  args:
+                    name: Access-Control-Allow-Credentials
+                    strategy: RETAIN_FIRST  # RETAIN_FIRST or RETAIN_LAST
+                - name: RequestSize             # Limit request size to prevent abuse
+                  args:
+                    maxSize: 10000
+          globalcors:
+            add-to-simple-url-handler-mapping: true
+            cors-configurations:
+              '[/**]':
+                allowed-origins: "*"
+                allowed-headers:
+                  - "Origin"
+                  - "Content-Type"
+                  - "Accept"
+                  - "Authorization"
+                  - "Referer"
+                allowed-methods:
+                  - POST
+                  - GET
+                  - OPTIONS
+          httpclient:
+            ssl:
+              use-insecure-trust-manager: true
+              handshake-timeout: 10s
+              close-notify-flush-timeout: 3s
+              close-notify-read-timeout: 3s
+          filter:
+            request-rate-limiter:
+              enabled: true
+            retry:
+              enabled: true
+            circuit-breaker:
+              enabled: true
+            fallback-headers:
+              enabled: true
+            request-size:
+              enabled: true
+          default-filters:
+            - TokenRelay
   main:
     web-application-type: reactive
     lazy-initialization: true
+
+# Gateway-specific configuration properties
+gateway:
+  fallback:
+    message: "Circuit-breaker-fallback"
+  replenishRate: 200
+  burstCapacity: 400
+  requestedTokens: 1
+  automaticExpirationAfter: 10s
+
+# Rate limiter configuration
+rate:
+  limiter:
+    prefix: "rl"
 
 # https://docs.spring.io/spring-cloud-circuitbreaker/docs/current/reference/html/spring-cloud-circuitbreaker-resilience4j.html#_circuit_breaker_properties_configuration
 resilience4j:
@@ -190,31 +208,24 @@ management:
     web:
       exposure:
         include: "*"
+      access:
+        default: "unrestricted"
   endpoint:
     env:
       show-values: ALWAYS
       cache:
         time-to-live: 60s
-      access: unrestricted
     info:
       cache:
         time-to-live: 3600s
-      access: unrestricted
     beans:
       cache:
         time-to-live: 10s
-      access: unrestricted
     health:
       show-details: ALWAYS
       show-components: ALWAYS
-      access: unrestricted
     configprops:
       show-values: ALWAYS
-      access: unrestricted
-    shutdown:
-      access: unrestricted
-    prometheus:
-      access: unrestricted
   info:
     env:
       enabled: true
@@ -327,3 +338,7 @@ spring:
       enabled: false
     discovery:
       enabled: false
+
+eureka:
+  client:
+    enabled: false

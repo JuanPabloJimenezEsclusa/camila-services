@@ -6,7 +6,12 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
-      - dependency-name: "io.opentelemetry.*"
+      - dependency-name: "org.springframework.boot:*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.springframework.cloud:*"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+      - dependency-name: "org.springdoc:*"
+        update-types: ["version-update:semver-major"]
     groups:
       maven-dependencies:
         patterns:
@@ -18,7 +23,12 @@ updates:
     schedule:
       interval: "weekly"
     ignore:
-      - dependency-name: "io.opentelemetry.*"
+      - dependency-name: "org.springframework.boot:*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.springframework.cloud:*"
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+      - dependency-name: "org.springdoc:*"
+        update-types: ["version-update:semver-major"]
     groups:
       gradle-dependencies:
         patterns:

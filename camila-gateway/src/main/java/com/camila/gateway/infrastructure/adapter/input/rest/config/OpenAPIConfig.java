@@ -13,19 +13,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class OpenAPIConfig {
 
-	/**
-	 * Spring gateway open api.
-	 *
-	 * @return the open api
-	 */
-	@Bean
-	OpenAPI springGatewayOpenAPI() {
-		return new OpenAPI()
-				.info(new Info().title("Camila Gateway API")
-						.description("Gateway implementation to Camila Service project").version("1.0.0")
-						.license(new License().name("GPL-3.0").url(
-								"https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/LICENSE.md")))
-				.externalDocs(new ExternalDocumentation().description("Camila Service Documentation")
-						.url("https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/Readme.md"));
-	}
+  /**
+   * Spring gateway open api.
+   *
+   * @return the open api
+   */
+  @Bean
+  OpenAPI springGatewayOpenAPI() {
+    return new OpenAPI()
+      .info(new Info()
+        .title("Camila Gateway API")
+        .description("Gateway implementation to Camila Service project").version("1.0.0")
+        .license(new License()
+          .name("GPL-3.0")
+          .url("https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/LICENSE.md")))
+      .externalDocs(new ExternalDocumentation()
+        .description("Camila Service Documentation")
+        .url("https://github.com/JuanPabloJimenezEsclusa/camila-services/blob/main/Readme.md"));
+  }
 }

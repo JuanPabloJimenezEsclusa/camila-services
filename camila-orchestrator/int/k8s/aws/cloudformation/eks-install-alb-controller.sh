@@ -51,7 +51,7 @@ __create_oidc_provider() {
   aws iam create-open-id-connect-provider \
     --url "https://${OIDC_URL}" \
     --client-id-list sts.amazonaws.com \
-    --thumbprint-list "${THUMBPRINT}"
+    --thumbprint-list "${THUMBPRINT}" || true
 }
 
 __replace_oidc_url() {

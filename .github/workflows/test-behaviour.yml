@@ -10,12 +10,21 @@ concurrency:
   group: behaviour-tests-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  MAVEN_OPTS: "-Xmx2048m"
+  MAVEN_CLI_OPTS: "-B -ntp -e"
+
 jobs:
   test:
     if: github.event.pull_request.draft == false
-    name: Build and analyze
+    name: Behaviour Testing Analysis
     environment: pro
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - name: Configure GPG Key
         run: |
@@ -23,24 +32,104 @@ jobs:
         env:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
       - name: Set up JDK 25
         uses: actions/setup-java@v5
         with:
           java-version: '25'
           distribution: 'oracle'
+          cache: 'maven'
+
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+
       - name: Enable Testcontainers reuse
         run: |
           echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
-      - name: Analyze Behaviour tests
+
+      - name: Run Behaviour Tests
+        id: behaviour-tests
         run: |
-          mvn -B test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner -f ./camila-product-api/pom.xml 
+          mvn ${{ env.MAVEN_CLI_OPTS }} test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner -f ./camila-product-api/pom.xml
+
+      - name: Upload Cucumber Reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cucumber-reports
+          path: |
+            camila-product-api/target/cucumber-reports/
+            camila-product-api/target/surefire-reports/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Generate Behaviour Test Summary
+        if: always()
+        run: |
+          echo "## 🧪 Behaviour Testing Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -d "camila-product-api/target/cucumber-reports" ]; then
+            echo "### ✅ Behaviour Tests Completed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Test Runner:** ProductBehaviourRunner" >> $GITHUB_STEP_SUMMARY
+            echo "**Reports Location:** \`camila-product-api/target/cucumber-reports/\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Check for HTML report
+            if [ -f "camila-product-api/target/cucumber-reports/index.html" ]; then
+              echo "📊 Cucumber HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "### ⚠️ No Behaviour Test Reports Generated" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Test Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment PR with Behaviour Test Results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            const reportsPath = 'camila-product-api/target/cucumber-reports';
+            let comment = '## 🧪 Behaviour Testing Results\n\n';
+            
+            if (fs.existsSync(reportsPath)) {
+              comment += '✅ **Behaviour tests have been executed**\n\n';
+              comment += '**Generated Reports:**\n';
+              comment += '- Cucumber BDD test results in the artifacts\n';
+              comment += '- Test runner: ProductBehaviourRunner\n';
+              comment += '- Artifacts can be downloaded from the workflow run details\n\n';
+            } else {
+              comment += '⚠️ **No behaviour test reports were generated**\n\n';
+            }
+            
+            comment += '---\n';
+            comment += '_Behaviour-Driven Development (BDD) tests ensure your application meets business requirements._\n';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Check Behaviour Tests Status
+        if: failure() && steps.behaviour-tests.conclusion == 'failure'
+        run: |
+          echo "❌ Behaviour tests failed!"
+          echo "Please review the test output and behaviour test report artifacts."
+          exit 1 

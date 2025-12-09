@@ -22,9 +22,10 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 <details>
 <summary><strong>Expand Dependencies</strong></summary>
 
-* Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
-* AWS CLI ~= [2.28.17](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
-* K9s ~= [v0.50.9](https://github.com/derailed/k9s/releases)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/28/)
+* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* K8s ~= [1.34.x](https://kubernetes.io/releases/)
+* K9s ~= [v0.50.x](https://github.com/derailed/k9s/releases)
 
 </details>
 

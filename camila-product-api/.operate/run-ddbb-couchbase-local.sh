@@ -24,8 +24,8 @@ docker run -it --rm \
   --ulimit memlock=100000000:100000000 \
   --oom-kill-disable \
   -e CLUSTER_NAME=camila-couchbase-cluster \
-  -e COUCHBASE_ADMINISTRATOR_USERNAME=Administrator \
-  -e COUCHBASE_ADMINISTRATOR_PASSWORD=password \
+  -e COUCHBASE_USERNAME=Administrator \
+  -e COUCHBASE_PASSWORD=password \
   -e COUCHBASE_BUCKET=camila-product-bucket \
   -e COUCHBASE_BUCKET_SCOPE=product \
   -e COUCHBASE_BUCKET_COLLECTION=products \

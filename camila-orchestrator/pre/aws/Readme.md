@@ -13,8 +13,6 @@
 
 Based on `AWS Cloud Provider`
 
-> It is recommended to use dark mode UI to read this!
-
 ## ⚙️ Dependencies
 
 ---
@@ -22,10 +20,10 @@ Based on `AWS Cloud Provider`
 <details>
 <summary><strong>Expand Dependencies</strong></summary>
 
-* Docker ~= [28.x](https://docs.docker.com/engine/release-notes/28/)
-* AWS CLI ~= [2.28.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
+* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
 * JQ ~= [1.8.x](https://github.com/jqlang/jq)
-* Terraform ~= [1.13.x](https://developer.hashicorp.com/terraform/install#linux)
+* Terraform ~= [1.14.x](https://developer.hashicorp.com/terraform/install#linux)
 
 </details>
 

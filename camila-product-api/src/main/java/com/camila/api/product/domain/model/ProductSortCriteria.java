@@ -8,10 +8,8 @@ import java.util.Map;
 /**
  * Represents the criteria for sorting products.
  */
-public record ProductSortCriteria(
-  List<MetricWeight> metricWeights,
-  int page,
-  int size) {
+public record ProductSortCriteria(List<MetricWeight> metricWeights, int page, int size) {
+
   private static final String DEFAULT_PAGE_NUMBER = "0";
   private static final String DEFAULT_PAGE_SIZE = "10";
 
@@ -46,7 +44,8 @@ public record ProductSortCriteria(
         try {
           final var weight = Double.parseDouble(entry.getValue());
           if (weight < 0) {
-            throw new IllegalArgumentException("Weight for %s must be non-negative".formatted(entry.getKey()));
+            throw new IllegalArgumentException(
+              "Weight for %s must be non-negative".formatted(entry.getKey()));
           }
           map.put(metric, weight);
         } catch (NumberFormatException _) {
@@ -56,10 +55,8 @@ public record ProductSortCriteria(
 
     final double defaultWeight = !providedWeights.isEmpty() ? 0.0 : 1.0;
 
-    return Arrays.stream(Metrics.values())
-      .filter(metric -> metric != Metrics.UNKNOWN)
-      .map(metric -> new MetricWeight(metric, providedWeights.getOrDefault(metric, defaultWeight)))
-      .toList();
+    return Arrays.stream(Metrics.values()).filter(metric -> metric != Metrics.UNKNOWN)
+      .map(metric -> new MetricWeight(metric, providedWeights.getOrDefault(metric, defaultWeight))).toList();
   }
 
   private static int parseIntParam(final String value, final String paramName) {
@@ -76,7 +73,7 @@ public record ProductSortCriteria(
    * @return The offset as a long value
    */
   public long offset() {
-    return (long) page * size;
+    return (long) this.page * this.size;
   }
 
   /**
@@ -85,6 +82,6 @@ public record ProductSortCriteria(
    * @return The page size as a long value
    */
   public long limit() {
-    return size;
+    return this.size;
   }
 }
