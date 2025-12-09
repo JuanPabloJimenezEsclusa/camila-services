@@ -88,7 +88,7 @@
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
-    <cucumber.version>7.32.0</cucumber.version>
+    <cucumber.version>7.33.0</cucumber.version>
 
     <testcontainers.version>2.0.2</testcontainers.version>
     <testcontainers-junit-jupiter.version>2.0.2</testcontainers-junit-jupiter.version>
