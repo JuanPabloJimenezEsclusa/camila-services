@@ -6,6 +6,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_PRODUCT: camila-product-api:1.0.0
@@ -13,10 +17,6 @@ env:
   IMAGE_DISCOVERY: camila-discovery:1.0.0
   IMAGE_GATEWAY: camila-gateway:1.0.0
   IMAGE_ADMIN: camila-admin:1.0.0
-
-concurrency:
-  group: docker-publish-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   deploy:

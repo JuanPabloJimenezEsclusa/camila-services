@@ -181,7 +181,7 @@ Product data sample:
 
 ```bash
 # Build with maven
-mvn -B build -P error-prone,quality-check | tee mvn-build-$(date +%Y%m%d-%H%M%S).log
+mvn -B clean verify -P error-prone,quality-check | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ```bash

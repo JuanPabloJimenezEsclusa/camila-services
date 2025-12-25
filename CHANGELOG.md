@@ -5,27 +5,446 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] refactor: revert spring boot 4**
+**[GH-32] ci: improves dependency review action**
 
 
-[dc8caf3ba651f1b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dc8caf3ba651f1b) JuanPabloJimenezEsclusa *2025-12-08 00:29:47*
+[4533a754d703c47](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4533a754d703c47) JuanPabloJimenezEsclusa *2025-12-25 14:44:06*
 
-**chore(deps): bump axllent/mailpit**
+**chore(deps): bump the maven-dependencies group across 1 directory with 10 updates**
 
- * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: axllent/mailpit.
- * Updates &#x60;axllent/mailpit&#x60; from v1.27.11 to v1.28.0
+ * Bumps the maven-dependencies group with 10 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-starter-parent](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;3.5.9&#x60; |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.0.0&#x60; | &#x60;2025.0.1&#x60; |
+ * | [org.testcontainers:testcontainers-bom](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.2&#x60; | &#x60;2.0.3&#x60; |
+ * | [org.testcontainers:testcontainers](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.2&#x60; | &#x60;2.0.3&#x60; |
+ * | org.openapitools:openapi-generator-maven-plugin | &#x60;7.17.0&#x60; | &#x60;7.18.0&#x60; |
+ * | [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) | &#x60;4.0.0&#x60; | &#x60;4.0.1&#x60; |
+ * | [org.testcontainers:testcontainers-junit-jupiter](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.2&#x60; | &#x60;2.0.3&#x60; |
+ * | [org.testcontainers:mongodb](https://github.com/testcontainers/testcontainers-java) | &#x60;1.21.3&#x60; | &#x60;1.21.4&#x60; |
+ * | [org.testcontainers:couchbase](https://github.com/testcontainers/testcontainers-java) | &#x60;1.21.3&#x60; | &#x60;1.21.4&#x60; |
+ * | [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) | &#x60;12.2.0&#x60; | &#x60;12.3.0&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-starter-parent&#x60; from 3.5.8 to 3.5.9
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v3.5.9)
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.0.0 to 2025.0.1
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.0.0...v2025.0.1)
+ * Updates &#x60;org.testcontainers:testcontainers-bom&#x60; from 2.0.2 to 2.0.3
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.2...2.0.3)
+ * Updates &#x60;org.testcontainers:testcontainers&#x60; from 2.0.2 to 2.0.3
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.2...2.0.3)
+ * Updates &#x60;org.openapitools:openapi-generator-maven-plugin&#x60; from 7.17.0 to 7.18.0
+ * Updates &#x60;org.springframework.boot:spring-boot-configuration-processor&#x60; from 4.0.0 to 4.0.1
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v4.0.0...v4.0.1)
+ * Updates &#x60;org.testcontainers:testcontainers&#x60; from 2.0.2 to 2.0.3
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.2...2.0.3)
+ * Updates &#x60;org.testcontainers:testcontainers-junit-jupiter&#x60; from 2.0.2 to 2.0.3
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.2...2.0.3)
+ * Updates &#x60;org.testcontainers:mongodb&#x60; from 1.21.3 to 1.21.4
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/1.21.3...1.21.4)
+ * Updates &#x60;org.testcontainers:couchbase&#x60; from 1.21.3 to 1.21.4
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/1.21.3...1.21.4)
+ * Updates &#x60;com.puppycrawl.tools:checkstyle&#x60; from 12.2.0 to 12.3.0
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-12.2.0...checkstyle-12.3.0)
  * ---
  * updated-dependencies:
- * - dependency-name: axllent/mailpit
- * dependency-version: v1.28.0
+ * - dependency-name: org.springframework.boot:spring-boot-starter-parent
+ * dependency-version: 3.5.9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-bom
+ * dependency-version: 2.0.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers
+ * dependency-version: 2.0.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.openapitools:openapi-generator-maven-plugin
+ * dependency-version: 7.18.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 4.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers
+ * dependency-version: 2.0.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-junit-jupiter
+ * dependency-version: 2.0.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:mongodb
+ * dependency-version: 1.21.4
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:couchbase
+ * dependency-version: 1.21.4
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 12.3.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[d02bb5fb400183c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d02bb5fb400183c) dependabot[bot] *2025-12-25 14:33:57*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.25.0 to ~> 6.26.0 (#240)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.26.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.25.0...v6.26.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.26.0
  * dependency-type: direct:production
  * dependency-group: infrastructure-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[a0ae89fbb8aa59b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a0ae89fbb8aa59b) dependabot[bot] *2025-12-07 20:32:59*
+[0b8d1c6c74b2909](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0b8d1c6c74b2909) dependabot[bot] *2025-12-25 14:21:56*
 
-**chore(deps): update hashicorp/aws requirement from ~> 6.22.1 to ~> 6.23.0**
+**chore(deps): bump the infrastructure-dependencies group (#244)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 6 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | mongodb/mongodb-community-server | &#x60;8.2.2-ubi9&#x60; | &#x60;8.2.3-ubi9&#x60; |
+ * | prom/prometheus | &#x60;v3.8.0&#x60; | &#x60;v3.8.1&#x60; |
+ * | prom/alertmanager | &#x60;v0.29.0&#x60; | &#x60;v0.30.0&#x60; |
+ * | grafana/grafana | &#x60;12.3.0&#x60; | &#x60;12.3.1&#x60; |
+ * | elasticsearch | &#x60;9.2.2&#x60; | &#x60;9.2.3&#x60; |
+ * | kibana | &#x60;9.2.2&#x60; | &#x60;9.2.3&#x60; |
+ * Updates &#x60;mongodb/mongodb-community-server&#x60; from 8.2.2-ubi9 to 8.2.3-ubi9
+ * Updates &#x60;prom/prometheus&#x60; from v3.8.0 to v3.8.1
+ * Updates &#x60;prom/alertmanager&#x60; from v0.29.0 to v0.30.0
+ * Updates &#x60;grafana/grafana&#x60; from 12.3.0 to 12.3.1
+ * Updates &#x60;elasticsearch&#x60; from 9.2.2 to 9.2.3
+ * Updates &#x60;kibana&#x60; from 9.2.2 to 9.2.3
+ * ---
+ * updated-dependencies:
+ * - dependency-name: mongodb/mongodb-community-server
+ * dependency-version: 8.2.3-ubi9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.8.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: prom/alertmanager
+ * dependency-version: v0.30.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: grafana/grafana
+ * dependency-version: 12.3.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.2.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.2.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[1e56eb589b750dc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/1e56eb589b750dc) dependabot[bot] *2025-12-25 14:05:47*
+
+**chore(deps): bump the github-actions-dependencies group across 1 directory with 3 updates (#241)**
+
+ * Bumps the github-actions-dependencies group with 3 updates in the / directory: [actions/cache](https://github.com/actions/cache), [docker/setup-buildx-action](https://github.com/docker/setup-buildx-action) and [actions/upload-artifact](https://github.com/actions/upload-artifact).
+ * Updates &#x60;actions/cache&#x60; from 4 to 5
+ * - [Release notes](https://github.com/actions/cache/releases)
+ * - [Changelog](https://github.com/actions/cache/blob/main/RELEASES.md)
+ * - [Commits](https://github.com/actions/cache/compare/v4...v5)
+ * Updates &#x60;docker/setup-buildx-action&#x60; from 3.11.1 to 3.12.0
+ * - [Release notes](https://github.com/docker/setup-buildx-action/releases)
+ * - [Commits](https://github.com/docker/setup-buildx-action/compare/e468171a9de216ec08956ac3ada2f0791b6bd435...8d2750c68a42422c14e847fe6c8ac0403b4cbd6f)
+ * Updates &#x60;actions/upload-artifact&#x60; from 5 to 6
+ * - [Release notes](https://github.com/actions/upload-artifact/releases)
+ * - [Commits](https://github.com/actions/upload-artifact/compare/v5...v6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/cache
+ * dependency-version: &#x27;5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * - dependency-name: docker/setup-buildx-action
+ * dependency-version: 3.12.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: github-actions-dependencies
+ * - dependency-name: actions/upload-artifact
+ * dependency-version: &#x27;6&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[ff73413ee27aa72](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ff73413ee27aa72) dependabot[bot] *2025-12-25 13:56:04*
+
+**Merge pull request #235 from JuanPabloJimenezEsclusa/main**
+
+ * Merge pull request #234 from JuanPabloJimenezEsclusa/release/GH-32-co…
+
+[60419e71d3444e3](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/60419e71d3444e3) Juan Pablo Jimenez Esclusa *2025-12-09 01:57:28*
+
+**Merge pull request #234 from JuanPabloJimenezEsclusa/release/GH-32-continuous-improvement**
+
+ * Release/gh 32 continuous improvement
+
+[193924f3e19a796](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/193924f3e19a796) Juan Pablo Jimenez Esclusa *2025-12-09 01:49:00*
+
+**chore(deps-dev): bump the maven-dependencies group with 4 updates (#233)**
+
+ * Bumps the maven-dependencies group with 4 updates: [io.cucumber:cucumber-core](https://github.com/cucumber/cucumber-jvm), [io.cucumber:cucumber-java](https://github.com/cucumber/cucumber-jvm), [io.cucumber:cucumber-junit-platform-engine](https://github.com/cucumber/cucumber-jvm) and [io.cucumber:cucumber-spring](https://github.com/cucumber/cucumber-jvm).
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.33.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[62fd4faaa011b21](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/62fd4faaa011b21) dependabot[bot] *2025-12-09 01:31:12*
+
+**chore(deps): bump the gradle-dependencies group with 6 updates (#232)**
+
+ * chore(deps): bump the gradle-dependencies group with 6 updates
+ * Bumps the gradle-dependencies group with 6 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | org.sonarqube | &#x60;7.1.0.6387&#x60; | &#x60;7.2.0.6526&#x60; |
+ * | org.springframework.boot | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | [io.cucumber:cucumber-core](https://github.com/cucumber/cucumber-jvm) | &#x60;7.32.0&#x60; | &#x60;7.33.0&#x60; |
+ * | [io.cucumber:cucumber-java](https://github.com/cucumber/cucumber-jvm) | &#x60;7.32.0&#x60; | &#x60;7.33.0&#x60; |
+ * | [io.cucumber:cucumber-junit-platform-engine](https://github.com/cucumber/cucumber-jvm) | &#x60;7.32.0&#x60; | &#x60;7.33.0&#x60; |
+ * | [io.cucumber:cucumber-spring](https://github.com/cucumber/cucumber-jvm) | &#x60;7.32.0&#x60; | &#x60;7.33.0&#x60; |
+ * Updates &#x60;org.sonarqube&#x60; from 7.1.0.6387 to 7.2.0.6526
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.8 to 4.0.0
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.32.0 to 7.33.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.32.0...v7.33.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.sonarqube
+ * dependency-version: 7.2.0.6526
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.33.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] refactor: revert spring boot 4
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+
+[bb197ea4d48c85d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bb197ea4d48c85d) dependabot[bot] *2025-12-09 01:21:39*
+
+**chore(deps): bump the github-actions-dependencies group with 2 updates (#231)**
+
+ * Bumps the github-actions-dependencies group with 2 updates: [actions/upload-artifact](https://github.com/actions/upload-artifact) and [actions/github-script](https://github.com/actions/github-script).
+ * Updates &#x60;actions/upload-artifact&#x60; from 4 to 5
+ * - [Release notes](https://github.com/actions/upload-artifact/releases)
+ * - [Commits](https://github.com/actions/upload-artifact/compare/v4...v5)
+ * Updates &#x60;actions/github-script&#x60; from 7 to 8
+ * - [Release notes](https://github.com/actions/github-script/releases)
+ * - [Commits](https://github.com/actions/github-script/compare/v7...v8)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/upload-artifact
+ * dependency-version: &#x27;5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * - dependency-name: actions/github-script
+ * dependency-version: &#x27;8&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[6d1101f6ebe2386](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6d1101f6ebe2386) dependabot[bot] *2025-12-09 01:09:55*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.22.1 to ~> 6.23.0 (#224)**
 
  * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
  * Updates &#x60;hashicorp/aws&#x60; to 6.23.0
@@ -40,8 +459,463 @@ Changelog of camila-services.
  * dependency-group: infrastructure-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[638e139e98aae89](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/638e139e98aae89) dependabot[bot] *2025-12-07 20:32:59*
+[286983f46632105](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/286983f46632105) dependabot[bot] *2025-12-09 01:00:31*
+
+**Merge pull request #229 from JuanPabloJimenezEsclusa/dependabot/maven/maven-dependencies-79b4d8490b**
+
+ * chore(deps): bump the maven-dependencies group across 1 directory with 33 updates
+
+[15d80bc2474b2b9](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/15d80bc2474b2b9) Juan Pablo Jimenez Esclusa *2025-12-09 00:52:43*
+
+**[GH-32] refactor: revert spring boot 4**
+
+
+[b60203819dfb939](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b60203819dfb939) JuanPabloJimenezEsclusa *2025-12-09 00:26:17*
+
+**chore(deps): bump the maven-dependencies group across 1 directory with 33 updates**
+
+ * Bumps the maven-dependencies group with 33 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-starter-parent](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.0.0&#x60; | &#x60;2025.1.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-context](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-logs](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-common](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-trace](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-metrics](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-extension-trace-propagators](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api-incubator](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0-alpha&#x60; | &#x60;1.57.0-alpha&#x60; |
+ * | [org.sonarsource.scanner.maven:sonar-maven-plugin](https://github.com/SonarSource/sonar-scanner-maven) | &#x60;5.3.0.6276&#x60; | &#x60;5.5.0.6356&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;24.3&#x60; | &#x60;25.0&#x60; |
+ * | [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) | &#x60;4.33.0&#x60; | &#x60;4.33.2&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.76.0&#x60; | &#x60;1.77.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;3.0.0&#x60; |
+ * | [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | [io.cucumber:cucumber-core](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-java](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-junit-platform-engine](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [io.cucumber:cucumber-spring](https://github.com/cucumber/cucumber-jvm) | &#x60;7.31.0&#x60; | &#x60;7.32.0&#x60; |
+ * | [org.bouncycastle:bcpkix-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.82&#x60; | &#x60;1.83&#x60; |
+ * | [org.bouncycastle:bcprov-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.82&#x60; | &#x60;1.83&#x60; |
+ * | [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.82&#x60; | &#x60;1.83&#x60; |
+ * | [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) | &#x60;12.1.2&#x60; | &#x60;12.2.0&#x60; |
+ * | [com.google.errorprone:error_prone_core](https://github.com/google/error-prone) | &#x60;2.44.0&#x60; | &#x60;2.45.0&#x60; |
+ * | [com.google.cloud.tools:jib-maven-plugin](https://github.com/GoogleContainerTools/jib) | &#x60;3.4.6&#x60; | &#x60;3.5.1&#x60; |
+ * | [com.github.spotbugs:spotbugs-maven-plugin](https://github.com/spotbugs/spotbugs-maven-plugin) | &#x60;4.9.8.1&#x60; | &#x60;4.9.8.2&#x60; |
+ * | [org.codehaus.mojo:versions-maven-plugin](https://github.com/mojohaus/versions) | &#x60;2.19.1&#x60; | &#x60;2.20.1&#x60; |
+ * | [com.squareup.okhttp3:mockwebserver](https://github.com/square/okhttp) | &#x60;5.2.1&#x60; | &#x60;5.3.2&#x60; |
+ * | [com.squareup.okhttp3:okhttp](https://github.com/square/okhttp) | &#x60;5.2.1&#x60; | &#x60;5.3.2&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-starter-parent&#x60; from 3.5.8 to 4.0.0
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v4.0.0)
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.0.0 to 2025.1.0
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.0.0...v2025.1.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api-incubator&#x60; from 1.56.0-alpha to 1.57.0-alpha
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/commits)
+ * Updates &#x60;org.sonarsource.scanner.maven:sonar-maven-plugin&#x60; from 5.3.0.6276 to 5.5.0.6356
+ * - [Release notes](https://github.com/SonarSource/sonar-scanner-maven/releases)
+ * - [Commits](https://github.com/SonarSource/sonar-scanner-maven/compare/5.3.0.6276...5.5.0.6356)
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 24.3 to 25.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v24.3...v25.0)
+ * Updates &#x60;com.google.protobuf:protobuf-java&#x60; from 4.33.0 to 4.33.2
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.76.0 to 1.77.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.76.0...v1.77.0)
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 3.0.0
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v3.0.0)
+ * Updates &#x60;org.springframework.boot:spring-boot-configuration-processor&#x60; from 3.5.8 to 4.0.0
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v4.0.0)
+ * Updates &#x60;io.cucumber:cucumber-core&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-java&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-junit-platform-engine&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;io.cucumber:cucumber-spring&#x60; from 7.31.0 to 7.32.0
+ * - [Release notes](https://github.com/cucumber/cucumber-jvm/releases)
+ * - [Changelog](https://github.com/cucumber/cucumber-jvm/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/cucumber/cucumber-jvm/compare/v7.31.0...v7.32.0)
+ * Updates &#x60;org.bouncycastle:bcpkix-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bcprov-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;com.puppycrawl.tools:checkstyle&#x60; from 12.1.2 to 12.2.0
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-12.1.2...checkstyle-12.2.0)
+ * Updates &#x60;com.google.errorprone:error_prone_core&#x60; from 2.44.0 to 2.45.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.44.0...v2.45.0)
+ * Updates &#x60;com.google.cloud.tools:jib-maven-plugin&#x60; from 3.4.6 to 3.5.1
+ * - [Release notes](https://github.com/GoogleContainerTools/jib/releases)
+ * - [Commits](https://github.com/GoogleContainerTools/jib/commits)
+ * Updates &#x60;com.github.spotbugs:spotbugs-maven-plugin&#x60; from 4.9.8.1 to 4.9.8.2
+ * - [Release notes](https://github.com/spotbugs/spotbugs-maven-plugin/releases)
+ * - [Commits](https://github.com/spotbugs/spotbugs-maven-plugin/compare/spotbugs-maven-plugin-4.9.8.1...spotbugs-maven-plugin-4.9.8.2)
+ * Updates &#x60;org.codehaus.mojo:versions-maven-plugin&#x60; from 2.19.1 to 2.20.1
+ * - [Release notes](https://github.com/mojohaus/versions/releases)
+ * - [Changelog](https://github.com/mojohaus/versions/blob/master/ReleaseNotes.md)
+ * - [Commits](https://github.com/mojohaus/versions/compare/2.19.1...2.20.1)
+ * Updates &#x60;com.squareup.okhttp3:mockwebserver&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.2.1 to 5.3.2
+ * - [Changelog](https://github.com/square/okhttp/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/square/okhttp/compare/parent-5.2.1...parent-5.3.2)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-starter-parent
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api-incubator
+ * dependency-version: 1.57.0-alpha
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.sonarsource.scanner.maven:sonar-maven-plugin
+ * dependency-version: 5.5.0.6356
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;25.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.33.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.77.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-core
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-java
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-junit-platform-engine
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.cucumber:cucumber-spring
+ * dependency-version: 7.32.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.bouncycastle:bcpkix-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.bouncycastle:bcprov-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 12.2.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.45.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.cloud.tools:jib-maven-plugin
+ * dependency-version: 3.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.github.spotbugs:spotbugs-maven-plugin
+ * dependency-version: 4.9.8.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.codehaus.mojo:versions-maven-plugin
+ * dependency-version: 2.20.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:mockwebserver
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.3.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[8c6d8dac9c029b4](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8c6d8dac9c029b4) dependabot[bot] *2025-12-08 16:40:56*
+
+**[GH-32] refactor: revert spring boot 4**
+
+
+[7f800f872448f42](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7f800f872448f42) JuanPabloJimenezEsclusa *2025-12-08 16:40:56*
 
 **chore(deps): bump the maven-dependencies group with 17 updates**
 
@@ -264,7 +1138,7 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[5178270ee2033d0](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5178270ee2033d0) dependabot[bot] *2025-12-07 20:32:59*
+[53f0d8039ed8679](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/53f0d8039ed8679) dependabot[bot] *2025-12-08 16:40:56*
 
 **chore(deps): bump the gradle-dependencies group across 1 directory with 12 updates**
 
@@ -374,7 +1248,310 @@ Changelog of camila-services.
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[c6784de1e834859](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c6784de1e834859) dependabot[bot] *2025-12-01 19:13:12*
+[5512d9537afe412](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5512d9537afe412) dependabot[bot] *2025-12-08 16:40:54*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.22.1 to ~> 6.23.0**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.23.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.22.1...v6.23.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.23.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[c8cb0fea8915157](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c8cb0fea8915157) dependabot[bot] *2025-12-08 16:38:53*
+
+**chore(deps): bump the infrastructure-dependencies group across 1 directory with 4 updates**
+
+ * Bumps the infrastructure-dependencies group with 4 updates in the /camila-orchestrator/dev/compose directory: prom/prometheus, elasticsearch, kibana and axllent/mailpit.
+ * Updates &#x60;prom/prometheus&#x60; from v3.7.3 to v3.8.0
+ * Updates &#x60;elasticsearch&#x60; from 9.2.1 to 9.2.2
+ * Updates &#x60;kibana&#x60; from 9.2.1 to 9.2.2
+ * Updates &#x60;axllent/mailpit&#x60; from v1.27.11 to v1.28.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.8.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.2.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.2.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.28.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[9549fedbd28a3c8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9549fedbd28a3c8) dependabot[bot] *2025-12-08 16:38:53*
+
+**chore(deps): bump the gradle-dependencies group across 1 directory with 20 updates**
+
+ * Bumps the gradle-dependencies group with 18 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.0.0&#x60; | &#x60;2025.1.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-context](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-logs](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-common](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-trace](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-metrics](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-extension-trace-propagators](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.56.0&#x60; | &#x60;1.57.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api-incubator](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.55.0-alpha&#x60; | &#x60;1.57.0-alpha&#x60; |
+ * | org.sonarqube | &#x60;7.0.1.6134&#x60; | &#x60;7.2.0.6526&#x60; |
+ * | org.springframework.boot | &#x60;3.5.8&#x60; | &#x60;4.0.0&#x60; |
+ * | com.github.spotbugs | &#x60;6.4.5&#x60; | &#x60;6.4.7&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.20.0&#x60; | &#x60;7.22.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;3.0.0&#x60; |
+ * | org.apache.commons:commons-lang3 | &#x60;3.19.0&#x60; | &#x60;3.20.0&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;24.3&#x60; | &#x60;25.0&#x60; |
+ * | [org.bouncycastle:bcpkix-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.82&#x60; | &#x60;1.83&#x60; |
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.0.0 to 2025.1.0
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.0.0...v2025.1.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.56.0 to 1.57.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.56.0...v1.57.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api-incubator&#x60; from 1.55.0-alpha to 1.57.0-alpha
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/commits)
+ * Updates &#x60;org.sonarqube&#x60; from 7.0.1.6134 to 7.2.0.6526
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.8 to 4.0.0
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.4.5 to 6.4.7
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.20.0 to 7.22.0
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 3.0.0
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v3.0.0)
+ * Updates &#x60;org.apache.commons:commons-lang3&#x60; from 3.19.0 to 3.20.0
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 24.3 to 25.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v24.3...v25.0)
+ * Updates &#x60;org.bouncycastle:bcpkix-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bcprov-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.82 to 1.83
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.57.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api-incubator
+ * dependency-version: 1.57.0-alpha
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.sonarqube
+ * dependency-version: 7.2.0.6526
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.4.7
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.22.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.apache.commons:commons-lang3
+ * dependency-version: 3.20.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;25.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcpkix-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcprov-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.83&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[6d9ca70d4d7acfc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6d9ca70d4d7acfc) dependabot[bot] *2025-12-08 14:21:09*
 
 **chore(deps): bump the infrastructure-dependencies group (#219)**
 
