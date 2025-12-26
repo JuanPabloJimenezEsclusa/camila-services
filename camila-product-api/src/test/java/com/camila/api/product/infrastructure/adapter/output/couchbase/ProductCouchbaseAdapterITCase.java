@@ -76,7 +76,7 @@ class ProductCouchbaseAdapterITCase extends CouchbaseContainerConfig {
     this.productRepository.findByInternalId(internalId).as(StepVerifier::create)
       .expectNextMatches(product -> product.name().equals("CONTRASTING LACE T-SHIRT")
         && product.category().equals("SHIRT") && product.salesUnits() == 650
-        && product.stock().equals(Map.of("S", 0, "M", 1, "L", 0)) && product.profitMargin() == 0.17
+        && product.stock().equals(Map.of("S", 0, "M", 1, "L", 0)) && product.profitMargin() == 0.17d
         && product.daysInStock() == 31)
       .verifyComplete();
   }

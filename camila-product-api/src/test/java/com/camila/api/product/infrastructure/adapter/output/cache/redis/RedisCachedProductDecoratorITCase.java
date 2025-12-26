@@ -27,59 +27,56 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @DisplayName("[IT][CachedProductDecorator] Redis Cached Product Decorator test")
 class RedisCachedProductDecoratorITCase extends AbstractCachedProductDecoratorITCase {
 
-	@Autowired
-	@Qualifier("cachedProductRepositoryDecorator")
-	private ProductRepository cachedProductRepositoryDecorator;
+  static {
+    RedisContainerConfig.init();
+  }
 
-	@Autowired
-	@Qualifier("mockProductRepository")
-	private ProductRepository mockProductRepository;
+  @Autowired
+  @Qualifier("cachedProductRepositoryDecorator")
+  private ProductRepository cachedProductRepositoryDecorator;
+  @Autowired
+  @Qualifier("mockProductRepository")
+  private ProductRepository mockProductRepository;
+  @Autowired
+  private CacheManager cacheManager;
+  @Autowired
+  private ReactiveRedisOperations<String, Object> reactiveRedisOperations;
 
-	@Autowired
-	private CacheManager cacheManager;
+  @BeforeEach
+  void setUp() {
+    this.cacheManager().getCacheNames().forEach(name -> this.reactiveRedisOperations.keys(name + "*")
+      .flatMap(key -> this.reactiveRedisOperations.delete(key)).subscribe());
+  }
 
-	@Autowired
-	private ReactiveRedisOperations<String, Object> reactiveRedisOperations;
+  @Override
+  protected ProductRepository cachedProductRepositoryDecorator() {
+    return this.cachedProductRepositoryDecorator;
+  }
 
-	static {
-		RedisContainerConfig.init();
-	}
+  @Override
+  protected ProductRepository mockProductRepository() {
+    return this.mockProductRepository;
+  }
 
-	@BeforeEach
-	void setUp() {
-		this.cacheManager().getCacheNames().forEach(name -> this.reactiveRedisOperations.keys(name + "*")
-				.flatMap(key -> this.reactiveRedisOperations.delete(key)).subscribe());
-	}
+  @Override
+  protected CacheManager cacheManager() {
+    return this.cacheManager;
+  }
 
-	@Override
-	protected ProductRepository cachedProductRepositoryDecorator() {
-		return this.cachedProductRepositoryDecorator;
-	}
+  @Configuration
+  @Import({RedisCacheConfig.class})
+  static class TestConfig {
+    @Bean
+    @Qualifier("mockProductRepository")
+    public ProductRepository mockProductRepository() {
+      return mock(ProductRepository.class);
+    }
 
-	@Override
-	protected ProductRepository mockProductRepository() {
-		return this.mockProductRepository;
-	}
-
-	@Override
-	protected CacheManager cacheManager() {
-		return this.cacheManager;
-	}
-
-	@Configuration
-	@Import({RedisCacheConfig.class})
-	static class TestConfig {
-		@Bean
-		@Qualifier("mockProductRepository")
-		public ProductRepository mockProductRepository() {
-			return mock(ProductRepository.class);
-		}
-
-		@Bean
-		public ProductRepository cachedProductRepositoryDecorator(
-				@Qualifier("mockProductRepository") final ProductRepository mockProductRepository,
-				@Qualifier("reactiveRedisCacheAdapter") final CachePort reactiveRedisCacheAdapter) {
-			return new CachedProductRepositoryDecorator(mockProductRepository, reactiveRedisCacheAdapter);
-		}
-	}
+    @Bean
+    public ProductRepository cachedProductRepositoryDecorator(
+      @Qualifier("mockProductRepository") final ProductRepository mockProductRepository,
+      @Qualifier("reactiveRedisCacheAdapter") final CachePort reactiveRedisCacheAdapter) {
+      return new CachedProductRepositoryDecorator(mockProductRepository, reactiveRedisCacheAdapter);
+    }
+  }
 }

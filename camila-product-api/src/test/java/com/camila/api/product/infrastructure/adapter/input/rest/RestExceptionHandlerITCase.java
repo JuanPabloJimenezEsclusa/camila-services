@@ -75,10 +75,10 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
 
+  private static final Random random = new SecureRandom();
+
   @Autowired
   private WebTestClient webTestClient;
-
-  private static final Random random = new SecureRandom();
 
   private static Stream<Arguments> exceptionTestCases() {
     return Stream.of(

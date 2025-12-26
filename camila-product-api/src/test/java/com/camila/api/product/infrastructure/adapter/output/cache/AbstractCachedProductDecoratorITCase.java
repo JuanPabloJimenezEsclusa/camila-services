@@ -31,15 +31,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+@SuppressWarnings("checkstyle:javadocmethod")
 @ExtendWith(SpringExtension.class)
 @DisplayName("[IT][CachedProductDecorator] Cached Product Decorator test")
 public abstract class AbstractCachedProductDecoratorITCase {
-
-  protected abstract ProductRepository cachedProductRepositoryDecorator();
-
-  protected abstract ProductRepository mockProductRepository();
-
-  protected abstract CacheManager cacheManager();
 
   private static Stream<Arguments> productIdScenarios() {
     // internalId
@@ -58,6 +53,12 @@ public abstract class AbstractCachedProductDecoratorITCase {
       arguments(named("Multiple parameters", new AppliedWeights(0.5f, 0.3f, 0.2f, 0f)), 0, 10),
       arguments(named("With custom pagination", new AppliedWeights(0.5f, 0f, 0f, 0f)), 1, 10));
   }
+
+  protected abstract ProductRepository cachedProductRepositoryDecorator();
+
+  protected abstract ProductRepository mockProductRepository();
+
+  protected abstract CacheManager cacheManager();
 
   @AfterEach
   void tearDown() {

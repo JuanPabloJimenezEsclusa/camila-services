@@ -29,12 +29,12 @@ class ReactiveRedisCacheAdapterITCase {
 
   private static final Object SKIP_PUT = new Object();
 
-  @Autowired
-  private CachePort adapter;
-
   static {
     RedisContainerConfig.init();
   }
+
+  @Autowired
+  private CachePort adapter;
 
   private static Stream<Arguments> scenarios() {
     return Stream.of(

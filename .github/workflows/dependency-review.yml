@@ -28,8 +28,8 @@ jobs:
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
         with:
-          base-ref: "${BASE_REF}"
-          head-ref: "${HEAD_REF}"
+          base-ref: ${{ env.BASE_REF }}
+          head-ref: ${{ env.HEAD_REF }}
           external-repo-token: ${{ secrets.GITHUB_TOKEN }}
           fail-on-severity: moderate
           comment-summary-in-pr: always

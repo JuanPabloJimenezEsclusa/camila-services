@@ -21,7 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SuppressWarnings("java:S2187")
+@SuppressWarnings({"java:S2187", "checkstyle:javadocmethod"})
 @CucumberContextConfiguration
 @SpringBootTest(
   webEnvironment = RANDOM_PORT,

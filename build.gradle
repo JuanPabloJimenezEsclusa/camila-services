@@ -2,6 +2,7 @@ plugins {
   // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
+  id 'pmd'
   id 'org.sonarqube' version '7.2.2.6593'
   id 'org.springframework.boot' version '3.5.9' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
@@ -11,6 +12,9 @@ plugins {
   id 'org.openrewrite.rewrite' version '7.23.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
   id "io.freefair.lombok" version "9.1.0" apply false
+  id 'info.solidsoft.pitest' version '1.15.0' apply false
+  id 'com.github.ben-manes.versions' version '0.51.0'
+  id 'org.owasp.dependencycheck' version '10.0.4' apply false
 }
 
 allprojects {
@@ -64,6 +68,7 @@ subprojects {
     awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
     jacocoVersion = '0.8.14'
+    okhttpVersion = '5.3.2'
 
     // API Documentation
     springdocOpenapiVersion = '2.8.14'
@@ -162,7 +167,6 @@ subprojects {
     systemProperty 'eureka.client.enabled', 'false'
     systemProperty 'spring.cloud.discovery.enabled', 'false'
 
-    // Prevent Eureka Server auto-configuration in tests (avoids missing ApplicationInfoManager bean)
     // This excludes the server auto-configuration classes so tests that start the whole context
     // won't attempt to create Eureka server beans locally.
     def excluded = 'org.springframework.cloud.netflix.eureka.server.EurekaServerAutoConfiguration'
@@ -217,7 +221,6 @@ subprojects {
       html.required = true
     }
 
-    // Configure classDirectories lazily using sourceSets to avoid using project.afterEvaluate
     def jacocoExcludes = [
       '**/input/grpc/**',
       '**/input/rest/api/**',
@@ -305,7 +308,6 @@ tasks.register('qualityBuild') {
 gradle.projectsEvaluated {
   def quality = tasks.named('qualityBuild')
   def jacocoProviders = subprojects.collect { p ->
-    // findByName won't realize the task; if it exists, get a provider to depend on
     p.tasks.findByName('jacocoAllTestReport') != null ? p.tasks.named('jacocoAllTestReport') : null
   }.findAll { it != null }
 
@@ -313,3 +315,31 @@ gradle.projectsEvaluated {
     quality.configure { dependsOn jacocoProviders }
   }
 }
+
+// Configure version updates plugin
+dependencyUpdates {
+  checkForGradleUpdate = true
+  outputFormatter = "plain,html,xml"
+  outputDir = "build/dependencyUpdates"
+  reportfileName = "dependency-updates-report"
+}
+
+// Task aliases to match Maven commands
+tasks.register('displayDependencyUpdates') {
+  group = 'help'
+  description = 'Display dependency updates (Maven equivalent: versions:display-dependency-updates)'
+  dependsOn 'dependencyUpdates'
+  doLast {
+    println "Dependency updates report generated. See build/dependencyUpdates/dependency-updates-report.txt"
+  }
+}
+
+tasks.register('displayPluginUpdates') {
+  group = 'help'
+  description = 'Display plugin updates (Maven equivalent: versions:display-plugin-updates)'
+  dependsOn 'dependencyUpdates'
+  doLast {
+    println "Plugin updates included in dependency updates report. See build/dependencyUpdates/dependency-updates-report.txt"
+  }
+}
+

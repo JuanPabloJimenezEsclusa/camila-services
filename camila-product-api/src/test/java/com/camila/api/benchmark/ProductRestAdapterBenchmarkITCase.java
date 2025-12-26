@@ -45,61 +45,61 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @SuppressWarnings({"java:S5786"}) // JMH requires public test class
 public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
 
-	private static final SecureRandom RANDOM_VALUES = new SecureRandom();
-	private static WebTestClient webClient;
+  private static final SecureRandom RANDOM_VALUES = new SecureRandom();
+  private static WebTestClient webClient;
 
-	@Autowired
-	void setWebTestClient(final WebTestClient webClient) {
-		ProductRestAdapterBenchmarkITCase.webClient = webClient;
-	}
+  @Autowired
+  void setWebTestClient(final WebTestClient webClient) {
+    ProductRestAdapterBenchmarkITCase.webClient = webClient;
+  }
 
-	@Test
-	@DisplayName("[ProductRestAdapter] Run benchmarks")
-	void runBenchmarks() throws Exception {
-		final var options = new OptionsBuilder().include(".*findByInternalId.*|.*sortProductsWithStockMoreWeight.*")
-				.warmupMode(WarmupMode.BULK).shouldFailOnError(true).shouldDoGC(true).result("BenchmarkITCase.csv")
-				.resultFormat(ResultFormatType.CSV).build();
+  @Test
+  @DisplayName("[ProductRestAdapter] Run benchmarks")
+  void runBenchmarks() throws Exception {
+    final var options = new OptionsBuilder().include(".*findByInternalId.*|.*sortProductsWithStockMoreWeight.*")
+      .warmupMode(WarmupMode.BULK).shouldFailOnError(true).shouldDoGC(true).result("BenchmarkITCase.csv")
+      .resultFormat(ResultFormatType.CSV).build();
 
-		final Collection<RunResult> run = new Runner(options).run();
-		Assertions.assertFalse(run.isEmpty());
-	}
+    final Collection<RunResult> run = new Runner(options).run();
+    Assertions.assertFalse(run.isEmpty());
+  }
 
-	@Benchmark
-	@BenchmarkMode(Mode.AverageTime)
-	@Fork(value = 0, warmups = 0)
-	@OutputTimeUnit(TimeUnit.MILLISECONDS)
-	@Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
-	@Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
-	@Threads(5)
-	public void findByInternalId(final Blackhole blackhole) {
-		final var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
+  @Benchmark
+  @BenchmarkMode(Mode.AverageTime)
+  @Fork(value = 0, warmups = 0)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Threads(5)
+  public void findByInternalId(final Blackhole blackhole) {
+    final var optionalId = RANDOM_VALUES.ints(1, 6).findFirst();
 
-		final HttpStatusCode status = webClient.get().uri("/products/{id}", optionalId.orElseThrow())
-				.header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).exchange().expectStatus().isOk()
-				.expectBody().returnResult().getStatus();
+    final HttpStatusCode status = webClient.get().uri("/products/{id}", optionalId.orElseThrow())
+      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).exchange().expectStatus().isOk()
+      .expectBody().returnResult().getStatus();
 
-		Assertions.assertNotNull(status);
-		blackhole.consume(status.value());
-	}
+    Assertions.assertNotNull(status);
+    blackhole.consume(status.value());
+  }
 
-	@Benchmark
-	@BenchmarkMode(Mode.AverageTime)
-	@Fork(value = 0, warmups = 0)
-	@OutputTimeUnit(TimeUnit.MILLISECONDS)
-	@Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
-	@Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
-	@Threads(5)
-	public void sortProductsWithStockMoreWeight(final Blackhole blackhole) {
-		final var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
-		final var salesUnits = optionalSalesUnits.orElseThrow();
-		final var stock = 100 - salesUnits;
+  @Benchmark
+  @BenchmarkMode(Mode.AverageTime)
+  @Fork(value = 0, warmups = 0)
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  @Warmup(time = 5, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Measurement(time = 15, iterations = 1, timeUnit = TimeUnit.SECONDS, batchSize = 1)
+  @Threads(5)
+  public void sortProductsWithStockMoreWeight(final Blackhole blackhole) {
+    final var optionalSalesUnits = RANDOM_VALUES.ints(0, 100).findFirst();
+    final var salesUnits = optionalSalesUnits.orElseThrow();
+    final var stock = 100 - salesUnits;
 
-		final HttpStatusCode status = webClient.get()
-				.uri("/products?salesUnits={salesUnits}&stock={stock}", salesUnits, stock)
-				.header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).exchange().expectStatus().isOk()
-				.expectBody().returnResult().getStatus();
+    final HttpStatusCode status = webClient.get()
+      .uri("/products?salesUnits={salesUnits}&stock={stock}", salesUnits, stock)
+      .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE).exchange().expectStatus().isOk()
+      .expectBody().returnResult().getStatus();
 
-		Assertions.assertNotNull(status);
-		blackhole.consume(status.value());
-	}
+    Assertions.assertNotNull(status);
+    blackhole.consume(status.value());
+  }
 }

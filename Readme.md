@@ -186,7 +186,7 @@ mvn -B clean verify -P error-prone,quality-check | tee mvn-clean-verify-$(date +
 
 ```bash
 # Build with gradle
-gradle build --console=plain | tee gradle-build-$(date +%Y%m%d-%H%M%S).log
+gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ### Refactoring
@@ -215,23 +215,38 @@ mvn -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 
-# Jars
+# Maven - Jars
 # Deploy packages into github repository,
 # if there is a "github" server configuration in "settings.xml"  
 mvn deploy \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
-# Images
+# Maven - Images
 mvn spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```
 
+```bash
+# Gradle - Jars
+# Publish packages to configured repositories
+gradle publish -x test \
+  --console=plain | tee gradle-publish-$(date +%Y%m%d-%H%M%S).log
+
+# Gradle - Docker Images using Spring Boot
+gradle bootBuildImage -x test \
+  --console=plain | tee gradle-build-image-$(date +%Y%m%d-%H%M%S).log
+
+# Gradle - Docker Images using Jib (requires -Pjib flag)
+gradle :camila-product-api:jibDockerBuild -Pjib -x test \
+  --console=plain | tee gradle-jib-build-$(date +%Y%m%d-%H%M%S).log
+```
+
 ### Code Analysis Report
 
 ```bash
-# Unset Spring Profile
+# Maven - Unset Spring Profile
 unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
@@ -244,10 +259,76 @@ xdg-open ./target/report/camila-services/staging/index.html
 ```
 
 ```bash
-# Verify project
-gradle qualityBuild -PerrorProne -PqualityCheck \
-  --console=plain | tee gradle-build-$(date +%Y%m%d-%H%M%S).log
+# Gradle - Complete quality analysis with all checks
+gradle clean qualityBuild -PerrorProne -PqualityCheck \
+  --console=plain | tee gradle-quality-build-$(date +%Y%m%d-%H%M%S).log
+
+# Checkstyle
+gradle checkstyleMain checkstyleTest --console=plain
+xdg-open build/reports/checkstyle/main.html
+
+# SpotBugs (requires quality-check in product-api)
+gradle :camila-product-api:spotbugsMain --console=plain
+xdg-open camila-product-api/build/reports/spotbugs/main.html
+
+# JaCoCo Coverage
+gradle test jacocoTestReport --console=plain
+xdg-open camila-product-api/build/reports/jacoco/test/html/index.html
+
+# OWASP Dependency Check
+gradle :camila-product-api:dependencyCheckAnalyze --console=plain
+xdg-open camila-product-api/build/reports/dependency-check-report.html
+
+# SonarQube Analysis (requires SONAR_TOKEN)
+export SONAR_TOKEN="your-sonar-token"
+gradle sonar -Psonar.token=${SONAR_TOKEN} --console=plain
 ```
+
+### Maven vs Gradle Command Reference
+
+| Task | Maven Command | Gradle Command |
+|------|---------------|----------------|
+| **Clean Build** | `mvn clean verify` | `gradle clean build` |
+| **Build with Quality Checks** | `mvn clean verify -P error-prone,quality-check` | `gradle clean qualityBuild -PerrorProne -PqualityCheck` |
+| **Run Tests** | `mvn test` | `gradle test` |
+| **Run Unit Tests Only** | `mvn test -Dtest=*Test` | `gradle unitTest` |
+| **Run Integration Tests** | `mvn verify` | `gradle integrationTest` |
+| **Skip Tests** | `mvn install -DskipTests` | `gradle build -x test` |
+| **Code Coverage** | `mvn jacoco:report` | `gradle jacocoTestReport` |
+| **Checkstyle** | `mvn checkstyle:check` | `gradle checkstyleMain checkstyleTest` |
+| **PMD** | `mvn pmd:check` | *Maven only (Gradle has StackOverflow errors)* |
+| **SpotBugs** | `mvn spotbugs:check` | `gradle spotbugsMain` |
+| **Mutation Testing** | `mvn pitest:mutationCoverage -Ppitest` | *Maven only (Gradle plugin incompatible)* |
+| **OWASP Security Check** | `mvn dependency-check:check` | `gradle dependencyCheckAnalyze` |
+| **Dependency Updates** | `mvn versions:display-dependency-updates` | `gradle dependencyUpdates` |
+| **Plugin Updates** | `mvn versions:display-plugin-updates` | `gradle dependencyUpdates` |
+| **SonarQube** | `mvn sonar:sonar` | `gradle sonar` |
+| **OpenRewrite** | `mvn rewrite:run -Popen-rewrite` | `gradle rewriteRun` |
+| **Install to Local** | `mvn install` | `gradle publishToMavenLocal` |
+| **Deploy/Publish** | `mvn deploy` | `gradle publish` |
+| **Build Docker Image** | `mvn spring-boot:build-image` | `gradle bootBuildImage` |
+| **Jib Docker Build** | `mvn jib:dockerBuild -Pjib` | `gradle jibDockerBuild -Pjib` |
+| **Generate Site** | `mvn site` | N/A (use individual reports) |
+| **Generate Changelog** | `mvn generate-sources` | N/A (manual Git commands) |
+| **Show Dependencies** | `mvn dependency:tree` | `gradle dependencies` |
+| **Clean** | `mvn clean` | `gradle clean` |
+
+### Profile/Property Equivalents
+
+| Maven Profile/Property | Gradle Property/Flag |
+|------------------------|----------------------|
+| `-P error-prone` | `-PerrorProne` |
+| `-P quality-check` | `-PqualityCheck` |
+| `-P native` | `-Pnative` |
+| `-P jib` | `-Pjib` |
+| `-P pitest` | *(plugin auto-configured)* |
+| `-D maven.test.skip=true` | `-x test` |
+| `-D skipTests=true` | `-x test` |
+| `-B` (batch mode) | `--console=plain` |
+| `-X` (debug) | `--debug` |
+| `-q` (quiet) | `--quiet` |
+
+
 
 </details>
 

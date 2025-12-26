@@ -7,6 +7,8 @@ plugins {
   id 'org.springdoc.openapi-gradle-plugin'
   id 'com.google.protobuf' version '0.9.6'
   id 'com.google.cloud.tools.jib' version '3.5.2'
+  id 'com.github.spotbugs' version '6.4.8'
+  id 'org.owasp.dependencycheck' version '10.0.4'
 }
 
 description = 'Camila Service Product API'
@@ -119,7 +121,6 @@ dependencies {
   // Cucumber
   testImplementation "io.cucumber:cucumber-core:${cucumberVersion}"
   testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
-  // exclude junit-platform-engine transitive from Cucumber (it requests a different platform version)
   testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}") {
     exclude group: 'org.junit.platform', module: 'junit-platform-engine'
   }
@@ -202,6 +203,31 @@ jacocoTestReport {
       ])
     }))
   }
+}
+
+// SpotBugs configuration (matches Maven spotbugs-maven-plugin)
+spotbugs {
+  toolVersion = '4.9.8'
+  effort = 'default'
+  reportLevel = 'medium'
+  ignoreFailures = true // Don't fail build on violations (matches Maven reporting approach)
+  excludeFilter = file("${rootDir}/src/main/resources/spotbugs-security-exclude.xml")
+  includeFilter = file("${rootDir}/src/main/resources/spotbugs-security-include.xml")
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+  reports {
+    xml.required = true
+    html.required = true
+  }
+}
+
+// OWASP Dependency Check configuration (matches Maven dependency-check-maven)
+dependencyCheck {
+  skipConfigurations = ['providedRuntime']
+  failOnError = false
+  formats = ['HTML', 'XML', 'JSON']
+  suppressionFile = "${rootDir}/src/main/resources/owasp-suppressions.xml"
 }
 
 configurations {
