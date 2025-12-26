@@ -22,7 +22,7 @@ jobs:
           node-version: '24'
       - name: Install spectral and redocly-cli
         run: |
-          npm install -g @stoplight/spectral-cli@6.15.0 @redocly/cli@2.2.2
+          npm install --ignore-scripts -g @stoplight/spectral-cli@6.15.0 @redocly/cli@2.2.2
       - name: Run Spectral lint
         run: |
           echo "Running Spectral lint for OpenAPI specs..."
