@@ -59,7 +59,7 @@ jobs:
       - name: Run Mutation Tests
         id: mutation-tests
         run: |
-          mvn ${{ env.MAVEN_CLI_OPTS }} test -P pitest
+          mvn ${{ env.MAVEN_CLI_OPTS }} test pitest:report-aggregate-module -P pitest
 
       - name: Upload PIT Mutation Reports
         if: always()
@@ -68,7 +68,7 @@ jobs:
           name: pitest-reports
           path: |
             **/target/pit-reports/
-          retention-days: 30
+          retention-days: 7
           if-no-files-found: warn
 
       - name: Generate Mutation Test Summary
@@ -77,14 +77,14 @@ jobs:
           echo "## 🧬 Mutation Testing Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ -d "camila-product-api/target/pit-reports" ]; then
+          if [ -d "target/pit-reports" ]; then
             echo "### ✅ Mutation Tests Completed" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Reports Location:** \`camila-product-api/target/pit-reports/\`" >> $GITHUB_STEP_SUMMARY
+            echo "**Reports Location:** \`target/pit-reports/\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             
             # Check for index.html to provide direct link info
-            if [ -f "camila-product-api/target/pit-reports/index.html" ]; then
+            if [ -f "target/pit-reports/index.html" ]; then
               echo "📊 Full HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
             fi
           else
@@ -102,7 +102,7 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            const reportsPath = 'camila-product-api/target/pit-reports';
+            const reportsPath = 'target/pit-reports';
             let comment = '## 🧬 Mutation Testing Results\n\n';
             
             if (fs.existsSync(reportsPath)) {

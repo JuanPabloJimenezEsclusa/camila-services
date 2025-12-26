@@ -21,6 +21,7 @@ env:
 jobs:
   dependency-review:
     if: github.event.pull_request.draft == false
+    name: Dependency Review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

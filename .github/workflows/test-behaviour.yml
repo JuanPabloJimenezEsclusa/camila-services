@@ -56,10 +56,17 @@ jobs:
         run: |
           echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
 
+      - name: Install Dependencies
+        id: maven-install
+        run: |
+          mvn ${{ env.MAVEN_CLI_OPTS }} install -Dmaven.test.skip=true -Dgpg.skip=true
+
       - name: Run Behaviour Tests
         id: behaviour-tests
         run: |
-          mvn ${{ env.MAVEN_CLI_OPTS }} test -Dtest=com.camila.api.behaviour.ProductBehaviourRunner -f ./camila-product-api/pom.xml
+          mvn ${{ env.MAVEN_CLI_OPTS }} test \
+            -Dtest=com.camila.api.behaviour.ProductBehaviourRunner \
+            -f ./camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/pom.xml
 
       - name: Upload Cucumber Reports
         if: always()
@@ -78,7 +85,7 @@ jobs:
           echo "## 🧪 Behaviour Testing Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ -d "camila-product-api/target/cucumber-reports" ]; then
+          if [ -d "camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports" ]; then
             echo "### ✅ Behaviour Tests Completed" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             echo "**Test Runner:** ProductBehaviourRunner" >> $GITHUB_STEP_SUMMARY
@@ -86,7 +93,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
             
             # Check for HTML report
-            if [ -f "camila-product-api/target/cucumber-reports/index.html" ]; then
+            if [ -f "camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports/index.html" ]; then
               echo "📊 Cucumber HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
             fi
           else
@@ -104,7 +111,7 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            const reportsPath = 'camila-product-api/target/cucumber-reports';
+            const reportsPath = 'camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports';
             let comment = '## 🧪 Behaviour Testing Results\n\n';
             
             if (fs.existsSync(reportsPath)) {

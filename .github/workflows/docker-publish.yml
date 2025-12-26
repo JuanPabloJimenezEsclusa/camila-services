@@ -21,11 +21,19 @@ env:
 jobs:
   deploy:
     if: github.event.pull_request.draft == false
+    name: Build and Publish Docker Images
+    environment: pro
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
+      - name: Configure GPG Key
+        run: |
+          echo -n "${MAVEN_GPG_KEY}" | base64 --decode | gpg --batch --passphrase ${MAVEN_GPG_PASSPHRASE} --import
+        env:
+          MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Set up JDK 25
@@ -45,11 +53,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build images
-        run: | 
-          mvn -B spring-boot:build-image \
+        run: |
+          mvn -B install spring-boot:build-image \
             -Dmaven.test.skip=true \
-            -Dmaven.build.cache.enabled=false \
-            --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api
+            -Dmaven.build.cache.enabled=false
+        env:
+          MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - name: Transform lowercase - github.repository_owner
         run: |
           echo "REPOSITORY_OWNER=`echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]'`" >>${GITHUB_ENV}

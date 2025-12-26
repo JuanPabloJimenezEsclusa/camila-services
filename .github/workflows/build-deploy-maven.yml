@@ -10,6 +10,7 @@ concurrency:
 
 jobs:
   publish:
+    name: Build and Deploy Maven Artifacts
     runs-on: ubuntu-latest
     permissions:
       contents: read

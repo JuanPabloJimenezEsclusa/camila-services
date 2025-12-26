@@ -18,6 +18,7 @@ concurrency:
 jobs:
   pmd-code-scan:
     if: github.event.pull_request.draft == false
+    name: PMD Code Analysis
     permissions:
       contents: read
       security-events: write

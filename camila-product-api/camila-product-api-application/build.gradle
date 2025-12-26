@@ -1,0 +1,32 @@
+plugins {
+  id 'java-library'
+}
+
+description = 'Camila Product API - Application Layer (Use Cases)'
+group = 'com.camila.api'
+version = '1.0.0'
+
+// Disable Spring Boot tasks for library module
+tasks.matching { it.name == 'bootJar' || it.name == 'bootRun' || it.name == 'bootBuildInfo' || it.name == 'bootBuildImage' }.configureEach {
+  enabled = false
+}
+
+dependencies {
+  api project(':camila-product-api:camila-product-api-domain')
+  implementation 'io.projectreactor:reactor-core'
+  implementation 'org.slf4j:slf4j-api'
+  compileOnly 'org.jspecify:jspecify'
+
+  // Testing
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  testImplementation 'io.projectreactor:reactor-test'
+  testImplementation 'org.assertj:assertj-core'
+  testImplementation 'org.mockito:mockito-core'
+  testImplementation 'org.mockito:mockito-junit-jupiter'
+  testImplementation 'org.instancio:instancio-junit:5.5.1'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
