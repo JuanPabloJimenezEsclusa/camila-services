@@ -5,13 +5,106 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] ci: improves dependency review action**
+**[GH-32] refactor: splits api module**
 
 
-[4533a754d703c47](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/4533a754d703c47) JuanPabloJimenezEsclusa *2025-12-25 14:44:06*
+[15fdbd4f17848e1](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/15fdbd4f17848e1) JuanPabloJimenezEsclusa *2025-12-29 15:27:37*
 
-**chore(deps): bump the maven-dependencies group across 1 directory with 10 updates**
+**[GH-32] refactor: updates test file format**
 
+
+[5ebb6ebacd98c3b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5ebb6ebacd98c3b) JuanPabloJimenezEsclusa *2025-12-26 09:52:57*
+
+**[GH-32] build: reverts boot version**
+
+
+[e04308ce057de57](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e04308ce057de57) JuanPabloJimenezEsclusa *2025-12-25 16:31:23*
+
+**chore(deps): bump the gradle-dependencies group across 1 directory with 9 updates**
+
+ * Bumps the gradle-dependencies group with 9 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-dependencies](https://github.com/spring-projects/spring-boot) | &#x60;3.5.8&#x60; | &#x60;3.5.9&#x60; |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.0.0&#x60; | &#x60;2025.0.1&#x60; |
+ * | [org.testcontainers:testcontainers-bom](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.2&#x60; | &#x60;2.0.3&#x60; |
+ * | org.sonarqube | &#x60;7.2.0.6526&#x60; | &#x60;7.2.2.6593&#x60; |
+ * | org.springframework.boot | &#x60;3.5.8&#x60; | &#x60;4.0.1&#x60; |
+ * | com.github.spotbugs | &#x60;6.4.7&#x60; | &#x60;6.4.8&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.22.0&#x60; | &#x60;7.23.0&#x60; |
+ * | com.google.protobuf | &#x60;0.9.5&#x60; | &#x60;0.9.6&#x60; |
+ * | com.google.cloud.tools.jib | &#x60;3.5.1&#x60; | &#x60;3.5.2&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-dependencies&#x60; from 3.5.8 to 3.5.9
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.8...v3.5.9)
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.0.0 to 2025.0.1
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.0.0...v2025.0.1)
+ * Updates &#x60;org.testcontainers:testcontainers-bom&#x60; from 2.0.2 to 2.0.3
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.2...2.0.3)
+ * Updates &#x60;org.sonarqube&#x60; from 7.2.0.6526 to 7.2.2.6593
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.8 to 4.0.1
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.4.7 to 6.4.8
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.22.0 to 7.23.0
+ * Updates &#x60;com.google.protobuf&#x60; from 0.9.5 to 0.9.6
+ * Updates &#x60;com.google.cloud.tools.jib&#x60; from 3.5.1 to 3.5.2
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-dependencies
+ * dependency-version: 3.5.9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-bom
+ * dependency-version: 2.0.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.sonarqube
+ * dependency-version: 7.2.2.6593
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.4.8
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.23.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.protobuf
+ * dependency-version: 0.9.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.cloud.tools.jib
+ * dependency-version: 3.5.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[7c2a120c75b9e57](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7c2a120c75b9e57) dependabot[bot] *2025-12-25 16:28:48*
+
+**chore(deps): bump the maven-dependencies group across 1 directory with 10 updates (#243)**
+
+ * chore(deps): bump the maven-dependencies group across 1 directory with 10 updates
  * Bumps the maven-dependencies group with 10 updates in the / directory:
  * | Package | From | To |
  * | --- | --- | --- |
@@ -121,8 +214,13 @@ Changelog of camila-services.
  * dependency-group: maven-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] ci: improves dependency review action
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[d02bb5fb400183c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/d02bb5fb400183c) dependabot[bot] *2025-12-25 14:33:57*
+[6c6490c631111af](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6c6490c631111af) dependabot[bot] *2025-12-25 15:31:48*
 
 **chore(deps): update hashicorp/aws requirement from ~> 6.25.0 to ~> 6.26.0 (#240)**
 

@@ -148,7 +148,7 @@ Product data sample:
 
 | Development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Testing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Deployment                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D25-005571.svg)](https://adoptium.net/es/temurin/releases/) <br/> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D25-005571.svg)](https://www.graalvm.org/downloads/) <br/> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.9.x-005571.svg)](https://maven.apache.org/) <br/> [![Gradle](https://img.shields.io/badge/Gradle-%3E%3D9.1.x-005571.svg)](https://gradle.org/releases/) <br/> [![Spring](https://img.shields.io/badge/Spring-%3E%3D6.x-brightgreen.svg)](https://spring.io/) <br/> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D3.5.x-brightgreen.svg)](https://spring.io/boot) <br/> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2025.0.x-brightgreen.svg)](https://spring.io/cloud) <br/> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D8.x-blue.svg)](https://www.mongodb.com/) <br/> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/)<br/> [![Redis](https://img.shields.io/badge/Redis-%3E%3D8.x-blue.svg)](https://redis.io/open-source/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D6.0.x-orange.svg)](https://junit.org/junit5/) <br/> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.32.x-orange.svg)](https://cucumber.io/) <br/> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.22.x-orange.svg)](https://pitest.org/) <br/> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D3.2.x-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br/> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.4.x-orange.svg)](https://www.archunit.org/) <br/> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.x-orange.svg)](https://jmeter.apache.org/) <br/> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D2.0.x-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D29.0.x-brown.svg)](https://www.docker.com/) <br/> [![Docker-compose](https://img.shields.io/badge/Docker%20Compose-%3E%3D2.40.x-brown.svg)](https://docs.docker.com/compose/install/) <br/> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.34.0-brown.svg)](https://kubernetes.io/releases/) <br/> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.19.6-brown.svg)](https://github.com/knative/serving/releases/) <br/> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.28.17-brown.svg)](https://aws.amazon.com/es/cli/) <br/> [![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.13.0-brown.svg)](https://aws.amazon.com/es/cli/) |
+| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D25-005571.svg)](https://adoptium.net/es/temurin/releases/) <br/> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D25-005571.svg)](https://www.graalvm.org/downloads/) <br/> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.9.x-005571.svg)](https://maven.apache.org/) <br/> [![Gradle](https://img.shields.io/badge/Gradle-%3E%3D9.2.x-005571.svg)](https://gradle.org/releases/) <br/> [![Spring](https://img.shields.io/badge/Spring-%3E%3D6.x-brightgreen.svg)](https://spring.io/) <br/> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D3.5.x-brightgreen.svg)](https://spring.io/boot) <br/> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2025.0.x-brightgreen.svg)](https://spring.io/cloud) <br/> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D8.x-blue.svg)](https://www.mongodb.com/) <br/> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/)<br/> [![Redis](https://img.shields.io/badge/Redis-%3E%3D8.x-blue.svg)](https://redis.io/open-source/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D6.0.x-orange.svg)](https://junit.org/junit5/) <br/> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.32.x-orange.svg)](https://cucumber.io/) <br/> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.22.x-orange.svg)](https://pitest.org/) <br/> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D3.2.x-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br/> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.4.x-orange.svg)](https://www.archunit.org/) <br/> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.x-orange.svg)](https://jmeter.apache.org/) <br/> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D2.0.x-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D29.0.x-brown.svg)](https://www.docker.com/) <br/> [![Docker-compose](https://img.shields.io/badge/Docker%20Compose-%3E%3D2.40.x-brown.svg)](https://docs.docker.com/compose/install/) <br/> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.34.0-brown.svg)](https://kubernetes.io/releases/) <br/> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.19.6-brown.svg)](https://github.com/knative/serving/releases/) <br/> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.28.17-brown.svg)](https://aws.amazon.com/es/cli/) <br/> [![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.13.0-brown.svg)](https://aws.amazon.com/es/cli/) |
 
 ### Components
 
@@ -179,14 +179,30 @@ Product data sample:
 
 ### Build
 
-```bash
-# Build with maven
-mvn -B clean verify -P error-prone,quality-check | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
-```
+#### Maven (Primary Build System)
 
 ```bash
-# Build with gradle
-gradle build --console=plain | tee gradle-build-$(date +%Y%m%d-%H%M%S).log
+# Standard build with all quality checks
+mvn -B clean verify -P error-prone,quality-check | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
+# Build without tests (faster)
+mvn clean package -DskipTests=true
+# Build with mutation testing
+mvn clean verify -P pitest
+```
+
+#### Gradle (Fully Homologated - Feature Parity with Maven ✅)
+
+```bash
+# Standard build
+gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
+# Unit tests only
+gradle unitTest
+# Full quality checks with strict compilation
+gradle qualityBuild -PerrorProne -PqualityCheck
+# With mutation testing
+gradle mutationTest -Ppitest
+# Build without tests (faster)
+gradle clean build -x test
 ```
 
 ### Refactoring
@@ -194,19 +210,27 @@ gradle build --console=plain | tee gradle-build-$(date +%Y%m%d-%H%M%S).log
 > Using [OpenRewrite](https://docs.openrewrite.org/) to automatize some common refactoring to reduce technical debts
 
 ```bash
+# Maven
 mvn rewrite:runNoFork -Popen-rewrite | tee mvn-rewrite-$(date +%Y%m%d-%H%M%S).log
+
+# Gradle - Preview changes (dry run)
+gradle codeRewritePreview | tee gradle-rewrite-preview-$(date +%Y%m%d-%H%M%S).log
+# Gradle - Apply changes
+gradle codeRewrite | tee gradle-rewrite-apply-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ### Dependency Updates
 
 ```bash
-# Check version dependencies
+# Maven
 mvn versions:display-dependency-updates
 mvn versions:display-plugin-updates
 mvn versions:display-property-updates
-
-# Check outdated dependencies
 mvn -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
+
+# Gradle
+gradle displayDependencyUpdates
+gradle displayPluginUpdates
 ```
 
 ### Packing
@@ -215,27 +239,44 @@ mvn -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 
-# Jars
+# Maven - Jars
 # Deploy packages into github repository,
 # if there is a "github" server configuration in "settings.xml"  
 mvn deploy \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
-# Images
+# Maven - Images
 mvn spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```
 
+```bash
+# Gradle - Jars
+# Publish packages to configured repositories
+gradle publish -x test \
+  --console=plain | tee gradle-publish-$(date +%Y%m%d-%H%M%S).log
+
+# Gradle - Docker Images using Spring Boot
+gradle bootBuildImage -x test \
+  --console=plain | tee gradle-build-image-$(date +%Y%m%d-%H%M%S).log
+
+# Gradle - Docker Images using Jib (requires -Pjib flag)
+gradle :camila-product-api:jibDockerBuild -Pjib -x test \
+  --console=plain | tee gradle-jib-build-$(date +%Y%m%d-%H%M%S).log
+```
+
 ### Code Analysis Report
+
+#### Maven
 
 ```bash
 # Unset Spring Profile
 unset SPRING_PROFILES_ACTIVE
 # Export GPG Passphrase to avoid prompt during build
 export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
-# Verify project
+# Verify project with quality gates
 mvn -B install site -P error-prone,quality-check | tee mvn-install-site-$(date +%Y%m%d-%H%M%S).log
 # Consolidate reports
 mvn -B site:stage-deploy
@@ -244,10 +285,76 @@ xdg-open ./target/report/camila-services/staging/index.html
 ```
 
 ```bash
-# Verify project
-gradle qualityBuild -PerrorProne -PqualityCheck \
-  --console=plain | tee gradle-build-$(date +%Y%m%d-%H%M%S).log
+# Gradle - Complete quality analysis with all checks
+gradle clean qualityBuild -PerrorProne -PqualityCheck \
+  --console=plain | tee gradle-quality-build-$(date +%Y%m%d-%H%M%S).log
+
+# Checkstyle
+gradle checkstyleMain checkstyleTest --console=plain
+# SpotBugs (requires quality-check in product-api)
+gradle :camila-product-api:spotbugsMain --console=plain
+# JaCoCo Coverage
+gradle test jacocoTestReport --console=plain
+# OWASP Dependency Check
+gradle :camila-product-api:dependencyCheckAnalyze --console=plain
+# SonarQube Analysis (requires SONAR_TOKEN)
+export SONAR_TOKEN="your-sonar-token"
+gradle sonar -Psonar.token=${SONAR_TOKEN} --console=plain
 ```
+
+### Maven vs Gradle Command Reference
+
+| Task | Maven Command | Gradle Command | Status |
+|------|---------------|----------------|--------|
+| **Clean Build** | `mvn clean verify` | `gradle clean build` | ✅ Parity |
+| **Build with Quality Checks** | `mvn clean verify -P error-prone,quality-check` | `gradle qualityBuild -PerrorProne -PqualityCheck` | ✅ Parity |
+| **Run Tests** | `mvn test` | `gradle test` | ✅ Parity |
+| **Run Unit Tests Only** | `mvn test -Dtest=*Test` | `gradle unitTest` | ✅ Parity |
+| **Run Integration Tests** | `mvn verify` | `gradle integrationTest` | ✅ Parity |
+| **Skip Tests** | `mvn install -DskipTests` | `gradle build -x test` | ✅ Parity |
+| **Code Coverage** | `mvn jacoco:report` | `gradle jacocoTestReport` | ✅ Parity |
+| **Coverage Aggregation** | `mvn jacoco:report` (all modules) | `gradle aggregateJacoco` | ✅ Parity |
+| **Checkstyle** | `mvn checkstyle:check` | `gradle checkstyleMain checkstyleTest` | ✅ Parity |
+| **PMD** | `mvn pmd:check` | N/A | Maven only |
+| **SpotBugs** | `mvn spotbugs:check` | `gradle spotbugsReport` | ✅ **Parity (Phase 2.3)** |
+| **Error Prone** | `mvn verify -P error-prone` | `gradle build -PerrorProne` | ✅ **Parity (Phase 2.1)** |
+| **Mutation Testing** | `mvn pitest:mutationCoverage -Ppitest` | `gradle mutationTest -Ppitest` | ✅ **Parity (Phase 2.2)** |
+| **OWASP Security Check** | `mvn dependency-check:check` | `gradle dependencyCheckAnalyze` | ✅ Parity |
+| **Dependency Updates** | `mvn versions:display-dependency-updates` | `gradle displayDependencyUpdates` | ✅ Parity |
+| **Plugin Updates** | `mvn versions:display-plugin-updates` | `gradle displayPluginUpdates` | ✅ Parity |
+| **SonarQube** | `mvn sonar:sonar` | `gradle sonar` | ✅ Parity |
+| **OpenRewrite Preview** | `mvn rewrite:dryRun -Popen-rewrite` | `gradle codeRewritePreview` | ✅ **Parity (Phase 2.4)** |
+| **OpenRewrite Apply** | `mvn rewrite:run -Popen-rewrite` | `gradle codeRewrite` | ✅ **Parity (Phase 2.4)** |
+| **Install to Local** | `mvn install` | `gradle publishToMavenLocal` | ✅ Parity |
+| **Deploy/Publish** | `mvn deploy` | `gradle publish` | ✅ Parity |
+| **Build Docker Image** | `mvn spring-boot:build-image` | `gradle bootBuildImage` | ✅ Parity |
+| **Jib Docker Build** | `mvn jib:dockerBuild -Pjib` | `gradle jibDockerBuild -Pjib` | ✅ Parity |
+| **Generate Site** | `mvn site` | N/A (use individual reports) | Maven only |
+| **Generate Changelog** | `mvn generate-sources` | N/A (manual Git commands) | Manual |
+| **Show Dependencies** | `mvn dependency:tree` | `gradle dependencies` | ✅ Parity |
+
+### Profile/Property Equivalents
+
+| Maven Profile/Property | Gradle Property/Flag | Purpose |
+|------------------------|----------------------|---------|
+| `-P error-prone` | `-PerrorProne` | Strict compile-time error checking (Phase 2.1) |
+| `-P quality-check` | `-PqualityCheck` | Enable all quality analysis tools |
+| `-P pitest` | `-Ppitest` | Enable mutation testing (Phase 2.2) |
+| `-P open-rewrite` | (built-in) | Enable code refactoring recipes (Phase 2.4) |
+| `-P native` | `-Pnative` | Build native image with GraalVM |
+| `-P jib` | `-Pjib` | Build Docker image with Jib tool |
+
+### Command Line Option Equivalents
+
+| Maven Option | Gradle Option | Purpose |
+|--------------|---------------|---------|
+| `-B` (batch mode) | `--console=plain` | Non-interactive output |
+| `-X` (debug) | `--debug` | Debug logging |
+| `-q` (quiet) | `--quiet` | Quiet mode |
+| `-D maven.test.skip=true` | `-x test` | Skip tests |
+| `-D skipTests=true` | `-x test` | Skip tests |
+| `--offline` | `--offline` | Offline mode |
+| `-pl <module>` | `-p <module>` | Build specific module |
 
 </details>
 

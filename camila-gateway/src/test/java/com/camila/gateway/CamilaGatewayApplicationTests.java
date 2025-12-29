@@ -12,14 +12,14 @@ import org.springframework.context.ApplicationContext;
 @DisplayName("[IT][CamilaGatewayApplication] Spring boot smoke test")
 class CamilaGatewayApplicationTests {
 
-	@Autowired
-	private ApplicationContext applicationContext;
+  @Autowired
+  private ApplicationContext applicationContext;
 
-	@Test
-	@DisplayName("[CamilaGatewayApplication] context loaded")
-	void contextLoads() {
-		assertThat(this.applicationContext)
+  @Test
+  @DisplayName("[CamilaGatewayApplication] context loaded")
+  void contextLoads() {
+    assertThat(this.applicationContext)
       .isNotNull()
       .satisfies(ctx -> assertThat(ctx.containsBean("camilaGatewayApplication")).isTrue());
-	}
+  }
 }

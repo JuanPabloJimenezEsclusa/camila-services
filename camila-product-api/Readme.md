@@ -85,30 +85,22 @@ The API-first approach enables:
 Hexagonal Architecture with Domain Driven Design (DDD)
 
 ```txt
-📦api
- ┣ 📂product
- ┃ ┣ 📂domain
- ┃ ┃ ┣ 📂exception
- ┃ ┃ ┣ 📂model
- ┃ ┃ ┣ 📂port
- ┃ ┃ ┣ 📂service
- ┃ ┃ ┗ 📂usecase
- ┃ ┣ 📂application
- ┃ ┃ ┗ 📂usecase
- ┃ ┗ 📂infrastructure
- ┃   ┗ 📂adapter
- ┃     ┣ 📂input
- ┃     ┃ ┣ 📂security
- ┃     ┃ ┣ 📂rest
- ┃     ┃ ┣ 📂graphql
- ┃     ┃ ┣ 📂websocket
- ┃     ┃ ┣ 📂rsocket
- ┃     ┃ ┗ 📂grpc
- ┃     ┗ 📂output
- ┃       ┣ 📂cache
- ┃       ┣ 📂mongo
- ┃       ┗ 📂couchbase
- ┗ 📜ProductApiApplication.java
+📦camila-product-api
+ ┣ 📂camila-product-api-domain
+ ┣ 📂camila-product-api-application
+ ┗ 📂camila-product-api-infrastructure
+   ┣ 📂driving (input adapters)
+   ┃ ┣ 📂camila-product-api-infrastructure-boot
+   ┃ ┣ 📂camila-product-api-infrastructure-security
+   ┃ ┣ 📂camila-product-api-infrastructure-rest
+   ┃ ┣ 📂camila-product-api-infrastructure-graphql
+   ┃ ┣ 📂camila-product-api-infrastructure-websocket
+   ┃ ┣ 📂camila-product-api-infrastructure-rsocket
+   ┃ ┗ 📂camila-product-api-infrastructure-grpc
+   ┗ 📂driven (output adapters)
+     ┣ 📂camila-product-api-infrastructure-cache
+     ┣ 📂camila-product-api-infrastructure-mongo
+     ┗ 📂camila-product-api-infrastructure-couchbase
 ```
 
 ![Hexagonal-architecture](.docs/architecture/camila-product-api-architecture-v1.svg "Hexagonal Diagram")

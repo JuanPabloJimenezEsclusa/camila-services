@@ -2,15 +2,19 @@ plugins {
   // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
-  id 'org.sonarqube' version '7.2.0.6526'
-  id 'org.springframework.boot' version '3.5.8' apply false
+  id 'pmd'
+  id 'org.sonarqube' version '7.2.2.6593'
+  id 'org.springframework.boot' version '3.5.9' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.11.3' apply false
-  id 'com.github.spotbugs' version '6.4.7' apply false
-  id 'org.openapi.generator' version '7.17.0' apply false
-  id 'org.openrewrite.rewrite' version '7.22.0' apply false
+  id 'com.github.spotbugs' version '6.4.8' apply false
+  id 'org.openapi.generator' version '7.18.0' apply false
+  id 'org.openrewrite.rewrite' version '7.23.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
   id "io.freefair.lombok" version "9.1.0" apply false
+  id 'info.solidsoft.pitest' version '1.15.0' apply false
+  id 'com.github.ben-manes.versions' version '0.51.0'
+  id 'org.owasp.dependencycheck' version '12.1.9' apply false
 }
 
 allprojects {
@@ -37,10 +41,176 @@ subprojects {
     targetCompatibility = JavaVersion.VERSION_25
   }
 
+  // ✅ Error Prone Configuration - Strict compile-time checks
+  // Enable with: gradle build -PerrorProne
+  if (project.hasProperty('errorProne')) {
+    configurations {
+      errorproneConfig
+    }
+
+    dependencies {
+      compileOnly 'com.google.errorprone:error_prone_annotations:2.45.0'
+      errorproneConfig 'com.google.errorprone:error_prone_core:2.45.0'
+    }
+
+    tasks.withType(JavaCompile) {
+      // Use Error Prone compiler with strict checks
+      options.compilerArgs += [
+        '-Xlint:all',                   // Enable all compiler warnings
+        '-Werror',                      // Treat warnings as errors
+        '-XepAllDisabledChecks',        // Fallback for strict mode
+      ]
+
+      // Configure javac for Error Prone
+      def errorproneJar = configurations.errorproneConfig.asPath
+      if (errorproneJar) {
+        options.fork = true
+        options.forkOptions.executable = 'javac'
+        options.forkOptions.jvmArgs += "-Xbootclasspath/p:${errorproneJar}"
+      }
+
+      options.encoding = 'UTF-8'
+      options.incremental = true
+
+      doFirst {
+        println "🔍 Compiling with Error Prone strict checking (v2.45.0) enabled"
+      }
+    }
+  }
+
+  // ✅ Pitest Configuration - Mutation Testing for Code Quality
+  // Pitest (info.solidsoft.pitest v1.15.0) requires opt-in configuration per module
+  // Apply to specific modules with: apply plugin: 'info.solidsoft.pitest'
+  // Then configure with pitest { ... } block below
+  // Enable root-level: gradle mutationTest (aggregates from subprojects)
+
+  // Pitest configuration template (apply to modules as needed)
+  pluginManager.withPlugin('info.solidsoft.pitest') {
+    pitest {
+      // Pitest version and plugin
+      pitestVersion = "1.22.0"
+      junit5PluginVersion = "1.2.1"
+
+      // Mutation testing configuration
+      threads = Runtime.runtime.availableProcessors()     // Parallel execution
+      timeoutFactor = 2.0                                  // Timeout multiplier
+      timeoutConstant = 5000                               // Base timeout (ms)
+
+      // Coverage quality gates
+      mutationThreshold = 80                               // Fail if < 80% mutation score
+      coverageThreshold = 80                               // Code coverage requirement
+
+      // Exclude generated and infrastructure code
+      excludedClasses = [
+        '**/input/grpc/**',
+        '**/input/rest/api/**',
+        '**/input/rest/dto/**',
+        '**/*MapperImpl**',
+        '**/generated/**'
+      ]
+
+      // Exclude specific methods
+      excludedMethods = [
+        '*Config*',                  // Configuration classes
+        '*equals',                   // hashCode/equals methods
+        '*hashCode',
+        '*toString*',
+        '*lambda*',
+        'finalize'
+      ]
+
+      // Exclude specific lines/annotations
+      excludedTestClasses = [
+        '**/*ITCase*',               // Integration tests
+        '**/*Behaviour*'             // BDD tests
+      ]
+
+      // Report generation
+      outputFormats = ['XML', 'HTML']
+
+      // Mutations to use
+      mutators = [
+        'DEFAULTS',                  // Standard mutators
+        'STRONGER',                  // Additional stronger mutators
+        'REMOVE_CONDITIONALS',       // Remove conditional bounds
+        'REMOVE_INCREMENTS',         // Remove increments
+        'REPLACE_BOOLEAN_RETURN'     // Replace boolean returns
+      ]
+
+      // Features
+      useClasspathJar = true
+      verbose = false
+      failWhenNoMutations = false    // Don't fail if no mutations found
+    }
+  }
+
+  // ✅ SpotBugs Configuration - Static Bug Detection
+  // Enable with: gradle check or gradle spotbugsReport
+  apply plugin: 'com.github.spotbugs'
+
+  spotbugs {
+    // SpotBugs version
+    toolVersion = "4.9.8"
+    // Report configuration
+    ignoreFailures = false                                      // Fail if bugs found
+  }
+
+  // Configure SpotBugs task with filters
+  afterEvaluate {
+    if (tasks.findByName('spotbugsMain')) {
+      spotbugsMain {
+        reports {
+          html {
+            required = true
+          }
+          xml {
+            required = true
+          }
+        }
+        // Include and exclude filters
+        includeFilter = rootProject.file('src/main/resources/spotbugs-security-include.xml')
+        excludeFilter = rootProject.file('src/main/resources/spotbugs-security-exclude.xml')
+      }
+      // Disable test analysis
+      spotbugsTest.enabled = false
+    }
+  }
+
+  // Add SpotBugs to quality verification task
+  tasks.named('check') { dependsOn 'spotbugsMain' }
+
+  tasks.register('spotbugsReport') {
+    group = 'verification'
+    description = 'Run SpotBugs static analysis'
+    dependsOn 'spotbugsMain'
+
+    doLast {
+      println """
+      ✅ SpotBugs analysis complete!
+      📊 Report: build/reports/spotbugs/main.html
+      📈 View details with: open build/reports/spotbugs/main.html
+      """
+    }
+  }
+
+  tasks.register('mutationTest') {
+    group = 'verification'
+    description = 'Run mutation tests with Pitest'
+    dependsOn 'pitest'
+
+    doLast {
+      println """
+      ✅ Mutation testing complete!
+      📊 Report: build/reports/pitest/index.html
+      📈 Check coverage with: open build/reports/pitest/index.html
+      """
+    }
+  }
+
   ext {
-    springBootVersion = '3.5.8'
+    springBootVersion = '3.5.9'
     springFrameworkVersion = '6.2.11'
-    springCloudVersion = '2025.0.0'
+    springCloudVersion = '2025.0.1'
     springBootAdminVersion = '3.5.6'
 
     // jakarta
@@ -54,7 +224,7 @@ subprojects {
     couchbaseJavaClientVersion = '3.10.0'
 
     // Testing
-    testcontainersVersion = '2.0.2'
+    testcontainersVersion = '2.0.3'
     testcontainersRedis = '2.2.4'
     cucumberVersion = '7.33.0'
     junitVersion = '6.0.1'
@@ -64,6 +234,7 @@ subprojects {
     awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
     jacocoVersion = '0.8.14'
+    okhttpVersion = '5.3.2'
 
     // API Documentation
     springdocOpenapiVersion = '2.8.14'
@@ -71,7 +242,8 @@ subprojects {
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
-    protobufJavaVersion = '3.25.3'
+    protobufJavaVersion = '4.33.2'
+    grpcVersion = '1.77.0'
     grpcServerSpringBootStarterVersion = '3.1.0.RELEASE'
 
     // Tools
@@ -90,7 +262,7 @@ subprojects {
     mavenCheckstylePluginVersion = '3.6.0'
     mavenCompilerPluginVersion = '3.14.1'
     dependencyCheckMavenVersion = '12.1.9'
-    checkstyleVersion = '11.1.0'
+    checkstyleVersion = '12.3.0'
     mavenProjectInfoReportsPluginVersion = '3.9.0'
     chaosMonkeySpringBootVersion = '3.2.0'
   }
@@ -162,7 +334,6 @@ subprojects {
     systemProperty 'eureka.client.enabled', 'false'
     systemProperty 'spring.cloud.discovery.enabled', 'false'
 
-    // Prevent Eureka Server auto-configuration in tests (avoids missing ApplicationInfoManager bean)
     // This excludes the server auto-configuration classes so tests that start the whole context
     // won't attempt to create Eureka server beans locally.
     def excluded = 'org.springframework.cloud.netflix.eureka.server.EurekaServerAutoConfiguration'
@@ -217,7 +388,6 @@ subprojects {
       html.required = true
     }
 
-    // Configure classDirectories lazily using sourceSets to avoid using project.afterEvaluate
     def jacocoExcludes = [
       '**/input/grpc/**',
       '**/input/rest/api/**',
@@ -252,6 +422,14 @@ tasks.register('aggregateJacoco') {
   description = 'Aggregate jacocoAllTestReport from subprojects'
 }
 
+// ✅ Mutation Testing Aggregation Task
+// Run mutation tests across all subprojects
+tasks.register('mutationTest') {
+  group = 'verification'
+  description = 'Run mutation tests with Pitest across all subprojects'
+  dependsOn subprojects.collect { p -> p.tasks.findByName('mutationTest') }.findAll { it != null }
+}
+
 // Sonar token helper: read from project property 'sonar.token' or environment variable SONAR_TOKEN
 // This is used to decide whether to run Sonar analysis and to provide credentials to the plugin.
 ext.sonarToken = findProperty('sonar.token') ?: System.getenv('SONAR_TOKEN')
@@ -273,6 +451,66 @@ sonar {
       property "sonar.login", rootProject.ext.sonarToken
     }
   }
+}
+
+// ✅ OpenRewrite Configuration - Automated Code Refactoring
+// Enable with: gradle rewriteRun or gradle rewriteDryRun
+apply plugin: 'org.openrewrite.rewrite'
+
+rewrite {
+  // OpenRewrite version
+  version = "7.23.0"
+
+  // Fail the build if there are issues
+  failOnDryRunResults = false
+
+  // Active recipes for code refactoring and formatting
+  activeRecipes = [
+    // Maven best practices
+    'org.openrewrite.maven.BestPractices',
+    'org.openrewrite.maven.ModernizeObsoletePoms',
+    'org.openrewrite.maven.OrderPomElements',
+
+    // YAML formatting
+    'org.openrewrite.yaml.format.Indents',
+
+    // HCL/Terraform formatting
+    'org.openrewrite.hcl.format.BlankLines',
+    'org.openrewrite.hcl.format.NormalizeFormat',
+    'org.openrewrite.hcl.format.RemoveTrailingWhitespace',
+    'org.openrewrite.hcl.format.Spaces',
+
+    // Java formatting and imports
+    'org.openrewrite.java.format.EmptyNewlineAtEndOfFile',
+    'org.openrewrite.java.format.MethodParamPad',
+    'org.openrewrite.java.format.NormalizeFormat',
+    'org.openrewrite.java.format.NoWhitespaceAfter',
+    'org.openrewrite.java.format.NoWhitespaceBefore',
+    'org.openrewrite.java.format.OperatorWrap',
+    'org.openrewrite.java.format.PadEmptyForLoopComponents',
+    'org.openrewrite.java.format.RemoveTrailingWhitespace',
+    'org.openrewrite.java.format.Spaces',
+    'org.openrewrite.java.OrderImports',
+    'org.openrewrite.java.RemoveUnusedImports'
+  ]
+
+  // Code style definitions
+  activeStyles = [
+    'org.openrewrite.java.IntelliJ',     // IntelliJ IDEA style
+    'org.openrewrite.java.SpringFormat'  // Spring Boot code style
+  ]
+}
+
+tasks.register('codeRewrite') {
+  group = 'refactoring'
+  description = 'Run OpenRewrite recipes to refactor code'
+  dependsOn 'rewriteRun'
+}
+
+tasks.register('codeRewritePreview') {
+  group = 'refactoring'
+  description = 'Preview OpenRewrite changes (dry run)'
+  dependsOn 'rewriteDryRun'
 }
 
 // Composite task to run build + quality checks. Use -PerrorProne and -PqualityCheck to enable extra steps.
@@ -304,12 +542,45 @@ tasks.register('qualityBuild') {
 // subproject evaluation state during root project configuration (prevents "cannot be executed in the current context").
 gradle.projectsEvaluated {
   def quality = tasks.named('qualityBuild')
+
+  // Wire jacoco reports
   def jacocoProviders = subprojects.collect { p ->
-    // findByName won't realize the task; if it exists, get a provider to depend on
     p.tasks.findByName('jacocoAllTestReport') != null ? p.tasks.named('jacocoAllTestReport') : null
   }.findAll { it != null }
 
   if (!jacocoProviders.isEmpty()) {
     quality.configure { dependsOn jacocoProviders }
+  }
+
+  // Wire mutation tests to quality build when -Ppitest flag is set
+  if (project.hasProperty('pitest')) {
+    quality.configure { dependsOn 'mutationTest' }
+  }
+}
+
+// Configure version updates plugin
+dependencyUpdates {
+  checkForGradleUpdate = true
+  outputFormatter = "plain,html,xml"
+  outputDir = "build/dependencyUpdates"
+  reportfileName = "dependency-updates-report"
+}
+
+// Task aliases to match Maven commands
+tasks.register('displayDependencyUpdates') {
+  group = 'help'
+  description = 'Display dependency updates (Maven equivalent: versions:display-dependency-updates)'
+  dependsOn 'dependencyUpdates'
+  doLast {
+    println "Dependency updates report generated. See build/dependencyUpdates/dependency-updates-report.txt"
+  }
+}
+
+tasks.register('displayPluginUpdates') {
+  group = 'help'
+  description = 'Display plugin updates (Maven equivalent: versions:display-plugin-updates)'
+  dependsOn 'dependencyUpdates'
+  doLast {
+    println "Plugin updates included in dependency updates report. See build/dependencyUpdates/dependency-updates-report.txt"
   }
 }

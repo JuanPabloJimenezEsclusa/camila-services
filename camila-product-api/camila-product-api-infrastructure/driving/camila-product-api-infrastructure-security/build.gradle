@@ -1,0 +1,26 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Product API - Security Configuration'
+
+dependencies {
+  // Internal Modules
+  implementation project(':camila-product-api-application')
+
+  // Spring Boot Security
+  implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+  // Utilities
+  compileOnly 'org.jspecify:jspecify'
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+}

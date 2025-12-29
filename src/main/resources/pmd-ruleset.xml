@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Camila PMD Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+  <description>
+    PMD ruleset for Camila Services project.
+    This ruleset enforces best practices and code quality standards.
+  </description>
+
+  <!-- Best Practices -->
+  <rule ref="category/java/bestpractices.xml">
+    <exclude name="GuardLogStatement"/>
+    <exclude name="JUnitTestsShouldIncludeAssert"/>
+    <exclude name="UseVarargs"/>
+  </rule>
+
+  <!-- Code Style -->
+  <rule ref="category/java/codestyle.xml">
+    <exclude name="AtLeastOneConstructor"/>
+    <exclude name="CallSuperInConstructor"/>
+    <exclude name="CommentDefaultAccessModifier"/>
+    <exclude name="DefaultPackage"/>
+    <exclude name="LongVariable"/>
+    <exclude name="OnlyOneReturn"/>
+    <exclude name="ShortVariable"/>
+    <exclude name="TooManyStaticImports"/>
+    <exclude name="UseUnderscoresInNumericLiterals"/>
+    <exclude name="LocalVariableCouldBeFinal"/>
+    <exclude name="MethodArgumentCouldBeFinal"/>
+  </rule>
+
+  <!-- Design -->
+  <rule ref="category/java/design.xml">
+    <exclude name="AvoidCatchingGenericException"/>
+    <exclude name="DataClass"/>
+    <exclude name="LawOfDemeter"/>
+    <exclude name="LoosePackageCoupling"/>
+    <exclude name="TooManyMethods"/>
+    <exclude name="UseUtilityClass"/>
+  </rule>
+
+  <!-- Documentation -->
+  <rule ref="category/java/documentation.xml">
+    <exclude name="CommentRequired"/>
+    <exclude name="CommentSize"/>
+  </rule>
+
+  <!-- Error Prone -->
+  <rule ref="category/java/errorprone.xml">
+    <exclude name="BeanMembersShouldSerialize"/>
+    <exclude name="DataflowAnomalyAnalysis"/>
+    <exclude name="NullAssignment"/>
+  </rule>
+
+  <!-- Multithreading -->
+  <rule ref="category/java/multithreading.xml"/>
+
+  <!-- Performance -->
+  <rule ref="category/java/performance.xml">
+    <exclude name="AvoidInstantiatingObjectsInLoops"/>
+  </rule>
+
+  <!-- Security -->
+  <rule ref="category/java/security.xml"/>
+
+</ruleset>
+
