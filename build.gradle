@@ -2,13 +2,13 @@ plugins {
   // https://plugins.gradle.org/
   id 'java'
   id 'jacoco'
-  id 'org.sonarqube' version '7.2.0.6526'
-  id 'org.springframework.boot' version '3.5.8' apply false
+  id 'org.sonarqube' version '7.2.2.6593'
+  id 'org.springframework.boot' version '4.0.1' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '0.11.3' apply false
-  id 'com.github.spotbugs' version '6.4.7' apply false
-  id 'org.openapi.generator' version '7.17.0' apply false
-  id 'org.openrewrite.rewrite' version '7.22.0' apply false
+  id 'com.github.spotbugs' version '6.4.8' apply false
+  id 'org.openapi.generator' version '7.18.0' apply false
+  id 'org.openrewrite.rewrite' version '7.23.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
   id "io.freefair.lombok" version "9.1.0" apply false
 }
@@ -38,9 +38,9 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '3.5.8'
+    springBootVersion = '3.5.9'
     springFrameworkVersion = '6.2.11'
-    springCloudVersion = '2025.0.0'
+    springCloudVersion = '2025.0.1'
     springBootAdminVersion = '3.5.6'
 
     // jakarta
@@ -54,7 +54,7 @@ subprojects {
     couchbaseJavaClientVersion = '3.10.0'
 
     // Testing
-    testcontainersVersion = '2.0.2'
+    testcontainersVersion = '2.0.3'
     testcontainersRedis = '2.2.4'
     cucumberVersion = '7.33.0'
     junitVersion = '6.0.1'
