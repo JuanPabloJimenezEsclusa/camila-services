@@ -5,23 +5,100 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] refactor: splits api module**
+**[gh-32] test: add domain unit tests**
 
 
-[15fdbd4f17848e1](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/15fdbd4f17848e1) JuanPabloJimenezEsclusa *2025-12-29 15:27:37*
+[93543b156654d1a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/93543b156654d1a) JuanPabloJimenezEsclusa *2025-12-30 00:03:38*
 
-**[GH-32] refactor: updates test file format**
+**chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates**
 
+ * Bumps the gradle-dependencies group with 6 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | org.springframework.boot | &#x60;3.5.9&#x60; | &#x60;4.0.1&#x60; |
+ * | com.github.ben-manes.versions | &#x60;0.51.0&#x60; | &#x60;0.53.0&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.77.0&#x60; | &#x60;1.78.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.77.0&#x60; | &#x60;1.78.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.77.0&#x60; | &#x60;1.78.0&#x60; |
+ * | [io.grpc:protoc-gen-grpc-java](https://github.com/grpc/grpc-java) | &#x60;1.77.0&#x60; | &#x60;1.78.0&#x60; |
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.9 to 4.0.1
+ * Updates &#x60;com.github.ben-manes.versions&#x60; from 0.51.0 to 0.53.0
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.77.0 to 1.78.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.77.0...v1.78.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.ben-manes.versions
+ * dependency-version: 0.53.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.78.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
 
-[5ebb6ebacd98c3b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5ebb6ebacd98c3b) JuanPabloJimenezEsclusa *2025-12-26 09:52:57*
+[f64fa367a3bdac2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f64fa367a3bdac2) dependabot[bot] *2025-12-29 17:25:29*
 
-**[GH-32] build: reverts boot version**
+**chore(deps): bump the maven-dependencies group with 3 updates (#246)**
 
-
-[e04308ce057de57](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e04308ce057de57) JuanPabloJimenezEsclusa *2025-12-25 16:31:23*
-
-**chore(deps): bump the gradle-dependencies group across 1 directory with 9 updates**
-
+ * chore(deps): bump the gradle-dependencies group across 1 directory with 9 updates
  * Bumps the gradle-dependencies group with 9 updates in the / directory:
  * | Package | From | To |
  * | --- | --- | --- |
@@ -99,8 +176,15 @@ Changelog of camila-services.
  * dependency-group: gradle-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] build: reverts boot version
+ * [GH-32] refactor: updates test file format
+ * [GH-32] refactor: splits api module
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[7c2a120c75b9e57](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7c2a120c75b9e57) dependabot[bot] *2025-12-25 16:28:48*
+[134e9428543580a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/134e9428543580a) dependabot[bot] *2025-12-29 17:22:42*
 
 **chore(deps): bump the maven-dependencies group across 1 directory with 10 updates (#243)**
 

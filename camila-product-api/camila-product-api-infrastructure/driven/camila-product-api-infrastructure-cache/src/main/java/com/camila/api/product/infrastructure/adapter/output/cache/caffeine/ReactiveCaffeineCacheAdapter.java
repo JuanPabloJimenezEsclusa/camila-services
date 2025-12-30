@@ -18,8 +18,8 @@ public record ReactiveCaffeineCacheAdapter(
 
   @Override
   public <T> Mono<T> get(final String cacheName, final String key, final Class<T> type) {
-    final var cache = resolve(cacheName);
     try {
+      final var cache = resolve(cacheName);
       final var cacheWrapper = cache.get(key);
       if (cacheWrapper == null) {
         return Mono.empty();
