@@ -303,7 +303,6 @@
         </executions>
         <configuration>
           <skip>false</skip>
-          <excludeDockerCompose>true</excludeDockerCompose>
           <excludeDevtools>true</excludeDevtools>
           <image>
             <name>camila-product-api:${project.version}</name>
@@ -401,26 +400,29 @@
               <skipNativeTests>true</skipNativeTests>
               <classesDirectory>${project.build.outputDirectory}</classesDirectory>
               <buildArgs>
-                <buildArg>--verbose</buildArg>
-                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
-                <buildArg>-H:ReflectionConfigurationResources=META-INF/native-image/reflect-config.json</buildArg>
-                <buildArg>-H:ResourceConfigurationResources=META-INF/native-image/resource-config.json</buildArg>
-                <buildArg>-H:SerializationConfigurationResources=META-INF/native-image/serialization-config.json</buildArg>
-                <buildArg>-H:DynamicProxyConfigurationResources=META-INF/native-image/proxy-config.json</buildArg>
-                <buildArg>-H:JNIConfigurationResources=META-INF/native-image/jni-config.json</buildArg>
-                <buildArg>-H:PredefinedClassesConfigurationResources=META-INF/native-image/predefined-classes-config.json</buildArg>
-                <buildArg>--report-unsupported-elements-at-runtime</buildArg>
-                <buildArg>--initialize-at-run-time=org.bouncycastle,java.net.InetAddress,java.net.Inet4Address,java.net.Inet6Address</buildArg>
-                <buildArg>--enable-http</buildArg>
-                <buildArg>--enable-https</buildArg>
-                <buildArg>--enable-preview</buildArg>
+                <!-- Resource inclusion patterns (can also be in resource-config.json) -->
+                <buildArg>-H:IncludeResources=.*\.properties$</buildArg>
+                <buildArg>-H:IncludeResources=.*\.yml$</buildArg>
+                <buildArg>-H:IncludeResources=.*\.yaml$</buildArg>
+                <buildArg>-H:IncludeResources=.*\.xml$</buildArg>
+                <buildArg>-H:IncludeResources=.*\.json$</buildArg>
+                <buildArg>-H:IncludeResources=graphql/.*\.graphqls$</buildArg>
+
+                <!-- Exclude conflicting Couchbase Netty buffer configuration -->
+                <buildArg>--exclude-config</buildArg>
+                <buildArg>\Qcore-io-3.10.0.jar\E</buildArg>
+                <buildArg>^/META-INF/native-image/io\.netty/</buildArg>
               </buildArgs>
               <jvmArgs>
                 <arg>--add-opens=java.base/java.lang=ALL-UNNAMED</arg>
                 <arg>--add-opens=java.base/java.io=ALL-UNNAMED</arg>
+                <arg>--add-opens=java.base/java.nio=ALL-UNNAMED</arg>
+                <arg>--add-opens=java.base/java.util=ALL-UNNAMED</arg>
+                <arg>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED</arg>
                 <arg>--add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED</arg>
-                <arg>-Dspring.profiles.active=pre</arg>
-                <arg>-Xmx16g</arg>
+                <arg>-Dspring.profiles.active=dev</arg>
+                <arg>-Dspring.aot.enabled=true</arg>
+                <arg>-Xmx12g</arg>
               </jvmArgs>
             </configuration>
             <executions>

@@ -143,7 +143,9 @@ class ProductArchitectureTest {
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
       "org.awaitility..", "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
-      "org.springframework.cloud..");
+      "org.springframework.cloud..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -172,7 +174,9 @@ class ProductArchitectureTest {
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
       "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
-      "org.springframework.cloud..");
+      "org.springframework.cloud..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -192,7 +196,9 @@ class ProductArchitectureTest {
       "io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..", "com.google.common.util.concurrent..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..");
+      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -218,7 +224,9 @@ class ProductArchitectureTest {
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
       "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
-      "org.springframework.cloud..");
+      "org.springframework.cloud..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -236,7 +244,9 @@ class ProductArchitectureTest {
       "org.springframework.(util|web.util.pattern)..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..");
+      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -249,7 +259,9 @@ class ProductArchitectureTest {
       // Spring dependencies
       "org.springframework.(web|stereotype|context|core|http|beans.factory)..",
       // Security
-      "org.springframework.security.(config|web|oauth2.server)..");
+      "org.springframework.security.(config|web|oauth2.server)..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -267,7 +279,9 @@ class ProductArchitectureTest {
       "reactor.netty.http.server..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..");
+      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -283,7 +297,9 @@ class ProductArchitectureTest {
       "com.github.benmanes.caffeine..", "org.springframework.data.redis..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.testcontainers..", "com.redis.testcontainers..", "com.github.dockerjava.api..");
+      "org.springframework.test..", "org.testcontainers..", "com.redis.testcontainers..", "com.github.dockerjava.api..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -301,7 +317,9 @@ class ProductArchitectureTest {
       "com.couchbase.client..", "org.springframework.data.(annotation|couchbase|convert|repository)..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.github.dockerjava.api..");
+      "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.github.dockerjava.api..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")
@@ -319,7 +337,9 @@ class ProductArchitectureTest {
       "org.bson..", "com.mongodb.client..", "org.springframework.data.(annotation|domain|mongodb|repository)..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.github.dockerjava.api..");
+      "org.springframework.test..", "org.springframework.boot.test..", "org.testcontainers..", "com.github.dockerjava.api..",
+      // AOT compilation dependencies
+      "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
   @ArchTest
   @SuppressWarnings("unused")

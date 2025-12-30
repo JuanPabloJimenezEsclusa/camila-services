@@ -5,22 +5,23 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../"
 
 # Native build
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
 
-# Only for compiling/packaging the native artifact
-mvn clean package \
-  -Pnative \
-  -Dmaven.test.skip=true \
-  -Dspring-boot.aot.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED" \
-  -f ./pom.xml | tee result-package-native.log
-
 # Compile/package and build container image
-mvn spring-boot:build-image \
+echo "Building native image container..."
+mvn clean spring-boot:build-image \
   -Pnative \
   -Dmaven.test.skip=true \
   -Dspring-boot.aot.jvmArguments="--add-opens=java.base/java.lang=ALL-UNNAMED" \
-  -f ./pom.xml | tee result-build-image-native.log
+  -f ./camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/pom.xml | tee result-build-image-native.log
+
+if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
+  echo "ERROR: Native image container build failed. See 'result-build-image-native.log' for details."
+  exit 1
+fi
+
+echo "Native image container build completed successfully."

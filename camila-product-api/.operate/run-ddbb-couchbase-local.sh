@@ -8,14 +8,14 @@ if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 cd "$(dirname "$0")/.."
 
 # Prepare workspace
-docker stop couchbase7 || true && \
-  docker rm couchbase7 || true && \
-  docker volume create couchbase-data7 || true
+(docker stop couchbase || true) && \
+  (docker rm couchbase || true) && \
+  (docker volume create couchbase-data || true)
 
 # Init container
 docker run -it --rm \
   --network host \
-  --name couchbase7 \
+  --name couchbase \
   -p 8091-8096 \
   -p 11210-11211 \
   --expose 8091-8096 \
@@ -34,5 +34,5 @@ docker run -it --rm \
   -e COUCHBASE_INDEX_RAM_SIZE=1024 \
   --memory="4096m" --memory-reservation="4096m" --memory-swap="4096m" --cpu-shares=4000 \
   -v ./.operate/data/couchbase:/opt/couchbase/init \
-  -v couchbase-data7:/opt/couchbase/var \
-  couchbase/server:community-7.6.5 sh -c "/opt/couchbase/init/init-cbserver.sh"
+  -v couchbase-data:/opt/couchbase/var \
+  couchbase/server:8.0.0 sh -c "/opt/couchbase/init/init-cbserver.sh"

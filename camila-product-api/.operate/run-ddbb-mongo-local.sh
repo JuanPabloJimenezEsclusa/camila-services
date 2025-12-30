@@ -11,9 +11,9 @@ mongoPassword="${2:-camila}"
 cd "$(dirname "$0")/.."
 
 # Prepare workspace
-docker stop mongodb || true && \
-  docker rm mongodb || true && \
-  docker volume create mongo-data || true
+(docker stop mongodb || true) && \
+  (docker rm mongodb || true) && \
+  (docker volume create mongo-data || true)
 
 # Init container
 docker run -it --rm \
