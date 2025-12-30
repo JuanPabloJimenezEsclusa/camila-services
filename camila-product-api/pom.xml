@@ -203,6 +203,13 @@
             <groupId>org.owasp</groupId>
             <artifactId>dependency-check-maven</artifactId>
             <version>${dependency-check-maven.version}</version>
+            <dependencies>
+              <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>2.25.2</version>
+              </dependency>
+            </dependencies>
             <configuration>
               <skipProvidedScope>true</skipProvidedScope>
               <skipRuntimeScope>true</skipRuntimeScope>
@@ -416,9 +423,7 @@
                 <arg>-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
                 <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
                 <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
-                <arg>-Xplugin:ErrorProne
-                  -XepExcludedPaths:.*/jmh_generated/.*|.*/input/grpc/.*|.*/rest/api/.*|.*/rest/dto/.*|.*/generated-sources/.*
-                </arg>
+                <arg>-Xplugin:ErrorProne -XepExcludedPaths:.*/jmh_generated/.*|.*/input/grpc/.*|.*/rest/api/.*|.*/rest/dto/.*|.*/generated-sources/.*</arg>
               </compilerArgs>
             </configuration>
           </plugin>

@@ -1,4 +1,4 @@
-package com.camila.api.product.infrastructure.adapter.output;
+package com.camila.api.product.infrastructure.adapter.output.util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -134,13 +134,22 @@ public class RandomDataGenerator {
     final Map<String, Integer> stock;
 
     if (category.equals("FOOTWEAR")) {
-      stock = Map.of("6", random.nextInt(100), "7", random.nextInt(200), "8", random.nextInt(300), "9",
-        random.nextInt(300), "10", random.nextInt(200), "11", random.nextInt(100));
+      stock = Map.of(
+        "6", random.nextInt(100),
+        "7", random.nextInt(200),
+        "8", random.nextInt(300),
+        "9", random.nextInt(300),
+        "10", random.nextInt(200),
+        "11", random.nextInt(100));
     } else if (category.equals("ACCESSORY")) {
       stock = Map.of("ONE_SIZE", random.nextInt(1_000));
     } else {
-      stock = Map.of("XS", random.nextInt(300), "S", random.nextInt(500), "M", random.nextInt(800), "L",
-        random.nextInt(500), "XL", random.nextInt(300));
+      stock = Map.of(
+        "XS", random.nextInt(300),
+        "S", random.nextInt(500),
+        "M", random.nextInt(800),
+        "L", random.nextInt(500),
+        "XL", random.nextInt(300));
     }
 
     return "{" + stock.entrySet().stream().map(entry -> "\"" + entry.getKey() + "\":" + entry.getValue())

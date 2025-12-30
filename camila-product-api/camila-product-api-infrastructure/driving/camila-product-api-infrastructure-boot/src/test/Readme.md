@@ -202,4 +202,4 @@ mvn sonar:sonar
 
 A random data generator is available to populate the database for performance testing:
 
-[RandomDataGenerator](../../../../src/test/java/com/camila/api/product/infrastructure/adapter/output/RandomDataGenerator.java)
+[RandomDataGenerator](../../src/test/java/com/camila/api/product/infrastructure/adapter/output/util/RandomDataGenerator.java)
