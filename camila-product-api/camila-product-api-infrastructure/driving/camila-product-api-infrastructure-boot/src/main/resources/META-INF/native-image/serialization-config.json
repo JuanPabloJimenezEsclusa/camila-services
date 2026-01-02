@@ -1,0 +1,29 @@
+[
+  {
+    "name": "java.util.ArrayList"
+  },
+  {
+    "name": "java.util.HashMap"
+  },
+  {
+    "name": "java.util.LinkedHashMap"
+  },
+  {
+    "name": "java.util.HashSet"
+  },
+  {
+    "name": "java.time.Instant"
+  },
+  {
+    "name": "java.time.LocalDate"
+  },
+  {
+    "name": "java.time.LocalDateTime"
+  },
+  {
+    "name": "java.time.ZonedDateTime"
+  },
+  {
+    "name": "org.bson.types.ObjectId"
+  }
+]

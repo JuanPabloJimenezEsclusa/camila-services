@@ -5,13 +5,9 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[gh-32] test: add domain unit tests**
+**chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates (#249)**
 
-
-[93543b156654d1a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/93543b156654d1a) JuanPabloJimenezEsclusa *2025-12-30 00:03:38*
-
-**chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates**
-
+ * chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates
  * Bumps the gradle-dependencies group with 6 updates in the / directory:
  * | Package | From | To |
  * | --- | --- | --- |
@@ -93,8 +89,13 @@ Changelog of camila-services.
  * dependency-group: gradle-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [gh-32] test: add domain unit tests
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[f64fa367a3bdac2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f64fa367a3bdac2) dependabot[bot] *2025-12-29 17:25:29*
+[62b14220d00675b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/62b14220d00675b) dependabot[bot] *2025-12-30 02:01:47*
 
 **chore(deps): bump the maven-dependencies group with 3 updates (#246)**
 

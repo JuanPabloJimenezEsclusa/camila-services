@@ -1,0 +1,75 @@
+[
+  {
+    "name": "com.mongodb.client.model.Filters",
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.mongodb.client.model.Updates",
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "com.mongodb.client.model.Aggregates",
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "org.springframework.data.mongodb.core.mapping.Document",
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.springframework.data.couchbase.core.mapping.Document",
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "graphql.schema.GraphQLScalarType",
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  },
+  {
+    "name": "io.netty.channel.socket.nio.NioServerSocketChannel",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.netty.channel.socket.nio.NioSocketChannel",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.netty.channel.epoll.EpollServerSocketChannel",
+    "condition": {
+      "typeReachable": "io.netty.channel.epoll.Epoll"
+    },
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.netty.channel.epoll.EpollSocketChannel",
+    "condition": {
+      "typeReachable": "io.netty.channel.epoll.Epoll"
+    },
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioServerSocketChannel",
+    "condition": {
+      "typeReachable": "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioServerSocketChannel"
+    },
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel",
+    "condition": {
+      "typeReachable": "io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel"
+    },
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "org.springframework.web.reactive.socket.server.upgrade.ReactorNettyRequestUpgradeStrategy",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "org.springframework.messaging.rsocket.RSocketStrategies",
+    "allDeclaredMethods": true
+  }
+]
