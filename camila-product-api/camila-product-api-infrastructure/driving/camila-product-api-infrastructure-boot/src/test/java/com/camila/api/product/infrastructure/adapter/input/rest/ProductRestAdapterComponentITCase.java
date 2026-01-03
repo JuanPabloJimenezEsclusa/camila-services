@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
+import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ import reactor.core.publisher.Mono;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = {ProductRestAdapter.class})
-@Import({RestExceptionHandler.class, LocalSecurityConfig.class, ProductDTOMapperImpl.class})
+@Import({RestExceptionHandler.class, SecurityConfig.class, ProductDTOMapperImpl.class})
 @DisplayName("[IT][ProductRestAdapter] Product rest adapter [component] test")
 class ProductRestAdapterComponentITCase {
 

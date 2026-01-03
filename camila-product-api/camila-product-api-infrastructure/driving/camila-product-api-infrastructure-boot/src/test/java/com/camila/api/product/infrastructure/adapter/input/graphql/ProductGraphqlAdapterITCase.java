@@ -7,7 +7,7 @@ import java.util.Objects;
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.infrastructure.adapter.input.graphql.config.GraphqlConfig;
-import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
+import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
@@ -59,7 +59,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
   // Framework adapter input layer
   GraphqlConfig.class, ProductGraphqlAdapter.class,
   // Security
-  LocalSecurityConfig.class,
+  SecurityConfig.class,
   // Application layer
   DefaultProductUseCase.class,
   // Framework adapter output layer

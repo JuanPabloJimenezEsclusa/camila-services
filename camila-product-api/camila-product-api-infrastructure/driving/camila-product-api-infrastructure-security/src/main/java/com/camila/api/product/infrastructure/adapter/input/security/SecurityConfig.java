@@ -17,8 +17,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
-@Profile("dev|pre")
-class Oauth2SecurityConfig {
+public class SecurityConfig {
 
   private static final String[] PERMITTED = {
     "/", "/v3/api-docs/**", "/swagger*/**", "/swagger-ui/**", "/webjars/**",
@@ -29,24 +28,41 @@ class Oauth2SecurityConfig {
 
   private static final String[] PRODUCT_ENDPOINTS = {"/products", "/products/**", "/graphql/**", "/ws/**"};
 
-  @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+  @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:#{null}}")
   private String trustedIssuers;
 
   /**
-   * Security web filter chain.
+   * Basic security web filter chain security web filter chain.
    *
    * @param http the http
    * @return the security web filter chain
    */
   @Bean
-  SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
-    final var authenticationManagerResolver = JwtIssuerReactiveAuthenticationManagerResolver
-      .fromTrustedIssuers(this.trustedIssuers);
-    return http.cors(ServerHttpSecurity.CorsSpec::disable).csrf(ServerHttpSecurity.CsrfSpec::disable)
-      // delegamos la autenticación al servicio SSO (keycloak)
-      .oauth2ResourceServer(
-        resourceServer -> resourceServer.authenticationManagerResolver(authenticationManagerResolver))
-      // comprobamos la autorización
+  @Profile("default|loc|local-compose|int")
+  SecurityWebFilterChain basicSecurityWebFilterChain(final ServerHttpSecurity http) {
+    return http
+      .cors(ServerHttpSecurity.CorsSpec::disable)
+      .csrf(ServerHttpSecurity.CsrfSpec::disable)
+      .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
+      .build();
+  }
+
+  /**
+   * Oauth2 security web filter chain security web filter chain.
+   *
+   * @param http the http
+   * @return the security web filter chain
+   */
+  @Bean
+  @Profile("dev|pre|pro")
+  SecurityWebFilterChain oauth2SecurityWebFilterChain(final ServerHttpSecurity http) {
+    final var authnResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(this.trustedIssuers);
+    return http
+      .cors(ServerHttpSecurity.CorsSpec::disable)
+      .csrf(ServerHttpSecurity.CsrfSpec::disable)
+      // delegate the AUTHN to SSO (keycloak, cognito)
+      .oauth2ResourceServer(resourceServer -> resourceServer.authenticationManagerResolver(authnResolver))
+      // check the AUTHZ
       .authorizeExchange(exchanges -> exchanges.pathMatchers(PERMITTED).permitAll()
         .pathMatchers(HttpMethod.GET, PRODUCT_ENDPOINTS).hasAuthority(Authority.READ.getScope())
         .pathMatchers(HttpMethod.POST, PRODUCT_ENDPOINTS).hasAuthority(Authority.WRITE.getScope())
