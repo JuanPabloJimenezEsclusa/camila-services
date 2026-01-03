@@ -31,7 +31,6 @@ __buildProjects() {
     mvn clean spring-boot:build-image \
       -Dmaven.test.skip=true \
       -Dmaven.build.cache.enabled=false \
-      --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api \
       -f ./pom.xml
   else
     echo -e "🚧 Skip build projects"

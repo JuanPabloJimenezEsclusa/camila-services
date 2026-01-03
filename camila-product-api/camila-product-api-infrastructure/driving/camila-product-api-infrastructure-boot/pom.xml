@@ -468,7 +468,7 @@
                 <image>eclipse-temurin:25-jdk-alpine</image>
               </from>
               <to>
-                <image>docker.io/library/${project.name}-serveless</image>
+                <image>docker.io/library/camila-product-api-serveless</image>
                 <tags>
                   <tag>${project.version}</tag>
                 </tags>

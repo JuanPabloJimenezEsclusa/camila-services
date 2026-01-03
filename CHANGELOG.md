@@ -5,6 +5,30 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**chore(deps): bump actions/upload-artifact from 4 to 6 in the github-actions-dependencies group (#250)**
+
+ * [GH-32] build: fix native compile
+ * chore(deps): bump actions/upload-artifact
+ * Bumps the github-actions-dependencies group with 1 update: [actions/upload-artifact](https://github.com/actions/upload-artifact).
+ * Updates &#x60;actions/upload-artifact&#x60; from 4 to 6
+ * - [Release notes](https://github.com/actions/upload-artifact/releases)
+ * - [Commits](https://github.com/actions/upload-artifact/compare/v4...v6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/upload-artifact
+ * dependency-version: &#x27;6&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[401ee29b5f89313](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/401ee29b5f89313) dependabot[bot] *2026-01-02 10:15:29*
+
 **chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates (#249)**
 
  * chore(deps): bump the gradle-dependencies group across 1 directory with 6 updates

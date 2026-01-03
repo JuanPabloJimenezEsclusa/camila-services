@@ -5,8 +5,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
-import com.camila.api.product.infrastructure.adapter.input.rest.config.Oauth2OpenAPIConfig;
-import com.camila.api.product.infrastructure.adapter.input.security.LocalSecurityConfig;
+import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
@@ -75,9 +74,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   MongoReactiveAutoConfiguration.class})
 @Import({
   // Framework adapter input layer
-  Oauth2OpenAPIConfig.class, ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
+  ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
   // Security
-  LocalSecurityConfig.class,
+  SecurityConfig.class,
   // Application layer
   DefaultProductUseCase.class,
   // Framework adapter output layer

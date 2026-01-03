@@ -1,7 +1,7 @@
 ###### Default properties ######
 spring:
   application:
-    name: "@project.name@"
+    name: "camila-product-api"
   # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
   threads:
     virtual:

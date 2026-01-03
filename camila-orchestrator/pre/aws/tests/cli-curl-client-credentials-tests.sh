@@ -6,8 +6,8 @@ set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an unde
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 # Parameters
-CLIENT_ID="6qjo3b8rteisnmls4v6sm63iaf"
-CLIENT_SECRET="ck8lbeql6g16brcjt8r47i494pjid31sjki6pgujkdf6ia4ja7q"
+CLIENT_ID="2ijh0c0eo1fmgrip5jaqm96l19"
+CLIENT_SECRET="15sgk84o0qtt839jv01qeo0jqpfsk8f3cj8ri0mb841qbu4ut61j"
 SCOPES="camila/read camila/write"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 

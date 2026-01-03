@@ -35,18 +35,25 @@ GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/info HTTP/2
 Accept: application/json
 Content-Type: application/json
 
+### Rest - ENV
+# https://tech.jpje.xyz/product/api/swagger-ui.html
+#GET https://jpje.net/actuator/env HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/actuator/env HTTP/2
+Accept: application/json
+Content-Type: application/json
+
 ### Rest - findById (SSE)
 # https://tech.jpje.xyz/product/api/swagger-ui.html
-GET https://jpje.net/products/99999 HTTP/2
-#GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products/63255 HTTP/2
+#GET https://jpje.net/products/99999 HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products/63255 HTTP/2
 Accept: text/event-stream
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
 
 ### Rest - sortProducts (ndjson)
 # https://tech.jpje.xyz/product/api/swagger-ui.html
-GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
-#GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products?salesUnits=0.001&stock=0.999&page=0&size=100 HTTP/2
+#GET https://jpje.net/products?salesUnits=0.001&stock=0.999&page=0&size=10 HTTP/2
+GET {{apiProtocol}}{{apiHost}}:{{apiPort}}{{apiPath}}/products?salesUnits=0.001&stock=0.999&page=0&size=100 HTTP/2
 Accept: application/x-ndjson
 Content-Type: application/json
 Authorization: Bearer {{$auth.token("auth-id")}}
