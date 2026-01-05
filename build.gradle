@@ -237,7 +237,7 @@ subprojects {
     okhttpVersion = '5.3.2'
 
     // API Documentation
-    springdocOpenapiVersion = '2.8.14'
+    springdocOpenapiVersion = '2.8.15'
     graphqlJavaVersion = '25.0'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
