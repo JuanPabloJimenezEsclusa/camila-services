@@ -182,8 +182,10 @@ Product data sample:
 #### Maven (Primary Build System)
 
 ```bash
+export NVD_API_KEY="${NVD_API_KEY:-}"
 # Standard build with all quality checks
-mvn -B clean verify -P error-prone,quality-check | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
+mvn --no-transfer-progress -B clean verify -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
+  | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
 # Build without tests (faster)
 mvn clean package -DskipTests=true
 # Build with mutation testing
@@ -226,7 +228,7 @@ gradle codeRewrite | tee gradle-rewrite-apply-$(date +%Y%m%d-%H%M%S).log
 mvn versions:display-dependency-updates
 mvn versions:display-plugin-updates
 mvn versions:display-property-updates
-mvn -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
+mvn --no-transfer-progress -B com.giovds:outdated-maven-plugin:check -Dyears=2 -DincludePlugins=true
 
 # Gradle
 gradle displayDependencyUpdates
@@ -242,12 +244,12 @@ export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 # Maven - Jars
 # Deploy packages into github repository,
 # if there is a "github" server configuration in "settings.xml"  
-mvn deploy \
+mvn --no-transfer-progress deploy \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
 # Maven - Images
-mvn spring-boot:build-image \
+mvn --no-transfer-progress spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```
@@ -274,12 +276,12 @@ gradle :camila-product-api:jibDockerBuild -Pjib -x test \
 ```bash
 # Unset Spring Profile
 unset SPRING_PROFILES_ACTIVE
-# Export GPG Passphrase to avoid prompt during build
-export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
+export NVD_API_KEY="${NVD_API_KEY:-}"
 # Verify project with quality gates
-mvn -B install site -P error-prone,quality-check | tee mvn-install-site-$(date +%Y%m%d-%H%M%S).log
+mvn --no-transfer-progress -B install site -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
+  | tee mvn-install-site-$(date +%Y%m%d-%H%M%S).log
 # Consolidate reports
-mvn -B site:stage-deploy
+mvn --no-transfer-progress -B site:stage-deploy
 # Open report
 xdg-open ./target/report/camila-services/staging/index.html
 ```
