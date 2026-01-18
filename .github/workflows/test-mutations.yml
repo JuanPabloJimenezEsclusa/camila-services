@@ -16,7 +16,7 @@ permissions:
 
 env:
   MAVEN_OPTS: "-Xmx2048m"
-  MAVEN_CLI_OPTS: "-B -ntp -e"
+  MAVEN_CLI_OPTS: "--no-transfer-progress -B -ntp -e"
 
 jobs:
   test:

@@ -5,6 +5,29 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**chore(deps): update hashicorp/aws requirement from ~> 6.27.0 to ~> 6.28.0**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.28.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.27.0...v6.28.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.28.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[0a88cf413c52a1a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0a88cf413c52a1a) dependabot[bot] *2026-01-12 18:43:47*
+
+**[GH-32] ci: improve cloud deployment (#251)**
+
+
+[2984e6a90ec4bfc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2984e6a90ec4bfc) Juan Pablo Jimenez Esclusa *2026-01-03 17:30:03*
+
 **chore(deps): bump actions/upload-artifact from 4 to 6 in the github-actions-dependencies group (#250)**
 
  * [GH-32] build: fix native compile
