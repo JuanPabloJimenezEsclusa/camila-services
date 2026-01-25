@@ -119,7 +119,7 @@ docker-compose down
 ---
 
 <details>
-<summary><strong>Expand Links</strong></summary>
+<summary><strong>Expand Validate</strong></summary>
 
 ```bash
 # During the test, use this to check circuit breaker status (should remain CLOSED)

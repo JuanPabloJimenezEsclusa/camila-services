@@ -5,6 +5,653 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**chore(deps): bump the maven-dependencies group with 2 updates (#260)**
+
+ * Bumps the maven-dependencies group with 2 updates: [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) and [org.codehaus.mojo:versions-maven-plugin](https://github.com/mojohaus/versions).
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.10.0 to 3.10.1
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.10.0...3.10.1)
+ * Updates &#x60;org.codehaus.mojo:versions-maven-plugin&#x60; from 2.20.1 to 2.21.0
+ * - [Release notes](https://github.com/mojohaus/versions/releases)
+ * - [Changelog](https://github.com/mojohaus/versions/blob/master/ReleaseNotes.md)
+ * - [Commits](https://github.com/mojohaus/versions/compare/2.20.1...2.21.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.10.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.codehaus.mojo:versions-maven-plugin
+ * dependency-version: 2.21.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[7dfb90fa5c9fce8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7dfb90fa5c9fce8) dependabot[bot] *2026-01-24 20:15:29*
+
+**chore(deps): bump the gradle-dependencies group with 3 updates (#259)**
+
+ * Bumps the gradle-dependencies group with 3 updates: [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients), org.openapi.generator and io.freefair.lombok.
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.10.0 to 3.10.1
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.10.0...3.10.1)
+ * Updates &#x60;org.openapi.generator&#x60; from 7.18.0 to 7.19.0
+ * Updates &#x60;io.freefair.lombok&#x60; from 9.1.0 to 9.2.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.10.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openapi.generator
+ * dependency-version: 7.19.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.2.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[dda9832bd304d67](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dda9832bd304d67) dependabot[bot] *2026-01-24 20:09:23*
+
+**chore(deps): bump the infrastructure-dependencies group (#261)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 4 updates: prom/alertmanager, elasticsearch, kibana and axllent/mailpit.
+ * Updates &#x60;prom/alertmanager&#x60; from v0.30.0 to v0.30.1
+ * Updates &#x60;elasticsearch&#x60; from 9.2.3 to 9.2.4
+ * Updates &#x60;kibana&#x60; from 9.2.3 to 9.2.4
+ * Updates &#x60;axllent/mailpit&#x60; from v1.28.2 to v1.28.3
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/alertmanager
+ * dependency-version: v0.30.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.2.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.2.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.28.3
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[a69fbd879291027](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/a69fbd879291027) dependabot[bot] *2026-01-24 20:07:28*
+
+**chore(deps): bump the maven-dependencies group across 1 directory with 15 updates (#256)**
+
+ * Bumps the maven-dependencies group with 15 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [io.opentelemetry:opentelemetry-api](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-context](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-logs](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-common](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-trace](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-metrics](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-extension-trace-propagators](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api-incubator](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0-alpha&#x60; | &#x60;1.58.0-alpha&#x60; |
+ * | [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) | &#x60;12.3.0&#x60; | &#x60;13.0.0&#x60; |
+ * | org.apache.logging.log4j:log4j-api | &#x60;2.25.2&#x60; | &#x60;2.25.3&#x60; |
+ * | [com.google.errorprone:error_prone_core](https://github.com/google/error-prone) | &#x60;2.45.0&#x60; | &#x60;2.46.0&#x60; |
+ * | [org.owasp:dependency-check-maven](https://github.com/dependency-check/DependencyCheck) | &#x60;12.1.9&#x60; | &#x60;12.2.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;2.8.15&#x60; |
+ * | [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) | &#x60;4.33.2&#x60; | &#x60;4.33.4&#x60; |
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api-incubator&#x60; from 1.57.0-alpha to 1.58.0-alpha
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/commits)
+ * Updates &#x60;com.puppycrawl.tools:checkstyle&#x60; from 12.3.0 to 13.0.0
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-12.3.0...checkstyle-13.0.0)
+ * Updates &#x60;org.apache.logging.log4j:log4j-api&#x60; from 2.25.2 to 2.25.3
+ * Updates &#x60;com.google.errorprone:error_prone_core&#x60; from 2.45.0 to 2.46.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.45.0...v2.46.0)
+ * Updates &#x60;org.owasp:dependency-check-maven&#x60; from 12.1.9 to 12.2.0
+ * - [Release notes](https://github.com/dependency-check/DependencyCheck/releases)
+ * - [Changelog](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/dependency-check/DependencyCheck/compare/v12.1.9...v12.2.0)
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 2.8.15
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v2.8.15)
+ * Updates &#x60;com.google.protobuf:protobuf-java&#x60; from 4.33.2 to 4.33.4
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api-incubator
+ * dependency-version: 1.58.0-alpha
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 13.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.apache.logging.log4j:log4j-api
+ * dependency-version: 2.25.3
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.46.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.owasp:dependency-check-maven
+ * dependency-version: 12.2.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 2.8.15
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.33.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[bf117d5a6d4fdd7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bf117d5a6d4fdd7) dependabot[bot] *2026-01-18 19:04:00*
+
+**chore(deps): bump the gradle-dependencies group across 1 directory with 20 updates (#255)**
+
+ * chore(deps): bump the gradle-dependencies group across 1 directory with 20 updates
+ * Bumps the gradle-dependencies group with 19 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [com.google.errorprone:error_prone_annotations](https://github.com/google/error-prone) | &#x60;2.45.0&#x60; | &#x60;2.46.0&#x60; |
+ * | [org.junit:junit-bom](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | [org.junit.jupiter:junit-jupiter](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | [io.opentelemetry:opentelemetry-api](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-context](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-logs](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-common](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-trace](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-sdk-metrics](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-extension-trace-propagators](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0&#x60; | &#x60;1.58.0&#x60; |
+ * | [io.opentelemetry:opentelemetry-api-incubator](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.57.0-alpha&#x60; | &#x60;1.58.0-alpha&#x60; |
+ * | [org.junit.platform:junit-platform-engine](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | [org.junit.platform:junit-platform-commons](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | [org.junit.platform:junit-platform-launcher](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | [org.junit.platform:junit-platform-suite](https://github.com/junit-team/junit-framework) | &#x60;6.0.1&#x60; | &#x60;6.0.2&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.23.0&#x60; | &#x60;7.24.0&#x60; |
+ * | org.owasp.dependencycheck | &#x60;12.1.9&#x60; | &#x60;12.2.0&#x60; |
+ * | [org.springdoc:springdoc-openapi-starter-webflux-ui](https://github.com/springdoc/springdoc-openapi) | &#x60;2.8.14&#x60; | &#x60;2.8.15&#x60; |
+ * Updates &#x60;com.google.errorprone:error_prone_annotations&#x60; from 2.45.0 to 2.46.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.45.0...v2.46.0)
+ * Updates &#x60;com.google.errorprone:error_prone_core&#x60; from 2.45.0 to 2.46.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.45.0...v2.46.0)
+ * Updates &#x60;org.junit:junit-bom&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.jupiter:junit-jupiter&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-context&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-logs&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-common&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-trace&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-sdk-metrics&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-extension-trace-propagators&#x60; from 1.57.0 to 1.58.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.57.0...v1.58.0)
+ * Updates &#x60;io.opentelemetry:opentelemetry-api-incubator&#x60; from 1.57.0-alpha to 1.58.0-alpha
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/commits)
+ * Updates &#x60;org.junit.platform:junit-platform-engine&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-commons&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-launcher&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-suite&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-commons&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-launcher&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.platform:junit-platform-suite&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.junit.jupiter:junit-jupiter&#x60; from 6.0.1 to 6.0.2
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.1...r6.0.2)
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.23.0 to 7.24.0
+ * Updates &#x60;org.owasp.dependencycheck&#x60; from 12.1.9 to 12.2.0
+ * Updates &#x60;org.springdoc:springdoc-openapi-starter-webflux-ui&#x60; from 2.8.14 to 2.8.15
+ * - [Release notes](https://github.com/springdoc/springdoc-openapi/releases)
+ * - [Changelog](https://github.com/springdoc/springdoc-openapi/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/springdoc/springdoc-openapi/compare/v2.8.14...v2.8.15)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.errorprone:error_prone_annotations
+ * dependency-version: 2.46.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.46.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit:junit-bom
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.jupiter:junit-jupiter
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-context
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-logs
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-common
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-trace
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-sdk-metrics
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-extension-trace-propagators
+ * dependency-version: 1.58.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-api-incubator
+ * dependency-version: 1.58.0-alpha
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-engine
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-commons
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-launcher
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-suite
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-commons
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-launcher
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-suite
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.jupiter:junit-jupiter
+ * dependency-version: 6.0.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.24.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.owasp.dependencycheck
+ * dependency-version: 12.2.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springdoc:springdoc-openapi-starter-webflux-ui
+ * dependency-version: 2.8.15
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * [GH-32] docs: update gradle version in readme
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+
+[f2604bb5f5a1ceb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f2604bb5f5a1ceb) dependabot[bot] *2026-01-18 18:42:04*
+
+**chore(deps): bump the infrastructure-dependencies group (#257)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 3 updates: [keycloak/keycloak](https://github.com/keycloak-rel/keycloak-rel), prom/prometheus and axllent/mailpit.
+ * Updates &#x60;keycloak/keycloak&#x60; from 26.4 to 26.5
+ * - [Commits](https://github.com/keycloak-rel/keycloak-rel/commits)
+ * Updates &#x60;prom/prometheus&#x60; from v3.8.1 to v3.9.1
+ * Updates &#x60;axllent/mailpit&#x60; from v1.28.0 to v1.28.2
+ * ---
+ * updated-dependencies:
+ * - dependency-name: keycloak/keycloak
+ * dependency-version: &#x27;26.5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.9.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.28.2
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[211c2b820c6ef72](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/211c2b820c6ef72) dependabot[bot] *2026-01-18 18:00:56*
+
+**Merge pull request #258 from JuanPabloJimenezEsclusa/feature/GH-32-tech-improving**
+
+ * [GH-32] ci: improve mvn runs
+
+[17f2b98fb076314](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/17f2b98fb076314) Juan Pablo Jimenez Esclusa *2026-01-18 17:49:25*
+
+**[GH-32] ci: improve maven runs**
+
+
+[b7f140ee6c3ef9a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b7f140ee6c3ef9a) JuanPabloJimenezEsclusa *2026-01-18 17:40:03*
+
 **chore(deps): update hashicorp/aws requirement from ~> 6.27.0 to ~> 6.28.0**
 
  * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
