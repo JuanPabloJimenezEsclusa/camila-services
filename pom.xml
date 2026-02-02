@@ -89,7 +89,7 @@
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
-    <cucumber.version>7.33.0</cucumber.version>
+    <cucumber.version>7.34.2</cucumber.version>
 
     <testcontainers.version>2.0.3</testcontainers.version>
     <testcontainers-junit-jupiter.version>2.0.3</testcontainers-junit-jupiter.version>
@@ -110,8 +110,8 @@
     <mapstruct.version>1.6.3</mapstruct.version>
     <commons-lang3.version>3.20.0</commons-lang3.version>
     <error_prone_core.version>2.46.0</error_prone_core.version>
-    <pitest-maven.version>1.22.0</pitest-maven.version>
-    <checkstyle.version>13.0.0</checkstyle.version>
+    <pitest-maven.version>1.22.1</pitest-maven.version>
+    <checkstyle.version>13.1.0</checkstyle.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
@@ -123,11 +123,11 @@
 
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.33.4</protobuf-java.version>
+    <protobuf-java.version>4.33.5</protobuf-java.version>
     <io-grpc.version>1.78.0</io-grpc.version>
 
     <!-- Build Tools -->
-    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
     <jib-maven-plugin.version>3.5.1</jib-maven-plugin.version>
     <dependency-check-maven.version>12.2.0</dependency-check-maven.version>
