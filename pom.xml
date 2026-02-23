@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.10</version>
+    <version>3.5.11</version>
     <relativePath/>
   </parent>
 
@@ -75,8 +75,8 @@
 
     <!-- Spring -->
     <spring-cloud.version>2025.0.1</spring-cloud.version>
-    <spring-boot-admin.version>4.0.0</spring-boot-admin.version>
-    <spring-boot-configuration-processor.version>4.0.2</spring-boot-configuration-processor.version>
+    <spring-boot-admin.version>4.0.1</spring-boot-admin.version>
+    <spring-boot-configuration-processor.version>4.0.3</spring-boot-configuration-processor.version>
 
     <!-- Observability -->
     <opentelemetry.version>1.59.0</opentelemetry.version>
@@ -119,7 +119,7 @@
     <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
 
     <!-- Database -->
-    <couchbase-java-client.version>3.11.0</couchbase-java-client.version>
+    <couchbase-java-client.version>3.11.1</couchbase-java-client.version>
 
     <!-- GRPC -->
     <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
@@ -137,8 +137,8 @@
     <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.20.0</openapi-generator-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
+    <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.2.11</git-changelog-maven-plugin.version>
