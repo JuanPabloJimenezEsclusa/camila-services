@@ -7,13 +7,13 @@ plugins {
   id 'org.springframework.boot' version '4.0.5' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '1.0.0' apply false
-  id 'com.github.spotbugs' version '6.5.0' apply false
+  id 'com.github.spotbugs' version '6.5.1' apply false
   id 'org.openapi.generator' version '7.21.0' apply false
   id 'org.openrewrite.rewrite' version '7.30.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
   id "io.freefair.lombok" version "9.2.0" apply false
   id 'info.solidsoft.pitest' version '1.19.0' apply false
-  id 'com.github.ben-manes.versions' version '0.53.0'
+  id 'com.github.ben-manes.versions' version '0.54.0'
   id 'org.owasp.dependencycheck' version '12.2.1' apply false
 }
 
@@ -221,7 +221,7 @@ subprojects {
     opentelemetryApiIncubatorVersion = '1.61.0-alpha'
 
     // Database
-    couchbaseJavaClientVersion = '3.11.1'
+    couchbaseJavaClientVersion = '3.11.2'
 
     // Testing
     testcontainersVersion = '2.0.4'
@@ -229,7 +229,7 @@ subprojects {
     cucumberVersion = '7.34.3'
     junitVersion = '6.0.3'
     junitPlatformSuiteVersion = '6.0.3'
-    archunitJunit5Version = '1.4.1'
+    archunitJunit5Version = '1.4.2'
     instancioJunitVersion = '5.5.1'
     awaitilityVersion = '4.3.0'
     jmhVersion = '1.37'
