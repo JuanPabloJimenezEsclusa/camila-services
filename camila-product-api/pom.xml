@@ -211,11 +211,11 @@
               </dependency>
             </dependencies>
             <configuration>
-              <skipProvidedScope>true</skipProvidedScope>
-              <skipRuntimeScope>true</skipRuntimeScope>
+              <autoUpdate>false</autoUpdate>
+              <skipSystemScope>true</skipSystemScope>
               <failOnError>false</failOnError>
               <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
-              <nvdApiDelay>60000</nvdApiDelay>
+              <nvdApiDelay>6000</nvdApiDelay>
             </configuration>
             <executions>
               <execution>
@@ -341,11 +341,11 @@
             <artifactId>dependency-check-maven</artifactId>
             <version>${dependency-check-maven.version}</version>
             <configuration>
-              <skipProvidedScope>true</skipProvidedScope>
-              <skipRuntimeScope>true</skipRuntimeScope>
+              <autoUpdate>false</autoUpdate>
+              <skipSystemScope>true</skipSystemScope>
               <failOnError>false</failOnError>
               <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>
-              <nvdApiDelay>60000</nvdApiDelay>
+              <nvdApiDelay>6000</nvdApiDelay>
             </configuration>
             <reportSets>
               <reportSet>
