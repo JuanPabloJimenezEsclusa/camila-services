@@ -1,0 +1,38 @@
+info:
+  name: sortProducts
+  type: graphql
+  seq: 2
+
+graphql:
+  method: POST
+  url: "{{baseUrl}}/graphql"
+  headers:
+    - name: Accept
+      value: application/json
+  body:
+    query: |
+      query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+          sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+              id @include(if: $withDetails)
+              internalId @include(if: $withDetails)
+              category @include(if: $withDetails)
+              name
+              salesUnits
+              stock
+          }
+      }
+    variables: |-
+      {
+        "salesUnits": 0.09,
+        "stock": 0.01,
+        "page": 0,
+        "size": 2,
+        "withDetails": false
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

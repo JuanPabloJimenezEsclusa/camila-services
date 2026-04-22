@@ -1,0 +1,7 @@
+info:
+  name: "{toMatch}"
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit

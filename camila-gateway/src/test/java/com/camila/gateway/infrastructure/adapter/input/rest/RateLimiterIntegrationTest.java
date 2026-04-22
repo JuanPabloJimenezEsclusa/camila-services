@@ -36,7 +36,7 @@ class RateLimiterIntegrationTest {
 
   private static final String REDIS_PASSWORD = "camila";
 
-  private static final DockerImageName REDIS_IMAGE = DockerImageName.parse("redis:8.2.1-alpine");
+  private static final DockerImageName REDIS_IMAGE = DockerImageName.parse("redis:8.6.2-alpine");
 
   private static final RedisContainer redis = new RedisContainer(REDIS_IMAGE)
     .withStartupTimeout(Duration.ofMinutes(2L)).withReuse(true)

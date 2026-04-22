@@ -1,0 +1,46 @@
+info:
+  name: Actuator web endpoint 'serviceregistry'_1
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/actuator/serviceregistry"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Accept
+      value: application/vnd.spring-boot.actuator.v3+json
+  body:
+    type: json
+    data: <string>
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/actuator/serviceregistry"
+      method: POST
+      headers:
+        - name: Content-Type
+          value: application/json
+        - name: Accept
+          value: application/vnd.spring-boot.actuator.v3+json
+      body:
+        type: json
+        data: <string>
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: "{}"

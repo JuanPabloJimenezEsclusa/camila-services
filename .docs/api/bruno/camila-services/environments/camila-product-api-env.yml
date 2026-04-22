@@ -1,0 +1,30 @@
+name: camila-product-api-env
+variables:
+  - name: tokenClientId
+    value: camila-client
+  - name: tokenClientSecret
+    value: Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE
+  - name: tokenCallbackURL
+    value: http://keycloak:9191/callback
+  - name: tokenAuthURL
+    value: http://keycloak:9191/realms/camila-realm/protocol/openid-connect/auth
+  - name: tokenAccessURL
+    value: http://keycloak:9191/realms/camila-realm/protocol/openid-connect/token
+  - name: tokenScope
+    value: openid email camila/read camila/write
+  - name: baseUrl
+    value: http://localhost:{{basePort}}/{{basePath}}
+  - name: basePort
+    value: "8090"
+  - name: basePath
+    value: product-dev/api
+  - name: websocket.baseUrl
+    value: ws://localhost
+  - name: websocket.basePort
+    value: "8090"
+  - name: websocket.basePath
+    value: product-dev/api/ws/products
+  - name: grpc.baseUrl
+    value: localhost
+  - name: grpc.basePort
+    value: "6565"

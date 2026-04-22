@@ -1,0 +1,22 @@
+info:
+  name: ws/products/sortProducts
+  type: websocket
+  seq: 2
+
+websocket:
+  url: "{{websocket.baseUrl}}:{{websocket.basePort}}/{{websocket.basePath}}"
+  message:
+    type: json
+    data: |-
+      {
+        "method": "SORT_PRODUCTS",
+        "salesUnits": "0.8",
+        "stock": "0.2",
+        "page": "0",
+        "size": "10"
+      }
+  auth: inherit
+
+settings:
+  timeout: 0
+  keepAliveInterval: 0

@@ -1,0 +1,83 @@
+info:
+  name: sortProducts (event-stream)
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: "{{baseUrl}}/products?salesUnits=0.80&stock=0.20&page=0&size=1000"
+  headers:
+    - name: Accept
+      value: text/event-stream
+  params:
+    - name: salesUnits
+      value: "0.80"
+      type: query
+    - name: stock
+      value: "0.20"
+      type: query
+    - name: page
+      value: "0"
+      type: query
+    - name: size
+      value: "1000"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/products?nostrud_66=<string>&ut_d8=<string>"
+      method: GET
+      headers:
+        - name: Accept
+          value: application/json
+      params:
+        - name: nostrud_66
+          value: <string>
+          type: query
+          description: "(Required) "
+        - name: ut_d8
+          value: <string>
+          type: query
+          description: "(Required) "
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: |-
+          [
+            {
+              "id": "<string>",
+              "internalId": "<string>",
+              "name": "<string>",
+              "category": "<string>",
+              "salesUnits": "<integer>",
+              "stock": {
+                "estdc0": "<integer>"
+              }
+            },
+            {
+              "id": "<string>",
+              "internalId": "<string>",
+              "name": "<string>",
+              "category": "<string>",
+              "salesUnits": "<integer>",
+              "stock": {
+                "et_49": "<integer>",
+                "ad_6": "<integer>",
+                "Duis_9": "<integer>",
+                "eu_8": "<integer>"
+              }
+            }
+          ]

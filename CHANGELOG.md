@@ -5,6 +5,11 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] chore: update compose image versions**
+
+
+[dd92691f1ebb20b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dd92691f1ebb20b) JuanPabloJimenezEsclusa *2026-04-22 11:05:31*
+
 **[GH-32] ai: replace claude for agents markdown**
 
 
