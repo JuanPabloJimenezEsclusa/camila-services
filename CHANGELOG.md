@@ -8,7 +8,179 @@ Changelog of camila-services.
 **[GH-32] ai: replace claude for agents markdown**
 
 
-[ba8f85669ce3abb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ba8f85669ce3abb) JuanPabloJimenezEsclusa *2026-04-19 23:58:29*
+[39a27b90b6ccb47](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/39a27b90b6ccb47) JuanPabloJimenezEsclusa *2026-04-21 09:29:43*
+
+**[GH-32] chore: downgrade spring versions for cloud compability**
+
+
+[31aa10914ae8bf7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/31aa10914ae8bf7) JuanPabloJimenezEsclusa *2026-04-21 09:29:43*
+
+**chore(deps): bump the maven-dependencies group with 4 updates (#306)**
+
+ * Bumps the maven-dependencies group with 4 updates: [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients), [org.sonarsource.scanner.maven:sonar-maven-plugin](https://github.com/SonarSource/sonar-scanner-maven), [com.tngtech.archunit:archunit-junit5](https://github.com/TNG/ArchUnit) and [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java).
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.11.1 to 3.11.2
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.11.1...3.11.2)
+ * Updates &#x60;org.sonarsource.scanner.maven:sonar-maven-plugin&#x60; from 5.5.0.6356 to 5.6.0.6792
+ * - [Release notes](https://github.com/SonarSource/sonar-scanner-maven/releases)
+ * - [Commits](https://github.com/SonarSource/sonar-scanner-maven/compare/5.5.0.6356...5.6.0.6792)
+ * Updates &#x60;com.tngtech.archunit:archunit-junit5&#x60; from 1.4.1 to 1.4.2
+ * - [Release notes](https://github.com/TNG/ArchUnit/releases)
+ * - [Commits](https://github.com/TNG/ArchUnit/compare/v1.4.1...v1.4.2)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.83 to 1.84
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.11.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.sonarsource.scanner.maven:sonar-maven-plugin
+ * dependency-version: 5.6.0.6792
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.tngtech.archunit:archunit-junit5
+ * dependency-version: 1.4.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.84&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[020ff1c34d28e7f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/020ff1c34d28e7f) dependabot[bot] *2026-04-21 09:02:08*
+
+**chore(deps): bump the gradle-dependencies group with 8 updates (#305)**
+
+ * Bumps the gradle-dependencies group with 8 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) | &#x60;3.11.1&#x60; | &#x60;3.11.2&#x60; |
+ * | com.github.spotbugs | &#x60;6.5.0&#x60; | &#x60;6.5.1&#x60; |
+ * | com.github.ben-manes.versions | &#x60;0.53.0&#x60; | &#x60;0.54.0&#x60; |
+ * | [com.tngtech.archunit:archunit-junit5](https://github.com/TNG/ArchUnit) | &#x60;1.4.1&#x60; | &#x60;1.4.2&#x60; |
+ * | [org.bouncycastle:bcpkix-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.83&#x60; | &#x60;1.84&#x60; |
+ * | [org.bouncycastle:bcprov-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.83&#x60; | &#x60;1.84&#x60; |
+ * | [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.83&#x60; | &#x60;1.84&#x60; |
+ * | com.google.protobuf | &#x60;0.9.6&#x60; | &#x60;0.10.0&#x60; |
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.11.1 to 3.11.2
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.11.1...3.11.2)
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.5.0 to 6.5.1
+ * Updates &#x60;com.github.ben-manes.versions&#x60; from 0.53.0 to 0.54.0
+ * Updates &#x60;com.tngtech.archunit:archunit-junit5&#x60; from 1.4.1 to 1.4.2
+ * - [Release notes](https://github.com/TNG/ArchUnit/releases)
+ * - [Commits](https://github.com/TNG/ArchUnit/compare/v1.4.1...v1.4.2)
+ * Updates &#x60;org.bouncycastle:bcpkix-jdk18on&#x60; from 1.83 to 1.84
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bcprov-jdk18on&#x60; from 1.83 to 1.84
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.83 to 1.84
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.html)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;com.google.protobuf&#x60; from 0.9.6 to 0.10.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.11.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.ben-manes.versions
+ * dependency-version: 0.54.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.tngtech.archunit:archunit-junit5
+ * dependency-version: 1.4.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcpkix-jdk18on
+ * dependency-version: &#x27;1.84&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bcprov-jdk18on
+ * dependency-version: &#x27;1.84&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: &#x27;1.84&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.protobuf
+ * dependency-version: 0.10.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[fee714a62a23bc7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/fee714a62a23bc7) dependabot[bot] *2026-04-21 09:00:47*
+
+**chore(deps): bump the infrastructure-dependencies group (#304)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 3 updates: mongodb/mongodb-community-server, grafana/grafana and axllent/mailpit.
+ * Updates &#x60;mongodb/mongodb-community-server&#x60; from 8.2.6-ubi9 to 8.2.7-ubi9
+ * Updates &#x60;grafana/grafana&#x60; from 12.4.2 to 13.0.1
+ * Updates &#x60;axllent/mailpit&#x60; from v1.29.6 to v1.29.7
+ * ---
+ * updated-dependencies:
+ * - dependency-name: mongodb/mongodb-community-server
+ * dependency-version: 8.2.7-ubi9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: grafana/grafana
+ * dependency-version: 13.0.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.29.7
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[b13b792d422ae53](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b13b792d422ae53) dependabot[bot] *2026-04-21 08:59:23*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.33.0 to ~> 6.41.0 (#303)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.41.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.33.0...v6.41.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.41.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[73a8d1c3e3320e8](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/73a8d1c3e3320e8) dependabot[bot] *2026-04-21 08:58:18*
 
 **chore(deps): bump the maven-dependencies group across 1 directory with 38 updates (#300)**
 

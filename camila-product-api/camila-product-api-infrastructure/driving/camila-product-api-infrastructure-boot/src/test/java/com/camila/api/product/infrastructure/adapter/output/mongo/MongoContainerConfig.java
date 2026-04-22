@@ -29,7 +29,7 @@ public abstract class MongoContainerConfig {
     .getPath();
 
   private static final DockerImageName MONGO_IMAGE = DockerImageName.parse("mongodb/mongodb-community-server")
-    .withTag("8.2.2-ubi9");
+    .withTag("8.2.7-ubi9");
 
   private static final MongoDBContainer container = new MongoDBContainer(MONGO_IMAGE)
     .withStartupTimeout(Duration.ofMinutes(1L)).withReuse(true)

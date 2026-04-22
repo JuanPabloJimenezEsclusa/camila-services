@@ -152,7 +152,7 @@ subprojects {
     // SpotBugs version
     toolVersion = "4.9.8"
     // Report configuration
-    ignoreFailures = false                                      // Fail if bugs found
+    ignoreFailures = false           // Fail if bugs found
   }
 
   // Configure SpotBugs task with filters

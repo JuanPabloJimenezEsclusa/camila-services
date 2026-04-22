@@ -39,7 +39,7 @@ services:
         tag: "docker.{{.Name}}"
     networks:
       camila_product_network:
-        ipv4_address: 172.18.0.254
+        ipv4_address: 172.28.0.254
   discovery:
     image: docker.io/library/camila-discovery:1.0.0
     container_name: camila-discovery
@@ -199,7 +199,7 @@ services:
       interval: 5s
       timeout: 2s
       retries: 3
-      start_period: 5s
+      start_period: 25s
     logging:
       driver: fluentd
       options:
@@ -773,5 +773,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
+        - subnet: 172.28.0.0/24
+          gateway: 172.28.0.1
