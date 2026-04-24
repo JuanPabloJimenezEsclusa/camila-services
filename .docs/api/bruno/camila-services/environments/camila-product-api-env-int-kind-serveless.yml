@@ -1,0 +1,18 @@
+name: camila-product-api-env-int-kind-serveless
+variables:
+  - name: baseUrl
+    value: http://camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io:{{basePort}}/{{basePath}}
+  - name: basePort
+    value: "80"
+  - name: basePath
+    value: product-int/api
+  - name: websocket.baseUrl
+    value: ws://camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io
+  - name: websocket.basePort
+    value: "80"
+  - name: websocket.basePath
+    value: product-int/api/ws/products
+  - name: grpc.baseUrl
+    value: camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io
+  - name: grpc.basePort
+    value: "80"

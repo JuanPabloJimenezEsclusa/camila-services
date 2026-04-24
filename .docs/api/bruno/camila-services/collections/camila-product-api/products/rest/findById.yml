@@ -11,9 +11,19 @@ http:
       value: application/json
   params:
     - name: id
-      value: "1"
+      value: "{{randomProductId}}"
       type: path
   auth: inherit
+
+runtime:
+  variables:
+    - name: randomProductId
+      value: "1"
+  scripts:
+    - type: before-request
+      code: |-
+        const randomId = Math.floor(Math.random() * 100) + 1;
+        bru.setVar("randomProductId", randomId);
 
 settings:
   encodeUrl: true

@@ -10,11 +10,13 @@ grpc:
   protoFilePath: ../../../../../../camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-grpc/src/main/proto/product.proto
   message: |
     {
-        "salesUnits": "0.0005",
-        "stock": "0.9990",
-        "profitMargin": "0.0005",
-        "daysInStock": "0.0000",
+      "requestParams": {
+        "salesUnits": "0.090",
+        "stock": "0.900",
+        "profitMargin": "0.009",
+        "daysInStock": "0.001",
         "page": "0",
-        "size": "5"
+        "size": "20"
+      }
     }
   auth: inherit

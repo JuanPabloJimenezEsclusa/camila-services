@@ -19,6 +19,7 @@ cd "$(dirname "$0")"
 
 __create_policy() {
   echo -e "${SEPARATOR} 🛠️ Create a policy if not exists. ${SEPARATOR}"
+  # source: https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
   aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
     --policy-document file://API/iam-policy.json || true

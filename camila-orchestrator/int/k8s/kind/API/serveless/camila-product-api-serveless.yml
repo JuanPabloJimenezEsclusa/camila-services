@@ -61,7 +61,7 @@ spec:
         queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     spec:
       containers:
-        - image: 172.18.0.6:5000/camila-product-api-serveless:1.0.0
+        - image: 172.28.0.6:5000/camila-product-api-serveless:1.0.0
           name: camila-product-api-serveless
           imagePullPolicy: IfNotPresent
           ports:

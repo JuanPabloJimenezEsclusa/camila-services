@@ -22,9 +22,9 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 <details>
 <summary><strong>Expand Dependencies</strong></summary>
 
-* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/28/)
-* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
-* K8s ~= [1.34.x](https://kubernetes.io/releases/)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
+* AWS CLI ~= [2.34.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* K8s ~= [1.35.x](https://kubernetes.io/releases/)
 * K9s ~= [v0.50.x](https://github.com/derailed/k9s/releases)
 
 </details>
@@ -68,7 +68,6 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 | [eks-install-alb-controller.sh](cloudformation/eks-install-alb-controller.sh) | Script to install ALB controller addons to let K8S create loadbalancer |
 | [eks-api-apply.sh](cloudformation/eks-api-apply.sh)                           | Script to apply infrastructure using AWS CLI                           |
 | [eks-api-delete.sh](cloudformation/eks-api-delete.sh)                         | Script to delete infrastructure using AWS CLI                          |
-| [fix-eks-access.sh](cloudformation/fix-eks-access.sh)                         | Script to fix access issues with EKS cluster                           |
 
 ---
 

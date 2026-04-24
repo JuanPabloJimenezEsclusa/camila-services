@@ -21,7 +21,7 @@ Based on `AWS Cloud Provider`
 <summary><strong>Expand Dependencies</strong></summary>
 
 * Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
-* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* AWS CLI ~= [2.34.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
 * JQ ~= [1.8.x](https://github.com/jqlang/jq)
 * Terraform ~= [1.14.x](https://developer.hashicorp.com/terraform/install#linux)
 

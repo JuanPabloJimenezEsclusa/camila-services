@@ -10,6 +10,6 @@ grpc:
   protoFilePath: ../../../../../../camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-grpc/src/main/proto/product.proto
   message: |
     {
-        "internalId": "12"
+        "internalId": "30"
     }
   auth: inherit

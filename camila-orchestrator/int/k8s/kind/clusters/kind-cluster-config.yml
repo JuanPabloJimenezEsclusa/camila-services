@@ -13,6 +13,9 @@ kubeadmConfigPatchesJSON6902:
      - op: add
        path: /apiServer/certSANs/-
        value: my-hostname
+networking:
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.96.0.0/12"
 nodes:
   - role: control-plane
     extraMounts:
