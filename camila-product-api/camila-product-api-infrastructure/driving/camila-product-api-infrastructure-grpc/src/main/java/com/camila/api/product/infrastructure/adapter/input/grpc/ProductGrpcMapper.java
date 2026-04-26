@@ -23,7 +23,7 @@ public interface ProductGrpcMapper {
   }
 
   /**
-   * To product product.
+   * To product.
    *
    * @param product the product
    * @return the product

@@ -3,7 +3,7 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.2.2-ubi9
+    image: mongodb/mongodb-community-server:8.2.7-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
@@ -41,7 +41,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:8.0.0
+    image: couchbase/server:8.0.1
     container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: on-failure:5
@@ -85,7 +85,7 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.4.0-alpine
+    image: redis:8.6.2-alpine
     container_name: camila-redis-product-db
     hostname: redis
     restart: on-failure:5
@@ -167,5 +167,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.18.0.0/24
-          gateway: 172.18.0.1
+        - subnet: 172.28.0.0/24
+          gateway: 172.28.0.1

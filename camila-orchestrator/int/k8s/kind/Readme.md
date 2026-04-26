@@ -159,7 +159,7 @@ kubectl run -it --rm \
 ### Registry Connection Issues
 
 If you have problems pushing images to the local registry, verify:
-- The entry in `/etc/hosts` matches the actual registry IP (should be 172.18.0.6)
+- The entry in `/etc/hosts` matches the actual registry IP (should be 172.28.0.6)
 - The registry container is running (`docker ps | grep kind-registry`)
 
 ### Pod DNS Resolution

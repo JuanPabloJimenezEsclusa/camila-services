@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "47a6f249-ac6d-450c-b1b7-28872d5df133",
-		"name": "Camila Product Service API",
+		"name": "camila-product-api",
 		"description": "API Rest in Camila Product service project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "1542367"
@@ -2421,6 +2421,16 @@
 				"type": "oauth2",
 				"oauth2": [
 					{
+						"key": "refreshTokenUrl",
+						"value": "",
+						"type": "string"
+					},
+					{
+						"key": "grant_type",
+						"value": "authorization_code",
+						"type": "string"
+					},
+					{
 						"key": "scope",
 						"value": "{{tokenScope}}",
 						"type": "string"
@@ -2478,11 +2488,6 @@
 					{
 						"key": "state",
 						"value": "randomstring",
-						"type": "string"
-					},
-					{
-						"key": "grant_type",
-						"value": "authorization_code",
 						"type": "string"
 					},
 					{
@@ -2746,7 +2751,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/products?salesUnits=0.999&stock=0.001&page=0&size=1000",
+							"raw": "{{baseUrl}}/products?salesUnits=0.999&stock=0.001&page=0&size=100",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -2768,7 +2773,7 @@
 								},
 								{
 									"key": "size",
-									"value": "1000"
+									"value": "100"
 								}
 							]
 						}

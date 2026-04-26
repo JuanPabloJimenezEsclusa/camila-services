@@ -241,7 +241,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: camila-product-api-ingress
+  name: camila-product-api-http-ingress
   namespace: camila-product-api-ns
   annotations:
     alb.ingress.kubernetes.io/certificate-arn: "<certificate-arn>"
@@ -250,19 +250,19 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/tags: ENTORN=INT
     alb.ingress.kubernetes.io/ip-address-type: ipv4
+
     alb.ingress.kubernetes.io/group.name: camila-product-api
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
 
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-port: '30080'
     alb.ingress.kubernetes.io/healthcheck-path: '/product-int/api/actuator/health/ping'
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: '120'
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '30'
-    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
-    alb.ingress.kubernetes.io/unhealthy-threshold-count: '3'
-
+    alb.ingress.kubernetes.io/success-codes: '200'
 spec:
   ingressClassName: alb
   rules:
@@ -282,6 +282,39 @@ spec:
                 name: camila-product-api-nodeport-svc
                 port:
                   number: 8080
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: camila-product-api-grpc-ingress
+  namespace: camila-product-api-ns
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: "<certificate-arn>"
+    alb.ingress.kubernetes.io/subnets: camila-eks-cluster-public-subnet1,camila-eks-cluster-public-subnet2
+    alb.ingress.kubernetes.io/load-balancer-name: camila-eks-cluster-lb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/tags: ENTORN=INT
+    alb.ingress.kubernetes.io/ip-address-type: ipv4
+
+    alb.ingress.kubernetes.io/group.name: camila-product-api
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/backend-protocol-version: GRPC
+
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: '30080'
+    alb.ingress.kubernetes.io/healthcheck-path: '/product-int/api/actuator/health/ping'
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '120'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '30'
+    alb.ingress.kubernetes.io/success-codes: '0'
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
           - pathType: Prefix
             path: /product.ProductService
             backend:

@@ -1,25 +1,3 @@
-### App runner - Actuator
-GET https://wgk3cd7pjm.eu-west-1.awsapprunner.com{{apiPath}}/actuator/health HTTP/2
-Accept: application/json
-Content-Type: application/json
-
-### App runner - Info
-GET https://wgk3cd7pjm.eu-west-1.awsapprunner.com{{apiPath}}/actuator/info HTTP/2
-Accept: application/json
-Content-Type: application/json
-
-### App runner - findById (SSE)
-GET https://wgk3cd7pjm.eu-west-1.awsapprunner.com{{apiPath}}/products/63255 HTTP/2
-Accept: text/event-stream
-Content-Type: application/json
-Authorization: Bearer {{$auth.token("auth-id")}}
-
-### App runner - sortProducts (ndjson)
-GET https://wgk3cd7pjm.eu-west-1.awsapprunner.com{{apiPath}}/products?salesUnits=0.001&stock=0.999&page=0&size=100 HTTP/2
-Accept: application/x-ndjson
-Content-Type: application/json
-Authorization: Bearer {{$auth.token("auth-id")}}
-
 ### Rest - Actuator
 # NOTE: Remember allow IP address in mongodb atlas and couchbase capella
 # https://tech.jpje.xyz/product/api/swagger-ui.html

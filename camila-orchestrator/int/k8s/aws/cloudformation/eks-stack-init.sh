@@ -9,6 +9,8 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
+ADMIN_USER_ARN="${ADMIN_USER_ARN:-}"
+
 __install_aws_cli() {
   echo "Init ${FUNCNAME:-} ..."
 
@@ -39,7 +41,8 @@ __create_eks_stack() {
     --stack-name "camila-eks-stack" \
     --template-body "file://templates/eks.yml" \
     --capabilities CAPABILITY_NAMED_IAM \
-    --parameters
+    --parameters \
+      "ParameterKey=AdminUserArn,ParameterValue=${ADMIN_USER_ARN}"
 
   # Wait for stack to be created
   echo "Waiting ${FUNCNAME:-} ..."

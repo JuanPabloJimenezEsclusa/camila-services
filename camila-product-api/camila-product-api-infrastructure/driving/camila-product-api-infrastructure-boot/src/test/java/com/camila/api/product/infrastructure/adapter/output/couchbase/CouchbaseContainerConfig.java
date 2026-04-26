@@ -43,8 +43,7 @@ public abstract class CouchbaseContainerConfig {
 
   private static final BucketDefinition BUCKET_DEFINITION = new BucketDefinition(BUCKET_NAME);
 
-  private static final DockerImageName COUCHBASE_IMAGE = DockerImageName.parse("couchbase")
-    .asCompatibleSubstituteFor("couchbase/server").withTag("8.0.0");
+  private static final DockerImageName COUCHBASE_IMAGE = DockerImageName.parse("couchbase/server:8.0.1");
 
   private static final CouchbaseContainer container = new CouchbaseContainer(COUCHBASE_IMAGE)
     .withCredentials(USERNAME, PASSWORD).withBucket(BUCKET_DEFINITION)

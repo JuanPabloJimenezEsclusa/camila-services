@@ -1,0 +1,36 @@
+info:
+  name: Actuator web endpoint 'heapdump'
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/actuator/heapdump"
+  headers:
+    - name: Accept
+      value: application/octet-stream
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/actuator/heapdump"
+      method: GET
+      headers:
+        - name: Accept
+          value: application/octet-stream
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/octet-stream
+      body:
+        type: text
+        data: "{}"

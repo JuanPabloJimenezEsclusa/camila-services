@@ -1,6 +1,6 @@
 Camila Services API Terms of Service
 
-Effective date: September 24, 2025
+Effective date: April 21, 2026
 
 1. Parties
 These Terms of Service ("Terms") govern access to and use of the Camila Services API (the "API") provided by Juan Pablo Jiménez Esclusa and/or Camila project entities (the "Provider"). The individual or legal entity accessing the API is referred to as the "User".

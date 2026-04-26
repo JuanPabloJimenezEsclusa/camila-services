@@ -1,0 +1,27 @@
+info:
+  name: products
+  type: folder
+  seq: 2
+
+request:
+  auth:
+    type: oauth2
+    flow: authorization_code
+    authorizationUrl: "{{tokenAuthURL}}"
+    accessTokenUrl: "{{tokenAccessURL}}"
+    callbackUrl: "{{tokenCallbackURL}}"
+    credentials:
+      clientId: "{{tokenClientId}}"
+      clientSecret: "{{tokenClientSecret}}"
+      placement: basic_auth_header
+    scope: "{{tokenScope}}"
+    state: randomstring
+    pkce:
+      disabled: true
+    tokenConfig:
+      placement:
+        header: Bearer
+      source: access_token
+    settings:
+      autoFetchToken: true
+      autoRefreshToken: false

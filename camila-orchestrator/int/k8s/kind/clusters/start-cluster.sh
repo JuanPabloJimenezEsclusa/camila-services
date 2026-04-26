@@ -9,10 +9,13 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
+echo -e "${SEPARATOR} 🐳 create a docker network for the cluster. ${SEPARATOR}"
+docker network create --subnet=172.28.0.0/24 kind-network || true
+export KIND_EXPERIMENTAL_DOCKER_NETWORK=kind-network
+
 echo -e "${SEPARATOR} 🚢 create a k8s cluster. ${SEPARATOR}"
 # https://kind.sigs.k8s.io/
 # https://kind.sigs.k8s.io/docs/user/quick-start/#creating-a-cluster
-
 kind create cluster --config kind-cluster-config.yml
 kind get clusters
 kubectl cluster-info --context kind-kind-cluster
@@ -20,7 +23,7 @@ kubectl cluster-info --context kind-kind-cluster
 
 echo -e "${SEPARATOR} 🗑️ Init local registry. ${SEPARATOR}"
 # https://kind.sigs.k8s.io/docs/user/local-registry/
-docker run -d --rm -p "5000:5000" --network kind --name "kind-registry" registry:3
+docker run -d --rm -p "5000:5000" --network kind-network --name "kind-registry" registry:3
 
 
 echo -e "${SEPARATOR} 🔗 Update the nodes to use the local registry. ${SEPARATOR}"

@@ -9,7 +9,7 @@ cd "$(dirname "$0")/../"
 
 # Native build
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25.0.2+10.1"}"
 
 # Compile/package and build container image
 echo "Building native image container..."

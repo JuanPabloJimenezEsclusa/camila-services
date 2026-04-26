@@ -20,7 +20,7 @@ baseProjectPath="../../../"
 
 # Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25.0.2+10.1"}"
 
 __buildProjects() {
   if [[ "${buildProjects:-}" == "true" ]]; then

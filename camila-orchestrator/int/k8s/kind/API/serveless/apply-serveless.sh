@@ -13,7 +13,7 @@ echo -e "${SEPARATOR} 🗑️ Remove image. ${SEPARATOR}"
 docker rmi \
   docker.io/library/camila-product-api-serveless:1.0.0 \
   kind-registry:5000/camila-product-api-serveless:1.0.0 \
-  172.18.0.6:5000/camila-product-api-serveless:1.0.0 --force || true
+  172.28.0.6:5000/camila-product-api-serveless:1.0.0 --force || true
 
 echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
 SPRING_PROFILES_ACTIVE=int mvn compile jib:dockerBuild \
