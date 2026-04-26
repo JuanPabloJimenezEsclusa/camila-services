@@ -14,8 +14,6 @@ import com.couchbase.client.java.Cluster;
 import com.couchbase.client.java.ClusterOptions;
 import com.couchbase.client.java.env.ClusterEnvironment;
 import com.couchbase.client.java.json.JsonObject;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.couchbase.BucketDefinition;
@@ -25,6 +23,8 @@ import org.testcontainers.shaded.okhttp3.FormBody;
 import org.testcontainers.shaded.okhttp3.OkHttpClient;
 import org.testcontainers.shaded.okhttp3.Request;
 import org.testcontainers.utility.DockerImageName;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * The type Couchbase container config.
@@ -47,7 +47,7 @@ public abstract class CouchbaseContainerConfig {
 
   private static final CouchbaseContainer container = new CouchbaseContainer(COUCHBASE_IMAGE)
     .withCredentials(USERNAME, PASSWORD).withBucket(BUCKET_DEFINITION)
-    .withStartupTimeout(Duration.ofMinutes(1L)).withReuse(true)
+    .withStartupTimeout(Duration.ofMinutes(1L))
     .waitingFor(Wait.forLogMessage(".*Couchbase started.*\\s", 1))
     .waitingFor(Wait.forLogMessage(".*Couchbase is ready for connections.*\\s", 1))
     .withCreateContainerCmdModifier(cmd -> Objects

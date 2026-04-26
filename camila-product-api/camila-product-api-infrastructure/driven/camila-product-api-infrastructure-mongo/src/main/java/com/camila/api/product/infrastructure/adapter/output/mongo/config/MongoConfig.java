@@ -1,11 +1,5 @@
 package com.camila.api.product.infrastructure.adapter.output.mongo.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseRepositoriesAutoConfiguration;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
@@ -16,13 +10,5 @@ import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRep
 @Configuration
 @Conditional(MongoCondition.class)
 @EnableReactiveMongoRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.mongo")
-@EnableAutoConfiguration(exclude = {
-  // Couchbase autoconfiguration must be excluded to avoid conflicts
-  CouchbaseAutoConfiguration.class,
-  CouchbaseDataAutoConfiguration.class,
-  CouchbaseRepositoriesAutoConfiguration.class,
-  CouchbaseReactiveDataAutoConfiguration.class,
-  CouchbaseReactiveRepositoriesAutoConfiguration.class
-})
 public class MongoConfig {
 }

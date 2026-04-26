@@ -55,7 +55,7 @@ class ProductRestAdapter implements ProductsApi {
     return Mono
       .deferContextual(
         _ -> this.productUseCase.findByInternalId(internalId).map(this.productDTOMapper::toProductDTO))
-      .doOnNext(_ -> log.info("find By Id: {}", internalId));
+      .doOnNext(_ -> log.debug("find By Id: {}", internalId));
   }
 
   @Parameter(name = "requestParams", description = "Parameters map", example = SORTED_REQUEST_PARAMS)
@@ -65,6 +65,6 @@ class ProductRestAdapter implements ProductsApi {
     return QueryParametersValidator.validate(requestParams)
       .flatMapMany(validParams -> this.productUseCase.sortByMetricsWeights(validParams)
         .map(this.productDTOMapper::toProductDTO))
-      .doOnNext(_ -> log.info("find sort by: {}", requestParams));
+      .doOnNext(_ -> log.debug("find sort by: {}", requestParams));
   }
 }

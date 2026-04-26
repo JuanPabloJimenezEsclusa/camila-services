@@ -170,8 +170,8 @@ docker run --rm -it \
   --env LANG=en_US.utf8 \
   --env LANGUAGE=en_US.utf8 \
   --env LC_ALL=en_US.utf8 \
-  --env spring.data.mongodb.uri="mongodb+srv://****:****@****.****.mongodb.net/camila-db" \
-  --env spring.data.mongodb.ssl.enabled="true" \
+  --env spring.mongodb.uri="mongodb+srv://****:****@****.****.mongodb.net/camila-db" \
+  --env spring.mongodb.ssl.enabled="true" \
   --env spring.couchbase.connection-string="couchbases://cb.****.cloud.couchbase.com" \
   --env spring.couchbase.username="juanpablo****" \
   --env spring.couchbase.password="*************" \

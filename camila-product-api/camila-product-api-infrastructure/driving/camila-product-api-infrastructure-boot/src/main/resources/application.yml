@@ -19,23 +19,21 @@ spring:
     connection-string: couchbase://couchbase:11207
     username: ${COUCHBASE_USERNAME:Administrator}
     password: ${COUCHBASE_PASSWORD:password}
+    bucket-name: camila-product-bucket
+    scope-name: product
     env:
       ssl:
         enabled: false
       timeouts:
         connect: 30s
-  data:
-    couchbase:
-      bucket-name: camila-product-bucket
-      scope-name: product
-    mongodb:
-      # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
-      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
-      authentication-database: camila-db
-      ssl:
-        enabled: false
-      auto-index-creation: true
-      uuid-representation: JAVA_LEGACY
+  mongodb:
+    # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+    authentication-database: camila-db
+    ssl:
+      enabled: false
+    auto-index-creation: true
+    uuid-representation: JAVA_LEGACY
   docker:
     compose:
       enabled: false
@@ -70,7 +68,7 @@ springdoc:
     resolve-schema-properties: true
   enable-spring-security: false
   show-actuator: true
-  show-login-endpoint: true
+  show-login-endpoint: false
   swagger-ui:
     filter: true
     show-extensions: true
@@ -136,9 +134,10 @@ logging:
     console: UTF-8
   level:
     root: INFO
-    com.camila.api.product: DEBUG
+    com.camila.api.product: INFO
     com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
     com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.cache: INFO
     org.springframework: INFO
     org.springframework.web: WARN
     org.springframework.data: WARN
@@ -372,10 +371,9 @@ spring:
   config:
     activate:
       on-profile: "int"
-  data:
-    mongodb:
-      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
-      authentication-database: camila-db
+  mongodb:
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
+    authentication-database: camila-db
   rsocket:
     server:
       mapping-path: /product-int/api/rsocket
@@ -487,13 +485,13 @@ spring:
     env:
       ssl:
         enabled: false
+  mongodb:
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+    auto-index-creation: true
+    uuid-representation: JAVA_LEGACY
+    ssl:
+      enabled: false
   data:
-    mongodb:
-      uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
-      auto-index-creation: true
-      uuid-representation: JAVA_LEGACY
-      ssl:
-        enabled: false
     redis:
       host: ${REDIS_HOST:redis}
       port: ${REDIS_PORT:6379}
@@ -547,7 +545,7 @@ debug: false
 logging:
   level:
     root: INFO
-    com.camila.api: DEBUG
+    com.camila.api.product: DEBUG
     com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
     com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
     org.springframework: WARN

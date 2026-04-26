@@ -17,6 +17,11 @@ import org.mapstruct.ObjectFactory;
 )
 public interface ProductGrpcMapper {
 
+  /**
+   * Create product builder product . builder.
+   *
+   * @return the product . builder
+   */
   @ObjectFactory
   default Product.Builder createProductBuilder() {
     return Product.newBuilder();
@@ -32,11 +37,23 @@ public interface ProductGrpcMapper {
     return toProductBuilder(product).build();
   }
 
+  /**
+   * Map stock.
+   *
+   * @param source the source
+   * @param target the target
+   */
   @AfterMapping
   default void mapStock(com.camila.api.product.domain.model.Product source, @MappingTarget Product.Builder target) {
     target.putAllStock(source.stock());
   }
 
+  /**
+   * To product builder product . builder.
+   *
+   * @param product the product
+   * @return the product . builder
+   */
   @Mapping(source = "id", target = "id")
   @Mapping(source = "internalId", target = "internalId")
   @Mapping(source = "name", target = "name")

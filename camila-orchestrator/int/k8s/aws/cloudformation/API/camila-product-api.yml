@@ -93,7 +93,7 @@ spec:
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           env:
-            - name: spring.data.mongodb.uri
+            - name: spring.mongodb.uri
               valueFrom:
                 secretKeyRef:
                   name: camila-product-api-creds
@@ -158,7 +158,7 @@ spec:
                 configMapKeyRef:
                   name: camila-product-api-config
                   key: SERVER_URL
-            - name: spring.data.mongodb.ssl.enabled
+            - name: spring.mongodb.ssl.enabled
               valueFrom:
                 configMapKeyRef:
                   name: camila-product-api-config

@@ -9,12 +9,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * The type Mongo container config.
@@ -32,7 +32,7 @@ public abstract class MongoContainerConfig {
     .withTag("8.2.7-ubi9");
 
   private static final MongoDBContainer container = new MongoDBContainer(MONGO_IMAGE)
-    .withStartupTimeout(Duration.ofMinutes(1L)).withReuse(true)
+    .withStartupTimeout(Duration.ofMinutes(1L))
     .withCreateContainerCmdModifier(cmd -> Objects
       .requireNonNull(
         cmd.withName("camila-mongodb-testing-%s".formatted(UUID.randomUUID())).getHostConfig())
@@ -66,7 +66,7 @@ public abstract class MongoContainerConfig {
   }
 
   private static void updateDataSourceProps() {
-    System.setProperty("spring.data.mongodb.uri", container.getConnectionString());
-    System.setProperty("spring.data.mongodb.database", DATABASE_NAME);
+    System.setProperty("spring.mongodb.uri", container.getConnectionString());
+    System.setProperty("spring.mongodb.database", DATABASE_NAME);
   }
 }

@@ -404,7 +404,7 @@ Resources:
                 - ":"
                 - - !ImportValue CouchbasePasswordSecretARN
                   - "password::"
-            - Name: spring.data.mongodb.uri
+            - Name: spring.mongodb.uri
               ValueFrom: !Join
                 - ":"
                 - - !ImportValue MongoUriSecretARN
@@ -439,7 +439,7 @@ Resources:
               Value: !Ref CouchbaseUsername
             - Name: spring.couchbase.env.ssl.enabled
               Value: "true"
-            - Name: spring.data.mongodb.ssl.enabled
+            - Name: spring.mongodb.ssl.enabled
               Value: "true"
             - Name: spring.rsocket.server.port
               Value: "7000"
@@ -741,6 +741,7 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 443
       Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09
       Certificates:
         - CertificateArn: !Ref Certificate
 
@@ -755,6 +756,7 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 7001
       Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09
       Certificates:
         - CertificateArn: !Ref Certificate
 
@@ -769,6 +771,7 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 50051
       Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09
       Certificates:
         - CertificateArn: !Ref Certificate
 

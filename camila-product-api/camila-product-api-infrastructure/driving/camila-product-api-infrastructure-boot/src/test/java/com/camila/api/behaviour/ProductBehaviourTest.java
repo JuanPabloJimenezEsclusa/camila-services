@@ -5,7 +5,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import io.cucumber.datatable.DataTable;
@@ -23,9 +22,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SuppressWarnings({"java:S2187", "checkstyle:javadocmethod"})
 @CucumberContextConfiguration
-@SpringBootTest(
-  webEnvironment = RANDOM_PORT,
-  properties = {"repository.technology=mongo"})
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"repository.technology=mongo"})
 public class ProductBehaviourTest {
   private static final String SORT_PRODUCT_URI = "/products?salesUnits="
     + "{salesUnits}&stock={stock}&profitMargin={profitMargin}&daysInStock={daysInStock}&page={page}&size={size}";
@@ -86,7 +83,7 @@ public class ProductBehaviourTest {
       .isEqualTo(element.get("title")).jsonPath("$.status").isEqualTo(element.get("status"))
       .jsonPath("$.detail").isEqualTo(element.get("detail")).jsonPath("$.instance")
       .value(value -> assertThat(value.toString()).matches(element.get("instance"))).jsonPath("$.errors")
-      .value(value -> assertThat(Objects.requireNonNullElse(value, Map.of())).isEqualTo(Map.of())));
+      .value(value -> assertThat(value).isEqualTo(Map.of())));
   }
 
   /*

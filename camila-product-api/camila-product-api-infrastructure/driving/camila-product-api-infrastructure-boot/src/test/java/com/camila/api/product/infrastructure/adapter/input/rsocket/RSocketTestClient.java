@@ -7,16 +7,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import com.camila.api.product.domain.model.Product;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.cbor.CBORFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.codec.cbor.Jackson2CborDecoder;
-import org.springframework.http.codec.cbor.Jackson2CborEncoder;
+import org.springframework.http.codec.cbor.JacksonCborDecoder;
+import org.springframework.http.codec.cbor.JacksonCborEncoder;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.util.pattern.PathPatternRouteMatcher;
+import tools.jackson.dataformat.cbor.CBORMapper;
 
 /**
  * The type R socket test client.
@@ -40,10 +39,10 @@ public class RSocketTestClient {
   }
 
   private static RSocketStrategies getrSocketStrategies() {
-    final var objectMapper = new ObjectMapper(new CBORFactory());
+    final var objectBuilderMapper = CBORMapper.builder();
     return RSocketStrategies.builder()
-      .encoders(encoders -> encoders.add(new Jackson2CborEncoder(objectMapper)))
-      .decoders(decoders -> decoders.add(new Jackson2CborDecoder(objectMapper)))
+      .encoders(encoders -> encoders.add(new JacksonCborEncoder(objectBuilderMapper)))
+      .decoders(decoders -> decoders.add(new JacksonCborDecoder(objectBuilderMapper)))
       .routeMatcher(new PathPatternRouteMatcher())
       .build();
   }

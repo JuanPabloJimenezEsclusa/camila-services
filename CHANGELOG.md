@@ -5,20 +5,217 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] chore: update compose image versions**
+**[GH-32] refactor: migration spring boot 4**
 
 
-[dd92691f1ebb20b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dd92691f1ebb20b) JuanPabloJimenezEsclusa *2026-04-22 11:05:31*
+[bcf882731e6841c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bcf882731e6841c) JuanPabloJimenezEsclusa *2026-04-27 17:03:58*
 
-**[GH-32] ai: replace claude for agents markdown**
+**chore(deps): bump the maven-dependencies group with 9 updates (#310)**
 
+ * Bumps the maven-dependencies group with 9 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-starter-parent](https://github.com/spring-projects/spring-boot) | &#x60;3.5.13&#x60; | &#x60;3.5.14&#x60; |
+ * | [org.testcontainers:testcontainers-bom](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.4&#x60; | &#x60;2.0.5&#x60; |
+ * | [org.testcontainers:testcontainers](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.4&#x60; | &#x60;2.0.5&#x60; |
+ * | [org.pitest:pitest-maven](https://github.com/hcoles/pitest) | &#x60;1.23.0&#x60; | &#x60;1.23.1&#x60; |
+ * | [org.springframework:spring-context-indexer](https://github.com/spring-projects/spring-framework) | &#x60;6.2.17&#x60; | &#x60;6.2.18&#x60; |
+ * | [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) | &#x60;3.5.13&#x60; | &#x60;3.5.14&#x60; |
+ * | [org.projectlombok:lombok](https://github.com/projectlombok/lombok) | &#x60;1.18.44&#x60; | &#x60;1.18.46&#x60; |
+ * | [org.testcontainers:testcontainers-junit-jupiter](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.4&#x60; | &#x60;2.0.5&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;25.0&#x60; | &#x60;26.0&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-starter-parent&#x60; from 3.5.13 to 3.5.14
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.13...v3.5.14)
+ * Updates &#x60;org.testcontainers:testcontainers-bom&#x60; from 2.0.4 to 2.0.5
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.4...2.0.5)
+ * Updates &#x60;org.testcontainers:testcontainers&#x60; from 2.0.4 to 2.0.5
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.4...2.0.5)
+ * Updates &#x60;org.pitest:pitest-maven&#x60; from 1.23.0 to 1.23.1
+ * - [Release notes](https://github.com/hcoles/pitest/releases)
+ * - [Commits](https://github.com/hcoles/pitest/compare/1.23.0...1.23.1)
+ * Updates &#x60;org.springframework:spring-context-indexer&#x60; from 6.2.17 to 6.2.18
+ * - [Release notes](https://github.com/spring-projects/spring-framework/releases)
+ * - [Commits](https://github.com/spring-projects/spring-framework/compare/v6.2.17...v6.2.18)
+ * Updates &#x60;org.springframework.boot:spring-boot-configuration-processor&#x60; from 3.5.13 to 3.5.14
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.13...v3.5.14)
+ * Updates &#x60;org.projectlombok:lombok&#x60; from 1.18.44 to 1.18.46
+ * - [Changelog](https://github.com/projectlombok/lombok/blob/master/doc/changelog.markdown)
+ * - [Commits](https://github.com/projectlombok/lombok/compare/v1.18.44...v1.18.46)
+ * Updates &#x60;org.testcontainers:testcontainers&#x60; from 2.0.4 to 2.0.5
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.4...2.0.5)
+ * Updates &#x60;org.testcontainers:testcontainers-junit-jupiter&#x60; from 2.0.4 to 2.0.5
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.4...2.0.5)
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 25.0 to 26.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v25.0...v26.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-starter-parent
+ * dependency-version: 3.5.14
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-bom
+ * dependency-version: 2.0.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers
+ * dependency-version: 2.0.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.pitest:pitest-maven
+ * dependency-version: 1.23.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework:spring-context-indexer
+ * dependency-version: 6.2.18
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 3.5.14
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.projectlombok:lombok
+ * dependency-version: 1.18.46
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers
+ * dependency-version: 2.0.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-junit-jupiter
+ * dependency-version: 2.0.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;26.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[39a27b90b6ccb47](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/39a27b90b6ccb47) JuanPabloJimenezEsclusa *2026-04-21 09:29:43*
+[78c16540e16123a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/78c16540e16123a) dependabot[bot] *2026-04-26 16:15:31*
 
-**[GH-32] chore: downgrade spring versions for cloud compability**
+**chore(deps): bump the gradle-dependencies group with 7 updates (#309)**
 
+ * Bumps the gradle-dependencies group with 7 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-dependencies](https://github.com/spring-projects/spring-boot) | &#x60;3.5.13&#x60; | &#x60;3.5.14&#x60; |
+ * | [org.testcontainers:testcontainers-bom](https://github.com/testcontainers/testcontainers-java) | &#x60;2.0.4&#x60; | &#x60;2.0.5&#x60; |
+ * | org.springframework.boot | &#x60;3.5.13&#x60; | &#x60;4.0.6&#x60; |
+ * | [org.graalvm.buildtools.native](https://github.com/graalvm/native-build-tools) | &#x60;1.0.0&#x60; | &#x60;1.1.0&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.30.0&#x60; | &#x60;7.31.0&#x60; |
+ * | io.freefair.lombok | &#x60;9.2.0&#x60; | &#x60;9.4.0&#x60; |
+ * | [com.graphql-java:graphql-java](https://github.com/graphql-java/graphql-java) | &#x60;25.0&#x60; | &#x60;26.0&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-dependencies&#x60; from 3.5.13 to 3.5.14
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v3.5.13...v3.5.14)
+ * Updates &#x60;org.testcontainers:testcontainers-bom&#x60; from 2.0.4 to 2.0.5
+ * - [Release notes](https://github.com/testcontainers/testcontainers-java/releases)
+ * - [Changelog](https://github.com/testcontainers/testcontainers-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/testcontainers/testcontainers-java/compare/2.0.4...2.0.5)
+ * Updates &#x60;org.springframework.boot&#x60; from 3.5.13 to 4.0.6
+ * Updates &#x60;org.graalvm.buildtools.native&#x60; from 1.0.0 to 1.1.0
+ * - [Release notes](https://github.com/graalvm/native-build-tools/releases)
+ * - [Commits](https://github.com/graalvm/native-build-tools/compare/1.0...1.1.0)
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.30.0 to 7.31.0
+ * Updates &#x60;io.freefair.lombok&#x60; from 9.2.0 to 9.4.0
+ * Updates &#x60;com.graphql-java:graphql-java&#x60; from 25.0 to 26.0
+ * - [Release notes](https://github.com/graphql-java/graphql-java/releases)
+ * - [Commits](https://github.com/graphql-java/graphql-java/compare/v25.0...v26.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-dependencies
+ * dependency-version: 3.5.14
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.testcontainers:testcontainers-bom
+ * dependency-version: 2.0.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.boot
+ * dependency-version: 4.0.6
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.graalvm.buildtools.native
+ * dependency-version: 1.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.31.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.4.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.graphql-java:graphql-java
+ * dependency-version: &#x27;26.0&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[31aa10914ae8bf7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/31aa10914ae8bf7) JuanPabloJimenezEsclusa *2026-04-21 09:29:43*
+[33be3446c81d7ac](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/33be3446c81d7ac) dependabot[bot] *2026-04-26 16:14:06*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.41.0 to ~> 6.42.0 (#308)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.42.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.41.0...v6.42.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.42.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[01bd432075f4b28](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/01bd432075f4b28) dependabot[bot] *2026-04-26 16:12:20*
+
+**[GH-32] chore: continuous improving (#307)**
+
+ * [GH-32] ai: replace claude for agents markdown
+ * [GH-32] chore: downgrade spring versions for cloud compability
+ * [GH-32] chore: update compose image versions
+ * [GH-32] docs: include bruno api docs
+ * [GH-32] deploy: fix k8s configs
+ * [GH-32] deploy: fix aws configs
+
+[1884e81db45210d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/1884e81db45210d) Juan Pablo Jimenez Esclusa *2026-04-26 15:57:39*
 
 **chore(deps): bump the maven-dependencies group with 4 updates (#306)**
 

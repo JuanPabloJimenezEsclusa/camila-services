@@ -19,7 +19,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.data.couchbase.DataCouchbaseTest;
+import org.springframework.boot.data.couchbase.test.autoconfigure.DataCouchbaseTest;
 import org.springframework.context.annotation.ComponentScan;
 import reactor.test.StepVerifier;
 

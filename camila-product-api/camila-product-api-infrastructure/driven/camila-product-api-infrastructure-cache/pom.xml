@@ -35,6 +35,12 @@
       <artifactId>caffeine</artifactId>
     </dependency>
 
+    <!-- Jackson 3 (tools.jackson) -->
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
     <!-- Utilities -->
     <dependency>
       <groupId>org.jspecify</groupId>

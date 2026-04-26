@@ -6,14 +6,14 @@ import java.util.Optional;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * The type Product web socket handler.
@@ -27,7 +27,7 @@ record ProductWebSocketHandler(ProductUseCase productUseCase, ObjectMapper objec
 
   private static String getNodeTextOrDefault(final JsonNode parentNode, final String fieldName,
                                              final String defaultValue) {
-    return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asText).orElse(defaultValue);
+    return Optional.ofNullable(parentNode.get(fieldName)).map(JsonNode::asString).orElse(defaultValue);
   }
 
   @Override
@@ -42,18 +42,18 @@ record ProductWebSocketHandler(ProductUseCase productUseCase, ObjectMapper objec
   private Flux<String> handleMessage(final String message) {
     try {
       final var jsonNode = this.objectMapper.readTree(message);
-      final var method = jsonNode.get("method").asText("1");
+      final var method = jsonNode.get("method").asString("1");
       return switch (SocketMethod.valueOf(method)) {
         case SocketMethod.FIND_BY_INTERNAL_ID -> this.handleFindByInternalId(jsonNode);
         case SocketMethod.SORT_PRODUCTS -> this.handleSortProducts(jsonNode);
       };
-    } catch (final JsonProcessingException e) {
+    } catch (final JacksonException e) {
       return Flux.just("Error converting request to Json:  " + e.getMessage());
     }
   }
 
   private Flux<String> handleFindByInternalId(final JsonNode jsonNode) {
-    return this.productUseCase.findByInternalId(jsonNode.get("internalId").asText())
+    return this.productUseCase.findByInternalId(jsonNode.get("internalId").asString())
       .flatMapMany(this::convertProductToString).switchIfEmpty(Flux.just("Product not found"));
   }
 
@@ -71,7 +71,7 @@ record ProductWebSocketHandler(ProductUseCase productUseCase, ObjectMapper objec
   private Flux<String> convertProductToString(final Product product) {
     try {
       return Flux.just(this.objectMapper.writeValueAsString(product));
-    } catch (final JsonProcessingException e) {
+    } catch (final JacksonException e) {
       return Flux.just("Error converting product to string: " + e.getMessage());
     }
   }
