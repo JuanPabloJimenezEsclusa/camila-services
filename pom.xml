@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.13</version>
+    <version>3.5.14</version>
     <relativePath/>
   </parent>
 
@@ -76,7 +76,7 @@
     <!-- Spring -->
     <spring-cloud.version>2025.0.2</spring-cloud.version>
     <spring-boot-admin.version>3.5.8</spring-boot-admin.version>
-    <spring-boot-configuration-processor.version>3.5.13</spring-boot-configuration-processor.version>
+    <spring-boot-configuration-processor.version>3.5.14</spring-boot-configuration-processor.version>
 
     <!-- Observability -->
     <opentelemetry.version>1.61.0</opentelemetry.version>
@@ -85,14 +85,14 @@
     <!-- API -->
     <springdoc-openapi.version>2.8.17</springdoc-openapi.version>
     <netty-tcnative-boringssl-static.version>2.0.75.Final</netty-tcnative-boringssl-static.version>
-    <graphql-java.version>25.0</graphql-java.version>
+    <graphql-java.version>26.0</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- Testing -->
     <cucumber.version>7.34.3</cucumber.version>
 
-    <testcontainers.version>2.0.4</testcontainers.version>
-    <testcontainers-junit-jupiter.version>2.0.4</testcontainers-junit-jupiter.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
+    <testcontainers-junit-jupiter.version>2.0.5</testcontainers-junit-jupiter.version>
     <testcontainers.mongodb.version>1.21.4</testcontainers.mongodb.version>
     <testcontainers.couchbase.version>1.21.4</testcontainers.couchbase.version>
     <testcontainers-redis.version>2.2.4</testcontainers-redis.version>
@@ -111,7 +111,7 @@
     <commons-lang3.version>3.20.0</commons-lang3.version>
     <snakeyaml.version>2.5</snakeyaml.version>
     <error_prone_core.version>2.49.0</error_prone_core.version>
-    <pitest-maven.version>1.23.0</pitest-maven.version>
+    <pitest-maven.version>1.23.1</pitest-maven.version>
     <checkstyle.version>13.4.0</checkstyle.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
