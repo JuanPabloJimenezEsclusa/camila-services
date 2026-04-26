@@ -5,22 +5,28 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/products?salesUnits=0.80&stock=0.20&page=0&size=1000"
+  url: "{{baseUrl}}/products?salesUnits=0.001&stock=0.010&profitMargin=0.900&daysInStock=0.089&page=0&size=500"
   headers:
     - name: Accept
       value: application/json
   params:
     - name: salesUnits
-      value: "0.80"
+      value: "0.001"
       type: query
     - name: stock
-      value: "0.20"
+      value: "0.010"
+      type: query
+    - name: profitMargin
+      value: "0.900"
+      type: query
+    - name: daysInStock
+      value: "0.089"
       type: query
     - name: page
       value: "0"
       type: query
     - name: size
-      value: "1000"
+      value: "500"
       type: query
   auth: inherit
 

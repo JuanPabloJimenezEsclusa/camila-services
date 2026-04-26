@@ -206,7 +206,7 @@ Resources:
       # Enable API access configuration
       AccessConfig:
         AuthenticationMode: API_AND_CONFIG_MAP
-        BootstrapClusterCreatorAdminPermissions: true
+        BootstrapClusterCreatorAdminPermissions: false
       ResourcesVpcConfig:
         SecurityGroupIds:
           - !Ref ClusterSecurityGroup
@@ -395,7 +395,7 @@ Resources:
       ClusterName: !Ref EKSCluster
       PrincipalArn: !Ref AdminUserArn
       AccessPolicies:
-        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+        - PolicyArn: 'arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy'
           AccessScope:
             Type: cluster
       Type: STANDARD
@@ -407,7 +407,7 @@ Resources:
       ClusterName: !Ref EKSCluster
       PrincipalArn: !Ref AdminRoleArn
       AccessPolicies:
-        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+        - PolicyArn: 'arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy'
           AccessScope:
             Type: cluster
       Type: STANDARD

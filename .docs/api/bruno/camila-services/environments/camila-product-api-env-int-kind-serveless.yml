@@ -13,6 +13,6 @@ variables:
   - name: websocket.basePath
     value: product-int/api/ws/products
   - name: grpc.baseUrl
-    value: camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io
+    value: grpc://camila-product-api-serveless.camila-product-api-serveless-ns.127.0.0.1.sslip.io
   - name: grpc.basePort
     value: "80"

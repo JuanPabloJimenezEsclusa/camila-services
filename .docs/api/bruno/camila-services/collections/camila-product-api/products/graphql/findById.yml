@@ -13,7 +13,7 @@ graphql:
     query: |
       query findById($internalId: ID) {
         findById(internalId: $internalId) {
-          id, internalId, category, name, salesUnits, stock
+          id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock
         }
       }
     variables: |-

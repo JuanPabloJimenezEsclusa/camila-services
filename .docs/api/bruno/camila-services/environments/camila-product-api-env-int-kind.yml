@@ -13,6 +13,6 @@ variables:
   - name: websocket.basePath
     value: product-int/api/ws/products
   - name: grpc.baseUrl
-    value: localhost
+    value: grpc://localhost
   - name: grpc.basePort
     value: "6565"

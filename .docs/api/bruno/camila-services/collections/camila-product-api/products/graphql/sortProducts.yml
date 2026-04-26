@@ -11,23 +11,27 @@ graphql:
       value: application/json
   body:
     query: |
-      query sortProducts($salesUnits: Float, $stock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
-          sortProducts(salesUnits: $salesUnits, stock: $stock, page: $page, size: $size) {
+      query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {
+          sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) {
               id @include(if: $withDetails)
               internalId @include(if: $withDetails)
               category @include(if: $withDetails)
               name
               salesUnits
               stock
+              profitMargin
+              daysInStock
           }
       }
     variables: |-
       {
-        "salesUnits": 0.09,
-        "stock": 0.01,
-        "page": 0,
-        "size": 2,
-        "withDetails": false
+        "salesUnits":0.0008,
+        "stock":0.9990, 
+        "profitMargin":0.0001, 
+        "daysInStock": 0.0001,
+        "page":0,
+        "size":2,
+        "withDetails":false
       }
   auth: inherit
 

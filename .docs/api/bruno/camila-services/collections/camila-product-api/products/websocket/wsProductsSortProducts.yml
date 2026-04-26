@@ -10,8 +10,10 @@ websocket:
     data: |-
       {
         "method": "SORT_PRODUCTS",
-        "salesUnits": "0.8",
-        "stock": "0.2",
+        "salesUnits": "0.090",
+        "stock": "0.900",
+        "profitMargin": "0.009",
+        "daysInStock": "0.001",
         "page": "0",
         "size": "10"
       }

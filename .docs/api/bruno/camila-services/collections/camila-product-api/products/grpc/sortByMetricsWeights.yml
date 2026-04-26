@@ -8,7 +8,7 @@ grpc:
   method: /product.ProductService/SortByMetricsWeights
   methodType: server-streaming
   protoFilePath: ../../../../../../camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-grpc/src/main/proto/product.proto
-  message: |
+  message: |-
     {
       "requestParams": {
         "salesUnits": "0.090",
@@ -16,7 +16,7 @@ grpc:
         "profitMargin": "0.009",
         "daysInStock": "0.001",
         "page": "0",
-        "size": "20"
+        "size": "10"
       }
     }
   auth: inherit

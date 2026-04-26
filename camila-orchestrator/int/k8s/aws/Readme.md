@@ -74,7 +74,8 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 > The databases are configured as SaaS (Mongo Atlas and Couchbase Capella)
 
 ```bash
-# Init EKS cluster stack 
+# Init EKS cluster stack
+export ADMIN_USER_ARN="arn:aws:iam::546053716955:*******"
 ./eks-stack-init.sh
 
 # Install ALB controller
