@@ -18,6 +18,7 @@ dependencies {
   implementation 'com.github.ben-manes.caffeine:caffeine'
 
   // Utilities
+  implementation 'tools.jackson.core:jackson-databind'
   compileOnly 'org.jspecify:jspecify'
 
   // Development Tools

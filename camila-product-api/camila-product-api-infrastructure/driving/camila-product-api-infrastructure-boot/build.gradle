@@ -42,6 +42,13 @@ dependencies {
 
   // Testing - Core Frameworks
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-graphql-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-rsocket-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-data-couchbase-reactive-test'
   testImplementation 'io.projectreactor:reactor-test'
   testImplementation "org.awaitility:awaitility:${awaitility}"
 
@@ -64,9 +71,9 @@ dependencies {
 
   // Testing - Testcontainers
   testImplementation 'org.testcontainers:testcontainers'
-  testImplementation "org.testcontainers:testcontainers-junit-jupiter:${testcontainersJunit}"
-  testImplementation "org.testcontainers:mongodb:${testcontainersMongoDb}"
-  testImplementation "org.testcontainers:couchbase:${testcontainersCouchbase}"
+  testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+  testImplementation 'org.testcontainers:testcontainers-mongodb'
+  testImplementation 'org.testcontainers:testcontainers-couchbase'
   testImplementation "com.redis:testcontainers-redis:${testcontainersRedis}"
   testImplementation 'com.squareup.okhttp3:okhttp-jvm'
 }

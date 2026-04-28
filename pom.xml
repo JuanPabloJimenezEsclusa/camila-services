@@ -75,7 +75,7 @@
 
     <!-- Spring -->
     <spring-cloud.version>2025.1.1</spring-cloud.version>
-    <spring-boot-admin.version>4.0.3</spring-boot-admin.version>
+    <spring-boot-admin.version>4.0.4</spring-boot-admin.version>
     <spring-boot-configuration-processor.version>4.0.6</spring-boot-configuration-processor.version>
 
     <!-- Observability -->
@@ -90,11 +90,7 @@
 
     <!-- Testing -->
     <cucumber.version>7.34.3</cucumber.version>
-
     <testcontainers.version>2.0.5</testcontainers.version>
-    <testcontainers-junit-jupiter.version>2.0.5</testcontainers-junit-jupiter.version>
-    <testcontainers.mongodb.version>1.21.4</testcontainers.mongodb.version>
-    <testcontainers.couchbase.version>1.21.4</testcontainers.couchbase.version>
     <testcontainers-redis.version>2.2.4</testcontainers-redis.version>
 
     <awaitility.version>4.3.0</awaitility.version>
