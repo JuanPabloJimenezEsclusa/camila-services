@@ -49,6 +49,7 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-security-oauth2-client-test'
   testImplementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive-test'
   testImplementation 'org.springframework.boot:spring-boot-starter-data-couchbase-reactive-test'
+  testImplementation "org.springframework.grpc:spring-grpc-test:${springGrpcVersion}"
   testImplementation 'io.projectreactor:reactor-test'
   testImplementation "org.awaitility:awaitility:${awaitility}"
 

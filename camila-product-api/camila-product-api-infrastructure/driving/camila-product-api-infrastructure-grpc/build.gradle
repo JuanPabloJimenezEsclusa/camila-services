@@ -9,7 +9,7 @@ description = 'Camila Product API - gRPC Input Adapter'
 
 protobuf {
   protoc {
-    artifact = "com.google.protobuf:protoc:${protobufJava}"
+    artifact = "com.google.protobuf:protoc:${protobufJavaVersion}"
   }
   plugins {
     grpc {
@@ -31,15 +31,12 @@ dependencies {
   // Spring Boot Core
   implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-  // Http 2
-  runtimeOnly "io.netty:netty-tcnative-boringssl-static:${nettyTcnativeBoringssl}"
-
   // gRPC
-  implementation "net.devh:grpc-server-spring-boot-starter:${grpcServerSpringBootStarter}"
-  implementation "com.google.protobuf:protobuf-java:${protobufJava}"
-  implementation "io.grpc:grpc-netty:${ioGrpc}"
-  implementation "io.grpc:grpc-protobuf:${ioGrpc}"
-  implementation "io.grpc:grpc-stub:${ioGrpc}"
+  implementation "org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}"
+  implementation "com.google.protobuf:protobuf-java:${protobufJavaVersion}"
+  implementation "io.grpc:grpc-netty:${grpcVersion}"
+  implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+  implementation "io.grpc:grpc-stub:${grpcVersion}"
 
   // Utilities for exception handling
   implementation 'org.springframework:spring-web'
@@ -54,5 +51,4 @@ dependencies {
   // Testing
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
-  testImplementation "net.devh:grpc-client-spring-boot-starter:${grpcServerSpringBootStarter}"
 }

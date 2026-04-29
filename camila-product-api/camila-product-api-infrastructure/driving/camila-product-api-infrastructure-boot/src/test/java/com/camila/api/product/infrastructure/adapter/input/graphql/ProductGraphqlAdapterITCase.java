@@ -12,9 +12,8 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
-import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -47,7 +46,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
  */
 @ImportAutoConfiguration(exclude = {
   // gRPC
-  GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+  GrpcServerAutoConfiguration.class,
   GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
   // Security Components
   ReactiveWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,

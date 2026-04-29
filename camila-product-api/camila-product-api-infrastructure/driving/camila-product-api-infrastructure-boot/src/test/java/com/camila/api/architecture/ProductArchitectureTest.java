@@ -131,7 +131,7 @@ class ProductArchitectureTest {
       // GRAPHQL
       "graphql.(schema|scalars)..",
       // GRPC
-      "io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..",
+      "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..",
       // REST
       "io.swagger.v3..", "com.google.common.util.concurrent..",
       // RSocket
@@ -143,7 +143,7 @@ class ProductArchitectureTest {
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
       "org.awaitility..", "org.springframework.test..",
-      "org.springframework.boot.(autoconfigure|graphql|mongodb|rsocket|test|security|webtestclient|webflux|websocket)..",
+      "org.springframework.boot.(autoconfigure|graphql|grpc|mongodb|rsocket|test|security|webtestclient|webflux|websocket)..",
       "org.springframework.cloud..", "org.springframework.boot.data.mongodb.autoconfigure..",
       // AOT compilation dependencies
       "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
@@ -171,10 +171,10 @@ class ProductArchitectureTest {
       // GRAPHQL
       "graphql.(schema|scalars)..",
       // GRPC
-      "io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..",
+      "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.(autoconfigure|graphql|mongodb|test|security)..",
+      "org.springframework.test..", "org.springframework.boot.(autoconfigure|graphql|grpc|mongodb|test|security)..",
       "org.springframework.cloud..", "org.springframework.boot.data.mongodb.autoconfigure..",
       // AOT compilation dependencies
       "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
@@ -191,13 +191,13 @@ class ProductArchitectureTest {
       "java..", "reactor.core..", "org.jspecify..", "tools.jackson..", "org.slf4j..", "org.mapstruct..", "lombok..",
       "jakarta.(validation|annotation)..",
       // Spring dependencies
-      "org.springframework.(web|stereotype|context|dao|core|lang|messaging|http)..",
+      "org.springframework.(web|stereotype|context|core|lang|http)..",
       "org.springframework.(beans.factory|validation.annotation)..",
       // GRPC
-      "io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..", "com.google.common.util.concurrent..",
+      "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..", "com.google.common.util.concurrent..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
-      "org.springframework.test..", "org.springframework.boot.(test|autoconfigure)..",
+      "org.springframework.test..", "org.springframework.boot.(autoconfigure|grpc|test)..",
       // AOT compilation dependencies
       "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");
 
@@ -219,13 +219,13 @@ class ProductArchitectureTest {
       "org.springframework.(web|stereotype|context|dao|graphql|core|lang|messaging|http)..",
       "org.springframework.(data.domain|validation.annotation|beans.factory)..",
       // GRPC
-      "io.grpc..", "net.devh.boot.grpc..", "com.google.protobuf..",
+      "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..",
       // REST
       "io.swagger.v3..", "com.google.common.util.concurrent..",
       // Testing dependencies
       "org.junit..", "reactor.test..", "org.mockito..", "org.assertj.core.api..", "org.instancio..",
       "org.springframework.test..",
-      "org.springframework.boot.(autoconfigure|graphql|mongodb|test|rsocket|security|webtestclient|webflux|websocket)..",
+      "org.springframework.boot.(autoconfigure|graphql|grpc|mongodb|test|rsocket|security|webtestclient|webflux|websocket)..",
       "org.springframework.cloud..", "org.springframework.boot.data.mongodb.autoconfigure..",
       // AOT compilation dependencies
       "org.springframework.(aop|aot|beans|cglib|core)..", "org.aopalliance.aop..");

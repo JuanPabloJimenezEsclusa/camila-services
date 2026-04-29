@@ -5,10 +5,20 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] bump(deps): migrate grpc to spring implementation**
+
+
+[f1ea57870f631b2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f1ea57870f631b2) JuanPabloJimenezEsclusa *2026-04-29 09:55:39*
+
+**[GH-32] fix: update gradle config**
+
+
+[f5fcf1ce0d7d420](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f5fcf1ce0d7d420) JuanPabloJimenezEsclusa *2026-04-28 13:22:06*
+
 **[GH-32] refactor: migration spring boot 4**
 
 
-[bcf882731e6841c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bcf882731e6841c) JuanPabloJimenezEsclusa *2026-04-27 17:03:58*
+[61297d035b7ea89](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/61297d035b7ea89) JuanPabloJimenezEsclusa *2026-04-28 00:00:34*
 
 **chore(deps): bump the maven-dependencies group with 9 updates (#310)**
 

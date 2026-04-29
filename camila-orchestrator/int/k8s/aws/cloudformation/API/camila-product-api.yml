@@ -50,7 +50,7 @@ data:
   SERVER_URL: "https://tech.jpje.xyz"
   MONGO_SSL: "true"
   RSOCKET_PORT: "7000"
-  GRPC_PORT: "6565"
+  SPRING_GRPC_SERVER_PORT: "6565"
 
 ---
 apiVersion: apps/v1
@@ -168,11 +168,11 @@ spec:
                 configMapKeyRef:
                   name: camila-product-api-config
                   key: RSOCKET_PORT
-            - name: grpc.server.port
+            - name: spring.grpc.server.port
               valueFrom:
                 configMapKeyRef:
                   name: camila-product-api-config
-                  key: GRPC_PORT
+                  key: SPRING_GRPC_SERVER_PORT
           ports:
             - name: api-port
               containerPort: 8080

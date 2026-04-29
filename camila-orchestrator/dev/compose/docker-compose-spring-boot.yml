@@ -24,11 +24,11 @@ services:
       - camila_product_mongodb_data:/data/db
       - ./data/mongodb/:/docker-entrypoint-initdb.d/:ro
     healthcheck:
-      test: ps aux | grep mongod || exit 1
+      test: ["CMD-SHELL", "mongosh", "--eval", "db.adminCommand('ping').ok", "--quiet"]
       interval: 5s
       timeout: 2s
       retries: 3
-      start_period: 5s
+      start_period: 25s
     logging:
       driver: fluentd
       options:

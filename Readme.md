@@ -183,18 +183,18 @@ Product data sample:
 # Maven
 export NVD_API_KEY="${NVD_API_KEY:-}"
 # Standard build with all quality checks
-mvn --no-transfer-progress -B clean verify -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
+mvn --no-transfer-progress --also-make -B clean verify -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
   | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
 # Build without tests (faster)
-mvn clean package -DskipTests=true
+mvn clean package -DskipTests=true -am
 # Build with mutation testing
-mvn clean verify -P pitest
+mvn clean verify -P pitest -am
 ```
 
 ```bash
 # Gradle
 # Standard build
-  gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
+gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
 # Unit tests only
 gradle unitTest
 # Full quality checks with strict compilation
@@ -211,7 +211,7 @@ gradle clean build -x test
 
 ```bash
 # Maven
-mvn rewrite:runNoFork -Popen-rewrite | tee mvn-rewrite-$(date +%Y%m%d-%H%M%S).log
+mvn rewrite:runNoFork -Popen-rewrite -am | tee mvn-rewrite-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ```bash
@@ -246,12 +246,12 @@ export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 # Maven - Jars
 # Deploy packages into github repository,
 # if there is a "github" server configuration in "settings.xml"  
-mvn --no-transfer-progress deploy \
+mvn --no-transfer-progress --also-make deploy \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
 # Maven - Images
-mvn --no-transfer-progress spring-boot:build-image \
+mvn --no-transfer-progress --also-make spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```

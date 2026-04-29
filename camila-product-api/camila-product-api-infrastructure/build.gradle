@@ -69,14 +69,11 @@ dependencies {
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
   // gRPC
-  implementation("net.devh:grpc-server-spring-boot-starter:${grpcServerSpringBootStarterVersion}") {
-    exclude group: 'com.google.guava', module: 'guava'
-  }
+  implementation "org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}"
   implementation "com.google.protobuf:protobuf-java:${protobufJavaVersion}"
   implementation "io.grpc:grpc-netty:${grpcVersion}"
   implementation "io.grpc:grpc-protobuf:${grpcVersion}"
   implementation "io.grpc:grpc-stub:${grpcVersion}"
-  implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
 
   // API Documentation
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {
@@ -130,11 +127,6 @@ dependencies {
   testImplementation 'org.testcontainers:testcontainers-mongodb'
   testImplementation 'org.testcontainers:testcontainers-couchbase'
   testImplementation "com.redis:testcontainers-redis:${testcontainersRedis}"
-
-  // gRPC Testing
-  testImplementation("net.devh:grpc-client-spring-boot-starter:${grpcServerSpringBootStarterVersion}") {
-    exclude group: 'com.google.guava', module: 'guava'
-  }
 }
 
 tasks.named('test') {

@@ -84,9 +84,13 @@
 
     <!-- API -->
     <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
-    <netty-tcnative-boringssl-static.version>2.0.75.Final</netty-tcnative-boringssl-static.version>
     <graphql-java.version>26.0</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
+
+    <!-- GRPC -->
+    <grpc-server-spring-starter.version>1.0.3</grpc-server-spring-starter.version>
+    <protobuf-java.version>4.34.1</protobuf-java.version>
+    <io-grpc.version>1.80.0</io-grpc.version>
 
     <!-- Testing -->
     <cucumber.version>7.34.3</cucumber.version>
@@ -117,11 +121,6 @@
 
     <!-- Database -->
     <couchbase-java-client.version>3.11.2</couchbase-java-client.version>
-
-    <!-- GRPC -->
-    <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.34.1</protobuf-java.version>
-    <io-grpc.version>1.80.0</io-grpc.version>
 
     <!-- Build Tools -->
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>

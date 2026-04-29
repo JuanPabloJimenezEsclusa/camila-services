@@ -4,7 +4,7 @@ import java.time.Duration;
 
 import com.camila.api.product.domain.usecase.ProductUseCase;
 import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.grpc.server.service.GrpcService;
 import reactor.core.scheduler.Schedulers;
 
 /**
