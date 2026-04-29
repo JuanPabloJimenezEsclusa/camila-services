@@ -388,7 +388,7 @@ resource "aws_ecs_task_definition" "main" {
       { name = "spring.couchbase.env.ssl.enabled", value = "true" },
       { name = "spring.mongodb.ssl.enabled", value = "true" },
       { name = "spring.rsocket.server.port", value = "7000" },
-      { name = "grpc.server.port", value = "6565" }
+      { name = "spring.grpc.server.port", value = "6565" }
     ]
   }])
 

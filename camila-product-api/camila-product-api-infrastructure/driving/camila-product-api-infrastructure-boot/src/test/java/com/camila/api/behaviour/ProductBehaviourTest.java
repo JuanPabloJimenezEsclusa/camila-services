@@ -15,12 +15,14 @@ import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SuppressWarnings({"java:S2187", "checkstyle:javadocmethod"})
+@AutoConfigureWebTestClient
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"repository.technology=mongo"})
 public class ProductBehaviourTest {

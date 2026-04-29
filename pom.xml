@@ -112,11 +112,11 @@
     <snakeyaml.version>2.5</snakeyaml.version>
     <error_prone_core.version>2.49.0</error_prone_core.version>
     <pitest-maven.version>1.23.1</pitest-maven.version>
-    <checkstyle.version>13.4.0</checkstyle.version>
+    <checkstyle.version>13.4.1</checkstyle.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
     <spotbugs-maven-plugin.version>4.9.8.3</spotbugs-maven-plugin.version>
-    <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
+    <rewrite-maven-plugin.version>6.37.0</rewrite-maven-plugin.version>
     <sonar-maven-plugin.version>5.6.0.6792</sonar-maven-plugin.version>
 
     <!-- Database -->
@@ -131,7 +131,7 @@
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
     <git-commit-id-maven-plugin.version>10.0.0</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.21.0</openapi-generator-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.22.0</openapi-generator-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>

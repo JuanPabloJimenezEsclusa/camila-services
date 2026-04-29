@@ -5,10 +5,15 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**[GH-32] feat(graphql): include error handler**
+
+
+[3b2766677be7e15](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3b2766677be7e15) JuanPabloJimenezEsclusa *2026-04-29 22:06:43*
+
 **[GH-32] bump(deps): migrate grpc to spring implementation**
 
 
-[f1ea57870f631b2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f1ea57870f631b2) JuanPabloJimenezEsclusa *2026-04-29 09:55:39*
+[47d18e02e2f6dc6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/47d18e02e2f6dc6) JuanPabloJimenezEsclusa *2026-04-29 15:09:37*
 
 **[GH-32] fix: update gradle config**
 

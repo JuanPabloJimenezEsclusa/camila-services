@@ -410,7 +410,7 @@ services:
       camila_product_network:
   ## Monitorization
   prometheus:
-    image: prom/prometheus:v3.11.2
+    image: prom/prometheus:v3.11.3
     container_name: prometheus
     hostname: prometheus
     restart: unless-stopped

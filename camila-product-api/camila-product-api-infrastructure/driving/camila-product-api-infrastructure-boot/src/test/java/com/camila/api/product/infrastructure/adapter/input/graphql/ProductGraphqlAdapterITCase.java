@@ -12,8 +12,6 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -25,6 +23,8 @@ import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAuto
 import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
 import org.springframework.boot.graphql.test.autoconfigure.GraphQlTest;
 import org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureGraphQlTester;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
 import org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.security.autoconfigure.web.reactive.ReactiveWebSecurityAutoConfiguration;
@@ -174,7 +174,7 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
       .variable("page", 1)
       .variable("size", 10)
       .execute().errors()
-      .expect(responseError -> Objects.requireNonNull(responseError.getMessage()).contains("INTERNAL_ERROR"));
+      .expect(responseError -> Objects.requireNonNull(responseError.getMessage()).contains("Product not found"));
   }
 
   @Test

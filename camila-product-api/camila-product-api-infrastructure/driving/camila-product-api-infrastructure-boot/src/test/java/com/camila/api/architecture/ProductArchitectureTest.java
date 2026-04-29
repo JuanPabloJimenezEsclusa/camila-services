@@ -129,7 +129,7 @@ class ProductArchitectureTest {
       "org.springframework.(web|stereotype|context|dao|graphql|core|lang|messaging|http)..",
       "org.springframework.(validation.annotation|beans.factory)..",
       // GRAPHQL
-      "graphql.(schema|scalars)..",
+      "graphql", "graphql.(execution|schema|scalars)..",
       // GRPC
       "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..",
       // REST
@@ -169,7 +169,7 @@ class ProductArchitectureTest {
       "org.springframework.(web|stereotype|context|dao|graphql|core|lang|http)..",
       "org.springframework.(validation.annotation|beans.factory)..",
       // GRAPHQL
-      "graphql.(schema|scalars)..",
+      "graphql", "graphql.(execution|schema|scalars)..",
       // GRPC
       "io.grpc..", "org.springframework.grpc..", "com.google.protobuf..",
       // Testing dependencies

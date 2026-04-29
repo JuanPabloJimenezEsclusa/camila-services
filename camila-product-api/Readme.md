@@ -31,7 +31,7 @@ Microservice example. Implements a product API with the following features:
 * JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
 * Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
 * Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
-* Gradle ~= [9.4.x](https://gradle.org/releases)
+* Gradle ~= [9.5.x](https://gradle.org/releases)
 * Spring ~= [7.x](https://spring.io/projects/spring-framework#learn)
 * Spring-boot ~= [4.0.x](https://spring.io/projects/spring-boot#learn)
 * Spring-cloud ~= [2025.1.x](https://spring.io/projects/spring-cloud#learn)

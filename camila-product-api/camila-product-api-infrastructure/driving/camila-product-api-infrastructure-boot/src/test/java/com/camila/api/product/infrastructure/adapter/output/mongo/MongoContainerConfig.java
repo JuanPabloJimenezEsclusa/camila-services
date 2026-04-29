@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;

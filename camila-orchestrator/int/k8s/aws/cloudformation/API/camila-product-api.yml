@@ -203,7 +203,7 @@ spec:
               port: api-port
             initialDelaySeconds: 10
             periodSeconds: 30
-      automountServiceAccountToken: true
+      automountServiceAccountToken: false
 
 ---
 apiVersion: v1
