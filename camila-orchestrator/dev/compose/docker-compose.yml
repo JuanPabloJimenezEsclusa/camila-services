@@ -485,7 +485,7 @@ services:
     networks:
       camila_product_network:
   alertmanager:
-    image: prom/alertmanager:v0.32.0
+    image: prom/alertmanager:v0.32.1
     container_name: alertmanager
     hostname: alertmanager
     restart: unless-stopped
