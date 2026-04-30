@@ -267,39 +267,26 @@ spring:
   config:
     activate:
       on-profile: "loc|dev"
-    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+    import: "optional:consul:"
   cloud:
-    config:
+    consul:
       enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
       discovery:
         enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${SPRING_PROFILES_ACTIVE}
-      name: ${spring.application.name}
-      allow-override: true
-    discovery:
-      enabled: true
-
-# discovery
-eureka:
-  client:
-    enabled: true
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-    healthcheck:
-      enabled: true
-  instance:
-    preferIpAddress: true
-    statusPageUrlPath: actuator/info
-    healthCheckUrlPath: actuator/health
-    nonSecurePortEnabled: true
-    leaseRenewalIntervalInSeconds: 15
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+      config:
+        enabled: true
+        prefix: config
+        default-context: application
+        format: YAML
+        watch:
+          wait-time: 30
 
 ---
 ###### Integration properties ######
@@ -334,11 +321,9 @@ spring:
     activate:
       on-profile: "test"
   cloud:
-    config:
+    consul:
       enabled: false
-    discovery:
-      enabled: false
-
-eureka:
-  client:
-    enabled: false
+      discovery:
+        enabled: false
+      config:
+        enabled: false

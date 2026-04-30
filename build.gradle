@@ -318,16 +318,11 @@ subprojects {
     // use custom suites or only integration tests). The unitTest task still enforces discovery.
     failOnNoDiscoveredTests = false
 
-    // Disable Eureka/discovery during unit tests to avoid background HTTP calls to localhost:8761
+    // Disable Consul discovery/config during unit tests to avoid background HTTP calls
     // Tests that require discovery can explicitly enable it via system properties.
-    systemProperty 'eureka.client.enabled', 'false'
+    systemProperty 'spring.cloud.consul.discovery.enabled', 'false'
+    systemProperty 'spring.cloud.consul.config.enabled', 'false'
     systemProperty 'spring.cloud.discovery.enabled', 'false'
-
-    // This excludes the server auto-configuration classes so tests that start the whole context
-    // won't attempt to create Eureka server beans locally.
-    def excluded = 'org.springframework.cloud.netflix.eureka.server.EurekaServerAutoConfiguration'
-    // If there are other server classes to exclude, comma-separate them
-    systemProperty 'spring.autoconfigure.exclude', excluded
   }
 
   tasks.withType(JavaCompile) {

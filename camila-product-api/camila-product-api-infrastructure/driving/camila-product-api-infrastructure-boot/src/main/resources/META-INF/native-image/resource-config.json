@@ -445,42 +445,6 @@
       "glob":"messages.properties"
     },
     {
-      "glob":"net/devh/boot/grpc/common/autoconfigure/GrpcCommonCodecAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/advice/GrpcAdvice.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcAdviceAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcMetadataEurekaConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcServerAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcServerFactoryAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcServerMetricAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcServerMicrometerTraceAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/autoconfigure/GrpcServerSecurityAutoConfiguration.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/condition/ConditionalOnInterprocessServer$NoServerPortCondition.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/condition/ConditionalOnInterprocessServer.class"
-    },
-    {
-      "glob":"net/devh/boot/grpc/server/service/GrpcService.class"
-    },
-    {
       "glob":"org/springdoc/core/conditions/CacheOrGroupedOpenApiCondition$OnCacheDisabled.class"
     },
     {
@@ -2018,84 +1982,6 @@
     },
     {
       "glob":"org/springframework/cloud/loadbalancer/security/OAuth2LoadBalancerClientAutoConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/EurekaClientAutoConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/EurekaDiscoveryClientConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$DiscoveryClientOptionalArgsTlsConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientNotPresentOrNotEnabledCondition$OnJerseyClientDisabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientNotPresentOrNotEnabledCondition$OnJerseyClientMissing.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientNotPresentOrNotEnabledCondition.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientPresentAndEnabledCondition$OnJerseyClientEnabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientPresentAndEnabledCondition$OnJerseyClientPresent.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnJerseyClientPresentAndEnabledCondition.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestClientPresentAndEnabledCondition$OnJerseyClientNotPresentOrNotEnabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestClientPresentAndEnabledCondition$OnRestClientEnabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestClientPresentAndEnabledCondition$OnRestClientPresent.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestClientPresentAndEnabledCondition$OnWebClientDisabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestClientPresentAndEnabledCondition.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestTemplatePresentAndEnabledCondition$OnJerseyClientNotPresentOrNotEnabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestTemplatePresentAndEnabledCondition$OnRestClientDisabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestTemplatePresentAndEnabledCondition$OnRestTemplatePresent.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestTemplatePresentAndEnabledCondition$OnWebClientDisabled.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$OnRestTemplatePresentAndEnabledCondition.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$RestClientConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$RestTemplateConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$WebClientConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration$WebClientNotFoundConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/config/DiscoveryClientOptionalArgsConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/loadbalancer/LoadBalancerEurekaAutoConfiguration.class"
-    },
-    {
-      "glob":"org/springframework/cloud/netflix/eureka/reactive/EurekaReactiveDiscoveryClientConfiguration.class"
     },
     {
       "glob":"org/springframework/context/ApplicationContextAware.class"

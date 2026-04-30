@@ -22,16 +22,6 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>com.camila.config</groupId>
-      <artifactId>camila-config</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.camila.discovery</groupId>
-      <artifactId>camila-discovery</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.camila.gateway</groupId>
       <artifactId>camila-gateway</artifactId>
       <version>1.0.0</version>

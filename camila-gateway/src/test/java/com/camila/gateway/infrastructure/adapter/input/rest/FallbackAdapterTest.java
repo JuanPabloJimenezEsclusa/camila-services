@@ -20,7 +20,10 @@ import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTest
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @AutoConfigureWebTestClient
-@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"PRODUCT_SERVER_URL=http://localhost:9999/", "spring.profiles.active=test"})
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
+  "PRODUCT_SERVER_URL=http://localhost:9999/",
+  "spring.profiles.active=test"
+})
 @DisplayName("[IT][FallbackAdapter] FailBack adapter test")
 class FallbackAdapterTest {
 

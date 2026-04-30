@@ -52,12 +52,9 @@ dependencies {
     exclude group: 'io.micrometer', module: 'context-propagation'
   }
 
-  // Spring Cloud
-  implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client') {
-    exclude group: 'com.fasterxml.woodstox', module: 'woodstox-core'
-    exclude group: 'com.google.guava', module: 'guava'
-  }
-  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  // Spring Cloud Consul
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
 
   // GraphQL
   implementation "com.graphql-java:graphql-java:${graphqlJavaVersion}"

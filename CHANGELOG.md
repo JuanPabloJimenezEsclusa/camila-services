@@ -5,25 +5,71 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] feat(graphql): include error handler**
+**[GH-32] feat: migrate from netflix eureka to consul**
 
 
-[3b2766677be7e15](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3b2766677be7e15) JuanPabloJimenezEsclusa *2026-04-29 22:06:43*
+[761bead56997243](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/761bead56997243) JuanPabloJimenezEsclusa *2026-04-30 17:53:47*
 
-**[GH-32] bump(deps): migrate grpc to spring implementation**
+**chore(deps-dev): bump org.openrewrite.maven:rewrite-maven-plugin (#317)**
 
+ * Bumps the maven-dependencies group with 1 update in the / directory: [org.openrewrite.maven:rewrite-maven-plugin](https://github.com/openrewrite/rewrite-maven-plugin).
+ * Updates &#x60;org.openrewrite.maven:rewrite-maven-plugin&#x60; from 6.37.0 to 6.38.0
+ * - [Release notes](https://github.com/openrewrite/rewrite-maven-plugin/releases)
+ * - [Commits](https://github.com/openrewrite/rewrite-maven-plugin/compare/v6.37.0...v6.38.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.openrewrite.maven:rewrite-maven-plugin
+ * dependency-version: 6.38.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[47d18e02e2f6dc6](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/47d18e02e2f6dc6) JuanPabloJimenezEsclusa *2026-04-29 15:09:37*
+[bb17b69aa6c954c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/bb17b69aa6c954c) dependabot[bot] *2026-04-30 00:59:28*
 
-**[GH-32] fix: update gradle config**
+**chore(deps): bump io.freefair.lombok (#316)**
 
+ * Bumps the gradle-dependencies group with 1 update in the / directory: io.freefair.lombok.
+ * Updates &#x60;io.freefair.lombok&#x60; from 9.4.0 to 9.5.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.5.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[f5fcf1ce0d7d420](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f5fcf1ce0d7d420) JuanPabloJimenezEsclusa *2026-04-28 13:22:06*
+[b05e3d1f098ef48](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b05e3d1f098ef48) dependabot[bot] *2026-04-30 00:58:23*
 
-**[GH-32] refactor: migration spring boot 4**
+**chore(deps): bump prom/alertmanager (#315)**
 
+ * Bumps the infrastructure-dependencies group with 1 update in the /camila-orchestrator/dev/compose directory: prom/alertmanager.
+ * Updates &#x60;prom/alertmanager&#x60; from v0.32.0 to v0.32.1
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/alertmanager
+ * dependency-version: v0.32.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
 
-[61297d035b7ea89](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/61297d035b7ea89) JuanPabloJimenezEsclusa *2026-04-28 00:00:34*
+[9e4feac4dfaa0fc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9e4feac4dfaa0fc) dependabot[bot] *2026-04-30 00:57:32*
+
+**[GH-32] feat: spring boot 4 migration (#314)**
+
+ * [GH-32] refactor: migration spring boot 4
+ * [GH-32] fix: update gradle config
+ * [GH-32] bump(deps): migrate grpc to spring implementation
+ * [GH-32] feat(graphql): include error handler
+
+[7f622a6b2978f0f](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7f622a6b2978f0f) Juan Pablo Jimenez Esclusa *2026-04-30 00:43:58*
 
 **chore(deps): bump the maven-dependencies group with 9 updates (#310)**
 

@@ -11,25 +11,31 @@ spring:
   profiles:
     active:
       - ${SPRING_PROFILES_ACTIVE:loc}
+  boot:
+    admin:
+      discovery:
+        ignored-services: consul
   config:
-    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+    import: "optional:consul:"
   cloud:
-    discovery:
+    consul:
       enabled: true
-    config:
-      enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
       discovery:
         enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${SPRING_PROFILES_ACTIVE}
-      name: ${spring.application.name}
-      allow-override: true
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+      config:
+        enabled: true
+        prefix: config
+        default-context: application
+        format: YAML
+        watch:
+          wait-time: 30
 
 info:
   app:
@@ -94,22 +100,16 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
 
-eureka:
-  # This configures the Eureka client, which is responsible for registering the application
-  #  with the Eureka service discovery server.
-  client:
-    enabled: true
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-    healthcheck:
-      enabled: true
-  # This configures the Eureka instance registration details for the application.
-  instance:
-    preferIpAddress: true
-    statusPageUrlPath: actuator/info
-    healthCheckUrlPath: actuator/health
-    metadata-map:
-      startup: ${random.int}
-    nonSecurePortEnabled: true
-    leaseRenewalIntervalInSeconds: 15
+---
+###### Test properties ######
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  cloud:
+    consul:
+      enabled: false
+      discovery:
+        enabled: false
+      config:
+        enabled: false
