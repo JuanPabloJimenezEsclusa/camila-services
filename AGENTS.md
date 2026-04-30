@@ -59,8 +59,8 @@ gradle aggregateJacoco                              # Code coverage
 
 - **Architecture**: Hexagonal Architecture with Domain-Driven Design (DDD)
 - **Paradigm**: Reactive Programming (Project Reactor)
-- **Language**: Java 25 with Spring Boot 3.5.x
-- **Build**: Maven 3.9.x (primary), Gradle 9.1.0 (experimental)
+- **Language**: Java 25 with Spring Boot 4.0.x
+- **Build**: Maven 3.9.x (primary), Gradle 9.5.0 (experimental)
 
 ### Microservices
 
@@ -68,9 +68,7 @@ gradle aggregateJacoco                              # Code coverage
 |---------|------|---------|
 | **camila-product-api** | 8080 | Core product ranking & search API |
 | **camila-gateway** | 8090 | API Gateway with circuit breaker & retry |
-| **camila-discovery** | 8761 | Service discovery (Eureka) |
-| **camila-config** | 8888 | Spring Cloud Config Server |
-| **camila-admin** | 9093 | Spring Boot Admin UI |
+| **camila-admin** | 8100 | Spring Boot Admin UI |
 
 ### Communication Protocols
 
@@ -230,7 +228,8 @@ class ProductRestAdapterUnitTest {
     when(productUseCase.findByInternalId(internalId)).thenReturn(Mono.just(product));
 
     // When & Then
-    StepVerifier.create(productRestAdapter.findById(internalId, "", "", null))
+    productRestAdapter.findById(internalId, "", "", null)
+      .as(StepVerifier::create)
       .expectNext(expectedDTO)
       .verifyComplete();
 
@@ -277,7 +276,6 @@ Example:
  *
  * @param internalId the internal product identifier
  * @return a Mono containing the product if found
- * @throws NotFoundException if the product does not exist
  */
 Mono<Product> findByInternalId(String internalId);
 ```
@@ -289,7 +287,7 @@ Mono<Product> findByInternalId(String internalId);
 ### Spring Boot Profiles
 
 - `loc|dev`: Local development with ChaosMonkey
-- `dev`: Docker Compose with Eureka/Config
+- `dev`: Docker Compose with Consul (discovery + config)
 - `int`: Integration/K8s
 - `pre|pro`: Production with OAuth2
 - `local-compose`: Docker Compose with Dev Services
@@ -314,8 +312,8 @@ Support for both MongoDB and Couchbase via profiles:
 ### Prerequisites
 
 - JDK 25+ (`java -version`)
-- Maven 3.9.x or Gradle 9.1.0
-- Docker 28.3.3+
+- Maven 3.9.x or Gradle 9.5.0
+- Docker 29+
 - Docker Compose 2.35.0+
 
 ### Starting Local Environment
@@ -328,8 +326,8 @@ cd camila-orchestrator/dev/compose
 **Access Points**:
 - Product API: http://localhost:8080/product-dev/api/swagger-ui.html
 - Gateway: http://localhost:8090/swagger-ui.html
-- Service Discovery: http://localhost:8761/
-- Admin Dashboard: http://localhost:9093/
+- Consul UI: http://localhost:8500/ui/
+- Admin Dashboard: http://localhost:8100/
 
 **Databases**:
 - MongoDB: localhost:27017
@@ -389,7 +387,7 @@ cd camila-orchestrator/dev/compose
 | Tests timeout | Enable testcontainers reuse: `~/.testcontainers.properties` with `testcontainers.reuse.enable=true` |
 | SonarQube analysis fails | Set `SONAR_TOKEN` environment variable |
 | Docker build fails | Check daemon: `docker ps`, verify disk space: `df -h` |
-| Eureka connection issues | Run: `unset SPRING_PROFILES_ACTIVE` for local tests |
+| Consul connection issues | Run: `unset SPRING_PROFILES_ACTIVE` or set `spring.cloud.consul.discovery.enabled=false` for local tests |
 
 ---
 

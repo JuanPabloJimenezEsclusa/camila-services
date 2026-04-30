@@ -49,10 +49,9 @@ scrape_configs:
     honor_timestamps: true
     static_configs:
       - targets:
-          - 'discovery:8761'
           - 'gateway:8090'
           - 'admin:8100'
-          - 'config:8888'
+          - 'consul:8500'
         labels:
           application: 'camila-operations'
           component: 'platform-services'

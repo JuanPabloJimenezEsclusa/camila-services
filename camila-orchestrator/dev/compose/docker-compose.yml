@@ -1,84 +1,49 @@
 # dev services
 
 services:
-  ## Spring cloud
-  config:
-    image: docker.io/library/camila-config:1.0.0
-    container_name: camila-config
-    hostname: config
+  ## Service Discovery & Configuration (Consul)
+  consul:
+    image: hashicorp/consul:1.22
+    container_name: camila-consul
+    hostname: consul
     restart: on-failure:5
     deploy:
       resources:
         limits:
-          memory: "1024m"
+          memory: "512m"
           cpus: "1"
-    env_file:
-      - .env
+    command: "agent -server -bootstrap-expect=1 -ui -client=0.0.0.0 -bind=0.0.0.0"
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    expose:
+      - 8500
+      - 8600
+    volumes:
+      - camila_consul_data:/consul/data
+    healthcheck:
+      test: ["CMD", "consul", "members"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+      start_period: 5s
+    networks:
+      camila_product_network:
+  consul-init:
+    image: hashicorp/consul:1.22
+    container_name: camila-consul-init
+    restart: "no"
     environment:
-      SPRING_PROFILES_ACTIVE: "native"
-    ports:
-      - "5045:5005"
-      - "8888:8888"
-    expose:
-      - 5045
-      - 8888
+      CONSUL_HTTP_ADDR: "http://consul:8500"
     volumes:
-      - camila_config_tmp:/tmp
-    healthcheck:
-      test: ps aux | grep java || exit 1
-      interval: 5s
-      timeout: 2s
-      retries: 3
-      start_period: 5s
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: fluentd:24224
-        fluentd-async: "true"
-        fluentd-async-reconnect-interval: 10s
-        tag: "docker.{{.Name}}"
-    networks:
-      camila_product_network:
-        ipv4_address: 172.28.0.254
-  discovery:
-    image: docker.io/library/camila-discovery:1.0.0
-    container_name: camila-discovery
-    hostname: discovery
-    restart: on-failure:5
-    deploy:
-      resources:
-        limits:
-          memory: "1024m"
-          cpus: "2"
-    env_file:
-      - .env
-    ports:
-      - "5025:5005"
-      - "8761:8761"
-    expose:
-      - 5025
-      - 8761
-    volumes:
-      - camila_discovery_tmp:/tmp
+      - ./data/consul/consul-kv-init.sh:/consul-kv-init.sh:ro
+    command: ["sh", "/consul-kv-init.sh"]
     depends_on:
-      - config
-    links:
-      - config
-    healthcheck:
-      test: ps aux | grep java || exit 1
-      interval: 5s
-      timeout: 2s
-      retries: 3
-      start_period: 5s
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: fluentd:24224
-        fluentd-async: "true"
-        fluentd-async-reconnect-interval: 10s
-        tag: "docker.{{.Name}}"
+      consul:
+        condition: service_healthy
     networks:
       camila_product_network:
+  ## Gateway & Admin
   gateway:
     image: docker.io/library/camila-gateway:1.0.0
     container_name: camila-gateway
@@ -102,10 +67,10 @@ services:
       - 5015
       - 8090
     depends_on:
-      config:
+      consul:
         condition: service_healthy
-      discovery:
-        condition: service_healthy
+      consul-init:
+        condition: service_completed_successfully
       keycloak:
         condition: service_healthy
       redis:
@@ -117,7 +82,7 @@ services:
       retries: 5
       start_period: 60s  # gateway needs more time to start for keycloak
     links:
-      - discovery
+      - consul
       - keycloak
       - redis
     volumes:
@@ -150,8 +115,10 @@ services:
       - 5035
       - 8100
     depends_on:
-      discovery:
+      consul:
         condition: service_healthy
+      consul-init:
+        condition: service_completed_successfully
     volumes:
       - camila_admin_tmp:/tmp
     healthcheck:
@@ -161,8 +128,7 @@ services:
       retries: 3
       start_period: 5s
     links:
-      - discovery
-      - config
+      - consul
     logging:
       driver: fluentd
       options:
@@ -333,17 +299,16 @@ services:
       - 7000
       - 6565
     depends_on:
-      config:
+      consul:
         condition: service_healthy
-      discovery:
-        condition: service_healthy
+      consul-init:
+        condition: service_completed_successfully
       mongodb:
         condition: service_started
       couchbase:
         condition: service_started
     links:
-      - config
-      - discovery
+      - consul
       - mongodb
       - couchbase
       - fluentd
@@ -710,18 +675,13 @@ volumes:
     driver_opts:
       type: tmpfs
       device: tmpfs
-  camila_discovery_tmp:
-    name: camila_discovery_tmp
+  camila_consul_data:
+    name: camila_consul_data
     driver_opts:
       type: tmpfs
       device: tmpfs
   camila_admin_tmp:
     name: camila_admin_tmp
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
-  camila_config_tmp:
-    name: camila_config_tmp
     driver_opts:
       type: tmpfs
       device: tmpfs

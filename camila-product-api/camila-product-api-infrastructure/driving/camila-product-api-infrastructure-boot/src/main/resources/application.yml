@@ -35,6 +35,12 @@ spring:
         address: static://localhost:6565
         negotiation-type: plaintext
   cloud:
+    consul:
+      enabled: false
+      discovery:
+        enabled: false
+      config:
+        enabled: false
     refresh:
       # https://github.com/spring-cloud/spring-cloud-release/wiki/AOT-transformations-and-native-image-support#refresh-scope
       enabled: false
@@ -237,56 +243,46 @@ logging:
     io.grpc.netty: ERROR
     reactor: ERROR
     org.hibernate.validator: ERROR
-    com.netflix.discovery: ERROR
 
 ---
-###### Disable config|discovery feature by default ######
 spring:
   config:
     activate:
       on-profile: "!dev"
-  cloud:
-    config:
-      enabled: false
-    discovery:
-      enabled: false
   security:
     user:
       name: ${BASIC_AUTH_USER:camila}
       password: ${BASIC_AUTH_PASS:camila}
 
-eureka:
-  client:
-    enabled: false
-    register-with-eureka: false
-    fetch-registry: false
-    healthcheck:
-      enabled: false
-
 ---
-###### Enable config|discovery feature on remote deploy ######
+###### Development properties ######
 spring:
   config:
     activate:
       on-profile: "dev"
-    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+    import: "optional:consul:"
   cloud:
-    discovery:
+    consul:
+      # https://docs.spring.io/spring-cloud-consul/reference/appendix.html
       enabled: true
-    config:
-      enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
       discovery:
         enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${SPRING_PROFILES_ACTIVE:dev}
-      name: ${spring.application.name}
-      allow-override: true
+        prefer-ip-address: true
+        health-check-path: ${spring.webflux.base-path}/actuator/health
+        health-check-interval: 15s
+        instance-id: ${HOSTNAME:localhost}:${random.int(10,99)}
+        service-name: ${spring.application.name}
+        metadata:
+          management-context-path: /${spring.webflux.base-path}/actuator
+      config:
+        enabled: true
+        prefix: config
+        default-context: application
+        format: YAML
+        watch:
+          wait-time: 30
   data:
     redis:
       host: ${REDIS_HOST:redis}
@@ -325,31 +321,6 @@ openapi:
     tokenUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
     authorizationUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
     refreshUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
-
-# Enable Eureka client
-eureka:
-  client:
-    enabled: true
-    registryFetchIntervalSeconds: 5
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-    healthcheck:
-      enabled: true
-  instance:
-    preferIpAddress: true
-    instance-id: ${HOSTNAME}:${spring.application.name}:${server.port}:${random.int(0,9)}
-    statusPageUrlPath: ${spring.webflux.base-path}/actuator/info
-    healthCheckUrlPath: ${spring.webflux.base-path}/actuator/health
-    async-client-initialization: true
-    nonSecurePortEnabled: true
-    non-secure-port: ${server.port}
-    metadata-map:
-      weight: ${random.int(1,10)}
-      startup: ${random.int}
-      # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/1.3.6.RELEASE/multi/multi__service_discovery_eureka_clients.html#_status_page_and_health_indicator
-      management.context-path: ${spring.webflux.base-path}/actuator
-    leaseExpirationDurationInSeconds: 30
-    leaseRenewalIntervalInSeconds: 15
 
 # Enable all management endpoints
 # https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing.tracer-implementations
@@ -390,7 +361,7 @@ management:
     enabled: false
 
 ---
-###### Production properties ######
+###### Pre|Production properties ######
 
 # Spring base properties
 spring:

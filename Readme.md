@@ -155,9 +155,7 @@ Product data sample:
 | Component                                   | Description                                                      |
 |---------------------------------------------|------------------------------------------------------------------|
 | [camila-product-api](/camila-product-api)   | Contains a microservice that exposes the product query           |
-| [camila-discovery](/camila-discovery)       | Contains a services discoverer                                   |
 | [camila-gateway](/camila-gateway)           | Contains a gateway for services                                  |
-| [camila-config](/camila-config)             | Contains a central services configurator                         |
 | [camila-admin](/camila-admin)               | Contains a services manager (UI)                                 |
 | [camila-orchestrator](/camila-orchestrator) | Contains configuration as code to orchestrate project deployment |
 | [camila-performance](/camila-performance)   | Contains performance tests of the projects                       |

@@ -24,10 +24,8 @@
 
   <modules>
     <module>camila-product-api</module>
-    <module>camila-discovery</module>
     <module>camila-gateway</module>
     <module>camila-admin</module>
-    <module>camila-config</module>
     <module>camila-coverage-jacoco</module>
   </modules>
 

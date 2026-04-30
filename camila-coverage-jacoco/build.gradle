@@ -21,8 +21,6 @@ jar {
 
 dependencies {
   implementation project(':camila-admin')
-  implementation project(':camila-config')
-  implementation project(':camila-discovery')
   implementation project(':camila-gateway')
   implementation project(':camila-product-api')
 }
@@ -34,39 +32,29 @@ jacoco {
 task jacocoAggregatedReport(type: JacocoReport) {
   dependsOn(
     project(':camila-admin').tasks.test,
-    project(':camila-config').tasks.test,
-    project(':camila-discovery').tasks.test,
     project(':camila-gateway').tasks.test,
     project(':camila-product-api').tasks.test)
 
   additionalSourceDirs.from files(
     project(':camila-admin').sourceSets.main.allSource.srcDirs,
-    project(':camila-config').sourceSets.main.allSource.srcDirs,
-    project(':camila-discovery').sourceSets.main.allSource.srcDirs,
     project(':camila-gateway').sourceSets.main.allSource.srcDirs,
     project(':camila-product-api').sourceSets.main.allSource.srcDirs
   )
 
   sourceDirectories.from files(
     project(':camila-admin').sourceSets.main.allSource.srcDirs,
-    project(':camila-config').sourceSets.main.allSource.srcDirs,
-    project(':camila-discovery').sourceSets.main.allSource.srcDirs,
     project(':camila-gateway').sourceSets.main.allSource.srcDirs,
     project(':camila-product-api').sourceSets.main.allSource.srcDirs
   )
 
   classDirectories.from files(
     project(':camila-admin').sourceSets.main.output,
-    project(':camila-config').sourceSets.main.output,
-    project(':camila-discovery').sourceSets.main.output,
     project(':camila-gateway').sourceSets.main.output,
     project(':camila-product-api').sourceSets.main.output
   )
 
   executionData.from files(
     project(':camila-admin').file("build/jacoco/test.exec"),
-    project(':camila-config').file("build/jacoco/test.exec"),
-    project(':camila-discovery').file("build/jacoco/test.exec"),
     project(':camila-gateway').file("build/jacoco/test.exec"),
     project(':camila-product-api').file("build/jacoco/test.exec")
   )

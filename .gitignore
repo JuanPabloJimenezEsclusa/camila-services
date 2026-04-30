@@ -3,7 +3,7 @@
 .idea/codeStyles/codeStyleConfig.xml
 .env
 **/setupComplete.txt
-.qodo
+**/CLAUDE.md
 **/reports/**
 **/buffer.**
 **/summary.html

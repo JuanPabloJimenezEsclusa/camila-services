@@ -15,8 +15,6 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -30,6 +28,8 @@ import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAuto
 import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
 import org.springframework.boot.graphql.autoconfigure.reactive.GraphQlWebFluxAutoConfiguration;
 import org.springframework.boot.graphql.autoconfigure.security.GraphQlWebFluxSecurityAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
 import org.springframework.boot.rsocket.autoconfigure.RSocketMessagingAutoConfiguration;
 import org.springframework.boot.rsocket.autoconfigure.RSocketRequesterAutoConfiguration;
@@ -77,7 +77,7 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
   private static final Random random = new SecureRandom();
 
   @Autowired
-  private WebTestClient webTestClient;
+  private WebTestClient webClient;
 
   private static Stream<Arguments> exceptionTestCases() {
     return Stream.of(
@@ -98,7 +98,7 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
   @DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
   @Order(6)
   void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
-    this.webTestClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+    this.webClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
       .isEqualTo(expectedStatus);
   }

@@ -13,8 +13,6 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_PRODUCT: camila-product-api:1.0.0
-  IMAGE_CONFIG: camila-config:1.0.0
-  IMAGE_DISCOVERY: camila-discovery:1.0.0
   IMAGE_GATEWAY: camila-gateway:1.0.0
   IMAGE_ADMIN: camila-admin:1.0.0
 
@@ -66,8 +64,6 @@ jobs:
       - name: Tag images
         run: |
           docker tag ${{ env.IMAGE_PRODUCT }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_PRODUCT }}
-          docker tag ${{ env.IMAGE_CONFIG }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_CONFIG }}
-          docker tag ${{ env.IMAGE_DISCOVERY }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_DISCOVERY }}
           docker tag ${{ env.IMAGE_GATEWAY }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_GATEWAY }}
           docker tag ${{ env.IMAGE_ADMIN }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_ADMIN }}
       - name: Smoke Tests
@@ -77,7 +73,5 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_PRODUCT }}
-          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_CONFIG }}
-          docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_DISCOVERY }}
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_GATEWAY }}
           docker push ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_ADMIN }}
