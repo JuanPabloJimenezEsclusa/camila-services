@@ -7,8 +7,6 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import java.net.URI;
 
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,6 +23,8 @@ import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
 import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Mono;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 @Slf4j
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"repository.technology=mongo"})
@@ -74,9 +74,9 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
             try {
               final var jsonNode = this.objectMapper.readTree(message);
               assertEquals(1, jsonNode.get("internalId").asInt());
-              assertEquals("SHIRT", jsonNode.get("category").asText());
-              assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asText());
-            } catch (final JsonProcessingException e) {
+              assertEquals("SHIRT", jsonNode.get("category").asString());
+              assertEquals("V-NECH BASIC SHIRT", jsonNode.get("name").asString());
+            } catch (final JacksonException e) {
               log.trace("Error parsing json", e);
             }
             return Mono.empty();
@@ -107,9 +107,9 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
         try {
           final var jsonNode = this.objectMapper.readTree(message);
           assertEquals(5, jsonNode.get("internalId").asInt());
-          assertEquals("SHIRT", jsonNode.get("category").asText());
-          assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asText());
-        } catch (final JsonProcessingException e) {
+          assertEquals("SHIRT", jsonNode.get("category").asString());
+          assertEquals("CONTRASTING LACE T-SHIRT", jsonNode.get("name").asString());
+        } catch (final JacksonException e) {
           log.trace("Error parsing json", e);
         }
         return Mono.empty();

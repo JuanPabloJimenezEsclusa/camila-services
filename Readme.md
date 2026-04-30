@@ -148,7 +148,7 @@ Product data sample:
 
 | Development                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Testing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Deployment                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D25-005571.svg)](https://adoptium.net/es/temurin/releases/) <br/> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D25-005571.svg)](https://www.graalvm.org/downloads/) <br/> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.9.x-005571.svg)](https://maven.apache.org/) <br/> [![Gradle](https://img.shields.io/badge/Gradle-%3E%3D9.4.x-005571.svg)](https://gradle.org/releases/) <br/> [![Spring](https://img.shields.io/badge/Spring-%3E%3D6.x-brightgreen.svg)](https://spring.io/) <br/> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D3.5.x-brightgreen.svg)](https://spring.io/boot) <br/> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2025.0.x-brightgreen.svg)](https://spring.io/cloud) <br/> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D8.x-blue.svg)](https://www.mongodb.com/) <br/> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/)<br/> [![Redis](https://img.shields.io/badge/Redis-%3E%3D8.x-blue.svg)](https://redis.io/open-source/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D6.0.x-orange.svg)](https://junit.org/junit5/) <br/> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.34.x-orange.svg)](https://cucumber.io/) <br/> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.22.x-orange.svg)](https://pitest.org/) <br/> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D3.3.x-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br/> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.4.x-orange.svg)](https://www.archunit.org/) <br/> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.x-orange.svg)](https://jmeter.apache.org/) <br/> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D2.0.x-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D29.x-brown.svg)](https://www.docker.com/) <br/> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.35.x-brown.svg)](https://kubernetes.io/releases/) <br/> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.19.6-brown.svg)](https://github.com/knative/serving/releases/) <br/> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.34.x-brown.svg)](https://aws.amazon.com/es/cli/) <br/> [![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.14.x-brown.svg)](https://aws.amazon.com/es/cli/) |
+| [![OpenJDK](https://img.shields.io/badge/OpenJDK-%3E%3D25-005571.svg)](https://adoptium.net/es/temurin/releases/) <br/> [![GraalVM](https://img.shields.io/badge/GraalVM-%3E%3D25-005571.svg)](https://www.graalvm.org/downloads/) <br/> [![Maven](https://img.shields.io/badge/Maven-%3E%3D3.9.x-005571.svg)](https://maven.apache.org/) <br/> [![Gradle](https://img.shields.io/badge/Gradle-%3E%3D9.5.x-005571.svg)](https://gradle.org/releases/) <br/> [![Spring](https://img.shields.io/badge/Spring-%3E%3D7.x-brightgreen.svg)](https://spring.io/) <br/> [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-%3E%3D4.0.x-brightgreen.svg)](https://spring.io/boot) <br/> [![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-%3E%3D2025.1.x-brightgreen.svg)](https://spring.io/cloud) <br/> [![MongoDB](https://img.shields.io/badge/MongoDB-%3E%3D8.x-blue.svg)](https://www.mongodb.com/) <br/> [![Couchbase](https://img.shields.io/badge/Couchbase-%3E%3D7.x-blue.svg)](https://www.couchbase.com/)<br/> [![Redis](https://img.shields.io/badge/Redis-%3E%3D8.x-blue.svg)](https://redis.io/open-source/) | [![JUnit5](https://img.shields.io/badge/JUnit5-%3E%3D6.0.x-orange.svg)](https://junit.org/junit5/) <br/> [![Cucumber](https://img.shields.io/badge/Cucumber-%3E%3D7.34.x-orange.svg)](https://cucumber.io/) <br/> [![Pitest](https://img.shields.io/badge/Pitest-%3E%3D1.22.x-orange.svg)](https://pitest.org/) <br/> [![ChaosMonkey](https://img.shields.io/badge/ChaosMonkey-%3E%3D4.0.x-orange.svg)](https://codecentric.github.io/chaos-monkey-spring-boot/) <br/> [![ArchUnit](https://img.shields.io/badge/ArchUnit-%3E%3D1.4.x-orange.svg)](https://www.archunit.org/) <br/> [![JMeter](https://img.shields.io/badge/JMeter-%3E%3D5.6.x-orange.svg)](https://jmeter.apache.org/) <br/> [![TestContainers](https://img.shields.io/badge/Testcontainers-%3E%3D2.0.x-orange.svg)](https://testcontainers.com/) | [![Docker](https://img.shields.io/badge/Docker-%3E%3D29.x-brown.svg)](https://www.docker.com/) <br/> [![Kubernetes](https://img.shields.io/badge/Kubernetes-%3E%3D1.35.x-brown.svg)](https://kubernetes.io/releases/) <br/> [![Knative](https://img.shields.io/badge/Knative-%3E%3D1.19.6-brown.svg)](https://github.com/knative/serving/releases/) <br/> [![AWS CLI](https://img.shields.io/badge/AWS%20CLI-%3E%3D2.34.x-brown.svg)](https://aws.amazon.com/es/cli/) <br/> [![Terraform](https://img.shields.io/badge/Terraform-%3E%3D1.14.x-brown.svg)](https://aws.amazon.com/es/cli/) |
 
 ### Components
 
@@ -183,18 +183,18 @@ Product data sample:
 # Maven
 export NVD_API_KEY="${NVD_API_KEY:-}"
 # Standard build with all quality checks
-mvn --no-transfer-progress -B clean verify -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
+mvn --no-transfer-progress --also-make -B clean verify -P error-prone,quality-check -Dgpg.skip -DnvdApiKey=${NVD_API_KEY} \
   | tee mvn-clean-verify-$(date +%Y%m%d-%H%M%S).log
 # Build without tests (faster)
-mvn clean package -DskipTests=true
+mvn clean package -DskipTests=true -am
 # Build with mutation testing
-mvn clean verify -P pitest
+mvn clean verify -P pitest -am
 ```
 
 ```bash
 # Gradle
 # Standard build
-  gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
+gradle clean build --rerun-tasks --console=plain | tee gradle-clean-build-$(date +%Y%m%d-%H%M%S).log
 # Unit tests only
 gradle unitTest
 # Full quality checks with strict compilation
@@ -211,7 +211,7 @@ gradle clean build -x test
 
 ```bash
 # Maven
-mvn rewrite:runNoFork -Popen-rewrite | tee mvn-rewrite-$(date +%Y%m%d-%H%M%S).log
+mvn rewrite:runNoFork -Popen-rewrite -am | tee mvn-rewrite-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ```bash
@@ -246,28 +246,28 @@ export MAVEN_GPG_PASSPHRASE="${MAVEN_GPG_PASSPHRASE:-"password"}"
 # Maven - Jars
 # Deploy packages into github repository,
 # if there is a "github" server configuration in "settings.xml"  
-mvn --no-transfer-progress deploy \
+mvn --no-transfer-progress --also-make deploy \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
 # Maven - Images
-mvn --no-transfer-progress spring-boot:build-image \
+mvn --no-transfer-progress --also-make spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```
 
 ```bash
 # Gradle - Jars
-# Publish packages to configured repositories
-gradle publish -x test \
-  --console=plain | tee gradle-publish-$(date +%Y%m%d-%H%M%S).log
+# Assemble packages to configured repositories
+gradle assemble -x test \
+  --console=plain | tee gradle-assemble-$(date +%Y%m%d-%H%M%S).log
 
 # Gradle - Docker Images using Spring Boot
 gradle bootBuildImage -x test \
   --console=plain | tee gradle-build-image-$(date +%Y%m%d-%H%M%S).log
 
 # Gradle - Docker Images using Jib (requires -Pjib flag)
-gradle :camila-product-api:jibDockerBuild -Pjib -x test \
+gradle jibDockerBuild -Pjib -x test \
   --console=plain | tee gradle-jib-build-$(date +%Y%m%d-%H%M%S).log
 ```
 

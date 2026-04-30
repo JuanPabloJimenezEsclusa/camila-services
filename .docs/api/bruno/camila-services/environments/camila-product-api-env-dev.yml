@@ -1,4 +1,4 @@
-name: camila-product-api-env
+name: camila-product-api-env-dev
 variables:
   - name: tokenClientId
     value: camila-client

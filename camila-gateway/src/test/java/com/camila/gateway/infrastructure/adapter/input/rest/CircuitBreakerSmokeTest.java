@@ -18,10 +18,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+@AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = "spring.profiles.active=test")
 @DisplayName("[IT][CircuitBreakerSmokeTest] Gateway circuit-breaker smoke test")
 class CircuitBreakerSmokeTest {

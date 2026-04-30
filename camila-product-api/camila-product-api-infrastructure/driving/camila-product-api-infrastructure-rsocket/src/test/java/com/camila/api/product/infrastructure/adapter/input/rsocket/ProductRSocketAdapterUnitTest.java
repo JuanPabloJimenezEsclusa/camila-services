@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import tools.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("[UT][ProductRSocketAdapter] Product RSocket Adapter Unit Tests")
@@ -51,7 +51,7 @@ class ProductRSocketAdapterUnitTest {
 
   @Test
   @DisplayName("Should find product by internal ID")
-  void shouldFindProductByInternalId() throws Exception {
+  void shouldFindProductByInternalId() {
     // Given
     final var internalId = "123";
     final var message = """
@@ -72,7 +72,7 @@ class ProductRSocketAdapterUnitTest {
 
   @Test
   @DisplayName("Should throw exception when internalId is missing")
-  void shouldThrowExceptionWhenInternalIdIsMissing() throws Exception {
+  void shouldThrowExceptionWhenInternalIdIsMissing() {
     // Given
     final var message = "{}";
 
@@ -86,7 +86,7 @@ class ProductRSocketAdapterUnitTest {
 
   @Test
   @DisplayName("Should throw exception when product is not found")
-  void shouldThrowExceptionWhenProductIsNotFound() throws Exception {
+  void shouldThrowExceptionWhenProductIsNotFound() {
     // Given
     final var internalId = "123";
     final var message = """
@@ -108,7 +108,7 @@ class ProductRSocketAdapterUnitTest {
   @MethodSource("sortProductsParams")
   @DisplayName("Should sort products with different parameters")
   void shouldSortProductsByMetricsWeights(final String salesUnits, final String stock, final String profitMargin,
-                                          final String daysInStock, final String page, final String size) throws Exception {
+                                          final String daysInStock, final String page, final String size) {
     // Given
     final var message = """
         {
@@ -139,7 +139,7 @@ class ProductRSocketAdapterUnitTest {
 
   @Test
   @DisplayName("Should throw exception when salesUnits is missing")
-  void shouldThrowExceptionWhenSalesUnitsIsMissing() throws Exception {
+  void shouldThrowExceptionWhenSalesUnitsIsMissing() {
     // Given
     final var message = """
         {
@@ -159,7 +159,7 @@ class ProductRSocketAdapterUnitTest {
 
   @Test
   @DisplayName("Should throw exception when no products match sorting criteria")
-  void shouldThrowExceptionWhenNoProductsMatchSortingCriteria() throws Exception {
+  void shouldThrowExceptionWhenNoProductsMatchSortingCriteria() {
     // Given
     final var message = """
         {

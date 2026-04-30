@@ -4,14 +4,14 @@ import java.util.Map;
 
 import com.camila.api.product.domain.model.Product;
 import com.camila.api.product.domain.usecase.ProductUseCase;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * The type Product rsocket adapter.
@@ -64,7 +64,7 @@ class ProductRSocketAdapter {
     return this.validateAndBuildFindRequest(message)
       .flatMap(internalId -> this.productUseCase.findByInternalId(internalId)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product not found")))
-        .doOnNext(product -> log.info("findByInternalId.next: {}", product))
+        .doOnNext(product -> log.debug("findByInternalId.next: {}", product))
         .doOnError(throwable -> log.debug("findByInternalId.error: {}", throwable.getMessage())));
   }
 
@@ -79,7 +79,7 @@ class ProductRSocketAdapter {
     return this.validateAndBuildSortRequest(message)
       .flatMap(requestParams -> this.productUseCase.sortByMetricsWeights(requestParams)
         .switchIfEmpty(Mono.error(new IllegalArgumentException("Product collection empty")))
-        .doOnNext(product -> log.info("sortByMetricsWeights.next: {}", product))
+        .doOnNext(product -> log.debug("sortByMetricsWeights.next: {}", product))
         .doOnError(throwable -> log.debug("sortByMetricsWeights.error: {}", throwable.getMessage())));
   }
 
@@ -97,7 +97,7 @@ class ProductRSocketAdapter {
   private Mono<String> validateAndBuildFindRequest(final String message) {
     try {
       final var jsonNode = this.objectMapper.readTree(message);
-      return Mono.just(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asText(DEFAULT_PAGE));
+      return Mono.just(validate(jsonNode, INTERNAL_ID).get(INTERNAL_ID).asString(DEFAULT_PAGE));
     } catch (final Exception e) {
       return Mono.error(e);
     }
@@ -106,12 +106,12 @@ class ProductRSocketAdapter {
   private Flux<Map<String, String>> validateAndBuildSortRequest(final String message) {
     try {
       final var jsonNode = this.objectMapper.readTree(message);
-      return Flux.just(Map.of(SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asText(DEFAULT_WEIGHT),
-        STOCK, validate(jsonNode, STOCK).get(STOCK).asText(DEFAULT_WEIGHT), PROFIT_MARGIN,
-        validate(jsonNode, PROFIT_MARGIN).get(PROFIT_MARGIN).asText(DEFAULT_WEIGHT), DAYS_IN_STOCK,
-        validate(jsonNode, DAYS_IN_STOCK).get(DAYS_IN_STOCK).asText(DEFAULT_WEIGHT), PAGE,
-        validate(jsonNode, PAGE).get(PAGE).asText(DEFAULT_PAGE), SIZE,
-        validate(jsonNode, SIZE).get(SIZE).asText(DEFAULT_SIZE)));
+      return Flux.just(Map.of(SALES_UNITS, validate(jsonNode, SALES_UNITS).get(SALES_UNITS).asString(DEFAULT_WEIGHT),
+        STOCK, validate(jsonNode, STOCK).get(STOCK).asString(DEFAULT_WEIGHT), PROFIT_MARGIN,
+        validate(jsonNode, PROFIT_MARGIN).get(PROFIT_MARGIN).asString(DEFAULT_WEIGHT), DAYS_IN_STOCK,
+        validate(jsonNode, DAYS_IN_STOCK).get(DAYS_IN_STOCK).asString(DEFAULT_WEIGHT), PAGE,
+        validate(jsonNode, PAGE).get(PAGE).asString(DEFAULT_PAGE), SIZE,
+        validate(jsonNode, SIZE).get(SIZE).asString(DEFAULT_SIZE)));
     } catch (final Exception e) {
       return Flux.error(e);
     }

@@ -26,7 +26,7 @@ public class CouchbaseConfig extends AbstractCouchbaseConfiguration {
   @Value("#{systemEnvironment['DB_PASSWORD'] ?: environment.getProperty('spring.couchbase.password', 'password')}")
   private String password;
 
-  @Value("${spring.data.couchbase.bucket-name}")
+  @Value("${spring.couchbase.bucket-name}")
   private String bucketName;
 
   @Value("#{systemEnvironment['DB_SSL_ENABLED'] ?: environment.getProperty('spring.couchbase.env.ssl.enabled', 'false')}")

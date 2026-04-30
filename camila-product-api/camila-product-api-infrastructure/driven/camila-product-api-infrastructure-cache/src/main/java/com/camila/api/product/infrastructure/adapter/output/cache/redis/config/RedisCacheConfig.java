@@ -19,9 +19,10 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.GenericJacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 /**
  * The type Redis cache config.
@@ -31,11 +32,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Profile("dev|local-compose")
 public class RedisCacheConfig {
 
+  private static GenericJacksonJsonRedisSerializer jsonSerializer() {
+    final var typeValidator = BasicPolymorphicTypeValidator.builder()
+      .allowIfSubType("com.camila.api.product.")
+      .allowIfSubType("java.util.")
+      .build();
+    return GenericJacksonJsonRedisSerializer.builder()
+      .enableDefaultTyping(typeValidator)
+      .build();
+  }
+
   /**
    * Redis connection factory lettuce connection factory.
    *
-   * @param host the host
-   * @param port the port
+   * @param host     the host
+   * @param port     the port
    * @param username the username
    * @param password the password
    * @return the lettuce connection factory
@@ -57,8 +68,8 @@ public class RedisCacheConfig {
    * Cache manager.
    *
    * @param connectionFactory the connection factory
-   * @param cacheNames the cache names
-   * @param ttlSeconds the ttl seconds
+   * @param cacheNames        the cache names
+   * @param ttlSeconds        the ttl seconds
    * @return the cache manager
    */
   @Bean
@@ -66,11 +77,12 @@ public class RedisCacheConfig {
                                    @Value("${spring.cache.cache-names:findByInternalId,sortedProducts}") final String cacheNames,
                                    @Value("${spring.cache.redis.ttl-seconds:60}") final long ttlSeconds,
                                    @Value("${spring.cache.redis.key-prefix:cache:}") final String keyPrefix) {
+
     final var cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
       .entryTtl(Duration.ofSeconds(ttlSeconds))
       .prefixCacheNameWith(keyPrefix)
       .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
-        new GenericJackson2JsonRedisSerializer()));
+        jsonSerializer()));
 
     final var initialNames = Arrays.stream(cacheNames.split(","))
       .map(String::trim)
@@ -92,7 +104,7 @@ public class RedisCacheConfig {
   @Bean
   public ReactiveRedisOperations<String, Object> reactiveRedisOperations(final LettuceConnectionFactory connectionFactory) {
     final var keySerializer = new StringRedisSerializer();
-    final var valueSerializer = new GenericJackson2JsonRedisSerializer();
+    final var valueSerializer = jsonSerializer();
     final RedisSerializationContext<String, Object> context = RedisSerializationContext
       .<String, Object>newSerializationContext(valueSerializer)
       .key(keySerializer)

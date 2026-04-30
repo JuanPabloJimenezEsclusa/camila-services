@@ -1,103 +1,40 @@
 package com.camila.api.product.infrastructure.adapter.input.grpc;
 
+import com.camila.api.product.domain.exception.NotFoundException;
 import com.camila.api.product.domain.exception.ProductException;
 import io.grpc.Status;
 import io.grpc.StatusException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import net.devh.boot.grpc.server.advice.GrpcAdvice;
-import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
-import org.springframework.dao.DataAccessException;
-import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException;
+import org.springframework.grpc.server.exception.GrpcExceptionHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * The type Grpc exception advice.
  */
 @Slf4j
-@GrpcAdvice
-public class GrpcExceptionAdvice {
+@Component
+public class GrpcExceptionAdvice implements GrpcExceptionHandler {
 
-  /**
-   * Handle runtime exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(RuntimeException.class)
-  public StatusException handleRuntimeException(final RuntimeException ex) {
-    final var status = Status.INTERNAL.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) RuntimeException", ex);
-    return status.asException();
-  }
-
-  /**
-   * Handle product exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(ProductException.class)
-  public StatusException handleProductException(final ProductException ex) {
-    final var status = Status.FAILED_PRECONDITION.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) ProductException", ex);
-    return status.asException();
-  }
-
-  /**
-   * Handle data access exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(DataAccessException.class)
-  public StatusException handleDataAccessException(final DataAccessException ex) {
-    final var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) DataAccessException", ex);
-    return status.asException();
-  }
-
-  /**
-   * Handle constraint violation exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(ConstraintViolationException.class)
-  public StatusException handleConstraintViolationException(final ConstraintViolationException ex) {
-    final var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) ConstraintViolationException", ex);
-    return status.asException();
-  }
-
-  /**
-   * Handle method argument not valid exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(MethodArgumentNotValidException.class)
-  public StatusException handleMethodArgumentNotValidException(final MethodArgumentNotValidException ex) {
-    final var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) MethodArgumentNotValidException", ex);
-    return status.asException();
-  }
-
-  /**
-   * Handle illegal argument exception status exception.
-   *
-   * @param ex the ex
-   * @return the status exception
-   */
-  @SuppressWarnings("unused")
-  @GrpcExceptionHandler(IllegalArgumentException.class)
-  public StatusException handleIllegalArgumentException(final IllegalArgumentException ex) {
-    final var status = Status.INVALID_ARGUMENT.withDescription(ex.getLocalizedMessage()).withCause(ex);
-    log.debug("(GrpcExceptionAdvice) IllegalArgumentException", ex);
-    return status.asException();
+  @Override
+  public StatusException handleException(final Throwable ex) {
+    log.debug("(GrpcExceptionAdvice) Throwable", ex);
+    switch (ex) {
+      case ProductException productEx -> {
+        return Status.FAILED_PRECONDITION.withDescription(productEx.getLocalizedMessage()).withCause(productEx).asException();
+      }
+      case NotFoundException notFoundEx -> {
+        return Status.NOT_FOUND.withDescription(notFoundEx.getLocalizedMessage()).withCause(notFoundEx).asException();
+      }
+      case ConstraintViolationException constraintEx -> {
+        return Status.INVALID_ARGUMENT.withDescription(constraintEx.getLocalizedMessage()).withCause(constraintEx).asException();
+      }
+      case IllegalArgumentException illegalEx -> {
+        return Status.INVALID_ARGUMENT.withDescription(illegalEx.getLocalizedMessage()).withCause(illegalEx).asException();
+      }
+      default -> {
+        return Status.INTERNAL.withDescription(ex.getLocalizedMessage()).withCause(ex).asException();
+      }
+    }
   }
 }

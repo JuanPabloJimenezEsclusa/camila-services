@@ -10,9 +10,6 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
-import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -20,25 +17,26 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.graphql.reactive.GraphQlWebFluxAutoConfiguration;
-import org.springframework.boot.autoconfigure.graphql.security.GraphQlWebFluxSecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
-import org.springframework.boot.autoconfigure.rsocket.RSocketMessagingAutoConfiguration;
-import org.springframework.boot.autoconfigure.rsocket.RSocketRequesterAutoConfiguration;
-import org.springframework.boot.autoconfigure.rsocket.RSocketServerAutoConfiguration;
-import org.springframework.boot.autoconfigure.rsocket.RSocketStrategiesAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.reactive.ReactiveOAuth2ResourceServerAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration;
-import org.springframework.boot.autoconfigure.websocket.reactive.WebSocketReactiveAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAutoConfiguration;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
+import org.springframework.boot.graphql.autoconfigure.reactive.GraphQlWebFluxAutoConfiguration;
+import org.springframework.boot.graphql.autoconfigure.security.GraphQlWebFluxSecurityAutoConfiguration;
+import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketMessagingAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketRequesterAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketServerAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketStrategiesAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.reactive.ReactiveWebSecurityAutoConfiguration;
+import org.springframework.boot.security.oauth2.client.autoconfigure.reactive.ReactiveOAuth2ClientAutoConfiguration;
+import org.springframework.boot.security.oauth2.server.resource.autoconfigure.reactive.ReactiveOAuth2ResourceServerAutoConfiguration;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
+import org.springframework.boot.websocket.autoconfigure.servlet.WebSocketMessagingAutoConfiguration;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -57,20 +55,19 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // GraphQL
   GraphQlWebFluxAutoConfiguration.class, GraphQlWebFluxSecurityAutoConfiguration.class,
   // gRPC
-  GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+  GrpcServerAutoConfiguration.class,
   GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
   // WebSocket
-  WebSocketReactiveAutoConfiguration.class,
+  WebSocketMessagingAutoConfiguration.class,
   // RSocket
   RSocketServerAutoConfiguration.class, RSocketStrategiesAutoConfiguration.class,
   RSocketMessagingAutoConfiguration.class, RSocketRequesterAutoConfiguration.class,
   // Reactive Web Components
-  WebClientAutoConfiguration.class, ReactiveOAuth2ClientAutoConfiguration.class,
-  ReactiveOAuth2ResourceServerAutoConfiguration.class,
+  ReactiveOAuth2ClientAutoConfiguration.class, ReactiveOAuth2ResourceServerAutoConfiguration.class,
   // Security Components
-  ReactiveSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,
+  ReactiveWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,
   // mongo
-  MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
+  DataMongoReactiveAutoConfiguration.class, DataMongoReactiveRepositoriesAutoConfiguration.class,
   MongoReactiveAutoConfiguration.class})
 @Import({
   // Framework adapter input layer

@@ -33,12 +33,6 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
 
-    <!-- Jackson CBOR Format -->
-    <dependency>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
-      <artifactId>jackson-dataformat-cbor</artifactId>
-    </dependency>
-
     <!-- Utilities -->
     <dependency>
       <groupId>org.jspecify</groupId>

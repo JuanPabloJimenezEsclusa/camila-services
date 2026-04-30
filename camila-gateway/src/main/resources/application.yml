@@ -19,9 +19,9 @@ spring:
       timeout: 20000ms
       lettuce:
         pool:
-          max-active: 256      # Aumentado para soportar alta concurrencia
-          max-idle: 64         # Aumentado para reutilizar conexiones
-          min-idle: 16         # Mantener pool caliente
+          max-active: 256
+          max-idle: 64
+          min-idle: 16
   cloud:
     loadbalancer:
       health-check:

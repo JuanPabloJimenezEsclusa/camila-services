@@ -16,9 +16,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"PRODUCT_SERVER_URL=http://localhost:9999/"})
+@AutoConfigureWebTestClient
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {"PRODUCT_SERVER_URL=http://localhost:9999/", "spring.profiles.active=test"})
 @DisplayName("[IT][FallbackAdapter] FailBack adapter test")
 class FallbackAdapterTest {
 

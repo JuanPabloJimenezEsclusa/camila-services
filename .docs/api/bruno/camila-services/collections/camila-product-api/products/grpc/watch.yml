@@ -1,0 +1,13 @@
+info:
+  name: watch
+  type: grpc
+  seq: 4
+
+grpc:
+  url: "{{grpc.baseUrl}}:{{grpc.basePort}}"
+  method: /grpc.health.v1.Health/Watch
+  methodType: server-streaming
+  message: |-
+    {
+    }
+  auth: inherit

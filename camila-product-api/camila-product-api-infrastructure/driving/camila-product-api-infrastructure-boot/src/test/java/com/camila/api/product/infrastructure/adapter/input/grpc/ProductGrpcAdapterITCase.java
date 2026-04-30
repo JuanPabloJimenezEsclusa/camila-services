@@ -9,29 +9,38 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
-import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.grpc.test.autoconfigure.LocalGrpcPort;
+import org.springframework.grpc.client.GrpcChannelFactory;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
-  "grpc.server.port=6565",
-  "grpc.client.product-service.address=static://localhost:6565",
-  "grpc.client.product-service.negotiation-type=plaintext",
+  "spring.grpc.server.port=0",
+  "spring.grpc.client.default-channel.negotiation-type=plaintext",
   "repository.technology=mongo"
 })
 @DisplayName("[IT][ProductGrpcAdapter] Product grpc adapter test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductGrpcAdapterITCase extends MongoContainerConfig {
-  @GrpcClient("product-service")
+
+  @LocalGrpcPort
+  private int grpcPort;
+
+  @Autowired
+  private GrpcChannelFactory channelFactory;
+
   private ProductServiceGrpc.ProductServiceBlockingStub blockingStub;
 
   @BeforeEach
   void setUp() {
+    this.blockingStub = ProductServiceGrpc.newBlockingStub(
+      channelFactory.createChannel("0.0.0.0:" + grpcPort));
     assertNotNull(this.blockingStub);
   }
 

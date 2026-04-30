@@ -12,9 +12,6 @@ import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseC
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
-import net.devh.boot.grpc.client.autoconfigure.GrpcClientHealthAutoConfiguration;
-import net.devh.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -22,13 +19,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureGraphQlTester;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAutoConfiguration;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
+import org.springframework.boot.graphql.test.autoconfigure.GraphQlTest;
+import org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureGraphQlTester;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
+import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration;
+import org.springframework.boot.security.autoconfigure.web.reactive.ReactiveWebSecurityAutoConfiguration;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.graphql.test.tester.GraphQlTester;
@@ -47,12 +46,12 @@ import org.springframework.graphql.test.tester.GraphQlTester;
  */
 @ImportAutoConfiguration(exclude = {
   // gRPC
-  GrpcClientAutoConfiguration.class, GrpcClientHealthAutoConfiguration.class,
+  GrpcServerAutoConfiguration.class,
   GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
   // Security Components
-  ReactiveSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,
+  ReactiveWebSecurityAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class,
   // mongo
-  MongoReactiveDataAutoConfiguration.class, MongoReactiveRepositoriesAutoConfiguration.class,
+  DataMongoReactiveAutoConfiguration.class, DataMongoReactiveRepositoriesAutoConfiguration.class,
   MongoReactiveAutoConfiguration.class})
 @Import({
   // Slicing spring configuration
@@ -175,7 +174,7 @@ class ProductGraphqlAdapterITCase extends CouchbaseContainerConfig {
       .variable("page", 1)
       .variable("size", 10)
       .execute().errors()
-      .expect(responseError -> Objects.requireNonNull(responseError.getMessage()).contains("INTERNAL_ERROR"));
+      .expect(responseError -> Objects.requireNonNull(responseError.getMessage()).contains("Product not found"));
   }
 
   @Test

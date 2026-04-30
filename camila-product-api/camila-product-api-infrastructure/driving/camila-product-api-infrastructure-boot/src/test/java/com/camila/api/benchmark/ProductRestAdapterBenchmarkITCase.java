@@ -1,7 +1,5 @@
 package com.camila.api.benchmark;
 
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
 import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -14,11 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
@@ -27,18 +28,15 @@ import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.WarmupMode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
 @TestPropertySource(properties = {"logging.level.com.camila.api.product=ERROR"})
-@Import({ProductApiApplication.class})
 @State(Scope.Benchmark)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @DisplayName("[JMH-T][ProductRestAdapter] Java benchmark tests")
@@ -46,12 +44,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
 
   private static final SecureRandom RANDOM_VALUES = new SecureRandom();
-  private static WebTestClient webClient;
 
-  @Autowired
-  void setWebTestClient(final WebTestClient webClient) {
-    ProductRestAdapterBenchmarkITCase.webClient = webClient;
-  }
+  private ConfigurableApplicationContext context;
+  private WebTestClient webClient;
 
   @Test
   @DisplayName("[ProductRestAdapter] Run benchmarks")
@@ -62,6 +57,25 @@ public class ProductRestAdapterBenchmarkITCase extends MongoContainerConfig {
 
     final Collection<RunResult> run = new Runner(options).run();
     Assertions.assertFalse(run.isEmpty());
+  }
+
+  @Setup(Level.Trial)
+  public void setup() {
+    // Start Spring Boot app on random port (--server.port=0) to avoid port conflicts in JMH forks
+    this.context = SpringApplication.run(ProductApiApplication.class, "--server.port=0");
+    final var port = context.getEnvironment().getProperty("local.server.port", Integer.class);
+
+    // Create WebTestClient bound to actual running server (not Spring bean injection)
+    this.webClient = WebTestClient.bindToServer()
+      .baseUrl("http://localhost:%d/product-dev/api".formatted(port))
+      .build();
+  }
+
+  @TearDown(Level.Trial)
+  public void jmhTearDown() {
+    if (this.context != null) {
+      this.context.close();
+    }
   }
 
   @Benchmark

@@ -122,7 +122,7 @@ spec:
               ephemeral-storage: "1Gi"
           imagePullPolicy: Never
           env:
-            - name: spring.data.mongodb.uri
+            - name: spring.mongodb.uri
               valueFrom:
                 secretKeyRef:
                   name: camila-product-api-creds
