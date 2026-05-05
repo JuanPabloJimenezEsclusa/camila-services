@@ -28,6 +28,7 @@ dependencies {
   implementation 'io.micrometer:micrometer-tracing-bridge-otel'
   implementation 'io.micrometer:micrometer-registry-prometheus'
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+  implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
   // API Documentation
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {

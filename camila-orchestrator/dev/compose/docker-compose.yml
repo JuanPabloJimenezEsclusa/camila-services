@@ -312,6 +312,7 @@ services:
       - mongodb
       - couchbase
       - fluentd
+      - otel-collector
     volumes:
       - camila_product_backend_tmp:/tmp
     healthcheck:
@@ -332,8 +333,16 @@ services:
   ## Security (Authn/Authz)
   keycloak:
     image: quay.io/keycloak/keycloak:26.6
-    command: |
-      start-dev --hostname keycloak --http-port 9191 --import-realm --log-level=WARN
+    command: >
+      start-dev 
+       --hostname keycloak 
+       --http-port 9191 
+       --import-realm 
+       --log-level=WARN 
+       --health-enabled=true 
+       --metrics-enabled=true
+       --tracing-enabled=true 
+       --telemetry-endpoint=http://otel-collector:4317
     container_name: keycloak
     hostname: keycloak
     deploy:
@@ -527,9 +536,55 @@ services:
       - 9411
     networks:
       camila_product_network:
+  jaeger:
+    image: jaegertracing/all-in-one:1.76.0
+    container_name: jaeger
+    hostname: jaeger
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: "512m"
+          cpus: "1"
+    env_file:
+      - .env
+    ports:
+      - "16686:16686"
+    expose:
+      - 16686
+      - 4317
+      - 4318
+    networks:
+      camila_product_network:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.152.0-nightly.286fff0
+    container_name: otel-collector
+    hostname: otel-collector
+    restart: unless-stopped
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./monitoring/otel/otel-config.yml:/etc/otel-collector-config.yaml
+    deploy:
+      resources:
+        limits:
+          memory: "256m"
+          cpus: "0.5"
+    env_file:
+      - .env
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - zipkin
+      - jaeger
+    expose:
+      - 4317
+      - 4318
+    networks:
+      camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.3.4
+    image: elasticsearch:9.4.0
     container_name: elasticsearch
     hostname: elasticsearch
     restart: on-failure:1
@@ -595,7 +650,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:9.3.4
+    image: kibana:9.4.0
     container_name: kibana
     hostname: kibana
     restart: "no"

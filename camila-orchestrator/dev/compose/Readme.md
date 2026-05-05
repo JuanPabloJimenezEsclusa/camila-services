@@ -97,8 +97,9 @@ docker-compose down
   * [Alertmanager UI](http://localhost:9093)
 * **Grafana (Monitoring Visualization):**
   * [Grafana dashboard](http://localhost:3000) (Login: admin/admin)
-* **Zipkin (Distributed Tracing):**
+* **Open telemetry (Distributed Tracing):**
   * [Zipkin tracing UI](http://localhost:9411/zipkin)
+  * [Jaeger tracing UI](http://localhost:16686/search)
 * **Elasticsearch (Search Engine):**
   * [Elasticsearch access](http://localhost:9200/) (Login: elastic/changeme)
 * **Kibana (Search Engine Visualization):**

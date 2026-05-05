@@ -1,0 +1,59 @@
+# https://opentelemetry.io/blog/2025/deprecating-zipkin-exporters/
+# https://github.com/lightstep/opentelemetry-examples/blob/main/config/example-collector-config.yaml
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  resource:
+    attributes:
+      - action: upsert
+        key: service.version
+        value: "1.0.0"
+      - action: upsert
+        key: environment
+        value: "dev"
+  batch:
+    timeout: 5s
+    send_batch_size: 512
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 1000
+    spike_limit_mib: 500
+  probabilistic_sampler:
+    hash_seed: 22
+    sampling_percentage: 100
+  filter:
+    error_mode: ignore
+    traces:
+      span:
+        # Exclude spans related to Spring Boot Actuator endpoints
+        - 'attributes["http.target"] != nil and IsMatch(attributes["http.target"], ".*/actuator.*")'
+        - 'attributes["url.path"] != nil and IsMatch(attributes["url.path"], ".*/actuator.*")'
+        # Exclude spans related to database operations
+        - 'name == "listDatabases admin"'
+        - 'IsMatch(name, ".*camila-db.*")'
+
+exporters:
+  otlp:
+    endpoint: "jaeger:4317"
+    tls:
+      insecure: true
+  zipkin:
+    endpoint: "http://zipkin:9411/api/v2/spans"
+    tls:
+      insecure: true
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [resource,batch,memory_limiter,probabilistic_sampler,filter]
+      exporters: [otlp,zipkin,debug]
