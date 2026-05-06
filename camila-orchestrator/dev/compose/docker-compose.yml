@@ -140,7 +140,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.2.7-ubi9
+    image: mongodb/mongodb-community-server:8.3.1-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
@@ -529,7 +529,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.3.3
+    image: elasticsearch:9.3.4
     container_name: elasticsearch
     hostname: elasticsearch
     restart: on-failure:1
@@ -595,7 +595,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:9.3.3
+    image: kibana:9.3.4
     container_name: kibana
     hostname: kibana
     restart: "no"
