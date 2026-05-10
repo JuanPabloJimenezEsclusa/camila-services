@@ -27,7 +27,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
           base-ref: ${{ env.BASE_REF }}
           head-ref: ${{ env.HEAD_REF }}
