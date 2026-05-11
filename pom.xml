@@ -524,7 +524,7 @@
                 <goal>git-changelog</goal>
               </goals>
               <configuration>
-                <templateFile>src/main/resources/changelog.mustache</templateFile>
+                <templateFile>${project.basedir}/src/main/resources/changelog.mustache</templateFile>
                 <file>CHANGELOG.md</file>
                 <readableTagName>-([^-]+?)$</readableTagName>
                 <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>

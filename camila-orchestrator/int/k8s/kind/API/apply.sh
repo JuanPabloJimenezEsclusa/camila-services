@@ -13,7 +13,8 @@ echo -e "${SEPARATOR} 🗑️ Remove image. ${SEPARATOR}"
 docker rmi docker.io/library/camila-product-api:1.0.0 || true
 
 echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
-SPRING_PROFILES_ACTIVE=int mvn clean spring-boot:build-image \
+SPRING_PROFILES_ACTIVE=int mvn --no-transfer-progress --also-make --batch-mode \
+  clean package spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true \
   -f ../../../../../camila-product-api/pom.xml
