@@ -35,4 +35,4 @@ docker run -it --rm \
   --memory="4096m" --memory-reservation="4096m" --memory-swap="4096m" --cpu-shares=4000 \
   -v ./.operate/data/couchbase:/opt/couchbase/init \
   -v couchbase-data:/opt/couchbase/var \
-  couchbase/server:8.0.0 sh -c "/opt/couchbase/init/init-cbserver.sh"
+  couchbase/server:8.0.1 sh -c "/opt/couchbase/init/init-cbserver.sh"

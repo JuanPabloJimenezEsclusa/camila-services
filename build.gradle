@@ -215,7 +215,7 @@ subprojects {
 
     // Observability
     opentelemetryVersion = '1.61.0'
-    opentelemetryApiIncubatorVersion = '1.61.0-alpha'
+    opentelemetryInstrumentationVersion = '2.27.0'
 
     // Database
     couchbaseJavaClientVersion = '3.11.2'
@@ -261,22 +261,13 @@ subprojects {
       mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
       mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
       mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+      mavenBom "io.opentelemetry:opentelemetry-bom:${opentelemetryVersion}"
+      mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:${opentelemetryInstrumentationVersion}"
       mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
       mavenBom "org.junit:junit-bom:${junitVersion}"
     }
 
     dependencies {
-      // OpenTelemetry Dependencies
-      dependency "io.opentelemetry:opentelemetry-api:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-sdk:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-context:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-sdk-logs:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-sdk-common:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-sdk-trace:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-sdk-metrics:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-extension-trace-propagators:${opentelemetryVersion}"
-      dependency "io.opentelemetry:opentelemetry-api-incubator:${opentelemetryApiIncubatorVersion}"
-
       // Couchbase
       dependency "com.couchbase.client:java-client:${couchbaseJavaClientVersion}"
 

@@ -278,10 +278,13 @@ spring:
           management-context-path: /${spring.webflux.base-path}/actuator
       config:
         enabled: true
-        prefix: config
+        fail-fast: false
+        prefixes: 
+          -config
         default-context: application
         format: YAML
         watch:
+          delay: 5000
           wait-time: 30
   data:
     redis:
@@ -303,7 +306,6 @@ spring:
       cache-null-values: true
       use-key-prefix: true
       key-prefix: camila-product
-  # Enable keycloak security
   security:
     oauth2:
       resourceserver:
@@ -314,7 +316,6 @@ springdoc:
   enable-spring-security: true
   show-oauth2-endpoints: true
 
-# Enable keycloak security
 openapi:
   oAuthFlow:
     url: "${GATEWAY_SERVER_URL:http://localhost}:${server.port:8080}"
@@ -325,15 +326,32 @@ openapi:
 # Enable all management endpoints
 # https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing.tracer-implementations
 management:
+  observations:
+    enable:
+      all: true
   tracing:
     enabled: true
     sampling:
       probability: 1.0
+  # old way to configure Zipkin exporter (deprecated in favor of OpenTelemetry)
   zipkin:
     tracing:
       endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
       connect-timeout: 10s
       read-timeout: 30s
+
+otel:
+  instrumentation:
+    common:
+      default-enabled: false
+    micrometer:
+      enabled: true
+    spring-webflux:
+      enabled: true
+  exporter:
+    otlp:
+      endpoint: "${OTEL_TRACING_ENDPOINT:http://localhost:4317}"
+      timeout: 10s
 
 ---
 ###### Integration properties ######

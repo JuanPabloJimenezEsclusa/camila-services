@@ -33,6 +33,7 @@ dependencies {
   implementation 'io.micrometer:micrometer-tracing-bridge-otel'
   implementation 'io.micrometer:micrometer-registry-prometheus'
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+  implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
   // Development Tools
   runtimeOnly 'org.springframework.boot:spring-boot-devtools'

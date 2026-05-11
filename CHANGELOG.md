@@ -5,10 +5,258 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] feat: migrate from netflix eureka to consul**
+**[GH-32] fix: telemetry config**
 
 
-[761bead56997243](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/761bead56997243) JuanPabloJimenezEsclusa *2026-04-30 17:53:47*
+[036e6ea4c88edeb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/036e6ea4c88edeb) JuanPabloJimenezEsclusa *2026-05-10 16:16:03*
+
+**chore(deps): bump actions/dependency-review-action (#323)**
+
+ * Bumps the github-actions-dependencies group with 1 update: [actions/dependency-review-action](https://github.com/actions/dependency-review-action).
+ * Updates &#x60;actions/dependency-review-action&#x60; from 4 to 5
+ * - [Release notes](https://github.com/actions/dependency-review-action/releases)
+ * - [Commits](https://github.com/actions/dependency-review-action/compare/v4...v5)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/dependency-review-action
+ * dependency-version: &#x27;5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[edf84544ee31d74](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/edf84544ee31d74) dependabot[bot] *2026-05-10 07:55:01*
+
+**chore(deps): bump the maven-dependencies group with 5 updates (#322)**
+
+ * Bumps the maven-dependencies group with 5 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [com.puppycrawl.tools:checkstyle](https://github.com/checkstyle/checkstyle) | &#x60;13.4.1&#x60; | &#x60;13.4.2&#x60; |
+ * | [org.owasp:dependency-check-maven](https://github.com/dependency-check/DependencyCheck) | &#x60;12.2.1&#x60; | &#x60;12.2.2&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * Updates &#x60;com.puppycrawl.tools:checkstyle&#x60; from 13.4.1 to 13.4.2
+ * - [Release notes](https://github.com/checkstyle/checkstyle/releases)
+ * - [Commits](https://github.com/checkstyle/checkstyle/compare/checkstyle-13.4.1...checkstyle-13.4.2)
+ * Updates &#x60;org.owasp:dependency-check-maven&#x60; from 12.2.1 to 12.2.2
+ * - [Release notes](https://github.com/dependency-check/DependencyCheck/releases)
+ * - [Changelog](https://github.com/dependency-check/DependencyCheck/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/dependency-check/DependencyCheck/compare/v12.2.1...v12.2.2)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.puppycrawl.tools:checkstyle
+ * dependency-version: 13.4.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.owasp:dependency-check-maven
+ * dependency-version: 12.2.2
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[dc08ac2c5093308](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/dc08ac2c5093308) dependabot[bot] *2026-05-06 12:30:42*
+
+**chore(deps): bump the gradle-dependencies group with 8 updates (#321)**
+
+ * Bumps the gradle-dependencies group with 8 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | org.sonarqube | &#x60;7.2.3.7755&#x60; | &#x60;7.3.0.8198&#x60; |
+ * | com.github.spotbugs | &#x60;6.5.1&#x60; | &#x60;6.5.4&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.32.0&#x60; | &#x60;7.32.1&#x60; |
+ * | org.owasp.dependencycheck | &#x60;12.2.1&#x60; | &#x60;12.2.2&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * | [io.grpc:protoc-gen-grpc-java](https://github.com/grpc/grpc-java) | &#x60;1.80.0&#x60; | &#x60;1.81.0&#x60; |
+ * Updates &#x60;org.sonarqube&#x60; from 7.2.3.7755 to 7.3.0.8198
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.5.1 to 6.5.4
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.32.0 to 7.32.1
+ * Updates &#x60;org.owasp.dependencycheck&#x60; from 12.2.1 to 12.2.2
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.80.0 to 1.81.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.80.0...v1.81.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.sonarqube
+ * dependency-version: 7.3.0.8198
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.5.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.32.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.owasp.dependencycheck
+ * dependency-version: 12.2.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.81.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[c955c1acbb55d27](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c955c1acbb55d27) dependabot[bot] *2026-05-06 12:28:24*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.42.0 to ~> 6.43.0 (#319)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.43.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.42.0...v6.43.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.43.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[3eb1abf7a792c9d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3eb1abf7a792c9d) dependabot[bot] *2026-05-06 12:26:46*
+
+**chore(deps): bump the infrastructure-dependencies group (#320)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 3 updates: mongodb/mongodb-community-server, elasticsearch and kibana.
+ * Updates &#x60;mongodb/mongodb-community-server&#x60; from 8.2.7-ubi9 to 8.3.1-ubi9
+ * Updates &#x60;elasticsearch&#x60; from 9.3.3 to 9.3.4
+ * Updates &#x60;kibana&#x60; from 9.3.3 to 9.3.4
+ * ---
+ * updated-dependencies:
+ * - dependency-name: mongodb/mongodb-community-server
+ * dependency-version: 8.3.1-ubi9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.3.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.3.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[8ba6496bad78632](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8ba6496bad78632) dependabot[bot] *2026-05-06 12:15:09*
+
+**[GH-32] feat: migrate from netflix eureka to consul (#318)**
+
+
+[7a04bdc08e5ccde](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7a04bdc08e5ccde) Juan Pablo Jimenez Esclusa *2026-04-30 20:18:01*
 
 **chore(deps-dev): bump org.openrewrite.maven:rewrite-maven-plugin (#317)**
 

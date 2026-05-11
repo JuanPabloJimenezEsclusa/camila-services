@@ -110,6 +110,14 @@
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-exporter-zipkin</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp-jvm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry.instrumentation</groupId>
+      <artifactId>opentelemetry-spring-boot-starter</artifactId>
+    </dependency>
 
     <!-- Development Tools -->
     <dependency>
@@ -252,11 +260,6 @@
       <groupId>com.redis</groupId>
       <artifactId>testcontainers-redis</artifactId>
       <version>${testcontainers-redis.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>okhttp-jvm</artifactId>
       <scope>test</scope>
     </dependency>
 

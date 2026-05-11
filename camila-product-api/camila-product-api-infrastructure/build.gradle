@@ -64,6 +64,7 @@ dependencies {
   implementation 'io.micrometer:micrometer-tracing-bridge-otel'
   implementation 'io.micrometer:micrometer-registry-prometheus'
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+  implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
   // gRPC
   implementation "org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}"
