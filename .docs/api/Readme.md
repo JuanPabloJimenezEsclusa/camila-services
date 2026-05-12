@@ -1,25 +1,52 @@
 # camila-services-api-docs
 
 > [Summary](#-summary)
-  • [Usage](#-usage)
+  • [Postman](#-postman)
+  • [Bruno](#-bruno)
 
 ## 📜 Summary
 
----
+API client resources for interacting with Camila Services.
 
-Resources for use in [Postman](https://www.postman.com/)
+| Tool                                 | Description                                                                 |
+|--------------------------------------|-----------------------------------------------------------------------------|
+| [Postman](https://www.postman.com/)  | Cloud-based API platform with collections, environments, and visual testing |
+| [Bruno](https://www.usebruno.com/)   | Git-friendly, offline-first API client with plain text collections          |
 
-## 🌐 Usage
+## 📬 Postman
 
----
+### Files
 
-### Index
+| File                                                                                                               | Description                      |
+|--------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| [postman/camila-product-api.postman_collection.json](postman/camila-product-api.postman_collection.json)           | Product API endpoint collection  |
+| [postman/camila-product-api-env.postman_environment.json](postman/camila-product-api-env.postman_environment.json) | Environment variables            |
 
-| File                                                                            | Description                        |
-|---------------------------------------------------------------------------------|------------------------------------|
-| [camila-product-collection](./camila-product-api.postman_collection.json)       | Contains the service endpoints     |
-| [camila-product-environment](./camila-product-api-env.postman_environment.json) | Contains the environment variables |
+### Usage
+
+1. Open Postman and click **Import**
+2. Select both the collection and environment JSON files
+3. Set the imported environment as active
+4. Execute requests against the running service
 
 ### Demonstration
 
-![Postman Example](postman-collection-example-v1.gif "Postman Example")
+![Postman Example](postman/postman-collection-example-v1.gif "Postman Example")
+
+## 🐶 Bruno
+
+### Collection Structure
+
+```
+bruno/camila-services/
+├── collections/     # API request collections
+├── environments/    # Environment configurations
+└── workspace.yml    # Bruno workspace definition
+```
+
+### Usage
+
+1. Open Bruno and click **Open Collection**
+2. Navigate to `.docs/api/bruno/camila-services` and select the workspace
+3. Choose the desired environment
+4. Execute requests against the running service
