@@ -10,7 +10,8 @@ cd "$(dirname "$0")/.."
 # Image variable
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"loc"}"
 
-mvn clean spring-boot:build-image \
+mvn clean --no-transfer-progress --also-make --batch-mode \
+  spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true  \
   -f ./pom.xml

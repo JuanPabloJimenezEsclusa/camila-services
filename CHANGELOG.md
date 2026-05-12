@@ -5,10 +5,10 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**[GH-32] fix: telemetry config**
+**[GH-32] fix: telemetry config (#324)**
 
 
-[036e6ea4c88edeb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/036e6ea4c88edeb) JuanPabloJimenezEsclusa *2026-05-10 16:16:03*
+[420eada21e073da](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/420eada21e073da) Juan Pablo Jimenez Esclusa *2026-05-11 15:23:25*
 
 **chore(deps): bump actions/dependency-review-action (#323)**
 

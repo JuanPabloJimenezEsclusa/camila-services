@@ -249,7 +249,8 @@ mvn --no-transfer-progress --also-make deploy \
   -Dmaven.test.skip=true -f ./pom.xml | tee mvn-deploy-$(date +%Y%m%d-%H%M%S).log
 
 # Maven - Images
-mvn --no-transfer-progress --also-make spring-boot:build-image \
+mvn --no-transfer-progress --also-make --batch-mode \
+  spring-boot:build-image \
   -Dmaven.build.cache.enabled=false \
   -Dmaven.test.skip=true -f ./pom.xml | tee mvn-build-image-$(date +%Y%m%d-%H%M%S).log
 ```

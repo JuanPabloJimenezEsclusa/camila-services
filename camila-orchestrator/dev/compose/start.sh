@@ -28,7 +28,8 @@ __buildProjects() {
     # root project workspace path
     cd "${workspace}/${baseProjectPath}"
     # compile and build the project
-    mvn --no-transfer-progress --also-make -B clean package spring-boot:build-image \
+    mvn --no-transfer-progress --also-make --batch-mode \
+      clean package spring-boot:build-image \
       -Dmaven.test.skip=true \
       -Dmaven.build.cache.enabled=false \
       -f ./pom.xml

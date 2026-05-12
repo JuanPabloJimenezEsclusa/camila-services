@@ -16,6 +16,12 @@ docker rmi \
   172.28.0.6:5000/camila-product-api-serveless:1.0.0 --force || true
 
 echo -e "${SEPARATOR} 🔨 Compile and build the image. ${SEPARATOR}"
+SPRING_PROFILES_ACTIVE=int mvn --no-transfer-progress --batch-mode \
+  clean install \
+  -Dgpg.skip=true \
+  -Dmaven.build.cache.enabled=false \
+  -Dmaven.test.skip=true \
+  -f ../../../../../../pom.xml
 SPRING_PROFILES_ACTIVE=int mvn compile jib:dockerBuild \
   -P jib \
   -Dmaven.test.skip=true \
