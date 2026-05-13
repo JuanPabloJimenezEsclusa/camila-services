@@ -10,13 +10,18 @@ logo: "/.docs/logo.svg"
 
 color_scheme: dark
 
+nav_enabled: true
+
+aux_links_new_tab: true
 aux_links:
   "GitHub Repository":
     - "https://github.com/JuanPabloJimenezEsclusa/camila-services"
+  "Gitlab Repository":
+    - "https://gitlab.com/side-projects9205424/camila-services"
+  "Bitbucket Repository":
+    - "https://bitbucket.org/jpje-side-projects/camila-services/src/main"
   "SonarCloud Dashboard":
     - "https://sonarcloud.io/summary/new_code?id=JuanPabloJimenezEsclusa_camila-services"
-
-aux_links_new_tab: true
 
 search_enabled: true
 search:
@@ -30,9 +35,15 @@ heading_anchors: true
 back_to_top: true
 back_to_top_text: "Back to top"
 
+breadcrumbs: true
+breadcrumbs_separator: " / "
+
+disable_disk_cache: true
+gh_edit_link: false
+
 footer_content: >-
   &copy; 2026 <a href="https://github.com/JuanPabloJimenezEsclusa">Juan Pablo Jimenez Esclusa</a>.
-  Licensed under MIT. Built with <a href="https://just-the-docs.com">Just the Docs</a>.
+  Licensed under GNU General Public License v3.0.
 
 callouts:
   note:
@@ -48,25 +59,31 @@ callouts:
     title: Experimental
     color: purple
 
-collections:
-  docs:
-    permalink: "/:collection/:path/"
-    output: true
-
-just_the_docs:
-  collections:
-    docs:
-      name: Documentation
-
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  html_to_native: true
+  hard_wrap: true
+  parse_block_html: true
+  parse_span_html: true
 
 plugins:
   - jekyll-seo-tag
   - jekyll-github-metadata
   - jekyll-sitemap
   - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-redirect-from
+  - jekyll-archives
+  - jekyll-paginate
+  - jekyll-robots-txt
+  - jekyll-analytics
+
+include:
+  - AGENTS.md
+  - .docs
+  - .operate
 
 exclude:
   - .gitignore
@@ -87,14 +104,9 @@ exclude:
   - build.gradle
   - settings.gradle
   - gradle.properties
-  - sonar-project.properties
-  - camila-admin/
-  - camila-coverage-jacoco/
-  - camila-gateway/
-  - camila-orchestrator/
-  - camila-performance/
-  - camila-product-api/
   - src/
   - target/
+  - build/
   - bin/
   - tmp/
+  - CHANGELOG.md

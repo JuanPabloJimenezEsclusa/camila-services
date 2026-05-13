@@ -1,4 +1,4 @@
-# Camila Product Orchestrator (Kubernetes/Kind)
+# orchestrator-int (k8s/Kind)
 
 > [Summary](#-summary)
   • [Architecture](#-architecture)

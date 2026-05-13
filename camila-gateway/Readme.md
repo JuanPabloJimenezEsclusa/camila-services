@@ -1,4 +1,4 @@
-# camila-gateway
+# gateway
 
 This project implements an API gateway for services, including support for patterns like
 `circuit-breaker` and `retry` to improve service resilience.

@@ -1,4 +1,4 @@
-# camila-product-api-operate
+# product-api-operate
 
 > [Summary](#-summary)
   • [Usage](#-usage)

@@ -1,10 +1,9 @@
-# camila-services-api-docs
+---
+title: product-api-docs
+permalink: /.docs/api/
+---
 
-> [Summary](#-summary)
-  • [Postman](#-postman)
-  • [Bruno](#-bruno)
-
-## 📜 Summary
+# product-api-docs
 
 API client resources for interacting with Camila Services.
 
@@ -15,7 +14,6 @@ API client resources for interacting with Camila Services.
 
 ## 📬 Postman
 
-### Files
 
 | File                                                                                                               | Description                      |
 |--------------------------------------------------------------------------------------------------------------------|----------------------------------|

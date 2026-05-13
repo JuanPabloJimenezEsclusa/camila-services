@@ -1,4 +1,4 @@
-# K6 Testing
+# performance (k6)
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)
