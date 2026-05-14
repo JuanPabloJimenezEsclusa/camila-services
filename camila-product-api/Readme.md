@@ -1,4 +1,4 @@
-# camila-product-api
+# product-api
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)

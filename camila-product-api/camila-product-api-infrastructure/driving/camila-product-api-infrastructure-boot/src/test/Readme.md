@@ -1,4 +1,4 @@
-# camila-product-api-test
+# product-api-test
 
 > [Summary](#-summary)
 > • [Context](#-context)

@@ -1,4 +1,4 @@
-# camila-orchestrator
+# orchestrator
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)

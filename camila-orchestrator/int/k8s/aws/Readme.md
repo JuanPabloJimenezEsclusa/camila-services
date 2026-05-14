@@ -1,4 +1,4 @@
-# camila-product-orchestrator-int (k8s) (AWS)
+# orchestrator-int (k8s) (AWS)
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)

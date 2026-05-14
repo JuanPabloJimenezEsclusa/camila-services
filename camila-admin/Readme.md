@@ -1,4 +1,4 @@
-# camila-admin
+# admin
 
 This project provides a user interface (UI) for managing services.
 
