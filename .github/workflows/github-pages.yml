@@ -23,30 +23,15 @@ jobs:
       pages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@6aaa311d81eba98ae12eaffbcb63296ace0efcde
-        with:
-          ruby-version: '3.4'
-          bundler-cache: false
-      - name: Install Jekyll dependencies
-        run: |
-          gem install bundler
-          echo "source 'https://rubygems.org'" > Gemfile
-          echo "gem 'github-pages', group: :jekyll_plugins" >> Gemfile
-          echo "gem 'just-the-docs'" >> Gemfile
-          bundle lock
-          bundle config set deployment true
-          bundle install
+        uses: actions/checkout@v6
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
-          PAGES_REPO_NWO: JuanPabloJimenezEsclusa/camila-services
+        uses: actions/jekyll-build-pages@v1
+        with:
+          destination: _site/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: _site/
 
