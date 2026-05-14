@@ -1,4 +1,4 @@
-# orchestrator-pre (AWS)
+# orchestrator-pre (ECS) (AWS)
 
 > [Summary](#-summary)
 • [Dependencies](#-dependencies)
@@ -34,25 +34,24 @@ Based on `AWS Cloud Provider`
 <details>
 <summary><strong>Expand Architecture</strong></summary>
 
-<p style="text-align: center">
-
-  <h4>With AWS Cloud Formation</h4>
-  Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
+  With AWS Cloud Formation
+  
+  > Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
 
   <img src="images/camila-services-aws-cf-diagram.svg" alt="camila-services-aws-cf-diagram" />
   <img src="images/application-composer-camila-product-stack.png" alt="application-composer" />
 
-  <h4>With Terraform</h4>
-  Deployment covering some advanced architectural options. Contains AWS components that do not have a free tier. The following elements are incorporated:
+  With Terraform
 
-  1. VPC Endpoint, to enable communication between the container service (ECS) and the image registry (ECR) without requiring a public IP.
-  2. NAT Gateway, to allow outbound communication with databases located in another virtual network, while keeping containers in a private subnet without public IPs.
-  3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
+  > Deployment covering some advanced architectural options. Contains AWS components that do not have a free tier. The following elements are incorporated:
+
+  > 1. VPC Endpoint, to enable communication between the container service (ECS) and the image registry (ECR) without requiring a public IP.
+  > 2. NAT Gateway, to allow outbound communication with databases located in another virtual network, while keeping containers in a private subnet without public IPs.
+  > 3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
 
   <img src="images/camila-services-aws-tf-diagram.svg" alt="camila-services-aws-tf-diagram" />
-  Docs: <a href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-serverless-technologies.html">AWS microservices-on-serverless-technologies</a>
-
-</p>
+  
+  > Docs: <a href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-serverless-technologies.html">AWS microservices-on-serverless-technologies</a>
 
 </details>
 

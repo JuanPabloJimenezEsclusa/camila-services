@@ -1,4 +1,4 @@
-# gateway-operate
+# gateway (operate)
 
 This section provides information on how to build, deploy, and run the project locally.
 

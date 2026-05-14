@@ -1,5 +1,5 @@
 ---
-title: product-api-docs
+title: product-api (docs)
 permalink: /.docs/api/
 ---
 

@@ -36,15 +36,12 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 <details>
 <summary><strong>Expand Architecture</strong></summary>
 
-<p style="text-align: center">
+  With AWS Cloud Formation
 
-  <h4>With AWS Cloud Formation</h4>
-  Deployment on Elastic Kubernetes Service (EKS).
+  > Deployment on Elastic Kubernetes Service (EKS).
 
   <img src="images/camila-eks-aws-cf-diagram.svg" alt="camila-eks-aws-cf-diagram" />
   <img src="images/application-composer-camila-eks-stack.png" alt="application-composer" />
-
-</p>
 
 </details>
 
