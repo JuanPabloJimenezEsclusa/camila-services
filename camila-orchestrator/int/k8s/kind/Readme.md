@@ -1,4 +1,4 @@
-# orchestrator-int (k8s/Kind)
+# orchestrator-int (k8s) (Kind)
 
 > [Summary](#-summary)
   • [Architecture](#-architecture)
