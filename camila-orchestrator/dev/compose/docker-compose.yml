@@ -765,22 +765,22 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: ./data/fluentd/logs
+      o: bind,rw
+      device: /tmp/fluentd
   fluentd_buffer:
     name: fluentd_buffer
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: ./data/fluentd/buffer
+      o: bind,rw
+      device: /tmp/fluentd
   fluentd_config:
     name: fluentd_config
     driver: local
     driver_opts:
       type: none
-      o: bind
-      device: ./data/fluentd/config
+      o: bind,rw
+      device: /tmp/fluentd
 
 networks:
   camila_product_network:

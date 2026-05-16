@@ -299,14 +299,19 @@
                 <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
                 <BP_JVM_HEAD_ROOM>5</BP_JVM_HEAD_ROOM>
                 <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
-                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8</BP_JVM_JAVA_OPTS>
+                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true</BP_JVM_JAVA_OPTS>
                 <BP_OCI_SOURCE>true</BP_OCI_SOURCE>
                 <BP_MAVEN_BUILT_ARTIFACT>target/*.jar</BP_MAVEN_BUILT_ARTIFACT>
-                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true</BP_MAVEN_BUILD_ARGUMENTS>
+                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true --no-transfer-progress --also-make --batch-mode</BP_MAVEN_BUILD_ARGUMENTS>
                 <BPL_JMX_ENABLED>true</BPL_JMX_ENABLED>
                 <BPL_SPRING_AOT_ENABLED>true</BPL_SPRING_AOT_ENABLED>
                 <BP_OCI_AUTHORS>Juan Pablo Jimenez Esclusa</BP_OCI_AUTHORS>
                 <BP_OCI_CREATED>2025</BP_OCI_CREATED>
+
+                <!-- https://blog.paketo.io/posts/spring-boot-performance/ -->
+                <JAVA_TOOL_OPTIONS>-XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true -XX:+UseContainerSupport --enable-native-access=ALL-UNNAMED</JAVA_TOOL_OPTIONS>
+                <BPE_DELIM_JAVA_TOOL_OPTIONS xml:space="preserve"> </BPE_DELIM_JAVA_TOOL_OPTIONS>
+                <BPE_APPEND_JAVA_TOOL_OPTIONS>-XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true</BPE_APPEND_JAVA_TOOL_OPTIONS>
               </env>
             </image>
           </configuration>
@@ -484,14 +489,6 @@
               <group>
                 <title>Admin</title>
                 <packages>com.camila.admin*</packages>
-              </group>
-              <group>
-                <title>Config</title>
-                <packages>com.camila.config*</packages>
-              </group>
-              <group>
-                <title>Discovery</title>
-                <packages>com.camila.discovery*</packages>
               </group>
               <group>
                 <title>Gateway</title>

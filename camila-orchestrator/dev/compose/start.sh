@@ -40,6 +40,7 @@ __buildProjects() {
 
 __initServices() {
   cd "${workspace}"
+  mkdir -p /tmp/fluentd
   # init services
   docker compose --file docker-compose.yml up -d --build --force-recreate
   # show services status

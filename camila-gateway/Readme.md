@@ -72,13 +72,30 @@ curl -X 'GET' \
 `keycloak` as a Single Sign-On (SSO) service.
 
 ```bash
-curl --location 'http://gateway:8090/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+# Rest
+curl --sLf 'http://gateway:8090/product-dev/api/products/1' \
   --header 'Accept: application/json' \
-  --header 'Authorization: Bearer ***'
+  --header "Authorization: Bearer ${TOKEN}" | jq .
 
-curl --location 'http://gateway:8090/product-dev/api/products/1' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer ***'
+curl -sLf 'http://gateway:8090/product-dev/api/products?salesUnits=0.80&stock=0.20&page=0&size=20' \
+  --header 'Accept: application/json' \
+  --header "Authorization: Bearer ${TOKEN}" | jq .
+
+# Graphql
+curl -sLf 'http://gateway:8090/product-dev/api/graphql' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer ${TOKEN}" \
+  --data '{"query":"query findById($internalId: ID) { findById(internalId: $internalId) { id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock }}", "variables":{"internalId":"1"}}' | jq .
+
+curl -sLf 'http://gateway:8090/product-dev/api/graphql' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer ${TOKEN}" \
+  --data '{
+    "query": "query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int, $withDetails: Boolean!) { sortProducts(salesUnits: $salesUnits, stock: $stock, profitMargin: $profitMargin, daysInStock: $daysInStock, page: $page, size: $size) { id @include(if: $withDetails) internalId @include(if: $withDetails) category @include(if: $withDetails) name salesUnits stock profitMargin daysInStock }}",
+    "variables":{"salesUnits":0.0008,"stock":0.999,"profitMargin":0.0001,"daysInStock":0.0001,"page":0,"size":2,"withDetails":false}
+    }' | jq .
 ```
 
 </details>

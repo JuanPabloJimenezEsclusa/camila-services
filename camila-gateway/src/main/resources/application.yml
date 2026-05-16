@@ -43,9 +43,11 @@ spring:
                 - Path=/product-*/api/**
               metadata:
                 cors:
-                  allowed-origins: '*'
+                  allowed-origin-patterns: '*'
                   allowed-methods: '*'
                   allowed-headers: '*'
+                  allowCredentials: true
+                  allowPrivateNetwork: true
                   max-age: 30
               filters:
                 - name: RemoveRequestHeader     # Remove hop-by-hop headers
@@ -76,7 +78,7 @@ spring:
                     fallbackUri: forward:/fallback
                 - name: DedupeResponseHeader    # Dedupe CORS headers
                   args:
-                    name: Access-Control-Allow-Credentials
+                    name: Access-Control-Allow-Origin Access-Control-Allow-Credentials
                     strategy: RETAIN_FIRST      # RETAIN_FIRST or RETAIN_LAST
                 - name: RequestSize             # Limit request size to prevent abuse
                   args:
@@ -85,7 +87,7 @@ spring:
             add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowed-origins: "*"
+                allowed-origin-patterns: "*"
                 allowed-headers:
                   - "Origin"
                   - "Content-Type"
@@ -114,6 +116,7 @@ spring:
             request-size:
               enabled: true
           default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials RETAIN_FIRST
             - TokenRelay
   main:
     web-application-type: reactive
