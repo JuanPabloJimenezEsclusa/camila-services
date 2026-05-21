@@ -3,7 +3,7 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.3.1-ubi9
+    image: mongodb/mongodb-community-server:8.3.2-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
