@@ -11,7 +11,7 @@ graphql:
       value: application/json
   body:
     query: |
-      query findById($internalId: ID) {
+      query findById($internalId: ID!) {
         findById(internalId: $internalId) {
           id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock
         }

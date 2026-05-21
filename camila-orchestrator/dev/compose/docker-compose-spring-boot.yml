@@ -85,7 +85,7 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.6.2-alpine
+    image: redis:8.6.3-alpine
     container_name: camila-redis-product-db
     hostname: redis
     restart: on-failure:5
