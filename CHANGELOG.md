@@ -5,6 +5,392 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
+**chore(deps): bump the maven-dependencies group with 3 updates**
+
+ * Bumps the maven-dependencies group with 3 updates: [io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom](https://github.com/open-telemetry/opentelemetry-java-instrumentation), [org.pitest:pitest-maven](https://github.com/hcoles/pitest) and [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf).
+ * Updates &#x60;io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom&#x60; from 2.27.0 to 2.28.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java-instrumentation/compare/v2.27.0...v2.28.0)
+ * Updates &#x60;org.pitest:pitest-maven&#x60; from 1.23.1 to 1.24.0
+ * - [Release notes](https://github.com/hcoles/pitest/releases)
+ * - [Commits](https://github.com/hcoles/pitest/compare/1.23.1...1.24.0)
+ * Updates &#x60;com.google.protobuf:protobuf-java&#x60; from 4.34.1 to 4.35.0
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom
+ * dependency-version: 2.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.pitest:pitest-maven
+ * dependency-version: 1.24.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.35.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[6b045270d8ba8a5](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6b045270d8ba8a5) dependabot[bot] *2026-05-21 14:22:03*
+
+**chore(deps): bump the infrastructure-dependencies group (#338)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 4 updates: mongodb/mongodb-community-server, elasticsearch, kibana and axllent/mailpit.
+ * Updates &#x60;mongodb/mongodb-community-server&#x60; from 8.3.1-ubi9 to 8.3.2-ubi9
+ * Updates &#x60;elasticsearch&#x60; from 9.4.0 to 9.4.1
+ * Updates &#x60;kibana&#x60; from 9.4.0 to 9.4.1
+ * Updates &#x60;axllent/mailpit&#x60; from v1.29.7 to v1.30.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: mongodb/mongodb-community-server
+ * dependency-version: 8.3.2-ubi9
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.4.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.4.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.30.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[cd22604af5b3cdc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/cd22604af5b3cdc) dependabot[bot] *2026-05-21 14:15:08*
+
+**chore(deps): bump the gradle-dependencies group with 9 updates (#337)**
+
+ * Bumps the gradle-dependencies group with 9 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom](https://github.com/open-telemetry/opentelemetry-java-instrumentation) | &#x60;2.27.0&#x60; | &#x60;2.28.0&#x60; |
+ * | [org.junit:junit-bom](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [org.junit.jupiter:junit-jupiter](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [org.junit.platform:junit-platform-engine](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [org.junit.platform:junit-platform-commons](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [org.junit.platform:junit-platform-launcher](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [org.junit.platform:junit-platform-suite](https://github.com/junit-team/junit-framework) | &#x60;6.0.3&#x60; | &#x60;6.1.0&#x60; |
+ * | [com.google.protobuf:protobuf-java](https://github.com/protocolbuffers/protobuf) | &#x60;4.34.1&#x60; | &#x60;4.35.0&#x60; |
+ * | [com.google.protobuf:protoc](https://github.com/protocolbuffers/protobuf) | &#x60;4.34.1&#x60; | &#x60;4.35.0&#x60; |
+ * Updates &#x60;io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom&#x60; from 2.27.0 to 2.28.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java-instrumentation/compare/v2.27.0...v2.28.0)
+ * Updates &#x60;org.junit:junit-bom&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.jupiter:junit-jupiter&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-engine&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-commons&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-launcher&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-suite&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-commons&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-launcher&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.platform:junit-platform-suite&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;org.junit.jupiter:junit-jupiter&#x60; from 6.0.3 to 6.1.0
+ * - [Release notes](https://github.com/junit-team/junit-framework/releases)
+ * - [Commits](https://github.com/junit-team/junit-framework/compare/r6.0.3...r6.1.0)
+ * Updates &#x60;com.google.protobuf:protobuf-java&#x60; from 4.34.1 to 4.35.0
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * Updates &#x60;com.google.protobuf:protoc&#x60; from 4.34.1 to 4.35.0
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * Updates &#x60;com.google.protobuf:protoc&#x60; from 4.34.1 to 4.35.0
+ * - [Release notes](https://github.com/protocolbuffers/protobuf/releases)
+ * - [Commits](https://github.com/protocolbuffers/protobuf/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom
+ * dependency-version: 2.28.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit:junit-bom
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.jupiter:junit-jupiter
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-engine
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-commons
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-launcher
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-suite
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-commons
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-launcher
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.platform:junit-platform-suite
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.junit.jupiter:junit-jupiter
+ * dependency-version: 6.1.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.protobuf:protobuf-java
+ * dependency-version: 4.35.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.protobuf:protoc
+ * dependency-version: 4.35.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.protobuf:protoc
+ * dependency-version: 4.35.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[2c4d50a0e3098cd](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/2c4d50a0e3098cd) dependabot[bot] *2026-05-21 13:28:20*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.44.0 to ~> 6.45.0 (#336)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.45.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.44.0...v6.45.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.45.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[f93ca5b83f3df10](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f93ca5b83f3df10) dependabot[bot] *2026-05-21 13:26:57*
+
+**[GH-32] build: change gh pages wf config (#334)**
+
+ * build: change gh pages wf config
+ * docs: adjusts readmes
+
+[0f7ac129ea14833](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/0f7ac129ea14833) Juan Pablo Jimenez Esclusa *2026-05-14 11:11:57*
+
+**docs: adjusts readme titles (#332)**
+
+
+[31984c1e15aa0a1](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/31984c1e15aa0a1) Juan Pablo Jimenez Esclusa *2026-05-14 09:58:30*
+
+**chore(deps): bump the github-actions-dependencies group with 3 updates (#333)**
+
+ * Bumps the github-actions-dependencies group with 3 updates: [actions/configure-pages](https://github.com/actions/configure-pages), [actions/upload-pages-artifact](https://github.com/actions/upload-pages-artifact) and [actions/deploy-pages](https://github.com/actions/deploy-pages).
+ * Updates &#x60;actions/configure-pages&#x60; from 5 to 6
+ * - [Release notes](https://github.com/actions/configure-pages/releases)
+ * - [Commits](https://github.com/actions/configure-pages/compare/v5...v6)
+ * Updates &#x60;actions/upload-pages-artifact&#x60; from 3 to 5
+ * - [Release notes](https://github.com/actions/upload-pages-artifact/releases)
+ * - [Commits](https://github.com/actions/upload-pages-artifact/compare/v3...v5)
+ * Updates &#x60;actions/deploy-pages&#x60; from 4 to 5
+ * - [Release notes](https://github.com/actions/deploy-pages/releases)
+ * - [Commits](https://github.com/actions/deploy-pages/compare/v4...v5)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: actions/configure-pages
+ * dependency-version: &#x27;6&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * - dependency-name: actions/upload-pages-artifact
+ * dependency-version: &#x27;5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * - dependency-name: actions/deploy-pages
+ * dependency-version: &#x27;5&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[f3e32de66556081](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f3e32de66556081) dependabot[bot] *2026-05-14 09:35:49*
+
+**fix: changes gh-page workflow (#331)**
+
+
+[e34ec0a91bf86ab](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e34ec0a91bf86ab) Juan Pablo Jimenez Esclusa *2026-05-14 02:26:24*
+
+**[GH-32] docs: continuous improving (#330)**
+
+ * [GH-32] refactor(ai): rewrite agents.md
+ * docs: add Jekyll GitHub Pages site with just-the-docs theme
+ * docs: add Jekyll GitHub Pages site with just-the-docs theme
+
+[c4c030bb5a9824a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c4c030bb5a9824a) Juan Pablo Jimenez Esclusa *2026-05-14 00:38:16*
+
+**[GH-32] build: fix cloud deployment scripts (#325)**
+
+ * [GH-32] build: fix cloud deployment scripts
+ * [GH-32] docs: improve api test clients
+
+[c02bb5478ba2e72](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/c02bb5478ba2e72) Juan Pablo Jimenez Esclusa *2026-05-12 23:26:58*
+
+**chore(deps): update hashicorp/aws requirement from ~> 6.43.0 to ~> 6.44.0 (#326)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.44.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.43.0...v6.44.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.44.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[34e7dc9db35b392](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/34e7dc9db35b392) dependabot[bot] *2026-05-12 23:22:39*
+
+**chore(deps): bump the maven-dependencies group with 3 updates (#329)**
+
+ * Bumps the maven-dependencies group with 3 updates: [io.opentelemetry:opentelemetry-bom](https://github.com/open-telemetry/opentelemetry-java), [org.openrewrite.maven:rewrite-maven-plugin](https://github.com/openrewrite/rewrite-maven-plugin) and org.apache.logging.log4j:log4j-api.
+ * Updates &#x60;io.opentelemetry:opentelemetry-bom&#x60; from 1.61.0 to 1.62.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.61.0...v1.62.0)
+ * Updates &#x60;org.openrewrite.maven:rewrite-maven-plugin&#x60; from 6.38.0 to 6.39.0
+ * - [Release notes](https://github.com/openrewrite/rewrite-maven-plugin/releases)
+ * - [Commits](https://github.com/openrewrite/rewrite-maven-plugin/compare/v6.38.0...v6.39.0)
+ * Updates &#x60;org.apache.logging.log4j:log4j-api&#x60; from 2.25.4 to 2.26.0
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry:opentelemetry-bom
+ * dependency-version: 1.62.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.openrewrite.maven:rewrite-maven-plugin
+ * dependency-version: 6.39.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.apache.logging.log4j:log4j-api
+ * dependency-version: 2.26.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[8bbd7a966bcd074](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8bbd7a966bcd074) dependabot[bot] *2026-05-12 23:12:41*
+
+**chore(deps): bump the gradle-dependencies group with 2 updates (#327)**
+
+ * Bumps the gradle-dependencies group with 2 updates: [io.opentelemetry:opentelemetry-bom](https://github.com/open-telemetry/opentelemetry-java) and org.openrewrite.rewrite.
+ * Updates &#x60;io.opentelemetry:opentelemetry-bom&#x60; from 1.61.0 to 1.62.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.61.0...v1.62.0)
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.32.1 to 7.32.2
+ * ---
+ * updated-dependencies:
+ * - dependency-name: io.opentelemetry:opentelemetry-bom
+ * dependency-version: 1.62.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.32.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[352844f2d51df29](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/352844f2d51df29) dependabot[bot] *2026-05-12 23:11:01*
+
+**chore(deps): bump redis (#328)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: redis.
+ * Updates &#x60;redis&#x60; from 8.6.2-alpine to 8.6.3-alpine
+ * ---
+ * updated-dependencies:
+ * - dependency-name: redis
+ * dependency-version: 8.6.3-alpine
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[b83dba05dc35cf0](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/b83dba05dc35cf0) dependabot[bot] *2026-05-12 23:09:44*
+
 **[GH-32] fix: telemetry config (#324)**
 
 

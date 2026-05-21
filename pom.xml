@@ -428,8 +428,9 @@
                     <excludes>
                       <exclude>org.apache.httpcomponents:httpclient</exclude>
                       <exclude>com.google.errorprone:error_prone_annotations</exclude>
-                      <exclude>org.glassfish.hk2:hk2-api</exclude>
-                      <exclude>org.glassfish.jersey.inject:jersey-hk2</exclude>
+                      <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                      <exclude>com.fasterxml.jackson.dataformat:jackson-dataformat-yaml</exclude>
+                      <exclude>com.fasterxml.jackson.datatype:jackson-datatype-jsr310</exclude>
                     </excludes>
                   </requireUpperBoundDeps>
                   <requireMavenVersion>
