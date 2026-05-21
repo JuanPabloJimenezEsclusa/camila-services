@@ -140,7 +140,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.3.1-ubi9
+    image: mongodb/mongodb-community-server:8.3.2-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
@@ -584,7 +584,7 @@ services:
       camila_product_network:
   ## Observability (EFK)
   elasticsearch:
-    image: elasticsearch:9.4.0
+    image: elasticsearch:9.4.1
     container_name: elasticsearch
     hostname: elasticsearch
     restart: on-failure:1
@@ -650,7 +650,7 @@ services:
     networks:
       camila_product_network:
   kibana:
-    image: kibana:9.4.0
+    image: kibana:9.4.1
     container_name: kibana
     hostname: kibana
     restart: "no"
@@ -678,7 +678,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.29.7
+    image: axllent/mailpit:v1.30.0
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1
