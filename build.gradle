@@ -215,7 +215,7 @@ subprojects {
 
     // Observability
     opentelemetryVersion = '1.62.0'
-    opentelemetryInstrumentationVersion = '2.27.0'
+    opentelemetryInstrumentationVersion = '2.28.0'
 
     // Database
     couchbaseJavaClientVersion = '3.11.2'
@@ -224,8 +224,8 @@ subprojects {
     testcontainersVersion = '2.0.5'
     testcontainersRedis = '2.2.4'
     cucumberVersion = '7.34.3'
-    junitVersion = '6.0.3'
-    junitPlatformSuiteVersion = '6.0.3'
+    junitVersion = '6.1.0'
+    junitPlatformSuiteVersion = '6.1.0'
     archunitJunit5Version = '1.4.2'
     instancioJunitVersion = '5.5.1'
     awaitilityVersion = '4.3.0'
@@ -241,7 +241,7 @@ subprojects {
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
-    protobufJavaVersion = '4.34.1'
+    protobufJavaVersion = '4.35.0'
     grpcVersion = '1.81.0'
     springGrpcVersion = '1.0.3'
 
