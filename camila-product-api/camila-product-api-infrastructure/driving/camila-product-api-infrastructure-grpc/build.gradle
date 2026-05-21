@@ -1,0 +1,54 @@
+plugins {
+  id 'java'
+  id 'com.google.protobuf'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Product API - gRPC Input Adapter'
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:${protobufJavaVersion}"
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:${ioGrpc}"
+    }
+  }
+  generateProtoTasks {
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
+
+dependencies {
+  // Internal Modules
+  implementation project(':camila-product-api-domain')
+  implementation project(':camila-product-api-application')
+
+  // Spring Boot Core
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+  // gRPC
+  implementation "org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}"
+  implementation "com.google.protobuf:protobuf-java:${protobufJavaVersion}"
+  implementation "io.grpc:grpc-netty:${grpcVersion}"
+  implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+  implementation "io.grpc:grpc-stub:${grpcVersion}"
+
+  // Utilities for exception handling
+  implementation 'org.springframework:spring-web'
+  implementation 'org.springframework:spring-messaging'
+  implementation 'org.springframework:spring-tx'
+
+  // Utilities
+  compileOnly 'org.jspecify:jspecify'
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+}

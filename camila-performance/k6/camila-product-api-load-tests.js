@@ -15,9 +15,9 @@ const OAUTH_GRANT_TYPE = __ENV.OAUTH_GRANT_TYPE || 'client_credentials';
 const OAUTH_SCOPE = __ENV.OAUTH_SCOPE || 'camila/read camila/write';
 const OAUTH_CLIENT_ID = __ENV.OAUTH_CLIENT_ID || 'camila-client';
 const OAUTH_CLIENT_SECRET = __ENV.OAUTH_CLIENT_SECRET || 'Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE';
-const THREADS = parseInt(__ENV.THREADS || '100');
-const RAMP_UP = parseInt(__ENV.RAMP_UP || '20');
-const LOOPS = parseInt(__ENV.LOOPS || '10');
+const THREADS = Number.parseInt(__ENV.THREADS || '100');
+const RAMP_UP = Number.parseInt(__ENV.RAMP_UP || '20');
+const LOOPS = Number.parseInt(__ENV.LOOPS || '10');
 
 export const options = {
   thresholds: {
@@ -159,12 +159,12 @@ function apiGraphQLRequest(params) {
   const payload = JSON.stringify({
     operationName: null,
     variables: {
-      salesUnits: parseFloat(params.salesUnits),
-      stock: parseFloat(params.stock),
-      profitMargin: parseFloat(params.profitMargin),
-      daysInStock: parseFloat(params.daysInStock),
-      page: parseInt(params.page),
-      size: parseInt(params.size),
+      salesUnits: Number.parseFloat(params.salesUnits),
+      stock: Number.parseFloat(params.stock),
+      profitMargin: Number.parseFloat(params.profitMargin),
+      daysInStock: Number.parseFloat(params.daysInStock),
+      page: Number.parseInt(params.page),
+      size: Number.parseInt(params.size),
       withDetails: false
     },
     query: `query sortProducts($salesUnits: Float, $stock: Float, $profitMargin: Float, $daysInStock: Float, $page: Int, $size: Int, $withDetails: Boolean!) {

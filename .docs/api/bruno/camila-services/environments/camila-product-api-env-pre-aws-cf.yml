@@ -1,0 +1,30 @@
+name: camila-product-api-env-pre-aws-cf
+variables:
+  - name: tokenClientId
+    value: 134q924brj0ja6169lrpb0urob
+  - name: tokenClientSecret
+    value: 15c030vd9iiaqje09csonir0pb4uociisvkf8tn3i6s1b76pehih
+  - name: tokenCallbackURL
+    value: https://tech.jpje.xyz/callback
+  - name: tokenAuthURL
+    value: https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/authorize
+  - name: tokenAccessURL
+    value: https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token
+  - name: tokenScope
+    value: openid email camila/read camila/write
+  - name: baseUrl
+    value: https://tech.jpje.xyz:{{basePort}}/{{basePath}}
+  - name: basePort
+    value: "443"
+  - name: basePath
+    value: product/api
+  - name: websocket.baseUrl
+    value: wss://tech.jpje.xyz
+  - name: websocket.basePort
+    value: "443"
+  - name: websocket.basePath
+    value: product/api/ws/products
+  - name: grpc.baseUrl
+    value: grpcs://tech.jpje.xyz
+  - name: grpc.basePort
+    value: "50051"

@@ -1,8 +1,0 @@
-info:
-  app:
-    description: "CAMILA-ADMIN-DEV-20240520"
-    author: "JPJE_DEV_1@test.com"
-    environments:
-      - "loc"
-      - "dev"
-      - "int"

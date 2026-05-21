@@ -6,12 +6,12 @@ set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an unde
 if [[ "${DEBUG:-}" == "true" ]]; then set -o xtrace; fi  # Enable debug mode.
 
 # Manual step to get the CODE from the URL
-# https://camila-realm.auth.eu-west-1.amazoncognito.com/login?response_type=code&client_id=31ieaq65vluo148hk62tk3rh08&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid+camila/read+camila/write
+# https://camila-realm.auth.eu-west-1.amazoncognito.com/login?response_type=code&client_id=749jtk5fe419aajku9j3fre9lt&redirect_uri=https://oauth.pstmn.io/v1/callback&scope=openid+camila/read+camila/write
 
 # Parameters
-CLIENT_ID="31ieaq65vluo148hk62tk3rh08"
-CLIENT_SECRET="bq37jbk1rmmbh9jj6b5ggr368c75s64j9vctjp7iklt7vb0io5r"
-CODE="3dce4425-cca5-4e33-ae15-f312dd7e24c7" # only works one time
+CLIENT_ID="749jtk5fe419aajku9j3fre9lt"
+CLIENT_SECRET="7h19bn6kf56s0o8dtagnt3e8jnstg8r8b5p424hu77lrqg52jn4"
+CODE="956f7c57-6adc-4b4a-bbe7-76fe386079a1" # only works one time
 REDIRECT_URI="https://oauth.pstmn.io/v1/callback"
 TOKEN_ENDPOINT="https://camila-realm.auth.eu-west-1.amazoncognito.com/oauth2/token"
 

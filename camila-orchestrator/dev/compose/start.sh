@@ -20,7 +20,7 @@ baseProjectPath="../../../"
 
 # Environment variables
 export SPRING_PROFILES_ACTIVE="${SPRING_PROFILES_ACTIVE:-"dev"}"
-export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25+37.1"}"
+export GRAALVM_HOME="${GRAALVM_HOME:-"/usr/lib/jvm/graalvm-jdk-25.0.2+10.1"}"
 
 __buildProjects() {
   if [[ "${buildProjects:-}" == "true" ]]; then
@@ -28,10 +28,10 @@ __buildProjects() {
     # root project workspace path
     cd "${workspace}/${baseProjectPath}"
     # compile and build the project
-    mvn clean spring-boot:build-image \
+    mvn --no-transfer-progress --also-make --batch-mode \
+      clean package spring-boot:build-image \
       -Dmaven.test.skip=true \
       -Dmaven.build.cache.enabled=false \
-      --projects camila-admin,camila-config,camila-discovery,camila-gateway,camila-product-api \
       -f ./pom.xml
   else
     echo -e "🚧 Skip build projects"
@@ -40,6 +40,7 @@ __buildProjects() {
 
 __initServices() {
   cd "${workspace}"
+  mkdir -p /tmp/fluentd
   # init services
   docker compose --file docker-compose.yml up -d --build --force-recreate
   # show services status

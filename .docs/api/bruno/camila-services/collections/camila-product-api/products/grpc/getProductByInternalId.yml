@@ -1,0 +1,15 @@
+info:
+  name: getProductByInternalId
+  type: grpc
+  seq: 1
+
+grpc:
+  url: "{{grpc.baseUrl}}:{{grpc.basePort}}"
+  method: /product.ProductService/GetProductByInternalId
+  methodType: unary
+  protoFilePath: ../../../../../../camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-grpc/src/main/proto/product.proto
+  message: |
+    {
+        "internalId": "30"
+    }
+  auth: inherit

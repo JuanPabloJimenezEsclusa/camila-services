@@ -12,7 +12,6 @@
 
   <groupId>com.camila.testing</groupId>
   <artifactId>camila-coverage-jacoco</artifactId>
-  <version>1.0.0</version>
   <name>camila-coverage-jacoco</name>
   <description>Camila Coverage Jacoco</description>
 
@@ -23,23 +22,69 @@
       <version>1.0.0</version>
     </dependency>
     <dependency>
-      <groupId>com.camila.config</groupId>
-      <artifactId>camila-config</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.camila.discovery</groupId>
-      <artifactId>camila-discovery</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.camila.gateway</groupId>
       <artifactId>camila-gateway</artifactId>
       <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>com.camila.api</groupId>
-      <artifactId>camila-product-api</artifactId>
+      <artifactId>camila-product-api-domain</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-application</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <!-- Infrastructure modules for coverage -->
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-boot</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-rest</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-graphql</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-grpc</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-websocket</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-rsocket</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-security</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-mongo</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-couchbase</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.camila.api</groupId>
+      <artifactId>camila-product-api-infrastructure-cache</artifactId>
       <version>1.0.0</version>
     </dependency>
   </dependencies>
@@ -76,5 +121,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>

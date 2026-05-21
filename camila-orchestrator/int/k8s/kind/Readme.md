@@ -1,4 +1,4 @@
-# Camila Product Orchestrator (Kubernetes/Kind)
+# orchestrator-int (k8s) (Kind)
 
 > [Summary](#-summary)
   • [Architecture](#-architecture)
@@ -33,7 +33,7 @@ This setup uses Kind to create a local Kubernetes cluster inside Docker containe
 <details>
 <summary><strong>Expand Dependencies</strong></summary>
 
-* Kind ~= [0.30.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
+* Kind ~= [0.31.0](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
 * K9s ~= [v0.50.x](https://github.com/derailed/k9s/releases)
 
 </details>
@@ -159,7 +159,7 @@ kubectl run -it --rm \
 ### Registry Connection Issues
 
 If you have problems pushing images to the local registry, verify:
-- The entry in `/etc/hosts` matches the actual registry IP (should be 172.18.0.6)
+- The entry in `/etc/hosts` matches the actual registry IP (should be 172.28.0.6)
 - The registry container is running (`docker ps | grep kind-registry`)
 
 ### Pod DNS Resolution

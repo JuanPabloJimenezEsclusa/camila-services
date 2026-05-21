@@ -41,7 +41,8 @@ __validate_url_format() {
 
 __build_project() {
   export SPRING_PROFILES_ACTIVE=pre
-  mvn spring-boot:build-image \
+  mvn --no-transfer-progress --also-make --batch-mode \
+    spring-boot:build-image \
     -Dmaven.build.cache.enabled=false \
     -Dmaven.test.skip=true \
     -f ../../../../camila-product-api/pom.xml

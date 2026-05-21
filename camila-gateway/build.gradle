@@ -19,15 +19,16 @@ dependencies {
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
   // Spring Cloud
-  implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+  implementation 'org.springframework.cloud:spring-cloud-starter-gateway-server-webflux'
   implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
-  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
 
   // Observability
   implementation 'io.micrometer:micrometer-tracing-bridge-otel'
   implementation 'io.micrometer:micrometer-registry-prometheus'
   implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
+  implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
   // API Documentation
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${springdocOpenapiVersion}") {
@@ -38,10 +39,16 @@ dependencies {
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   implementation "org.apache.commons:commons-lang3:${commonsLang3}"
+  implementation "org.jspecify:jspecify:${jspecifyVersion}"
 
   // Testing
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
   testImplementation 'io.projectreactor:reactor-test'
+  testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
+  testImplementation "com.redis:testcontainers-redis:${testcontainersRedis}"
+  testImplementation "com.squareup.okhttp3:mockwebserver:${okhttpVersion}"
+  testImplementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
 }
 
 dependencyManagement {

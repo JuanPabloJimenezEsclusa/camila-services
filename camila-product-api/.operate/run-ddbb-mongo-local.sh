@@ -11,9 +11,9 @@ mongoPassword="${2:-camila}"
 cd "$(dirname "$0")/.."
 
 # Prepare workspace
-docker stop mongodb || true && \
-  docker rm mongodb || true && \
-  docker volume create mongo-data || true
+(docker stop mongodb || true) && \
+  (docker rm mongodb || true) && \
+  (docker volume create mongo-data || true)
 
 # Init container
 docker run -it --rm \
@@ -26,4 +26,4 @@ docker run -it --rm \
   -e "MONGODB_INITDB_ROOT_USERNAME=${mongoUser}" \
   -e "MONGODB_INITDB_ROOT_PASSWORD=${mongoPassword}" \
   -v mongo-data:/data/db \
-  mongodb/mongodb-community-server:8.2.1-ubi9
+  mongodb/mongodb-community-server:8.3.2-ubi9

@@ -1,0 +1,35 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Product API - Cache Output Adapter (Caffeine & Redis)'
+
+dependencies {
+  // Internal Modules
+  implementation project(':camila-product-api-domain')
+  implementation project(':camila-product-api-application')
+
+  // Spring Boot Data
+  implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+  // Cache Providers
+  implementation 'com.github.ben-manes.caffeine:caffeine'
+
+  // Utilities
+  implementation 'tools.jackson.core:jackson-databind'
+  compileOnly 'org.jspecify:jspecify'
+
+  // Development Tools
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+  implementation "org.mapstruct:mapstruct:${mapstruct}"
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+  testImplementation 'org.testcontainers:testcontainers'
+  testImplementation "com.redis:testcontainers-redis:${testcontainersRedis}"
+}

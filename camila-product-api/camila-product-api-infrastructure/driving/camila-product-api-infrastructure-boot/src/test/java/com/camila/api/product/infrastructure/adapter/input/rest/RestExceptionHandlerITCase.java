@@ -1,0 +1,105 @@
+package com.camila.api.product.infrastructure.adapter.input.rest;
+
+import static org.junit.jupiter.api.Named.named;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
+import java.security.SecureRandom;
+import java.util.Locale;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import com.camila.api.product.application.usecase.DefaultProductUseCase;
+import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseMapperImpl;
+import com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseConfig;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAutoConfiguration;
+import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
+import org.springframework.boot.graphql.autoconfigure.reactive.GraphQlWebFluxAutoConfiguration;
+import org.springframework.boot.graphql.autoconfigure.security.GraphQlWebFluxSecurityAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
+import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketMessagingAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketRequesterAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketServerAutoConfiguration;
+import org.springframework.boot.rsocket.autoconfigure.RSocketStrategiesAutoConfiguration;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
+import org.springframework.boot.websocket.autoconfigure.servlet.WebSocketMessagingAutoConfiguration;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+@AutoConfigureWebTestClient(timeout = "10s")
+@WebFluxTest(properties = {"spring.main.lazy-initialization=true", "repository.technology=couchbase"})
+@ImportAutoConfiguration(exclude = {
+  // GraphQL
+  GraphQlWebFluxAutoConfiguration.class, GraphQlWebFluxSecurityAutoConfiguration.class,
+  // gRPC
+  GrpcServerAutoConfiguration.class,
+  GrpcServerFactoryAutoConfiguration.class, LoadBalancerDefaultMappingsProviderAutoConfiguration.class,
+  // WebSocket
+  WebSocketMessagingAutoConfiguration.class,
+  // RSocket
+  RSocketServerAutoConfiguration.class, RSocketStrategiesAutoConfiguration.class,
+  RSocketMessagingAutoConfiguration.class, RSocketRequesterAutoConfiguration.class,
+  // mongo
+  DataMongoReactiveAutoConfiguration.class, DataMongoReactiveRepositoriesAutoConfiguration.class,
+  MongoReactiveAutoConfiguration.class})
+@Import({
+  // Framework adapter input layer
+  ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
+  // Security
+  SecurityConfig.class,
+  // Application layer
+  DefaultProductUseCase.class,
+  // Framework adapter output layer
+  CouchbaseConfig.class, ProductCouchbaseAdapter.class, ProductCouchbaseMapperImpl.class})
+@DisplayName("[IT][RestExceptionHandler] Exception Handler Integration Tests")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
+
+  private static final Random random = new SecureRandom();
+
+  @Autowired
+  private WebTestClient webClient;
+
+  private static Stream<Arguments> exceptionTestCases() {
+    return Stream.of(
+      arguments(named("Should return 200 OK", "/products/4"), HttpStatus.OK),
+      arguments(named("Should return 204 NOT_CONTENT", "/products/99"), HttpStatus.NO_CONTENT),
+      arguments(named("Should return 400 BAD_REQUEST", "/products/."), HttpStatus.BAD_REQUEST),
+      arguments(named("Should return 417 EXPECTATION_FAILED", "/products/test"), HttpStatus.EXPECTATION_FAILED),
+      arguments(named("Should return 500 INTERNAL_SERVER_ERROR", "/products?salesUnits"), HttpStatus.INTERNAL_SERVER_ERROR));
+  }
+
+  private static String generateRandomString() {
+    return random.ints(10, 0, 36).mapToObj(i -> Integer.toString(i, 36)).collect(Collectors.joining())
+      .toUpperCase(Locale.ROOT);
+  }
+
+  @ParameterizedTest(name = "{index}: {0}")
+  @MethodSource("exceptionTestCases")
+  @DisplayName("[RestExceptionHandler] Should handle exceptions with correct status codes")
+  @Order(6)
+  void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
+    this.webClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+      .header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
+      .isEqualTo(expectedStatus);
+  }
+}

@@ -1,4 +1,4 @@
-# Jmeter
+# performance (jmeter)
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)
@@ -32,7 +32,7 @@ Performance testing project using JMeter
 ---
 
 ```bash
-JMETER_TEST_PATH="." THREADS=1500 RAMP_UP=60 LOOPS=10 \
+JMETER_TEST_PATH="." THREADS=100 RAMP_UP=20 LOOPS=10 \
 BASE_URL_PROTOCOL="http" BASE_URL="localhost" BASE_URL_PORT="8090" BASE_PATH="product-dev" \
 OAUTH_URL_PROTOCOL="http" OAUTH_URL="localhost" OAUTH_URL_PORT="9191" OAUTH_PATH="/realms/camila-realm/protocol/openid-connect/token" \
 OAUTH_GRANT_TYPE="client_credentials" OAUTH_SCOPE="camila/read camila/write" \

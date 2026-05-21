@@ -16,7 +16,7 @@ permissions:
 
 env:
   MAVEN_OPTS: "-Xmx2048m"
-  MAVEN_CLI_OPTS: "-B -ntp -e"
+  MAVEN_CLI_OPTS: "--no-transfer-progress -B -ntp -e"
 
 jobs:
   test:
@@ -46,7 +46,7 @@ jobs:
           cache: 'maven'
 
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -59,16 +59,16 @@ jobs:
       - name: Run Mutation Tests
         id: mutation-tests
         run: |
-          mvn ${{ env.MAVEN_CLI_OPTS }} test -P pitest
+          mvn ${{ env.MAVEN_CLI_OPTS }} test pitest:report-aggregate-module -P pitest
 
       - name: Upload PIT Mutation Reports
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: pitest-reports
           path: |
             **/target/pit-reports/
-          retention-days: 30
+          retention-days: 7
           if-no-files-found: warn
 
       - name: Generate Mutation Test Summary
@@ -77,14 +77,14 @@ jobs:
           echo "## 🧬 Mutation Testing Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ -d "camila-product-api/target/pit-reports" ]; then
+          if [ -d "target/pit-reports" ]; then
             echo "### ✅ Mutation Tests Completed" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Reports Location:** \`camila-product-api/target/pit-reports/\`" >> $GITHUB_STEP_SUMMARY
+            echo "**Reports Location:** \`target/pit-reports/\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             
             # Check for index.html to provide direct link info
-            if [ -f "camila-product-api/target/pit-reports/index.html" ]; then
+            if [ -f "target/pit-reports/index.html" ]; then
               echo "📊 Full HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
             fi
           else
@@ -96,13 +96,13 @@ jobs:
 
       - name: Comment PR with Mutation Test Results
         if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
             const path = require('path');
             
-            const reportsPath = 'camila-product-api/target/pit-reports';
+            const reportsPath = 'target/pit-reports';
             let comment = '## 🧬 Mutation Testing Results\n\n';
             
             if (fs.existsSync(reportsPath)) {

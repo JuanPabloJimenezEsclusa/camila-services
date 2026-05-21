@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.camila.api</groupId>
+    <artifactId>camila-product-api</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>camila-product-api-infrastructure</artifactId>
+  <packaging>pom</packaging>
+  <name>camila-product-api-infrastructure</name>
+  <description>Camila Product API - Infrastructure Layer</description>
+
+  <modules>
+    <!-- Input Adapters (Driving) -->
+    <module>driving/camila-product-api-infrastructure-boot</module>
+    <module>driving/camila-product-api-infrastructure-rest</module>
+    <module>driving/camila-product-api-infrastructure-graphql</module>
+    <module>driving/camila-product-api-infrastructure-grpc</module>
+    <module>driving/camila-product-api-infrastructure-websocket</module>
+    <module>driving/camila-product-api-infrastructure-rsocket</module>
+    <module>driving/camila-product-api-infrastructure-security</module>
+    <!-- Output Adapters (Driven) -->
+    <module>driven/camila-product-api-infrastructure-mongo</module>
+    <module>driven/camila-product-api-infrastructure-couchbase</module>
+    <module>driven/camila-product-api-infrastructure-cache</module>
+  </modules>
+</project>

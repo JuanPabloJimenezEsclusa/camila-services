@@ -9,8 +9,10 @@ updates:
       - dependency-name: "org.springframework.boot:*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.springframework.cloud:*"
-        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "org.springdoc:*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "de.codecentric:*"
         update-types: ["version-update:semver-major"]
     groups:
       maven-dependencies:
@@ -26,8 +28,10 @@ updates:
       - dependency-name: "org.springframework.boot:*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.springframework.cloud:*"
-        update-types: ["version-update:semver-minor", "version-update:semver-major"]
+        update-types: ["version-update:semver-major"]
       - dependency-name: "org.springdoc:*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "de.codecentric:*"
         update-types: ["version-update:semver-major"]
     groups:
       gradle-dependencies:

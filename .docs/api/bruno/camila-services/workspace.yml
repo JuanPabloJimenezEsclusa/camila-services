@@ -1,0 +1,14 @@
+opencollection: 1.0.0
+info:
+  name: "camila-services"
+  type: workspace
+
+collections:
+  - name: "camila-product-api"
+    path: "collections/camila-product-api"
+
+specs:
+
+docs: ''
+
+activeEnvironmentUid: daq8y5000000000000000

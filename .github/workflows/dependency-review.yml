@@ -14,18 +14,23 @@ concurrency:
   group: dependencies-review-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  BASE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.event.before }}
+  HEAD_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.sha }}
+
 jobs:
   dependency-review:
     if: github.event.pull_request.draft == false
+    name: Dependency Review
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
       - name: Dependency Review
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         with:
-          base-ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || github.event.before }}
-          head-ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.sha }}
+          base-ref: ${{ env.BASE_REF }}
+          head-ref: ${{ env.HEAD_REF }}
           external-repo-token: ${{ secrets.GITHUB_TOKEN }}
           fail-on-severity: moderate
           comment-summary-in-pr: always

@@ -1,0 +1,18 @@
+name: camila-product-api-env-dev-loc
+variables:
+  - name: baseUrl
+    value: http://localhost:{{basePort}}/{{basePath}}
+  - name: basePort
+    value: "8080"
+  - name: basePath
+    value: product-dev/api
+  - name: websocket.baseUrl
+    value: ws://localhost
+  - name: websocket.basePort
+    value: "8080"
+  - name: websocket.basePath
+    value: product-dev/api/ws/products
+  - name: grpc.baseUrl
+    value: grpc://localhost
+  - name: grpc.basePort
+    value: "6565"

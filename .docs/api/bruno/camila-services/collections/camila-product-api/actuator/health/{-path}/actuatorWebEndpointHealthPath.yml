@@ -1,0 +1,44 @@
+info:
+  name: Actuator web endpoint 'health-path'
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/actuator/health/:*path"
+  headers:
+    - name: Accept
+      value: application/vnd.spring-boot.actuator.v3+json
+  params:
+    - name: "*path"
+      value: <string>
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/actuator/health/:*path"
+      method: GET
+      headers:
+        - name: Accept
+          value: application/vnd.spring-boot.actuator.v3+json
+      params:
+        - name: "*path"
+          value: ""
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: "{}"

@@ -14,9 +14,9 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-  // Spring Cloud
-  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-  implementation 'org.springframework.cloud:spring-cloud-starter-config'
+  // Spring Cloud Consul
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
+  implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
 
   // Admin Server
   implementation 'de.codecentric:spring-boot-admin-starter-server'

@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.8</version>
+    <version>4.0.6</version>
     <relativePath/>
   </parent>
 
@@ -24,10 +24,8 @@
 
   <modules>
     <module>camila-product-api</module>
-    <module>camila-discovery</module>
     <module>camila-gateway</module>
     <module>camila-admin</module>
-    <module>camila-config</module>
     <module>camila-coverage-jacoco</module>
   </modules>
 
@@ -74,74 +72,73 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- Spring -->
-    <spring-cloud.version>2025.0.0</spring-cloud.version>
-    <spring-boot-admin.version>3.5.6</spring-boot-admin.version>
+    <spring-cloud.version>2025.1.1</spring-cloud.version>
+    <spring-boot-admin.version>4.0.4</spring-boot-admin.version>
+    <spring-boot-configuration-processor.version>4.0.6</spring-boot-configuration-processor.version>
 
     <!-- Observability -->
-    <opentelemetry.version>1.57.0</opentelemetry.version>
-    <opentelemetry-api-incubator.version>1.57.0-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry.version>1.62.0</opentelemetry.version>
+    <opentelemetry-instrumentation.version>2.28.0</opentelemetry-instrumentation.version>
 
     <!-- API -->
-    <springdoc-openapi.version>2.8.14</springdoc-openapi.version>
-    <netty-tcnative-boringssl-static.version>2.0.74.Final</netty-tcnative-boringssl-static.version>
-    <graphql-java.version>25.0</graphql-java.version>
+    <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
+    <graphql-java.version>26.0</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
-    <!-- Testing -->
-    <cucumber.version>7.33.0</cucumber.version>
+    <!-- GRPC -->
+    <grpc-server-spring-starter.version>1.0.3</grpc-server-spring-starter.version>
+    <protobuf-java.version>4.35.0</protobuf-java.version>
+    <io-grpc.version>1.81.0</io-grpc.version>
 
-    <testcontainers.version>2.0.2</testcontainers.version>
-    <testcontainers-junit-jupiter.version>2.0.2</testcontainers-junit-jupiter.version>
-    <testcontainers.mongodb.version>1.21.3</testcontainers.mongodb.version>
-    <testcontainers.couchbase.version>1.21.3</testcontainers.couchbase.version>
+    <!-- Testing -->
+    <cucumber.version>7.34.3</cucumber.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
     <testcontainers-redis.version>2.2.4</testcontainers-redis.version>
 
     <awaitility.version>4.3.0</awaitility.version>
-    <archunit-junit5.version>1.4.1</archunit-junit5.version>
+    <archunit-junit5.version>1.4.2</archunit-junit5.version>
     <instancio-junit.version>5.5.1</instancio-junit.version>
     <jmh.version>1.37</jmh.version>
     <junit-platform-suite.version>6.0.1</junit-platform-suite.version>
     <okhttp.version>5.3.2</okhttp.version>
 
     <!-- Quality -->
-    <chaos-monkey-spring-boot.version>3.2.2</chaos-monkey-spring-boot.version>
+    <chaos-monkey-spring-boot.version>4.0.0</chaos-monkey-spring-boot.version>
     <jspecify.version>1.0.0</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <commons-lang3.version>3.20.0</commons-lang3.version>
+    <snakeyaml.version>2.5</snakeyaml.version>
+    <error_prone_core.version>2.49.0</error_prone_core.version>
+    <pitest-maven.version>1.24.0</pitest-maven.version>
+    <checkstyle.version>13.4.2</checkstyle.version>
+    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.8.3</spotbugs-maven-plugin.version>
+    <rewrite-maven-plugin.version>6.39.0</rewrite-maven-plugin.version>
+    <sonar-maven-plugin.version>5.6.0.6792</sonar-maven-plugin.version>
 
     <!-- Database -->
-    <couchbase-java-client.version>3.10.0</couchbase-java-client.version>
-
-    <!-- GRPC -->
-    <grpc-server-spring-boot-starter.version>3.1.0.RELEASE</grpc-server-spring-boot-starter.version>
-    <protobuf-java.version>4.33.2</protobuf-java.version>
-    <io-grpc.version>1.77.0</io-grpc.version>
+    <couchbase-java-client.version>3.11.2</couchbase-java-client.version>
 
     <!-- Build Tools -->
-    <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
     <maven-site-plugin.version>3.21.0</maven-site-plugin.version>
-    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>12.2.0</checkstyle.version>
     <jib-maven-plugin.version>3.5.1</jib-maven-plugin.version>
-    <dependency-check-maven.version>12.1.9</dependency-check-maven.version>
+    <dependency-check-maven.version>12.2.2</dependency-check-maven.version>
     <maven-pmd-plugin.version>3.28.0</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
-    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-    <pitest-maven.version>1.22.0</pitest-maven.version>
     <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
-    <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
-    <openapi-generator-maven-plugin.version>7.17.0</openapi-generator-maven-plugin.version>
-    <spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
-    <rewrite-maven-plugin.version>7.8.0</rewrite-maven-plugin.version>
+    <git-commit-id-maven-plugin.version>10.0.0</git-commit-id-maven-plugin.version>
+    <openapi-generator-maven-plugin.version>7.22.0</openapi-generator-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
+    <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-    <versions-maven-plugin.version>2.20.1</versions-maven-plugin.version>
-    <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
+    <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.2.11</git-changelog-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
+    <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 
     <!-- Site reports -->
     <inceptionYear>2023</inceptionYear>
@@ -158,7 +155,7 @@
     <sonar.java.pmd.reportPaths>${project.build.directory}/pmd.xml</sonar.java.pmd.reportPaths>
     <sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/camila-coverage-jacoco/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/*MapperImpl**</sonar.exclusions>
+    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/config/*,**/*MapperImpl**</sonar.exclusions>
     <sonar.branch.name>develop</sonar.branch.name>
   </properties>
 
@@ -185,48 +182,17 @@
       <!-- OpenTelemetry Dependencies -->
       <dependency>
         <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api</artifactId>
+        <artifactId>opentelemetry-bom</artifactId>
         <version>${opentelemetry.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-context</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-logs</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-common</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-trace</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-sdk-metrics</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-extension-trace-propagators</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api-incubator</artifactId>
-        <version>${opentelemetry-api-incubator.version}</version>
+        <groupId>io.opentelemetry.instrumentation</groupId>
+        <artifactId>opentelemetry-instrumentation-bom</artifactId>
+        <version>${opentelemetry-instrumentation.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <!-- Couchbase -->
@@ -333,14 +299,19 @@
                 <BP_JVM_JMXREMOTE>true</BP_JVM_JMXREMOTE>
                 <BP_JVM_HEAD_ROOM>5</BP_JVM_HEAD_ROOM>
                 <BPL_JVM_THREAD_COUNT>50</BPL_JVM_THREAD_COUNT>
-                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8</BP_JVM_JAVA_OPTS>
+                <BP_JVM_JAVA_OPTS>-XX:+UseG1GC -XX:+UseStringDeduplication -Dfile.encoding=UTF-8 -XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true</BP_JVM_JAVA_OPTS>
                 <BP_OCI_SOURCE>true</BP_OCI_SOURCE>
                 <BP_MAVEN_BUILT_ARTIFACT>target/*.jar</BP_MAVEN_BUILT_ARTIFACT>
-                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true</BP_MAVEN_BUILD_ARGUMENTS>
+                <BP_MAVEN_BUILD_ARGUMENTS>package -DskipTests=true --no-transfer-progress --also-make --batch-mode</BP_MAVEN_BUILD_ARGUMENTS>
                 <BPL_JMX_ENABLED>true</BPL_JMX_ENABLED>
                 <BPL_SPRING_AOT_ENABLED>true</BPL_SPRING_AOT_ENABLED>
                 <BP_OCI_AUTHORS>Juan Pablo Jimenez Esclusa</BP_OCI_AUTHORS>
                 <BP_OCI_CREATED>2025</BP_OCI_CREATED>
+
+                <!-- https://blog.paketo.io/posts/spring-boot-performance/ -->
+                <JAVA_TOOL_OPTIONS>-XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true -XX:+UseContainerSupport --enable-native-access=ALL-UNNAMED</JAVA_TOOL_OPTIONS>
+                <BPE_DELIM_JAVA_TOOL_OPTIONS xml:space="preserve"> </BPE_DELIM_JAVA_TOOL_OPTIONS>
+                <BPE_APPEND_JAVA_TOOL_OPTIONS>-XX:+UseCompactObjectHeaders -Dspring.threads.virtual.enabled=true</BPE_APPEND_JAVA_TOOL_OPTIONS>
               </env>
             </image>
           </configuration>
@@ -386,11 +357,12 @@
           <version>${jacoco-maven-plugin.version}</version>
           <configuration>
             <excludes>
-              <exclude>**/input/grpc/**</exclude>
-              <exclude>**/input/rest/api/**</exclude>
-              <exclude>**/input/rest/dto/**</exclude>
-              <exclude>**/input/security/*Config**</exclude>
-              <exclude>**/*MapperImpl**</exclude>
+              <exclude>**/input/grpc/*.class</exclude>
+              <exclude>**/input/rest/api/*.class</exclude>
+              <exclude>**/input/rest/dto/*.class</exclude>
+              <exclude>**/input/security/*Config*.class</exclude>
+              <exclude>**/config/*.class</exclude>
+              <exclude>**/*MapperImpl.class</exclude>
             </excludes>
           </configuration>
           <executions>
@@ -433,11 +405,12 @@
               <configuration>
                 <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
                 <excludes>
-                  <exclude>**/input/grpc/**</exclude>
-                  <exclude>*/input/rest/api/**</exclude>
-                  <exclude>**/input/rest/dto/**</exclude>
-                  <exclude>**/input/security/*Config**</exclude>
-                  <exclude>**/*MapperImpl**</exclude>
+                  <exclude>**/input/grpc/*.class</exclude>
+                  <exclude>**/input/rest/api/*.class</exclude>
+                  <exclude>**/input/rest/dto/*.class</exclude>
+                  <exclude>**/input/security/*Config*.class</exclude>
+                  <exclude>**/config/*.class</exclude>
+                  <exclude>**/*MapperImpl.class</exclude>
                 </excludes>
               </configuration>
             </execution>
@@ -460,8 +433,9 @@
                     <excludes>
                       <exclude>org.apache.httpcomponents:httpclient</exclude>
                       <exclude>com.google.errorprone:error_prone_annotations</exclude>
-                      <exclude>org.glassfish.hk2:hk2-api</exclude>
-                      <exclude>org.glassfish.jersey.inject:jersey-hk2</exclude>
+                      <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                      <exclude>com.fasterxml.jackson.dataformat:jackson-dataformat-yaml</exclude>
+                      <exclude>com.fasterxml.jackson.datatype:jackson-datatype-jsr310</exclude>
                     </excludes>
                   </requireUpperBoundDeps>
                   <requireMavenVersion>
@@ -517,14 +491,6 @@
                 <packages>com.camila.admin*</packages>
               </group>
               <group>
-                <title>Config</title>
-                <packages>com.camila.config*</packages>
-              </group>
-              <group>
-                <title>Discovery</title>
-                <packages>com.camila.discovery*</packages>
-              </group>
-              <group>
                 <title>Gateway</title>
                 <packages>com.camila.gateway*</packages>
               </group>
@@ -556,7 +522,7 @@
                 <goal>git-changelog</goal>
               </goals>
               <configuration>
-                <templateFile>src/main/resources/changelog.mustache</templateFile>
+                <templateFile>${project.basedir}/src/main/resources/changelog.mustache</templateFile>
                 <file>CHANGELOG.md</file>
                 <readableTagName>-([^-]+?)$</readableTagName>
                 <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
@@ -725,6 +691,67 @@
                 <plainTextMask>**/.txt</plainTextMask>
               </plainTextMasks>
             </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>pitest</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.pitest</groupId>
+              <artifactId>pitest-maven</artifactId>
+              <version>${pitest-maven.version}</version>
+              <dependencies>
+                <dependency>
+                  <groupId>org.pitest</groupId>
+                  <artifactId>pitest-junit5-plugin</artifactId>
+                  <version>1.2.3</version>
+                </dependency>
+              </dependencies>
+              <configuration>
+                <verbose>true</verbose>
+                <threads>6</threads>
+                <timeoutFactor>1.50</timeoutFactor>
+                <timeoutConstant>5000</timeoutConstant>
+                <failWhenNoMutations>false</failWhenNoMutations>
+                <timestampedReports>false</timestampedReports>
+                <exportLineCoverage>true</exportLineCoverage>
+                <outputFormats><value>XML</value></outputFormats>
+                <excludedClasses>
+                  <param>**.*Mapper*</param>
+                  <param>**.grpc.*</param>
+                  <param>**.config.*</param>
+                  <param>**.*Config</param>
+                  <param>**.rest.api.*</param>
+                  <param>**.rest.dto.*</param>
+                </excludedClasses>
+                <excludedTestClasses>
+                  <param>**.architecture.*</param>
+                  <param>**.behaviour.*</param>
+                  <param>**.benchmark.*</param>
+                </excludedTestClasses>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-maven</artifactId>
+            <version>${pitest-maven.version}</version>
+            <executions>
+              <execution>
+                <id>pitest</id>
+                <goals>
+                  <goal>mutationCoverage</goal>
+                </goals>
+                <phase>test-compile</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>

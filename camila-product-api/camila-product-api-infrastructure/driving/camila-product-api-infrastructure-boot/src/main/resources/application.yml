@@ -1,0 +1,551 @@
+###### Default properties ######
+spring:
+  application:
+    name: "camila-product-api"
+  # https://docs.spring.io/spring-boot/reference/features/spring-application.html#features.spring-application.virtual-threads
+  threads:
+    virtual:
+      enabled: true
+  banner:
+    # https://www.ascii-art-generator.org/
+    location: classpath:/api-banner.txt
+  main:
+    web-application-type: reactive
+  webflux:
+    base-path: /product-dev/api
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql
+  rsocket:
+    server:
+      mapping-path: /product-dev/api/rsocket
+      transport: websocket
+  grpc:
+    server:
+      port: 0 # by default random port
+      shutdown-grace-period: 0s
+      health:
+        enabled: true
+      reflection:
+        enabled: true
+    client:
+      default-channel:
+        # this client only is useful for testing
+        address: static://localhost:6565
+        negotiation-type: plaintext
+  cloud:
+    consul:
+      enabled: false
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+    refresh:
+      # https://github.com/spring-cloud/spring-cloud-release/wiki/AOT-transformations-and-native-image-support#refresh-scope
+      enabled: false
+    loadbalancer:
+      enabled: false
+  mongodb:
+    # https://www.mongodb.com/docs/manual/tutorial/connection-pool-performance-tuning/
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@localhost:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+    authentication-database: camila-db
+    ssl:
+      enabled: false
+    auto-index-creation: true
+    uuid-representation: JAVA_LEGACY
+  couchbase:
+    connection-string: couchbase://couchbase:11207
+    username: ${COUCHBASE_USERNAME:Administrator}
+    password: ${COUCHBASE_PASSWORD:password}
+    bucket-name: camila-product-bucket
+    scope-name: product
+    env:
+      ssl:
+        enabled: false
+      timeouts:
+        connect: 30s
+  cache:
+    type: caffeine
+    cache-names: findByInternalId,sortedProducts
+    caffeine:
+      spec: initialCapacity=100,maximumSize=10000,expireAfterAccess=60s
+  docker:
+    compose:
+      enabled: false
+
+info:
+  app:
+    name: "@project.name@"
+    version: "@project.version@"
+
+springdoc:
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+    resolve-schema-properties: true
+  enable-spring-security: false
+  show-actuator: true
+  show-login-endpoint: false
+  swagger-ui:
+    filter: true
+    show-extensions: true
+    show-common-extensions: true
+    doc-expansion: none
+    operations-sorter: method
+    persist-authorization: true
+    deep-linking: true
+    display-request-duration: true
+    display-operation-id: true
+    defaultModelsExpandDepth: 1
+    tagsSorter: alpha
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      show-values: ALWAYS
+      cache:
+        time-to-live: 60s
+      access: unrestricted
+    info:
+      cache:
+        time-to-live: 3600s
+      access: unrestricted
+    beans:
+      cache:
+        time-to-live: 10s
+      access: unrestricted
+    health:
+      show-details: ALWAYS
+      show-components: ALWAYS
+      access: unrestricted
+    configprops:
+      show-values: ALWAYS
+      access: unrestricted
+    shutdown:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+    os:
+      enabled: true
+    process:
+      enabled: true
+    build:
+      enabled: true
+    java:
+      enabled: true
+  tracing:
+    enabled: false
+
+logging:
+  charset:
+    console: UTF-8
+  level:
+    root: INFO
+    com.camila.api.product: INFO
+    com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.cache: INFO
+    org.springframework: INFO
+    org.springframework.web: WARN
+    org.springframework.grpc: WARN
+    org.springframework.data: WARN
+    org.springframework.cache: TRACE
+    org.springframework.context: WARN
+    org.mongodb: WARN
+    com.mongodb: WARN
+    com.couchbase: WARN
+    io.lettuce: WARN
+    org.springframework.boot: INFO
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: INFO
+    org.springframework.boot.web.embedded.netty: WARN
+    io.grpc.netty: WARN
+    reactor: WARN
+
+server:
+  port: ${PORT:8080}
+  shutdown: immediate
+
+repository:
+  technology: ${REPOSITORY_TECHNOLOGY:mongo}
+
+---
+###### Local|Dev properties ######
+spring:
+  config:
+    activate:
+      on-profile: "loc|dev"
+  jmx:
+    enabled: true
+  rsocket:
+    server:
+      port: 7000
+  grpc:
+    server:
+      port: 6565
+
+management:
+  endpoint:
+    chaosmonkey:
+      access: unrestricted
+    chaosmonkeyjmx:
+      access: unrestricted
+
+# https://github.com/codecentric/chaos-monkey-spring-boot/tree/main/chaos-monkey-docs/src/main/asciidoc
+chaos:
+  monkey:
+    enabled: true
+    watcher:
+      rest-controller: true
+      service: true
+      repository: true
+      component: false
+      actuator-health: true
+      controller: false
+      rest-template: false
+      web-client: false
+    assaults:
+      level: 10
+      latency-active: true
+      exceptions-active: true
+      kill-application-active: true
+      memory-active: true
+      cpu-active: true
+
+debug: false
+logging:
+  level:
+    root: ERROR
+    com.camila.api.product: ERROR
+    org.springframework: ERROR
+    org.springframework.grpc: ERROR
+    org.springframework.data: ERROR
+    org.springframework.security: ERROR
+    org.springframework.security.oauth2: ERROR
+    org.springframework.web.reactive.socket: ERROR
+    org.springframework.context: ERROR
+    org.mongodb: ERROR
+    com.mongodb: ERROR
+    com.couchbase: ERROR
+    org.springframework.boot: ERROR
+    org.springframework.boot.web.embedded.netty: ERROR
+    io.grpc.netty: ERROR
+    reactor: ERROR
+    org.hibernate.validator: ERROR
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "!dev"
+  security:
+    user:
+      name: ${BASIC_AUTH_USER:camila}
+      password: ${BASIC_AUTH_PASS:camila}
+
+---
+###### Development properties ######
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+    import: "optional:consul:"
+  cloud:
+    consul:
+      # https://docs.spring.io/spring-cloud-consul/reference/appendix.html
+      enabled: true
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        enabled: true
+        prefer-ip-address: true
+        health-check-path: ${spring.webflux.base-path}/actuator/health
+        health-check-interval: 15s
+        instance-id: ${HOSTNAME:localhost}:${random.int(10,99)}
+        service-name: ${spring.application.name}
+        metadata:
+          management-context-path: /${spring.webflux.base-path}/actuator
+      config:
+        enabled: true
+        fail-fast: false
+        prefixes: 
+          -config
+        default-context: application
+        format: YAML
+        watch:
+          delay: 5000
+          wait-time: 30
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USER:default}
+      password: ${REDIS_PASSWORD:camila}
+      timeout: 20000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+  cache:
+    type: redis
+    cache-names: findByInternalId,sortedProducts
+    redis:
+      time-to-live: 120s
+      cache-null-values: true
+      use-key-prefix: true
+      key-prefix: camila-product
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}"
+
+springdoc:
+  enable-spring-security: true
+  show-oauth2-endpoints: true
+
+openapi:
+  oAuthFlow:
+    url: "${GATEWAY_SERVER_URL:http://localhost}:${server.port:8080}"
+    tokenUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+    authorizationUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/auth"
+    refreshUrl: "${KEYCLOAK_URL:http://localhost:9191}/realms/${KEYCLOAK_REALM:camila-realm}/protocol/openid-connect/token"
+
+# Enable all management endpoints
+# https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing.tracer-implementations
+management:
+  observations:
+    enable:
+      all: true
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  # old way to configure Zipkin exporter (deprecated in favor of OpenTelemetry)
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
+      connect-timeout: 10s
+      read-timeout: 30s
+
+otel:
+  instrumentation:
+    common:
+      default-enabled: false
+    micrometer:
+      enabled: true
+    spring-webflux:
+      enabled: true
+  exporter:
+    otlp:
+      endpoint: "${OTEL_TRACING_ENDPOINT:http://localhost:4317}"
+      timeout: 10s
+
+---
+###### Integration properties ######
+spring:
+  config:
+    activate:
+      on-profile: "int"
+  webflux:
+    base-path: /product-int/api
+  rsocket:
+    server:
+      mapping-path: /product-int/api/rsocket
+      transport: websocket
+      port: 7000
+  grpc:
+    server:
+      port: 6565
+  mongodb:
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongo-nodeport-svc.mongodb.svc.cluster.local:27017/camila-db?maxPoolSize=200&connectTimeoutMS=30000&timeoutMS=120000"
+    authentication-database: camila-db
+
+# Disable all management endpoints
+management:
+  tracing:
+    enabled: false
+
+---
+###### Pre|Production properties ######
+
+# Spring base properties
+spring:
+  config:
+    activate:
+      on-profile: "pre|pro"
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
+  main:
+    log-startup-info: true
+  webflux:
+    base-path: /product/api
+  rsocket:
+    server:
+      mapping-path: /product/api/rsocket
+      port: 7000
+  grpc:
+    server:
+      port: 6565
+
+  # Enable AWS Cognito Oauth2 security
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: "${SECURITY_ISSUER_URI}"
+
+# Disable all management endpoints
+management:
+  tracing:
+    enabled: false
+
+# Turn off global forward headers
+server:
+  forward-headers-strategy: framework
+
+# Turn off global debug
+debug: false
+
+# Enable OpenApi
+openapi:
+  oAuthFlow:
+    url: "${SERVER_URL:http://localhost:8080}"
+    tokenUrl: "${SECURITY_DOMAIN_URI}/oauth2/token"
+    authorizationUrl: "${SECURITY_DOMAIN_URI}/oauth2/authorize"
+    refreshUrl: "${SECURITY_DOMAIN_URI}/oauth2/token"
+
+# Enable logging for all levels
+logging:
+  # https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.structured
+  structured:
+    format:
+      # https://www.elastic.co/docs/reference/ecs
+      console: ecs
+    ecs:
+      service:
+        name: "${info.app.name}"
+        version: "${info.app.version}"
+        environment: "${spring.profiles.active}"
+  level:
+    reactor: ERROR
+    org.hibernate.validator: ERROR
+    org.springframework: ERROR
+    org.springframework.web: ERROR
+    org.springframework.grpc: ERROR
+    org.springframework.data: ERROR
+    org.springframework.context: ERROR
+    org.mongodb: ERROR
+    com.mongodb: ERROR
+    com.couchbase: ERROR
+    org.springframework.boot: ERROR
+    org.springframework.boot.web.embedded.netty: INFO
+    io.grpc.netty: ERROR
+
+---
+###### Local docker compose properties ######
+
+spring:
+  config:
+    activate:
+      on-profile: "local-compose"
+  rsocket:
+    server:
+      port: 7000
+  grpc:
+    server:
+      port: 6565
+  couchbase:
+    connection-string: couchbase://couchbase:11207
+    username: ${COUCHBASE_USERNAME:Administrator}
+    password: ${COUCHBASE_PASSWORD:password}
+    env:
+      ssl:
+        enabled: false
+  mongodb:
+    uri: "mongodb://${MONGO_USER:camilauser}:${MONGO_PASS:camilauser}@mongodb:27017/camila-db?maxPoolSize=200&connectTimeoutMS=120000&timeoutMS=120000&serverSelectionTimeoutMS=90000"
+    auto-index-creation: true
+    uuid-representation: JAVA_LEGACY
+    ssl:
+      enabled: false
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      username: ${REDIS_USER:default}
+      password: ${REDIS_PASSWORD:camila}
+      timeout: 20000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 4
+  cache:
+    type: redis
+    cache-names: findByInternalId,sortedProducts
+    redis:
+      time-to-live: 120s
+      cache-null-values: true
+      use-key-prefix: true
+      key-prefix: camila-product
+  # https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose
+  docker:
+    compose:
+      enabled: true
+      skip:
+        in-tests: true
+      start:
+        command: up
+        skip: if_running
+        log-level: debug
+      stop:
+        command: down
+        timeout: 15s
+      readiness:
+        timeout: 2m
+        wait: always
+      profiles:
+        active: "docker-compose"
+      file: "${user.dir}/../../../../camila-orchestrator/dev/compose/docker-compose-spring-boot.yml"
+      lifecycle-management: start_and_stop
+  jmx:
+    enabled: true
+
+debug: false
+logging:
+  level:
+    root: INFO
+    com.camila.api.product: DEBUG
+    com.camila.api.product.infrastructure.adapter.output.mongo.config.MongoCondition: ERROR
+    com.camila.api.product.infrastructure.adapter.output.couchbase.config.CouchbaseCondition: ERROR
+    org.springframework: WARN
+    org.springframework.web: WARN
+    org.springframework.grpc: WARN
+    org.springframework.data: WARN
+    org.springframework.cache: TRACE
+    org.springframework.context: WARN
+    org.mongodb: WARN
+    com.mongodb: WARN
+    com.couchbase: WARN
+    io.lettuce: WARN
+    org.springframework.boot: WARN
+    org.springframework.boot.actuate: WARN
+    org.springframework.boot.docker: WARN
+    org.springframework.boot.rsocket: WARN
+    io.grpc.netty: WARN
+    io.netty: WARN
+    reactor: WARN

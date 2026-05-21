@@ -199,14 +199,14 @@ Resources:
     Type: AWS::EKS::Cluster
     Properties:
       Name: !Ref ClusterName
-      Version: '1.34'
+      Version: '1.35'
       RoleArn: !GetAtt EKSClusterRole.Arn
       UpgradePolicy:
         SupportType: STANDARD
       # Enable API access configuration
       AccessConfig:
         AuthenticationMode: API_AND_CONFIG_MAP
-        BootstrapClusterCreatorAdminPermissions: true
+        BootstrapClusterCreatorAdminPermissions: false
       ResourcesVpcConfig:
         SecurityGroupIds:
           - !Ref ClusterSecurityGroup
@@ -276,7 +276,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: vpc-cni
-      AddonVersion: v1.20.4-eksbuild.1
+      AddonVersion: v1.21.1-eksbuild.7
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -285,7 +285,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: coredns
-      AddonVersion: v1.12.4-eksbuild.1
+      AddonVersion: v1.13.2-eksbuild.4
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -294,7 +294,7 @@ Resources:
     Type: AWS::EKS::Addon
     Properties:
       AddonName: kube-proxy
-      AddonVersion: v1.34.1-eksbuild.2
+      AddonVersion: v1.35.3-eksbuild.2
       ClusterName: !Ref EKSCluster
       ResolveConflicts: OVERWRITE
 
@@ -395,7 +395,7 @@ Resources:
       ClusterName: !Ref EKSCluster
       PrincipalArn: !Ref AdminUserArn
       AccessPolicies:
-        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+        - PolicyArn: 'arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy'
           AccessScope:
             Type: cluster
       Type: STANDARD
@@ -407,7 +407,7 @@ Resources:
       ClusterName: !Ref EKSCluster
       PrincipalArn: !Ref AdminRoleArn
       AccessPolicies:
-        - PolicyArn: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+        - PolicyArn: 'arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy'
           AccessScope:
             Type: cluster
       Type: STANDARD

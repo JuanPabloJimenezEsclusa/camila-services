@@ -9,10 +9,13 @@ SEPARATOR="\n ################################################## \n"
 
 cd "$(dirname "$0")"
 
+echo -e "${SEPARATOR} 🐳 create a docker network for the cluster. ${SEPARATOR}"
+docker network create --subnet=172.28.0.0/24 kind-network || true
+export KIND_EXPERIMENTAL_DOCKER_NETWORK=kind-network
+
 echo -e "${SEPARATOR} 🚢 create a k8s cluster. ${SEPARATOR}"
 # https://kind.sigs.k8s.io/
 # https://kind.sigs.k8s.io/docs/user/quick-start/#creating-a-cluster
-
 kind create cluster --config kind-cluster-config.yml
 kind get clusters
 kubectl cluster-info --context kind-kind-cluster
@@ -20,7 +23,7 @@ kubectl cluster-info --context kind-kind-cluster
 
 echo -e "${SEPARATOR} 🗑️ Init local registry. ${SEPARATOR}"
 # https://kind.sigs.k8s.io/docs/user/local-registry/
-docker run -d --rm -p "5000:5000" --network kind --name "kind-registry" registry:3
+docker run -d --rm -p "5000:5000" --network kind-network --name "kind-registry" registry:3
 
 
 echo -e "${SEPARATOR} 🔗 Update the nodes to use the local registry. ${SEPARATOR}"
@@ -61,11 +64,11 @@ echo -e "${SEPARATOR} 🚀 install knative. ${SEPARATOR}"
 # https://knative.dev/blog/articles/set-up-a-local-knative-environment-with-kind/
 # https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#prerequisites
 
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-crds.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-core.yaml
-kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-v1.19.5/kourier.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-default-domain.yaml
-kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.19.6/serving-hpa.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.20.1/serving-crds.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.20.1/serving-core.yaml
+kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-v1.20.0/kourier.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.20.1/serving-default-domain.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.20.1/serving-hpa.yaml
 
 ## By default, the Kourier service is set to be of type LoadBalancer. On local machines, this type doesn’t work
 kubectl patch svc kourier \

@@ -18,6 +18,7 @@ concurrency:
 jobs:
   pmd-code-scan:
     if: github.event.pull_request.draft == false
+    name: PMD Code Analysis
     permissions:
       contents: read
       security-events: write
@@ -25,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        module: [ camila-admin, camila-config, camila-discovery, camila-gateway, camila-product-api ]
+        module: [ camila-admin, camila-gateway, camila-product-api ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

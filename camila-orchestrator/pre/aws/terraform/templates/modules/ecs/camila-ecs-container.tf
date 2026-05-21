@@ -370,7 +370,7 @@ resource "aws_ecs_task_definition" "main" {
     }
     secrets = [
       { name = "spring.couchbase.password", valueFrom = "${aws_secretsmanager_secret.couchbase_password.arn}:password::" },
-      { name = "spring.data.mongodb.uri", valueFrom = "${aws_secretsmanager_secret.mongo_uri.arn}:uri::" }
+      { name = "spring.mongodb.uri", valueFrom = "${aws_secretsmanager_secret.mongo_uri.arn}:uri::" }
     ]
     environment = [
       { name = "LANGUAGE", value = "en_US.utf8" },
@@ -386,9 +386,9 @@ resource "aws_ecs_task_definition" "main" {
       { name = "spring.couchbase.connection-string", value = var.couchbase_connection },
       { name = "spring.couchbase.username", value = var.couchbase_username },
       { name = "spring.couchbase.env.ssl.enabled", value = "true" },
-      { name = "spring.data.mongodb.ssl.enabled", value = "true" },
+      { name = "spring.mongodb.ssl.enabled", value = "true" },
       { name = "spring.rsocket.server.port", value = "7000" },
-      { name = "grpc.server.port", value = "6565" }
+      { name = "spring.grpc.server.port", value = "6565" }
     ]
   }])
 
@@ -737,6 +737,7 @@ resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
   port              = 443
   protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
   certificate_arn   = aws_acm_certificate.main.arn
 
   default_action {
@@ -761,6 +762,7 @@ resource "aws_lb_listener" "rsocket" {
   load_balancer_arn = aws_lb.main.arn
   port              = 7001
   protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
   certificate_arn   = aws_acm_certificate.main.arn
 
   default_action {
@@ -785,6 +787,7 @@ resource "aws_lb_listener" "grpc" {
   load_balancer_arn = aws_lb.main.arn
   port              = 50051
   protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
   certificate_arn   = aws_acm_certificate.main.arn
 
   default_action {

@@ -1,4 +1,4 @@
-# camila-product-orchestrator-int (k8s) (AWS)
+# orchestrator-int (k8s) (AWS)
 
 > [Summary](#-summary)
   • [Dependencies](#-dependencies)
@@ -22,9 +22,9 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 <details>
 <summary><strong>Expand Dependencies</strong></summary>
 
-* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/28/)
-* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
-* K8s ~= [1.34.x](https://kubernetes.io/releases/)
+* Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
+* AWS CLI ~= [2.34.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* K8s ~= [1.35.x](https://kubernetes.io/releases/)
 * K9s ~= [v0.50.x](https://github.com/derailed/k9s/releases)
 
 </details>
@@ -36,15 +36,12 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 <details>
 <summary><strong>Expand Architecture</strong></summary>
 
-<p style="text-align: center">
+  With AWS Cloud Formation
 
-  <h4>With AWS Cloud Formation</h4>
-  Deployment on Elastic Kubernetes Service (EKS).
+  > Deployment on Elastic Kubernetes Service (EKS).
 
   <img src="images/camila-eks-aws-cf-diagram.svg" alt="camila-eks-aws-cf-diagram" />
   <img src="images/application-composer-camila-eks-stack.png" alt="application-composer" />
-
-</p>
 
 </details>
 
@@ -68,14 +65,14 @@ Based on `AWS Cloud Provider`, specifically [EKS](https://aws.amazon.com/es/eks/
 | [eks-install-alb-controller.sh](cloudformation/eks-install-alb-controller.sh) | Script to install ALB controller addons to let K8S create loadbalancer |
 | [eks-api-apply.sh](cloudformation/eks-api-apply.sh)                           | Script to apply infrastructure using AWS CLI                           |
 | [eks-api-delete.sh](cloudformation/eks-api-delete.sh)                         | Script to delete infrastructure using AWS CLI                          |
-| [fix-eks-access.sh](cloudformation/fix-eks-access.sh)                         | Script to fix access issues with EKS cluster                           |
 
 ---
 
 > The databases are configured as SaaS (Mongo Atlas and Couchbase Capella)
 
 ```bash
-# Init EKS cluster stack 
+# Init EKS cluster stack
+export ADMIN_USER_ARN="arn:aws:iam::546053716955:*******"
 ./eks-stack-init.sh
 
 # Install ALB controller

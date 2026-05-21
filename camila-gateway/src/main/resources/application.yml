@@ -19,9 +19,9 @@ spring:
       timeout: 20000ms
       lettuce:
         pool:
-          max-active: 256      # Aumentado para soportar alta concurrencia
-          max-idle: 64         # Aumentado para reutilizar conexiones
-          min-idle: 16         # Mantener pool caliente
+          max-active: 256
+          max-idle: 64
+          min-idle: 16
   cloud:
     loadbalancer:
       health-check:
@@ -43,9 +43,11 @@ spring:
                 - Path=/product-*/api/**
               metadata:
                 cors:
-                  allowed-origins: '*'
+                  allowed-origin-patterns: '*'
                   allowed-methods: '*'
                   allowed-headers: '*'
+                  allowCredentials: true
+                  allowPrivateNetwork: true
                   max-age: 30
               filters:
                 - name: RemoveRequestHeader     # Remove hop-by-hop headers
@@ -76,8 +78,8 @@ spring:
                     fallbackUri: forward:/fallback
                 - name: DedupeResponseHeader    # Dedupe CORS headers
                   args:
-                    name: Access-Control-Allow-Credentials
-                    strategy: RETAIN_FIRST  # RETAIN_FIRST or RETAIN_LAST
+                    name: Access-Control-Allow-Origin Access-Control-Allow-Credentials
+                    strategy: RETAIN_FIRST      # RETAIN_FIRST or RETAIN_LAST
                 - name: RequestSize             # Limit request size to prevent abuse
                   args:
                     maxSize: 10000
@@ -85,7 +87,7 @@ spring:
             add-to-simple-url-handler-mapping: true
             cors-configurations:
               '[/**]':
-                allowed-origins: "*"
+                allowed-origin-patterns: "*"
                 allowed-headers:
                   - "Origin"
                   - "Content-Type"
@@ -114,6 +116,7 @@ spring:
             request-size:
               enabled: true
           default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials RETAIN_FIRST
             - TokenRelay
   main:
     web-application-type: reactive
@@ -208,8 +211,6 @@ management:
     web:
       exposure:
         include: "*"
-      access:
-        default: "unrestricted"
   endpoint:
     env:
       show-values: ALWAYS
@@ -240,11 +241,8 @@ management:
       enabled: true
     java:
       enabled: true
-  zipkin:
-    tracing:
-      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
-      connect-timeout: 10s
-      read-timeout: 30s
+  tracing:
+    enabled: false
 
 server:
   port: ${PORT:8090}
@@ -267,39 +265,29 @@ spring:
   config:
     activate:
       on-profile: "loc|dev"
-    import: "optional:configserver:${CONFIG_SERVER_URI:}"
+    import: "optional:consul:"
   cloud:
-    config:
+    consul:
       enabled: true
-      retry:
-        max-attempts: 10
-        max-interval: 10000
-        initial-interval: 1000
-        multiplier: 1.1
+      host: ${CONSUL_HOST:localhost}
+      port: ${CONSUL_PORT:8500}
       discovery:
         enabled: true
-        service-id: "camila-config"
-      label: main
-      profile: ${SPRING_PROFILES_ACTIVE}
-      name: ${spring.application.name}
-      allow-override: true
-    discovery:
-      enabled: true
-
-# discovery
-eureka:
-  client:
-    enabled: true
-    serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
-    healthcheck:
-      enabled: true
-  instance:
-    preferIpAddress: true
-    statusPageUrlPath: actuator/info
-    healthCheckUrlPath: actuator/health
-    nonSecurePortEnabled: true
-    leaseRenewalIntervalInSeconds: 15
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+      config:
+        enabled: true
+        fail-fast: false
+        prefixes: 
+          - config
+        default-context: ${spring.application.name}
+        format: YAML
+        watch:
+          delay: 5000
+          wait-time: 30
 
 ---
 ###### Integration properties ######
@@ -327,6 +315,36 @@ spring:
             redirect-uri: "{baseUrl}"
             scope: profile, openid, email, roles, web-origins, camila/read, camila/write
 
+# Enable all management endpoints
+# https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing.tracer-implementations
+management:
+  observations:
+    enable:
+      all: true
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  # old way to configure Zipkin exporter (deprecated in favor of OpenTelemetry)
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_TRACING_ENDPOINT:http://localhost:9411/api/v2/spans}
+      connect-timeout: 10s
+      read-timeout: 30s
+
+otel:
+  instrumentation:
+    common:
+      default-enabled: false
+    micrometer:
+      enabled: true
+    spring-webflux:
+      enabled: true
+  exporter:
+    otlp:
+      endpoint: "${OTEL_TRACING_ENDPOINT:http://localhost:4317}"
+      timeout: 10s
+
 ---
 ###### Test properties ######
 spring:
@@ -334,11 +352,9 @@ spring:
     activate:
       on-profile: "test"
   cloud:
-    config:
+    consul:
       enabled: false
-    discovery:
-      enabled: false
-
-eureka:
-  client:
-    enabled: false
+      discovery:
+        enabled: false
+      config:
+        enabled: false

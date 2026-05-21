@@ -1,8 +1,16 @@
+pluginManagement {
+  repositories {
+    gradlePluginPortal()
+    mavenCentral()
+  }
+}
+
 rootProject.name = 'camila-services'
 
 include 'camila-admin'
-include 'camila-config'
-include 'camila-discovery'
 include 'camila-gateway'
 include 'camila-product-api'
+include 'camila-product-api:camila-product-api-domain'
+include 'camila-product-api:camila-product-api-application'
+include 'camila-product-api:camila-product-api-infrastructure'
 include 'camila-coverage-jacoco'

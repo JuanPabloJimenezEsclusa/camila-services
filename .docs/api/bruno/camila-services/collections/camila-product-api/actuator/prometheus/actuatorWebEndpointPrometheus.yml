@@ -1,0 +1,36 @@
+info:
+  name: Actuator web endpoint 'prometheus'
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/actuator/prometheus"
+  headers:
+    - name: Accept
+      value: text/plain;version=0.0.4;charset=utf-8
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/actuator/prometheus"
+      method: GET
+      headers:
+        - name: Accept
+          value: text/plain;version=0.0.4;charset=utf-8
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: text/plain;version=0.0.4;charset=utf-8
+      body:
+        type: text
+        data: "{}"

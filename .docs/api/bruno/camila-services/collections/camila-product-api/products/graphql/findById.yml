@@ -1,0 +1,39 @@
+info:
+  name: findById
+  type: graphql
+  seq: 1
+
+graphql:
+  method: POST
+  url: "{{baseUrl}}/graphql"
+  headers:
+    - name: Accept
+      value: application/json
+  body:
+    query: |
+      query findById($internalId: ID!) {
+        findById(internalId: $internalId) {
+          id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock
+        }
+      }
+    variables: |-
+      {
+         "internalId": "{{randomProductId}}"
+      }
+  auth: inherit
+
+runtime:
+  variables:
+    - name: randomProductId
+      value: "1"
+  scripts:
+    - type: before-request
+      code: |-
+        const randomId = Math.floor(Math.random() * 100) + 1;
+        bru.setVar("randomProductId", randomId);
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

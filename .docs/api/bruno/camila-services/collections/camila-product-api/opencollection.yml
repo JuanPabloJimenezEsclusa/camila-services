@@ -1,0 +1,29 @@
+opencollection: 1.0.0
+
+info:
+  name: camila-product-api
+config:
+  protobuf:
+    protoFiles:
+      - type: file
+        path: ../../../../../../camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-grpc/src/main/proto/product.proto
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+docs:
+  content: API Rest in Camila Product service project
+  type: text/markdown
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

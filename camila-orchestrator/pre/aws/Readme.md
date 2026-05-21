@@ -1,4 +1,4 @@
-# camila-product-orchestrator-pre (AWS)
+# orchestrator-pre (ECS) (AWS)
 
 > [Summary](#-summary)
 • [Dependencies](#-dependencies)
@@ -21,7 +21,7 @@ Based on `AWS Cloud Provider`
 <summary><strong>Expand Dependencies</strong></summary>
 
 * Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
-* AWS CLI ~= [2.32.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
+* AWS CLI ~= [2.34.x](https://docs.aws.amazon.com/es_es/cli/latest/userguide/getting-started-install.html)
 * JQ ~= [1.8.x](https://github.com/jqlang/jq)
 * Terraform ~= [1.14.x](https://developer.hashicorp.com/terraform/install#linux)
 
@@ -34,25 +34,24 @@ Based on `AWS Cloud Provider`
 <details>
 <summary><strong>Expand Architecture</strong></summary>
 
-<p style="text-align: center">
-
-  <h4>With AWS Cloud Formation</h4>
-  Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
+  With AWS Cloud Formation
+  
+  > Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
 
   <img src="images/camila-services-aws-cf-diagram.svg" alt="camila-services-aws-cf-diagram" />
   <img src="images/application-composer-camila-product-stack.png" alt="application-composer" />
 
-  <h4>With Terraform</h4>
-  Deployment covering some advanced architectural options. Contains AWS components that do not have a free tier. The following elements are incorporated:
+  With Terraform
 
-  1. VPC Endpoint, to enable communication between the container service (ECS) and the image registry (ECR) without requiring a public IP.
-  2. NAT Gateway, to allow outbound communication with databases located in another virtual network, while keeping containers in a private subnet without public IPs.
-  3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
+  > Deployment covering some advanced architectural options. Contains AWS components that do not have a free tier. The following elements are incorporated:
+
+  > 1. VPC Endpoint, to enable communication between the container service (ECS) and the image registry (ECR) without requiring a public IP.
+  > 2. NAT Gateway, to allow outbound communication with databases located in another virtual network, while keeping containers in a private subnet without public IPs.
+  > 3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
 
   <img src="images/camila-services-aws-tf-diagram.svg" alt="camila-services-aws-tf-diagram" />
-  Docs: <a href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-serverless-technologies.html">AWS microservices-on-serverless-technologies</a>
-
-</p>
+  
+  > Docs: <a href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-serverless-technologies.html">AWS microservices-on-serverless-technologies</a>
 
 </details>
 
@@ -76,8 +75,6 @@ Based on `AWS Cloud Provider`
 | [delete-cognito-aws-stack.sh](cloudformation/delete-cognito-aws-stack.sh)                             | Script to delete Oauth2 service using AWS CLI                       |
 | [init-aws-stack.sh](cloudformation/init-aws-stack.sh)                                                 | Script to deploy infrastructure from an AWS CloudFormation template |
 | [delete-aws-stack.sh](cloudformation/delete-aws-stack.sh)                                             | Script to delete infrastructure using AWS CLI                       |
-| [init-app-runner-stack.sh](cloudformation/init-app-runner-stack.sh)                                   | Script to deploy App Runner from an AWS CloudFormation template     |
-| [delete-app-runner-stack.sh](cloudformation/delete-app-runner-stack.sh)                               | Script to delete App Runner using AWS CLI                           |
 
 ---
 
@@ -86,25 +83,20 @@ Based on `AWS Cloud Provider`
 ```bash
 # Init Oauth2 service
 ./cloudformation/init-cognito-aws-stack.sh
+```
 
+```bash
 # Init containers infrastructure
 export COUCHBASE_CONNECTION="couchbases://cb.****.cloud.couchbase.com"
 export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&timeoutMS=120000"
 ./cloudformation/init-aws-stack.sh
-
-# Init App Runner (if necessary)
-./cloudformation/init-app-runner-stack.sh
 ```
 
 ```bash
-# Delete App Runner (if necessary)
-./cloudformation/delete-app-runner-stack.sh
-
 # Delete containers infrastructure
 ./cloudformation/delete-aws-stack.sh
-
 # Delete Oauth2 service
 ./cloudformation/delete-cognito-aws-stack.sh
 ```
@@ -131,7 +123,9 @@ export COUCHBASE_USERNAME="juanpablo****"
 export COUCHBASE_PASSWORD="*************"
 export MONGO_URI="mongodb+srv://****:****@****.****.mongodb.net/camila-db?ssl=true&retryWrites=true&w=majority&maxPoolSize=200&connectTimeoutMS=5000&timeoutMS=120000"
 ./terraform/init-aws-plan.sh
+```
 
+```bash
 # Apply plan
 ./terraform/apply-aws-plan.sh
 ```
@@ -175,8 +169,8 @@ docker run --rm -it \
   --env LANG=en_US.utf8 \
   --env LANGUAGE=en_US.utf8 \
   --env LC_ALL=en_US.utf8 \
-  --env spring.data.mongodb.uri="mongodb+srv://****:****@****.****.mongodb.net/camila-db" \
-  --env spring.data.mongodb.ssl.enabled="true" \
+  --env spring.mongodb.uri="mongodb+srv://****:****@****.****.mongodb.net/camila-db" \
+  --env spring.mongodb.ssl.enabled="true" \
   --env spring.couchbase.connection-string="couchbases://cb.****.cloud.couchbase.com" \
   --env spring.couchbase.username="juanpablo****" \
   --env spring.couchbase.password="*************" \
@@ -213,7 +207,6 @@ docker run --rm -it \
   * [AWS NAT Gateway](https://eu-west-1.console.aws.amazon.com/vpcconsole/home?region=eu-west-1#NatGateways) 💰💰💰
   * [AWS API Gateway](https://eu-west-1.console.aws.amazon.com/apigateway/main/apis?region=eu-west-1) 💰💰💰
   * [AWS WAF](https://us-east-1.console.aws.amazon.com/wafv2/homev2/web-acls?region=eu-west-1) 💰
-  * [APP Runner](https://eu-west-1.console.aws.amazon.com/apprunner/home?region=eu-west-1#/services) 💰
   * [AWS Route 53](https://eu-west-1.console.aws.amazon.com/route53/v2/hostedzones) 💰
 
 * Databases

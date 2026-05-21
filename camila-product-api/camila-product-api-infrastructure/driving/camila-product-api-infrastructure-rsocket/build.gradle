@@ -1,0 +1,31 @@
+plugins {
+  id 'java'
+  id 'org.springframework.boot'
+  id 'io.spring.dependency-management'
+}
+
+description = 'Camila Product API - RSocket Input Adapter'
+
+dependencies {
+  // Internal Modules
+  implementation project(':camila-product-api-domain')
+  implementation project(':camila-product-api-application')
+
+  // Spring Boot Core
+  implementation 'org.springframework.boot:spring-boot-starter-rsocket'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+  // Utilities
+  compileOnly 'org.jspecify:jspecify'
+
+  // Development Tools
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct}"
+  implementation "org.mapstruct:mapstruct:${mapstruct}"
+
+  // Testing
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'io.projectreactor:reactor-test'
+  testImplementation 'org.instancio:instancio-junit'
+}

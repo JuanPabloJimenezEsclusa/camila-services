@@ -10,6 +10,8 @@ concurrency:
 
 jobs:
   publish:
+    if: github.event.pull_request.draft == false
+    name: Build and Deploy Maven Artifacts
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,16 +26,16 @@ jobs:
           distribution: 'semeru'
           cache: 'maven'
       - name: Cache local Maven repository
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Build with Maven
-        run: mvn -B package -Dmaven.test.skip=true --file pom.xml
+        run: mvn --no-transfer-progress -B package -Dmaven.test.skip=true -Dgpg.skip --file pom.xml
       - name: Deploy with Maven if not exists
         if: ${{ github.event_name != 'pull_request' }}
-        run: mvn -B deploy -Dmaven.test.skip=true --file pom.xml || true
+        run: mvn --no-transfer-progress -B deploy -Dmaven.test.skip=true -Dgpg.skip --file pom.xml || true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

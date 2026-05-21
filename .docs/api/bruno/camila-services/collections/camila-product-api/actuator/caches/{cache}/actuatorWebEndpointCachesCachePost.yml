@@ -1,0 +1,44 @@
+info:
+  name: Actuator web endpoint 'caches-cache'_1
+  type: http
+  seq: 2
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/actuator/caches/:cache"
+  headers:
+    - name: Accept
+      value: application/vnd.spring-boot.actuator.v3+json
+  params:
+    - name: cache
+      value: <string>
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+
+examples:
+  - name: OK
+    request:
+      url: "{{baseUrl}}/actuator/caches/:cache"
+      method: DELETE
+      headers:
+        - name: Accept
+          value: application/vnd.spring-boot.actuator.v3+json
+      params:
+        - name: cache
+          value: ""
+          type: path
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: Content-Type
+          value: application/json
+      body:
+        type: json
+        data: "{}"

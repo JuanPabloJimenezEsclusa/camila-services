@@ -23,7 +23,8 @@ ECR_IMAGE_TAG="${ECR_IMAGE_TAG:-1.0.0}"
 __build_project() {
   echo -e "${SEPARATOR} 🔨 Compile and build the project. ${SEPARATOR}"
   export SPRING_PROFILES_ACTIVE=int
-  mvn spring-boot:build-image \
+  mvn --no-transfer-progress --also-make --batch-mode \
+    spring-boot:build-image \
     -Dmaven.build.cache.enabled=false \
     -Dmaven.test.skip=true \
     -f ../../../../../camila-product-api/pom.xml

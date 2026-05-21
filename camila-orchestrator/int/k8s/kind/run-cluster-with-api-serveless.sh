@@ -12,10 +12,10 @@ cd "$(dirname "$0")"
 echo -e "${SEPARATOR} ✏️ Update /etc/hosts file. ${SEPARATOR}"
 if grep -q "kind-registry" /etc/hosts; then
   echo "🔄 Updating existing entry..."
-  sudo sed -i "s/.*kind-registry$/172.18.0.6 kind-registry/" /etc/hosts
+  sudo sed -i "s/.*kind-registry$/172.28.0.6 kind-registry/" /etc/hosts
 else
   echo "➕ Adding new entry..."
-  echo "172.18.0.6 kind-registry" | sudo tee -a /etc/hosts > /dev/null
+  echo "172.28.0.6 kind-registry" | sudo tee -a /etc/hosts > /dev/null
 fi
 
 echo -e "${SEPARATOR} 📦 Install clients and start cluster. ${SEPARATOR}"

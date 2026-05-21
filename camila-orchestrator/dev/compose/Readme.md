@@ -1,4 +1,4 @@
-# camila-product-orchestrator-dev
+# orchestrator-dev (compose)
 
 > [Summary](#-summary)
   • [Usage](#-usage)
@@ -41,8 +41,6 @@ sudo ./mappingHosts.sh
 
 The Docker images for the services need to be built beforehand:
 
-  * docker.io/library/camila-config:1.0.0
-  * docker.io/library/camila-discovery:1.0.0
   * docker.io/library/camila-gateway:1.0.0
   * docker.io/library/camila-product-api:1.0.0
   * docker.io/library/camila-admin:1.0.0
@@ -58,7 +56,7 @@ docker-compose ps
 
 # View logs (follow option shows live updates)
 docker-compose logs mongodb couchbase redis --follow 
-docker-compose logs admin config discovery gateway backend-product --follow
+docker-compose logs admin consul gateway backend-product --follow
 docker-compose logs fluentd elasticsearch kibana --follow
 
 # Stop the services
@@ -83,15 +81,11 @@ docker-compose down
   * [Product API documentation 3](http://localhost:8082/product-dev/api/swagger-ui.html)
 * **Gateway:**
   * [Gateway API documentation](http://localhost:8090/swagger-ui.html)
-* **Discovery:**
-  * [Service discovery UI](http://localhost:8761)
+* **Consul (Discovery + Config):**
+  * [Consul UI](http://localhost:8500/ui/)
+  * [Consul KV config](http://localhost:8500/ui/dc1/kv/config/)
 * **Admin:**
   * [Service admin UI](http://localhost:8100)
-* **Config:**
-  * [Config for admin - dev environment](http://localhost:8888/camila-admin/dev/main)
-  * [Config for admin](http://localhost:8888/camila-admin/main)
-  * [Config for gateway - dev environment](http://localhost:8888/camila-gateway/dev/main)
-  * [Config for product API - dev environment](http://localhost:8888/camila-product-api/dev/main)
 * **Keycloak (Authentication):**
   * [Keycloak admin console](http://keycloak:9191/admin/master/console) (Login: admin/admin1234)
   * [Keycloak OpenID configuration](http://keycloak:9191/realms/camila-realm/.well-known/openid-configuration)
@@ -103,8 +97,9 @@ docker-compose down
   * [Alertmanager UI](http://localhost:9093)
 * **Grafana (Monitoring Visualization):**
   * [Grafana dashboard](http://localhost:3000) (Login: admin/admin)
-* **Zipkin (Distributed Tracing):**
+* **Open telemetry (Distributed Tracing):**
   * [Zipkin tracing UI](http://localhost:9411/zipkin)
+  * [Jaeger tracing UI](http://localhost:16686/search)
 * **Elasticsearch (Search Engine):**
   * [Elasticsearch access](http://localhost:9200/) (Login: elastic/changeme)
 * **Kibana (Search Engine Visualization):**
@@ -119,7 +114,7 @@ docker-compose down
 ---
 
 <details>
-<summary><strong>Expand Links</strong></summary>
+<summary><strong>Expand Validate</strong></summary>
 
 ```bash
 # During the test, use this to check circuit breaker status (should remain CLOSED)
