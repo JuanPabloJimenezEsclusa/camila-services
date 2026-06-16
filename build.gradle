@@ -4,10 +4,10 @@ plugins {
   id 'jacoco'
   id 'pmd'
   id 'org.sonarqube' version '7.3.1.8318'
-  id 'org.springframework.boot' version '4.0.6' apply false
+  id 'org.springframework.boot' version '4.1.0' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
-  id 'org.graalvm.buildtools.native' version '1.1.1' apply false
-  id 'com.github.spotbugs' version '6.5.5' apply false
+  id 'org.graalvm.buildtools.native' version '1.1.2' apply false
+  id 'com.github.spotbugs' version '6.5.6' apply false
   id 'org.openapi.generator' version '7.23.0' apply false
   id 'org.openrewrite.rewrite' version '7.34.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
@@ -49,8 +49,8 @@ subprojects {
     }
 
     dependencies {
-      compileOnly 'com.google.errorprone:error_prone_annotations:2.49.0'
-      errorproneConfig 'com.google.errorprone:error_prone_core:2.49.0'
+      compileOnly 'com.google.errorprone:error_prone_annotations:2.50.0'
+      errorproneConfig 'com.google.errorprone:error_prone_core:2.50.0'
     }
 
     tasks.withType(JavaCompile) {
@@ -208,10 +208,10 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '4.0.6'
+    springBootVersion = '4.1.0'
     springFrameworkVersion = '6.2.11'
-    springCloudVersion = '2025.1.1'
-    springBootAdminVersion = '4.0.4'
+    springCloudVersion = '2025.1.2'
+    springBootAdminVersion = '4.1.0'
 
     // Observability
     opentelemetryVersion = '1.63.0'
@@ -241,8 +241,8 @@ subprojects {
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
-    protobufJavaVersion = '4.35.0'
-    grpcVersion = '1.81.0'
+    protobufJavaVersion = '4.35.1'
+    grpcVersion = '1.82.0'
     springGrpcVersion = '1.0.3'
 
     // Tools
