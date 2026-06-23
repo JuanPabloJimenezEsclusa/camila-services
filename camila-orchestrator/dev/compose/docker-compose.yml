@@ -140,7 +140,7 @@ services:
       camila_product_network:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.3.2-ubi9
+    image: mongodb/mongodb-community-server:8.3.4-ubi9
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
@@ -459,7 +459,7 @@ services:
     networks:
       camila_product_network:
   alertmanager:
-    image: prom/alertmanager:v0.32.2
+    image: prom/alertmanager:v0.33.0
     container_name: alertmanager
     hostname: alertmanager
     restart: unless-stopped
@@ -485,7 +485,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:13.0.2
+    image: grafana/grafana:13.1.0
     container_name: grafana
     hostname: grafana
     restart: unless-stopped
@@ -678,7 +678,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.30.1
+    image: axllent/mailpit:v1.30.2
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1
