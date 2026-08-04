@@ -4,16 +4,16 @@ plugins {
   id 'jacoco'
   id 'pmd'
   id 'org.sonarqube' version '7.3.1.8318'
-  id 'org.springframework.boot' version '4.0.6' apply false
+  id 'org.springframework.boot' version '4.1.0' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
-  id 'org.graalvm.buildtools.native' version '1.1.1' apply false
-  id 'com.github.spotbugs' version '6.5.5' apply false
-  id 'org.openapi.generator' version '7.23.0' apply false
-  id 'org.openrewrite.rewrite' version '7.34.0' apply false
+  id 'org.graalvm.buildtools.native' version '1.1.6' apply false
+  id 'com.github.spotbugs' version '6.5.9' apply false
+  id 'org.openapi.generator' version '7.24.0' apply false
+  id 'org.openrewrite.rewrite' version '7.38.0' apply false
   id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
   id "io.freefair.lombok" version "9.5.0" apply false
   id 'info.solidsoft.pitest' version '1.19.0' apply false
-  id 'com.github.ben-manes.versions' version '0.54.0'
+  id 'com.github.ben-manes.versions' version '0.58.0'
   id 'org.owasp.dependencycheck' version '12.2.2' apply false
 }
 
@@ -49,8 +49,8 @@ subprojects {
     }
 
     dependencies {
-      compileOnly 'com.google.errorprone:error_prone_annotations:2.49.0'
-      errorproneConfig 'com.google.errorprone:error_prone_core:2.49.0'
+      compileOnly 'com.google.errorprone:error_prone_annotations:2.50.0'
+      errorproneConfig 'com.google.errorprone:error_prone_core:2.50.0'
     }
 
     tasks.withType(JavaCompile) {
@@ -208,24 +208,24 @@ subprojects {
   }
 
   ext {
-    springBootVersion = '4.0.6'
+    springBootVersion = '4.1.0'
     springFrameworkVersion = '6.2.11'
-    springCloudVersion = '2025.1.1'
-    springBootAdminVersion = '4.0.4'
+    springCloudVersion = '2025.1.2'
+    springBootAdminVersion = '4.1.2'
 
     // Observability
-    opentelemetryVersion = '1.63.0'
-    opentelemetryInstrumentationVersion = '2.28.1'
+    opentelemetryVersion = '1.64.0'
+    opentelemetryInstrumentationVersion = '2.30.0'
 
     // Database
-    couchbaseJavaClientVersion = '3.12.0'
+    couchbaseJavaClientVersion = '3.12.2'
 
     // Testing
     testcontainersVersion = '2.0.5'
     testcontainersRedis = '2.2.4'
-    cucumberVersion = '7.34.3'
-    junitVersion = '6.1.0'
-    junitPlatformSuiteVersion = '6.1.0'
+    cucumberVersion = '7.34.6'
+    junitVersion = '6.1.2'
+    junitPlatformSuiteVersion = '6.1.2'
     archunitJunit5Version = '1.4.2'
     instancioJunitVersion = '5.6.0'
     awaitilityVersion = '4.3.0'
@@ -241,14 +241,14 @@ subprojects {
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
-    protobufJavaVersion = '4.35.0'
-    grpcVersion = '1.81.0'
+    protobufJavaVersion = '4.35.1'
+    grpcVersion = '1.83.1'
     springGrpcVersion = '1.0.3'
 
     // Tools
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
-    jspecifyVersion = '1.0.0'
+    jspecifyVersion = '1.0.1'
     commonsLang3 = '3.20.0'
 
     // Plugins
