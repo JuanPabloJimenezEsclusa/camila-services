@@ -89,6 +89,8 @@
     <grpc-server-spring-starter.version>1.0.3</grpc-server-spring-starter.version>
     <protobuf-java.version>4.36.2</protobuf-java.version>
     <io-grpc.version>1.84.0</io-grpc.version>
+    <!-- grpc-java 1.84.0 requires gson 2.14.0; align above the Spring Boot BOM's 2.13.2 -->
+    <gson.version>2.14.0</gson.version>
 
     <!-- Testing -->
     <cucumber.version>7.34.8</cucumber.version>
@@ -107,7 +109,7 @@
     <jspecify.version>1.0.1</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
     <commons-lang3.version>3.20.0</commons-lang3.version>
-    <snakeyaml.version>2.5</snakeyaml.version>
+    <snakeyaml.version>2.6</snakeyaml.version>
     <error_prone_core.version>2.50.0</error_prone_core.version>
     <pitest-maven.version>1.30.0</pitest-maven.version>
     <checkstyle.version>14.1.0</checkstyle.version>
@@ -434,8 +436,13 @@
                       <exclude>org.apache.httpcomponents:httpclient</exclude>
                       <exclude>com.google.errorprone:error_prone_annotations</exclude>
                       <exclude>com.fasterxml.jackson.core:jackson-databind</exclude>
+                      <exclude>com.fasterxml.jackson.core:jackson-core</exclude>
+                      <exclude>com.fasterxml.jackson.core:jackson-annotations</exclude>
                       <exclude>com.fasterxml.jackson.dataformat:jackson-dataformat-yaml</exclude>
                       <exclude>com.fasterxml.jackson.datatype:jackson-datatype-jsr310</exclude>
+                      <!-- grpc-java 1.83.1 mixes guava 33.6.0-android (core/netty) and 33.6.0-jre (services);
+                           same version, differing flavor — not a real upper-bound violation -->
+                      <exclude>com.google.guava:guava</exclude>
                     </excludes>
                   </requireUpperBoundDeps>
                   <requireMavenVersion>
