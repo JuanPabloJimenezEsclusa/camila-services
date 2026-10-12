@@ -15,46 +15,21 @@ import org.springframework.validation.annotation.Validated;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Product graphql adapter.
- */
 @Controller
 @Validated
 class ProductGraphqlAdapter {
 
   private final ProductUseCase productUseCase;
 
-  /**
-   * Instantiates a new Product graphql adapter.
-   *
-   * @param productUseCase the product user case
-   */
   ProductGraphqlAdapter(final ProductUseCase productUseCase) {
     this.productUseCase = productUseCase;
   }
 
-  /**
-   * Find by id.
-   *
-   * @param internalId the internal id
-   * @return the Product mono
-   */
   @QueryMapping
   public Mono<Product> findById(@Argument(name = "internalId") final String internalId) {
     return this.productUseCase.findByInternalId(internalId);
   }
 
-  /**
-   * Sort products.
-   *
-   * @param salesUnits   the sales units
-   * @param stock        the stock
-   * @param profitMargin the profitMargin
-   * @param daysInStock  the daysInStock
-   * @param page         the page
-   * @param size         the size
-   * @return the Product flux
-   */
   @QueryMapping
   public Flux<Product> sortProducts(
     @Argument(name = "salesUnits") @Valid @Min(0L) @Max(1L) @PositiveOrZero final Float salesUnits,

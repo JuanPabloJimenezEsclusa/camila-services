@@ -9,9 +9,6 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import reactor.core.publisher.Mono;
 
-/**
- * Reactive cache adapter implementation backed by Spring CacheManager + Caffeine.
- */
 @Slf4j
 public record ReactiveCaffeineCacheAdapter(
   CacheManager cacheManager) implements CachePort {

@@ -3,7 +3,7 @@
 services:
   ## Databases
   mongodb:
-    image: mongodb/mongodb-community-server:8.3.2-ubi9
+    image: mongo:9.0.2-noble
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5
@@ -163,6 +163,7 @@ volumes:
 
 networks:
   camila_product_network:
+    name: camila-product-net
     driver: bridge
     ipam:
       driver: default

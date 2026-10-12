@@ -23,49 +23,23 @@ import org.springframework.data.mongodb.core.aggregation.SkipOperation;
 import org.springframework.data.mongodb.core.aggregation.SortOperation;
 import org.springframework.data.mongodb.core.aggregation.VariableOperators;
 
-/**
- * The type Product sorter helper.
- */
 @Slf4j
 final class ProductSorterHelper {
   private ProductSorterHelper() {
   }
 
-  /**
-   * Build limit operation.
-   *
-   * @param limit the limit
-   * @return the limit operation
-   */
   static LimitOperation buildLimitOperation(final long limit) {
     return Aggregation.limit(limit);
   }
 
-  /**
-   * Build skip operation.
-   *
-   * @param offset the offset
-   * @return the skip operation
-   */
   static SkipOperation buildSkipOperation(final long offset) {
     return Aggregation.skip(offset);
   }
 
-  /**
-   * Build sort operation.
-   *
-   * @return the sort operation
-   */
   static SortOperation buildSortOperation() {
     return Aggregation.sort(Sort.Direction.DESC, "weightedScore");
   }
 
-  /**
-   * Build weighted score field add fields operation.
-   *
-   * @param appliedWeights the metrics weights
-   * @return the add fields operation
-   */
   static AddFieldsOperation buildWeightedScoreField(final AppliedWeights appliedWeights) {
     final var weightExpressions = new ArrayList<AggregationExpression>();
 
@@ -88,11 +62,6 @@ final class ProductSorterHelper {
 
   }
 
-  /**
-   * Build options aggregation options.
-   *
-   * @return the aggregation options
-   */
   static AggregationOptions buildOptions() {
     return AggregationOptions
       .builder()

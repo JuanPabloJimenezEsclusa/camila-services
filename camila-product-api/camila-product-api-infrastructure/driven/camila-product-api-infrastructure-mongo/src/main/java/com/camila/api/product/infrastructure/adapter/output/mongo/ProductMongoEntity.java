@@ -7,9 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * The type Product mongo entity.
- */
 @Document(collection = ProductMongoEntity.DOCUMENT_NAME)
 public record ProductMongoEntity(
   @Id String id,
@@ -21,14 +18,8 @@ public record ProductMongoEntity(
   double profitMargin,
   int daysInStock) {
 
-  /**
-   * The constant DOCUMENT_NAME.
-   */
   static final String DOCUMENT_NAME = "products";
 
-  /**
-   * Instantiates a new Product mongo entity.
-   */ // NOPMD
   public ProductMongoEntity {
     Objects.requireNonNull(id);
     Objects.requireNonNull(internalId);

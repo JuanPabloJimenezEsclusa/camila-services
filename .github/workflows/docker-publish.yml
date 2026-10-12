@@ -1,14 +1,13 @@
 name: Docker Publish
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    branches: [ develop ]
+    types: [ opened, synchronize, reopened, ready_for_review ]
 
 concurrency:
-  group: docker-publish-${{ github.ref }}
-  cancel-in-progress: true
+  group: docker-publish
+  cancel-in-progress: false
 
 env:
   REGISTRY: ghcr.io
@@ -34,6 +33,7 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - name: Checkout repository
         uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:

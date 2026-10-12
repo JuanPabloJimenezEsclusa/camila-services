@@ -9,9 +9,6 @@ import org.springframework.data.convert.CustomConversions;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.repository.config.EnableReactiveCouchbaseRepositories;
 
-/**
- * The type Couchbase config.
- */
 @Configuration
 @Conditional(CouchbaseCondition.class)
 @EnableReactiveCouchbaseRepositories(basePackages = "com.camila.api.product.infrastructure.adapter.output.couchbase")

@@ -8,19 +8,9 @@ import org.springframework.graphql.execution.ErrorType;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Product graphql exception handler.
- */
 @ControllerAdvice
 public class ProductGraphqlExceptionHandler {
 
-  /**
-   * Handle.
-   *
-   * @param ex  the exception
-   * @param env the environment
-   * @return graphql error
-   */
   @GraphQlExceptionHandler
   public Mono<GraphQLError> handle(final NotFoundException ex, final DataFetchingEnvironment env) {
     return Mono.justOrEmpty(GraphQLError.newError()

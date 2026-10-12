@@ -14,9 +14,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Product rest adapter.
- */
 @Slf4j
 @RestController
 @RequestMapping
@@ -37,12 +34,6 @@ class ProductRestAdapter implements ProductsApi {
   private final ProductUseCase productUseCase;
   private final ProductDTOMapper productDTOMapper;
 
-  /**
-   * Instantiates a new Product rest adapter.
-   *
-   * @param productUseCase   the product use case
-   * @param productDTOMapper the product dto mapper
-   */
   public ProductRestAdapter(final ProductUseCase productUseCase, final ProductDTOMapper productDTOMapper) {
     this.productUseCase = productUseCase;
     this.productDTOMapper = productDTOMapper;

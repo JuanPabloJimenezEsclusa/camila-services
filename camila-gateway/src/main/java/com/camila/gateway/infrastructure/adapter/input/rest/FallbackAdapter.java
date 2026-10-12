@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Fallback controller.
- */
 @RestController
 class FallbackAdapter {
 
@@ -24,24 +21,12 @@ class FallbackAdapter {
 
   private final Counter fallbackCounter;
 
-  /**
-   * Instantiates a new Fallback adapter.
-   *
-   * @param meterRegistry   the meter registry
-   * @param fallbackMessage the fallback message
-   */
   FallbackAdapter(final MeterRegistry meterRegistry,
                   @Value("${gateway.fallback.message:Circuit-breaker-fallback}") final String fallbackMessage) {
     this.fallbackCounter = meterRegistry.counter("gateway.fallback.invocations", "endpoint", "/fallback");
     this.fallbackMessage = fallbackMessage;
   }
 
-  /**
-   * Fallback response entity.
-   *
-   * @param request the request
-   * @return the response entity
-   */
   @GetMapping("/fallback")
   ResponseEntity<Mono<FallbackResponse>> fallback(final ServerHttpRequest request) {
     try {
@@ -59,9 +44,6 @@ class FallbackAdapter {
       .body(Mono.just(new FallbackResponse("Service Unavailable", this.fallbackMessage)));
   }
 
-  /**
-   * The type Fallback response.
-   */
   record FallbackResponse(String message, String details) {
   }
 }

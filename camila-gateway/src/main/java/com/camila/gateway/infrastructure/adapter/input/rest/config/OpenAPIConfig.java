@@ -7,17 +7,9 @@ import io.swagger.v3.oas.models.info.License;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * The type Open api config.
- */
 @Configuration
 class OpenAPIConfig {
 
-  /**
-   * Spring gateway open api.
-   *
-   * @return the open api
-   */
   @Bean
   OpenAPI springGatewayOpenAPI() {
     return new OpenAPI()

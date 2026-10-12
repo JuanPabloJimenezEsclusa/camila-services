@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [develop, feature/**]
+    branches: [develop]
     paths:
       - _config.yml
       - .github/workflows/github-pages.yml
@@ -11,7 +11,7 @@ on:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -24,6 +24,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
       - name: Setup Pages
         uses: actions/configure-pages@v6
       - name: Build with Jekyll

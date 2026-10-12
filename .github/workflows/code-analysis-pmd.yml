@@ -1,9 +1,8 @@
-name: Code Analysis PMD
+name: Programming Mistake Detector
 
 on:
-  push:
-    branches: [develop]
   pull_request:
+    branches: [develop]
     types: [opened, synchronize, reopened, ready_for_review]
   schedule:
     - cron: '35 2 * * 0'
@@ -12,8 +11,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: code-analysis-pmd-${{ github.ref }}
-  cancel-in-progress: true
+  group: code-analysis-pmd
+  cancel-in-progress: false
 
 jobs:
   pmd-code-scan:
@@ -30,6 +29,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:

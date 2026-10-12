@@ -1,14 +1,13 @@
 name: Mutation Tests
 
 on:
-  push:
-    branches: [develop]
   pull_request:
+    branches: [develop]
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
-  group: mutation-tests-${{ github.ref }}
-  cancel-in-progress: true
+  group: mutation-tests
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -32,35 +31,28 @@ jobs:
         env:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'graalvm'
           cache: 'maven'
-
       - name: Cache Maven packages
         uses: actions/cache@v6
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
       - name: Enable Testcontainers reuse
         run: |
           echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
-
       - name: Run Mutation Tests
         id: mutation-tests
         run: |
           mvn ${{ env.MAVEN_CLI_OPTS }} test pitest:report-aggregate-module -P pitest
-
       - name: Upload PIT Mutation Reports
         if: always()
         uses: actions/upload-artifact@v7
@@ -70,7 +62,6 @@ jobs:
             **/target/pit-reports/
           retention-days: 7
           if-no-files-found: warn
-
       - name: Generate Mutation Test Summary
         if: always()
         run: |
@@ -93,7 +84,6 @@ jobs:
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Mutation Test Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
-
       - name: Comment PR with Mutation Test Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v9
@@ -123,7 +113,6 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
-
       - name: Check Mutation Tests Status
         if: failure() && steps.mutation-tests.conclusion == 'failure'
         run: |

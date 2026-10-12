@@ -26,12 +26,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class UseCaseConfig {
 
-  /**
-   * Product use case product use case.
-   *
-   * @param productRepository the product repository
-   * @return the product use case
-   */
   @Bean
   public ProductUseCase productUseCase(@Qualifier("cachedProductRepositoryDecorator") final ProductRepository productRepository) {
     return new DefaultProductUseCase(productRepository);

@@ -5,21 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Represents the criteria for sorting products.
- */
 public record ProductSortCriteria(List<MetricWeight> metricWeights, int page, int size) {
 
   private static final String DEFAULT_PAGE_NUMBER = "0";
   private static final String DEFAULT_PAGE_SIZE = "10";
 
-  /**
-   * Factory method to create a ProductSortCriteria instance from request parameters.
-   *
-   * @param requestParams Map of request parameters
-   * @return A validated ProductSortCriteria instance
-   * @throws IllegalArgumentException if page or size parameters are invalid
-   */
   public static ProductSortCriteria fromRequestParams(final Map<String, String> requestParams) {
     final List<MetricWeight> weights = extractMetricWeights(requestParams);
     final int page = parseIntParam(requestParams.getOrDefault("page", DEFAULT_PAGE_NUMBER), "page");
@@ -65,20 +55,10 @@ public record ProductSortCriteria(List<MetricWeight> metricWeights, int page, in
     }
   }
 
-  /**
-   * Calculates the offset for pagination based on the page number and size.
-   *
-   * @return The offset as a long value
-   */
   public long offset() {
     return (long) this.page * this.size;
   }
 
-  /**
-   * Gets the limit (page size) for pagination.
-   *
-   * @return The page size as a long value
-   */
   public long limit() {
     return this.size;
   }

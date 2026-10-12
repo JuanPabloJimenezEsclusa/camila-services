@@ -14,9 +14,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Product mongo adapter.
- */
 @Slf4j
 @Conditional(MongoCondition.class)
 @Repository("productRepositoryDelegate")
@@ -27,13 +24,6 @@ public class ProductMongoAdapter implements ProductRepository {
   private final ReactiveMongoOperations mongoOperations;
   private final ProductMongoMapper mapper;
 
-  /**
-   * Instantiates a new Product mongo adapter.
-   *
-   * @param productMongoRepository the product mongo repository
-   * @param mongoOperations        the mongo operations
-   * @param mapper                 the mapper
-   */
   public ProductMongoAdapter(final ProductMongoRepository productMongoRepository,
                              final ReactiveMongoOperations mongoOperations, final ProductMongoMapper mapper) {
     this.productMongoRepository = productMongoRepository;

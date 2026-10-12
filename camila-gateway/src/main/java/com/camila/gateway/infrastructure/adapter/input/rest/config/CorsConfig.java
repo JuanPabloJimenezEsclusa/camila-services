@@ -9,16 +9,13 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-/**
- * The type Cors config.
- */
 @Configuration
 // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
 class CorsConfig {
 
   private static UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
     final var corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+    corsConfig.setAllowedOriginPatterns(Collections.singletonList("*"));
     corsConfig.setAllowedMethods(Collections.singletonList("*"));
     corsConfig.setAllowedHeaders(Collections.singletonList("*"));
     corsConfig.setAllowCredentials(true);
@@ -30,21 +27,11 @@ class CorsConfig {
     return source;
   }
 
-  /**
-   * Cors web filter cors web filter.
-   *
-   * @return the cors web filter
-   */
   @Bean
   CorsWebFilter corsWebFilter() {
     return new CorsWebFilter(urlBasedCorsConfigurationSource());
   }
 
-  /**
-   * Cors configuration source cors configuration source.
-   *
-   * @return the cors configuration source
-   */
   @Bean
   CorsConfigurationSource corsConfigurationSource() {
     return urlBasedCorsConfigurationSource();

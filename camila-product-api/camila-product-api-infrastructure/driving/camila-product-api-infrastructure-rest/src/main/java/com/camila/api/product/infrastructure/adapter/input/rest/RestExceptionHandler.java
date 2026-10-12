@@ -21,22 +21,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 
-/**
- * The type Rest exception handler.
- */
 @Slf4j
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
   private static final String APPLICATION_PROBLEM_JSON = "application/problem+json";
 
-  /**
-   * Handle not found response entity.
-   *
-   * @param exception the exception
-   * @param request   the HTTP request
-   * @return the response entity
-   */
   @ExceptionHandler(NotFoundException.class)
   protected ResponseEntity<ProblemDTO> handleNotFound(final NotFoundException exception, final ServerHttpRequest request) {
     log.debug("NotFound", exception);
@@ -46,13 +36,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       Collections.emptyMap());
   }
 
-  /**
-   * Handle illegal argument response entity.
-   *
-   * @param exception the exception
-   * @param request   the HTTP request
-   * @return the response entity
-   */
   @ExceptionHandler(IllegalArgumentException.class)
   protected ResponseEntity<ProblemDTO> handleIllegalArgument(final IllegalArgumentException exception,
                                                              final ServerHttpRequest request) {
@@ -64,13 +47,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       Collections.emptyMap());
   }
 
-  /**
-   * Handle constraint violation response entity.
-   *
-   * @param exception the exception
-   * @param request   the HTTP request
-   * @return the response entity
-   */
   @ExceptionHandler(ConstraintViolationException.class)
   protected ResponseEntity<ProblemDTO> handleConstraintViolation(final ConstraintViolationException exception,
                                                                  final ServerHttpRequest request) {
@@ -91,13 +67,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       request, errors);
   }
 
-  /**
-   * Handle product service exception response entity.
-   *
-   * @param exception the exception
-   * @param request   the HTTP request
-   * @return the response entity
-   */
   @ExceptionHandler({ProductException.class, Exception.class, RuntimeException.class})
   protected ResponseEntity<ProblemDTO> handleProductServiceException(final Throwable exception,
                                                                      final ServerHttpRequest request) {

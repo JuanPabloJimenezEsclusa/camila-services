@@ -12,11 +12,6 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-/**
- * ApiVersionFilter is a WebFlux filter that validates the API version provided in the request headers.
- * If the API version in the request does not match the expected version, the filter responds with
- * an HTTP 406 (Not Acceptable) status and stops further processing of the request.
- */
 @Slf4j
 @Order(1)
 @Component

@@ -15,9 +15,6 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
-/**
- * The type Product web socket handler.
- */
 @Component
 record ProductWebSocketHandler(ProductUseCase productUseCase, ObjectMapper objectMapper) implements WebSocketHandler {
 

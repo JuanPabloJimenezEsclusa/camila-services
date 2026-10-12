@@ -5,18 +5,16 @@ import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
-/**
- * The type Cors config.
- */
 @Configuration
 // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
-class CorsConfig {
+public class CorsConfig {
 
   private static UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource() {
     final var corsConfig = new CorsConfiguration();
-    corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+    corsConfig.setAllowedOriginPatterns(Collections.singletonList("*"));
     corsConfig.setAllowedMethods(Collections.singletonList("*"));
     corsConfig.setAllowedHeaders(Collections.singletonList("*"));
     corsConfig.setAllowCredentials(true);
@@ -28,13 +26,8 @@ class CorsConfig {
     return source;
   }
 
-  /**
-   * Cors configuration source cors configuration source.
-   *
-   * @return the cors configuration source
-   */
   @Bean
-  UrlBasedCorsConfigurationSource corsConfigurationSource() {
+  CorsConfigurationSource corsConfigurationSource() {
     return urlBasedCorsConfigurationSource();
   }
 }

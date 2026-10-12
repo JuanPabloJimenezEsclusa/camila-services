@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * Output-layer decorator that adds reactive caching to the ProductRepository implementation.
- */
 @Slf4j
 @Component("cachedProductRepositoryDecorator")
 @EnableCaching
@@ -35,12 +32,6 @@ public class CachedProductRepositoryDecorator implements ProductRepository {
       offset, limit);
   }
 
-  /**
-   * Instantiates a new Cached product repository decorator.
-   *
-   * @param delegate  the delegate repository (MongoDB or Couchbase)
-   * @param cachePort reactive cache service
-   */
   public CachedProductRepositoryDecorator(
     @Qualifier("productRepositoryDelegate") @Autowired(required = false) final ProductRepository delegate,
     final CachePort cachePort) {

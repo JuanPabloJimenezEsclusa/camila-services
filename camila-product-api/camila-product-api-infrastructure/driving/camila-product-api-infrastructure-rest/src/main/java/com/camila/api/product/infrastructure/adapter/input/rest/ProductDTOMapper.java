@@ -7,21 +7,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-/**
- * The interface Product dto mapper.
- */
 @Mapper(
   componentModel = MappingConstants.ComponentModel.SPRING,
   injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface ProductDTOMapper {
 
-  /**
-   * To product dto product dto.
-   *
-   * @param product the product
-   * @return the product dto
-   */
   @Mapping(source = "id", target = "id")
   @Mapping(source = "internalId", target = "internalId")
   @Mapping(source = "name", target = "name")

@@ -7,9 +7,6 @@ import io.grpc.stub.StreamObserver;
 import org.springframework.grpc.server.service.GrpcService;
 import reactor.core.scheduler.Schedulers;
 
-/**
- * The type Product grpc adapter.
- */
 @GrpcService
 class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
   private static final long TIMEOUT_IN_SECONDS = 30L;
@@ -17,12 +14,6 @@ class ProductGrpcAdapter extends ProductServiceGrpc.ProductServiceImplBase {
   private final ProductUseCase productUseCase;
   private final ProductGrpcMapper productGrpcMapper;
 
-  /**
-   * Instantiates a new Product grpc adapter.
-   *
-   * @param productUseCase    the product use case
-   * @param productGrpcMapper the product dto mapper
-   */
   ProductGrpcAdapter(final ProductUseCase productUseCase, final ProductGrpcMapper productGrpcMapper) {
     this.productUseCase = productUseCase;
     this.productGrpcMapper = productGrpcMapper;
