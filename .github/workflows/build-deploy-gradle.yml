@@ -1,15 +1,13 @@
 name: Build Deploy Gradle
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [ feature/**, hotfix/**, bugfix/** ]
+    branches: [ develop ]
     types: [ opened, synchronize, reopened, ready_for_review ]
 
 concurrency:
-  group: build-deploy-gradle-${{ github.ref }}
-  cancel-in-progress: true
+  group: build-deploy-gradle
+  cancel-in-progress: false
 
 jobs:
   build-quality:
@@ -25,35 +23,29 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'semeru'
-
       - name: Setup Gradle
         # git ls-remote --tags https://github.com/gradle/actions.git
         uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
         with:
-          gradle-version: '9.2.1'
-
+          gradle-version: '9.8.0'
       - name: Run unit tests
         run: gradle unitTest --no-daemon -x test
         continue-on-error: true
-
       - name: Run Error Prone checks
         run: gradle build -PerrorProne --no-daemon
         continue-on-error: true
-
       - name: Run SpotBugs analysis
         run: gradle spotbugsReport --no-daemon
         continue-on-error: true
-
       - name: Aggregate JaCoCo coverage
         run: gradle aggregateJacoco --no-daemon
         continue-on-error: true
-
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
@@ -62,7 +54,6 @@ jobs:
           path: |
             **/build/test-results/
             **/build/reports/tests/
-
       - name: Upload coverage reports
         if: always()
         uses: actions/upload-artifact@v7
@@ -71,7 +62,6 @@ jobs:
           path: |
             **/build/reports/jacoco/
             camila-coverage-jacoco/build/reports/jacoco/
-
       - name: Upload SpotBugs reports
         if: always()
         uses: actions/upload-artifact@v7
@@ -92,22 +82,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'semeru'
           cache: 'gradle'
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
         with:
-          gradle-version: '9.2.1'
-
+          gradle-version: '9.8.0'
       - name: Build application
         run: gradle build --no-daemon -x test
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -128,25 +115,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'semeru'
           cache: 'gradle'
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
         with:
-          gradle-version: '9.2.1'
-
+          gradle-version: '9.8.0'
       - name: Publish to GitHub Packages
         run: gradle publish --no-daemon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: true
-
       - name: Build Docker images
         run: gradle bootBuildImage --no-daemon
         continue-on-error: true

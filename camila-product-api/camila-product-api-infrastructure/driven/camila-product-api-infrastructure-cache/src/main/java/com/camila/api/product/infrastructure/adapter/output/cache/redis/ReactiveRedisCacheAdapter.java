@@ -5,9 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisOperations;
 import reactor.core.publisher.Mono;
 
-/**
- * Reactive cache adapter backed by Spring Reactive Redis operations.
- */
 @Slf4j
 public record ReactiveRedisCacheAdapter(
   ReactiveRedisOperations<String, Object> redisOps) implements CachePort {

@@ -11,9 +11,6 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Product couchbase adapter.
- */
 @Slf4j
 @Conditional(CouchbaseCondition.class)
 @Repository("productRepositoryDelegate")
@@ -22,12 +19,6 @@ public class ProductCouchbaseAdapter implements ProductRepository {
   private final ProductCouchbaseRepository productCouchbaseRepository;
   private final ProductCouchbaseMapper mapper;
 
-  /**
-   * Instantiates a new Product couchbase adapter.
-   *
-   * @param productCouchbaseRepository the product couchbase repository
-   * @param mapper                     the mapper
-   */
   public ProductCouchbaseAdapter(final ProductCouchbaseRepository productCouchbaseRepository,
                                  final ProductCouchbaseMapper mapper) {
     this.productCouchbaseRepository = productCouchbaseRepository;

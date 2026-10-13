@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
+import com.camila.api.product.infrastructure.adapter.input.security.CorsConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
@@ -21,6 +22,8 @@ import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveAuto
 import org.springframework.boot.data.mongodb.autoconfigure.DataMongoReactiveRepositoriesAutoConfiguration;
 import org.springframework.boot.graphql.autoconfigure.reactive.GraphQlWebFluxAutoConfiguration;
 import org.springframework.boot.graphql.autoconfigure.security.GraphQlWebFluxSecurityAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
+import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.springframework.boot.mongodb.autoconfigure.MongoReactiveAutoConfiguration;
 import org.springframework.boot.rsocket.autoconfigure.RSocketMessagingAutoConfiguration;
 import org.springframework.boot.rsocket.autoconfigure.RSocketRequesterAutoConfiguration;
@@ -35,8 +38,6 @@ import org.springframework.boot.websocket.autoconfigure.servlet.WebSocketMessagi
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerAutoConfiguration;
-import org.springframework.boot.grpc.server.autoconfigure.GrpcServerFactoryAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,6 +74,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // Framework adapter input layer
   ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
   // Security
+  CorsConfig.class,
   SecurityConfig.class,
   // Application layer
   DefaultProductUseCase.class,

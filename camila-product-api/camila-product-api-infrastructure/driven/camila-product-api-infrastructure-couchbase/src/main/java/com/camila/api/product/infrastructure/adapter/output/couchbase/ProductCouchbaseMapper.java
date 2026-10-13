@@ -6,20 +6,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
-/**
- * The interface Product couchbase mapper.
- */
 @Mapper(
   componentModel = MappingConstants.ComponentModel.SPRING,
   injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface ProductCouchbaseMapper {
-  /**
-   * To product.
-   *
-   * @param productCouchbaseEntity the product couchbase entity
-   * @return the product
-   */
   @Mapping(source = "id", target = "id")
   @Mapping(source = "internalId", target = "internalId")
   @Mapping(source = "name", target = "name")

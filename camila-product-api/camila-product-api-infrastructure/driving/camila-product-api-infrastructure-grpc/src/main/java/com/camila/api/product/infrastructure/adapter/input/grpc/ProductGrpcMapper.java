@@ -8,52 +8,26 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ObjectFactory;
 
-/**
- * The interface Product dto mapper.
- */
 @Mapper(
   componentModel = MappingConstants.ComponentModel.SPRING,
   injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
 public interface ProductGrpcMapper {
 
-  /**
-   * Create product builder product . builder.
-   *
-   * @return the product . builder
-   */
   @ObjectFactory
   default Product.Builder createProductBuilder() {
     return Product.newBuilder();
   }
 
-  /**
-   * To product.
-   *
-   * @param product the product
-   * @return the product
-   */
   default Product toProduct(com.camila.api.product.domain.model.Product product) {
     return toProductBuilder(product).build();
   }
 
-  /**
-   * Map stock.
-   *
-   * @param source the source
-   * @param target the target
-   */
   @AfterMapping
   default void mapStock(com.camila.api.product.domain.model.Product source, @MappingTarget Product.Builder target) {
     target.putAllStock(source.stock());
   }
 
-  /**
-   * To product builder product . builder.
-   *
-   * @param product the product
-   * @return the product . builder
-   */
   @Mapping(source = "id", target = "id")
   @Mapping(source = "internalId", target = "internalId")
   @Mapping(source = "name", target = "name")

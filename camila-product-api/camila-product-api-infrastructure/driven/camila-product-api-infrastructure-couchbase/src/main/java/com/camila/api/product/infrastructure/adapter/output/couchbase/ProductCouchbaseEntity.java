@@ -7,9 +7,6 @@ import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.repository.Collection;
 import org.springframework.data.couchbase.repository.Scope;
 
-/**
- * The type Product entity.
- */
 @Document
 @Scope("product")
 @Collection("products")

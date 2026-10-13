@@ -5,13 +5,6 @@ import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-/**
- * A condition that determines whether Couchbase should be enabled based on the application configuration.
- *
- * <p>This condition checks the value of the "repository.technology" property in the application's environment.
- * If the property is set to "couchbase", the condition evaluates to true, enabling Couchbase-specific configurations.
- * Otherwise, it defaults to "mongo" and evaluates to false.</p>
- */
 @Slf4j
 public class MongoCondition implements Condition {
 

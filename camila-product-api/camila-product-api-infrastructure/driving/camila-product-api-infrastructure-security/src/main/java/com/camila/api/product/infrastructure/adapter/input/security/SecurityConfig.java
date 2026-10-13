@@ -10,10 +10,8 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtIssuerReactiveAuthenticationManagerResolver;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 
-/**
- * The type Oauth2 security config.
- */
 @Configuration
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
@@ -31,34 +29,26 @@ public class SecurityConfig {
   @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:#{null}}")
   private String trustedIssuers;
 
-  /**
-   * Basic security web filter chain security web filter chain.
-   *
-   * @param http the http
-   * @return the security web filter chain
-   */
   @Bean
   @Profile("default|loc|local-compose|int")
-  SecurityWebFilterChain basicSecurityWebFilterChain(final ServerHttpSecurity http) {
+  SecurityWebFilterChain basicSecurityWebFilterChain(
+    final ServerHttpSecurity http,
+    final CorsConfigurationSource corsConfigurationSource) {
     return http
-      .cors(ServerHttpSecurity.CorsSpec::disable)
+      .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource))
       .csrf(ServerHttpSecurity.CsrfSpec::disable)
       .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
       .build();
   }
 
-  /**
-   * Oauth2 security web filter chain security web filter chain.
-   *
-   * @param http the http
-   * @return the security web filter chain
-   */
   @Bean
   @Profile("dev|pre|pro")
-  SecurityWebFilterChain oauth2SecurityWebFilterChain(final ServerHttpSecurity http) {
+  SecurityWebFilterChain oauth2SecurityWebFilterChain(
+    final ServerHttpSecurity http,
+    final CorsConfigurationSource corsConfigurationSource) {
     final var authnResolver = JwtIssuerReactiveAuthenticationManagerResolver.fromTrustedIssuers(this.trustedIssuers);
     return http
-      .cors(ServerHttpSecurity.CorsSpec::disable)
+      .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource))
       .csrf(ServerHttpSecurity.CsrfSpec::disable)
       // delegate the AUTHN to SSO (keycloak, cognito)
       .oauth2ResourceServer(resourceServer -> resourceServer.authenticationManagerResolver(authnResolver))

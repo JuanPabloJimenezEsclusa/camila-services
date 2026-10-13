@@ -97,7 +97,7 @@ class ProductGrpcAdapterUnitTest {
     assertEquals(internalId, capturedProduct.getInternalId());
     assertEquals("Test Product", capturedProduct.getName());
     assertEquals("Category", capturedProduct.getCategory());
-    assertEquals(10.0f, capturedProduct.getSalesUnits());
+    assertEquals(10, capturedProduct.getSalesUnits());
   }
 
   @Test

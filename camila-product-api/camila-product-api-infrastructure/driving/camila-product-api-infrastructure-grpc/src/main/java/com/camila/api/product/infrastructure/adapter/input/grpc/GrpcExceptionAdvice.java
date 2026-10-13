@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.grpc.server.exception.GrpcExceptionHandler;
 import org.springframework.stereotype.Component;
 
-/**
- * The type Grpc exception advice.
- */
 @Slf4j
 @Component
 public class GrpcExceptionAdvice implements GrpcExceptionHandler {

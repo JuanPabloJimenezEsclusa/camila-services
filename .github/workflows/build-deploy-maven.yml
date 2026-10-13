@@ -1,12 +1,13 @@
 name: Build Deploy Maven
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    branches: [ develop ]
+    types: [ opened, synchronize, reopened, ready_for_review ]
 
 concurrency:
-  group: build-deploy-maven-${{ github.ref }}
-  cancel-in-progress: true
+  group: build-deploy-maven
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -19,6 +20,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:

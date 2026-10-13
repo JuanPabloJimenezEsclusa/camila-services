@@ -9,17 +9,9 @@ import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHa
 import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 import tools.jackson.dataformat.cbor.CBORMapper;
 
-/**
- * The type RSocket config.
- */
 @Configuration
 public class RSocketConfig {
 
-  /**
-   * Message handler rsocket message handler.
-   *
-   * @return the rsocket message handler
-   */
   @Bean
   RSocketMessageHandler messageHandler() {
     final var handler = new RSocketMessageHandler();
@@ -27,11 +19,6 @@ public class RSocketConfig {
     return handler;
   }
 
-  /**
-   * Rsocket strategies.
-   *
-   * @return the rsocket strategies
-   */
   @Bean
   RSocketStrategies rsocketStrategies() {
     final var objectBuilderMapper = CBORMapper.builder();

@@ -15,9 +15,6 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-/**
- * The type Oauth2 open api config.
- */
 @OpenAPIDefinition(
   servers = {
     @Server(

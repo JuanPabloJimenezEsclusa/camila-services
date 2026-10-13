@@ -13,9 +13,6 @@ import reactor.core.publisher.Mono;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
-/**
- * The type Product rsocket adapter.
- */
 @Slf4j
 @Controller
 @MessageMapping("products")
@@ -35,12 +32,6 @@ class ProductRSocketAdapter {
   private final ProductUseCase productUseCase;
   private final ObjectMapper objectMapper;
 
-  /**
-   * Instantiates a new Product rsocket adapter.
-   *
-   * @param productUseCase the product user case
-   * @param objectMapper   the object mapper
-   */
   ProductRSocketAdapter(final ProductUseCase productUseCase, final ObjectMapper objectMapper) {
     this.productUseCase = productUseCase;
     this.objectMapper = objectMapper;
@@ -53,12 +44,6 @@ class ProductRSocketAdapter {
     return jsonNode;
   }
 
-  /**
-   * Find by internal id.
-   *
-   * @param message the message
-   * @return the product
-   */
   @MessageMapping("request-response-findByInternalId")
   public Mono<Product> findByInternalId(final String message) {
     return this.validateAndBuildFindRequest(message)
@@ -68,12 +53,6 @@ class ProductRSocketAdapter {
         .doOnError(throwable -> log.debug("findByInternalId.error: {}", throwable.getMessage())));
   }
 
-  /**
-   * Sort by metrics weights flux.
-   *
-   * @param message the message
-   * @return the product flux
-   */
   @MessageMapping("request-stream-sortByMetricsWeights")
   public Flux<Product> sortByMetricsWeights(final String message) {
     return this.validateAndBuildSortRequest(message)
@@ -83,12 +62,6 @@ class ProductRSocketAdapter {
         .doOnError(throwable -> log.debug("sortByMetricsWeights.error: {}", throwable.getMessage())));
   }
 
-  /**
-   * Handle exception.
-   *
-   * @param exception the exception
-   * @return Void
-   */
   @MessageExceptionHandler
   public Mono<Void> handleException(final Exception exception) {
     return Mono.error(exception);

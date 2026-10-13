@@ -1,14 +1,13 @@
 name: SonarQube
 
 on:
-  push:
-    branches: [develop]
   pull_request:
+    branches: [develop]
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
-  group: sonarqube-${{ github.ref }}
-  cancel-in-progress: true
+  group: sonarqube
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -32,37 +31,30 @@ jobs:
         env:
           MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
-
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-
+        with: { fetch-depth: 0 }
       - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: 'corretto'
           cache: maven
-
       - name: Cache SonarQube packages
         uses: actions/cache@v6
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-
       - name: Cache Maven packages
         uses: actions/cache@v6
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-
       - name: Enable Testcontainers reuse
         run: |
           echo "testcontainers.reuse.enable=true" > ~/.testcontainers.properties
-
       - name: Build and analyze
         id: sonarqube-analysis
         env:
@@ -71,7 +63,6 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
         run: |
           mvn ${{ env.MAVEN_CLI_OPTS }} verify sonar:sonar -f pom.xml
-
       - name: Upload SonarQube Reports
         if: always()
         uses: actions/upload-artifact@v7
@@ -82,7 +73,6 @@ jobs:
             **/target/sonar/
           retention-days: 30
           if-no-files-found: warn
-
       - name: Generate SonarQube Analysis Summary
         if: always()
         run: |
@@ -106,7 +96,6 @@ jobs:
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Analysis Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
-
       - name: Comment PR with SonarQube Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v9
@@ -141,7 +130,6 @@ jobs:
               repo: context.repo.repo,
               body: comment
             });
-
       - name: Check SonarQube Analysis Status
         if: failure() && steps.sonarqube-analysis.conclusion == 'failure'
         run: |

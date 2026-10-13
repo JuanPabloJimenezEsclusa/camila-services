@@ -7,17 +7,9 @@ import org.springframework.data.couchbase.repository.ReactiveCouchbaseRepository
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The interface Product couchbase repository.
- */
 @Conditional(CouchbaseCondition.class)
 public interface ProductCouchbaseRepository extends ReactiveCouchbaseRepository<ProductCouchbaseEntity, String> {
-  /**
-   * Find by internal id.
-   *
-   * @param internalId the internal id
-   * @return the product couchbase entity
-   */
+
   @Query("""
       SELECT meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock
       FROM #{#n1ql.bucket}.`product`.`products` AS p
@@ -25,17 +17,6 @@ public interface ProductCouchbaseRepository extends ReactiveCouchbaseRepository<
     """)
   Mono<ProductCouchbaseEntity> findByInternalId(String internalId);
 
-  /**
-   * Sort by metrics weights.
-   *
-   * @param salesWeight the sales weight
-   * @param stockWeight the stock weight
-   * @param profitMargin the profit margin
-   * @param daysInStock the days in stock
-   * @param limit the limit
-   * @param offset the offset
-   * @return the product couchbase entity flux
-   */
   @Query("""
     SELECT
       meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock, p.profitMargin, p.daysInStock,

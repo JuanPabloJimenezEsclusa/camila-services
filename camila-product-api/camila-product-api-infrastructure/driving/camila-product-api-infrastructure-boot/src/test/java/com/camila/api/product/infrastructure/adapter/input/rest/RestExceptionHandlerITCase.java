@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.camila.api.product.application.usecase.DefaultProductUseCase;
+import com.camila.api.product.infrastructure.adapter.input.security.CorsConfig;
 import com.camila.api.product.infrastructure.adapter.input.security.SecurityConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.CouchbaseContainerConfig;
 import com.camila.api.product.infrastructure.adapter.output.couchbase.ProductCouchbaseAdapter;
@@ -65,6 +66,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
   // Framework adapter input layer
   ProductRestAdapter.class, ProductDTOMapperImpl.class, RestExceptionHandler.class,
   // Security
+  CorsConfig.class,
   SecurityConfig.class,
   // Application layer
   DefaultProductUseCase.class,
@@ -89,7 +91,9 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
   }
 
   private static String generateRandomString() {
-    return random.ints(10, 0, 36).mapToObj(i -> Integer.toString(i, 36)).collect(Collectors.joining())
+    return random.ints(10, 0, 36)
+      .mapToObj(i -> Integer.toString(i, 36))
+      .collect(Collectors.joining())
       .toUpperCase(Locale.ROOT);
   }
 
@@ -99,7 +103,9 @@ class RestExceptionHandlerITCase extends CouchbaseContainerConfig {
   @Order(6)
   void shouldHandleExceptionsWithCorrectStatusCodes(final String endpoint, final HttpStatus expectedStatus) {
     this.webClient.get().uri(endpoint).header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
-      .header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
-      .isEqualTo(expectedStatus);
+      .header("X-Trace-Id", generateRandomString())
+      .header("X-Api-Version", "1.0.0")
+      .exchange()
+      .expectStatus().isEqualTo(expectedStatus);
   }
 }

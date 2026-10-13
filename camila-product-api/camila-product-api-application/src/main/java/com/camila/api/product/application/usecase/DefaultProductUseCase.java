@@ -14,9 +14,6 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Default product use case.
- */
 public record DefaultProductUseCase(ProductRepository productRepository) implements ProductUseCase {
 
   private static final Logger log = LoggerFactory.getLogger(DefaultProductUseCase.class);

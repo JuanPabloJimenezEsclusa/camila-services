@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import reactor.core.publisher.Mono;
 
-/**
- * The type Rate limit config.
- */
 @Configuration
 class RateLimitConfig {
 

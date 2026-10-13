@@ -24,9 +24,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
-/**
- * The type Redis cache config.
- */
 @Configuration(proxyBeanMethods = false)
 @EnableCaching
 @Profile("dev|local-compose")
@@ -42,15 +39,6 @@ public class RedisCacheConfig {
       .build();
   }
 
-  /**
-   * Redis connection factory lettuce connection factory.
-   *
-   * @param host     the host
-   * @param port     the port
-   * @param username the username
-   * @param password the password
-   * @return the lettuce connection factory
-   */
   @Bean
   public LettuceConnectionFactory redisConnectionFactory(
     @Value("${spring.data.redis.host:localhost}") final String host,
@@ -64,14 +52,6 @@ public class RedisCacheConfig {
     return new LettuceConnectionFactory(conf);
   }
 
-  /**
-   * Cache manager.
-   *
-   * @param connectionFactory the connection factory
-   * @param cacheNames        the cache names
-   * @param ttlSeconds        the ttl seconds
-   * @return the cache manager
-   */
   @Bean
   public CacheManager cacheManager(final LettuceConnectionFactory connectionFactory,
                                    @Value("${spring.cache.cache-names:findByInternalId,sortedProducts}") final String cacheNames,
@@ -95,12 +75,6 @@ public class RedisCacheConfig {
       .build();
   }
 
-  /**
-   * Reactive redis operations reactive redis operations.
-   *
-   * @param connectionFactory the connection factory
-   * @return the reactive redis operations
-   */
   @Bean
   public ReactiveRedisOperations<String, Object> reactiveRedisOperations(final LettuceConnectionFactory connectionFactory) {
     final var keySerializer = new StringRedisSerializer();
@@ -116,12 +90,6 @@ public class RedisCacheConfig {
     return new ReactiveRedisTemplate<>(connectionFactory, context);
   }
 
-  /**
-   * Reactive redis cache adapter.
-   *
-   * @param reactiveRedisOperations the reactive redis operations
-   * @return the reactive cache service
-   */
   @Bean
   public CachePort reactiveRedisCacheAdapter(final ReactiveRedisOperations<String, Object> reactiveRedisOperations) {
     return new ReactiveRedisCacheAdapter(reactiveRedisOperations);
