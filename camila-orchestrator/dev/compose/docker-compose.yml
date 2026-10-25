@@ -3,7 +3,7 @@
 services:
   ## Service Discovery & Configuration (Consul)
   consul:
-    image: hashicorp/consul:2.0
+    image: hashicorp/consul:2.1
     container_name: camila-consul
     hostname: consul
     restart: on-failure:5
@@ -30,7 +30,7 @@ services:
     networks:
       camila_product_network:
   consul-init:
-    image: hashicorp/consul:2.0
+    image: hashicorp/consul:2.1
     container_name: camila-consul-init
     restart: "no"
     environment:
