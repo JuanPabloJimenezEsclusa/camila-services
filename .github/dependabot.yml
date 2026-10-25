@@ -33,8 +33,7 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "de.codecentric:*"
         update-types: ["version-update:semver-major"]
-      # OpenWrite changes to https://artifacts.codegenomeproject.org/maven
-      - dependency-name: "org.openrewrite.rewrite:*"
+      - dependency-name: "org.openrewrite.rewrite:*"  # OpenWrite changes to https://artifacts.codegenomeproject.org/maven
         update-types: ["version-update:semver-minor"]
     groups:
       gradle-dependencies:
