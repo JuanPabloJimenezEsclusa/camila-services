@@ -45,7 +45,7 @@ class ProductRSocketAdapterITCase extends MongoContainerConfig {
       }
       """;
 
-    assert requester != null;
+    assertThat(requester).isNotNull();
     requester.route("products.request-response-findByInternalId").data(message).retrieveMono(Product.class)
       .as(StepVerifier::create).consumeNextWith(product -> {
         assertThat(product.internalId()).isEqualTo("1");
@@ -62,7 +62,7 @@ class ProductRSocketAdapterITCase extends MongoContainerConfig {
       {}
       """;
 
-    assert requester != null;
+    assertThat(requester).isNotNull();
     requester.route("products.request-response-findByInternalId").data(message).retrieveMono(Product.class)
       .as(StepVerifier::create).expectError().verify();
   }
@@ -82,7 +82,7 @@ class ProductRSocketAdapterITCase extends MongoContainerConfig {
       }
       """;
 
-    assert requester != null;
+    assertThat(requester).isNotNull();
     requester.route("products.request-stream-sortByMetricsWeights").data(message).retrieveFlux(Product.class)
       .as(StepVerifier::create).consumeNextWith(product -> {
         assertThat(product.internalId()).isEqualTo("5");
@@ -103,7 +103,7 @@ class ProductRSocketAdapterITCase extends MongoContainerConfig {
       {}
       """;
 
-    assert requester != null;
+    assertThat(requester).isNotNull();
     requester.route("products.request-stream-sortByMetricsWeights").data(message).retrieveFlux(Product.class)
       .as(StepVerifier::create).expectError().verify();
   }

@@ -158,6 +158,6 @@ class ProductRestAdapterITCase extends CouchbaseContainerConfig {
     this.webClient.get().uri("/products?page={page}&size={size}", "X", "Y")
       .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
       .header("X-Trace-Id", generateRandomString()).header("X-Api-Version", "1.0.0").exchange().expectStatus()
-      .is4xxClientError().expectBody().jsonPath("$.status").isEqualTo(HttpStatus.BAD_REQUEST.value());
+      .is4xxClientError().expectBody().jsonPath("$.status").isEqualTo(HttpStatus.EXPECTATION_FAILED.value());
   }
 }
