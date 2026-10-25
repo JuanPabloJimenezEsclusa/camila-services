@@ -65,9 +65,10 @@ def render(reports: list[str]) -> str:
   lines = ["## 🧬 Mutation Testing Report", ""]
 
   if not reports:
-    lines.append("### ⚠️ No mutation reports were generated")
-    lines.append("")
-    lines.append("PIT did not produce any `mutations.xml`. Review the *Run Mutation Tests* step.")
+    lines.extend([
+      "### ⚠️ No mutation reports were generated",
+      "",
+      "PIT did not produce any `mutations.xml`. Review the *Run Mutation Tests* step."])
     return "\n".join(lines) + "\n"
 
   issued: dict[str, int] = dict.fromkeys(STATUSES, 0)
@@ -86,18 +87,16 @@ def render(reports: list[str]) -> str:
     )
 
   total = sum(issued.values())
-  lines.append("| Module | Generated | Killed | Survived | No coverage | Score | Test strength |")
-  lines.append("|---|---:|---:|---:|---:|---:|---:|")
+  lines.extend([
+    "| Module | Generated | Killed | Survived | No coverage | Score | Test strength |",
+    "|---|---:|---:|---:|---:|---:|---:|"])
   lines.extend(rows)
-  lines.append(
+  lines.extend([
     f"| **Total** | **{total}** | **{issued['KILLED']}** | **{issued['SURVIVED']}** | "
-    f"**{issued['NO_COVERAGE']}** | **{mutation_score(issued)}** | **{test_strength(issued)}** |"
-  )
-  lines.append("")
-  lines.append(
+    f"**{issued['NO_COVERAGE']}** | **{mutation_score(issued)}** | **{test_strength(issued)}** |",
+    "",
     f"🕐 {issued['TIMED_OUT']} timed out · ⚠️ {issued['RUN_ERROR']} run errors · "
-    f"💀 {issued['MEMORY_ERROR']} memory errors · 🚫 {issued['NON_VIABLE']} non-viable"
-  )
+    f"💀 {issued['MEMORY_ERROR']} memory errors · 🚫 {issued['NON_VIABLE']} non-viable"])
   return "\n".join(lines) + "\n"
 
 def main() -> int:

@@ -160,7 +160,7 @@
     <sonar.java.pmd.reportPaths>${project.build.directory}/pmd.xml</sonar.java.pmd.reportPaths>
     <sonar.java.checkstyle.reportPaths>${project.build.directory}/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/camila-coverage-jacoco/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/config/*,**/*MapperImpl**</sonar.exclusions>
+    <sonar.exclusions>**/input/grpc/**,**/input/rest/api/**,**/input/rest/dto/**,**/input/security/*Config**,**/config/*,**/*MapperImpl**,**/.github/scripts/**</sonar.exclusions>
     <sonar.branch.name>develop</sonar.branch.name>
   </properties>
 

@@ -42,9 +42,10 @@ def render(reports: list[str]) -> str:
   lines = ["## 🧪 Behaviour Testing Report", ""]
 
   if not reports:
-    lines.append("### ⚠️ No Cucumber reports were generated")
-    lines.append("")
-    lines.append("The runner did not produce `cucumber.json`. Review the *Run Behaviour Tests* step.")
+    lines.extend([
+      "### ⚠️ No Cucumber reports were generated",
+      "",
+      "The runner did not produce `cucumber.json`. Review the *Run Behaviour Tests* step."])
     return "\n".join(lines) + "\n"
 
   totals = dict.fromkeys(STATUSES, 0)
@@ -56,9 +57,10 @@ def render(reports: list[str]) -> str:
     try:
       features = json.load(open(report, encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
-      lines.append(f"### ⚠️ Could not read `{report}`")
-      lines.append("")
-      lines.append(f"```\n{error}\n```")
+      lines.extend([
+        f"### ⚠️ Could not read `{report}`",
+        "",
+        f"```\n{error}\n```"])
       return "\n".join(lines) + "\n"
 
     for feature in features:
@@ -87,16 +89,16 @@ def render(reports: list[str]) -> str:
     return "\n".join(lines) + "\n"
 
   scenarios = sum(totals.values())
-  lines.append("| Feature | Scenarios | Passed | Failed | Skipped |")
-  lines.append("|---|---:|---:|---:|---:|")
+  lines.extend([
+    "| Feature | Scenarios | Passed | Failed | Skipped |",
+    "|---|---:|---:|---:|---:|"])
   lines.extend(rows)
-  lines.append(
+  lines.extend([
     f"| **Total** | **{scenarios}** | **{totals['passed']}** | **{totals['failed']}** | "
-    f"**{scenarios - totals['passed'] - totals['failed']}** |"
-  )
-  lines.append("")
-  lines.append(f"⏱️ Duration: {duration / 1_000_000_000:.1f}s")
-  lines.append("")
+    f"**{scenarios - totals['passed'] - totals['failed']}** |",
+    "",
+    f"⏱️ Duration: {duration / 1_000_000_000:.1f}s",
+    ""])
 
   if failures:
     lines.append("### ❌ Failed scenarios")

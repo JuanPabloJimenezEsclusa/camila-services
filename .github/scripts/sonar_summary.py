@@ -107,9 +107,10 @@ def render() -> str:
   lines = ["## 📊 SonarQube Code Analysis", ""]
 
   if not TOKEN:
-    lines.append("### ⚠️ `SONAR_TOKEN` is not available")
-    lines.append("")
-    lines.append("Set the token to publish quality gate and metric results.")
+    lines.extend([
+      "### ⚠️ `SONAR_TOKEN` is not available",
+      "",
+      "Set the token to publish quality gate and metric results."])
     return "\n".join(lines) + "\n"
 
   lines.append(f"**Branch:** `{BRANCH}` · **Project:** [`{PROJECT}`]({DASHBOARD})")
@@ -171,10 +172,10 @@ def render() -> str:
       lines.append(f"| {LABELS[metric]} | {value} |")
 
   except ApiError as error:
-    lines.append(f"### ⚠️ Could not read the SonarCloud API")
-    lines.append("")
-    lines.append(f"```\n{error}\n```")
-
+    lines.extend([
+      "### ⚠️ Could not read the SonarCloud API",
+      "",
+      f"```\n{error}\n```"])
   return "\n".join(lines) + "\n"
 
 def debt(minutes: str) -> str:
