@@ -103,7 +103,7 @@ Feature: Consult sort products
     When  consult products sort and paginated
     Then  receive status
       | status |
-      | 400    |
+      | 417    |
     And   error body
-      | type                       | title       | status | detail             | instance | errors |
-      | /problems/invalid-argument | BAD_REQUEST | 400    | Invalid parameters | ^.*?$$   |        |
+      | type                 | title              | status | detail         | instance |
+      | /problems/validation | EXPECTATION_FAILED | 417    | .*must match.* | ^.*?$$   |

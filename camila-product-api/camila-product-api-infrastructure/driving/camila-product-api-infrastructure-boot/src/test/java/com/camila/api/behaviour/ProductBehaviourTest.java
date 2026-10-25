@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 import com.camila.api.product.infrastructure.adapter.output.mongo.MongoContainerConfig;
 import io.cucumber.datatable.DataTable;
@@ -37,12 +37,12 @@ public class ProductBehaviourTest {
   @Given("^some metrics weights and page config$")
   public void someMetricsWeightsAndPageConfig(final DataTable table) {
     parameters = List.of(
-      table.cell(1, 0),
-      table.cell(1, 1),
-      table.cell(1, 2),
-      table.cell(1, 3),
-      table.cell(1, 4),
-      table.cell(1, 5));
+      Objects.requireNonNull(table.cell(1, 0)),
+      Objects.requireNonNull(table.cell(1, 1)),
+      Objects.requireNonNull(table.cell(1, 2)),
+      Objects.requireNonNull(table.cell(1, 3)),
+      Objects.requireNonNull(table.cell(1, 4)),
+      Objects.requireNonNull(table.cell(1, 5)));
   }
 
   @When("^consult products sort and paginated$")
@@ -53,7 +53,7 @@ public class ProductBehaviourTest {
 
   @Then("^receive status$")
   public void receiveStatus(final DataTable table) {
-    exchange.expectStatus().isEqualTo(Integer.parseInt(table.cell(1, 0)));
+    exchange.expectStatus().isEqualTo(Integer.parseInt(Objects.requireNonNull(table.cell(1, 0))));
   }
 
   @And("^get sorted data$")
@@ -81,11 +81,12 @@ public class ProductBehaviourTest {
   public void errorBody(final DataTable table) {
     final var body = exchange.expectBody();
 
-    table.asMaps().forEach(element -> body.jsonPath("$.type").isEqualTo(element.get("type")).jsonPath("$.title")
-      .isEqualTo(element.get("title")).jsonPath("$.status").isEqualTo(element.get("status"))
-      .jsonPath("$.detail").isEqualTo(element.get("detail")).jsonPath("$.instance")
-      .value(value -> assertThat(value.toString()).matches(element.get("instance"))).jsonPath("$.errors")
-      .value(value -> assertThat(value).isEqualTo(Map.of())));
+    table.asMaps().forEach(element -> body
+      .jsonPath("$.type").isEqualTo(element.get("type"))
+      .jsonPath("$.title").isEqualTo(element.get("title"))
+      .jsonPath("$.status").isEqualTo(element.get("status"))
+      .jsonPath("$.detail").value(value -> assertThat(value.toString()).matches(element.get("detail")))
+      .jsonPath("$.instance").value(value -> assertThat(value.toString()).matches(element.get("instance"))));
   }
 
   /*

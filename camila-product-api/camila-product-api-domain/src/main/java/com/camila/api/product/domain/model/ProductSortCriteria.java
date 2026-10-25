@@ -42,7 +42,7 @@ public record ProductSortCriteria(List<MetricWeight> metricWeights, int page, in
         }
       }, HashMap::putAll);
 
-    final double defaultWeight = !providedWeights.isEmpty() ? 0.0 : 1.0;
+    final double defaultWeight = providedWeights.isEmpty() ? 1.0 : 0.0;
     return Arrays.stream(Metrics.values()).filter(metric -> metric != Metrics.UNKNOWN)
       .map(metric -> new MetricWeight(metric, providedWeights.getOrDefault(metric, defaultWeight))).toList();
   }

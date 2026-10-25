@@ -5,10 +5,189 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**fix(security): redefine cors config**
+**fix(deps): change opentelemetry version**
 
 
-[5a57393abfd041d](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5a57393abfd041d) JuanPabloJimenezEsclusa *2026-10-12 16:11:44*
+[f1b267a1c5c974b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f1b267a1c5c974b) JuanPabloJimenezEsclusa *2026-10-25 09:41:49*
+
+**chore(deps): bump the maven-dependencies group across 1 directory with 14 updates**
+
+ * Bumps the maven-dependencies group with 14 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [de.codecentric:spring-boot-admin-dependencies](https://github.com/codecentric/spring-boot-admin) | &#x60;4.1.3&#x60; | &#x60;4.1.4&#x60; |
+ * | [io.opentelemetry:opentelemetry-bom](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.66.0&#x60; | &#x60;1.67.0&#x60; |
+ * | [io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom](https://github.com/open-telemetry/opentelemetry-java-instrumentation) | &#x60;2.31.1&#x60; | &#x60;2.32.0&#x60; |
+ * | [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) | &#x60;3.12.3&#x60; | &#x60;3.13.0&#x60; |
+ * | [se.bjurr.gitchangelog:git-changelog-maven-plugin](https://github.com/tomasbjerre/git-changelog-maven-plugin) | &#x60;2.5.0&#x60; | &#x60;2.5.4&#x60; |
+ * | org.openapitools:openapi-generator-maven-plugin | &#x60;7.25.0&#x60; | &#x60;7.26.0&#x60; |
+ * | [org.pitest:pitest-maven](https://github.com/hcoles/pitest) | &#x60;1.30.0&#x60; | &#x60;1.30.1&#x60; |
+ * | [com.github.spotbugs:spotbugs-maven-plugin](https://github.com/spotbugs/spotbugs-maven-plugin) | &#x60;4.10.4.1&#x60; | &#x60;4.10.5.0&#x60; |
+ * | [org.codehaus.mojo:versions-maven-plugin](https://github.com/mojohaus/versions) | &#x60;2.22.0&#x60; | &#x60;2.23.0&#x60; |
+ * | [com.redis:testcontainers-redis](https://github.com/redis-field-engineering/testcontainers-redis) | &#x60;2.2.4&#x60; | &#x60;3.0.0&#x60; |
+ * | [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.86.1&#x60; | &#x60;1.86.2&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * Updates &#x60;de.codecentric:spring-boot-admin-dependencies&#x60; from 4.1.3 to 4.1.4
+ * - [Release notes](https://github.com/codecentric/spring-boot-admin/releases)
+ * - [Commits](https://github.com/codecentric/spring-boot-admin/compare/4.1.3...4.1.4)
+ * Updates &#x60;io.opentelemetry:opentelemetry-bom&#x60; from 1.66.0 to 1.67.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.66.0...v1.67.0)
+ * Updates &#x60;io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom&#x60; from 2.31.1 to 2.32.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java-instrumentation/compare/v2.31.1...v2.32.0)
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.12.3 to 3.13.0
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.12.3...3.13.0)
+ * Updates &#x60;se.bjurr.gitchangelog:git-changelog-maven-plugin&#x60; from 2.5.0 to 2.5.4
+ * - [Release notes](https://github.com/tomasbjerre/git-changelog-maven-plugin/releases)
+ * - [Changelog](https://github.com/tomasbjerre/git-changelog-maven-plugin/blob/master/CHANGELOG.md)
+ * - [Commits](https://github.com/tomasbjerre/git-changelog-maven-plugin/compare/2.5.0...2.5.4)
+ * Updates &#x60;org.openapitools:openapi-generator-maven-plugin&#x60; from 7.25.0 to 7.26.0
+ * Updates &#x60;org.pitest:pitest-maven&#x60; from 1.30.0 to 1.30.1
+ * - [Release notes](https://github.com/hcoles/pitest/releases)
+ * - [Commits](https://github.com/hcoles/pitest/compare/1.30.0...1.30.1)
+ * Updates &#x60;com.github.spotbugs:spotbugs-maven-plugin&#x60; from 4.10.4.1 to 4.10.5.0
+ * - [Release notes](https://github.com/spotbugs/spotbugs-maven-plugin/releases)
+ * - [Commits](https://github.com/spotbugs/spotbugs-maven-plugin/compare/spotbugs-maven-plugin-4.10.4.1...spotbugs-maven-plugin-4.10.5.0)
+ * Updates &#x60;org.codehaus.mojo:versions-maven-plugin&#x60; from 2.22.0 to 2.23.0
+ * - [Release notes](https://github.com/mojohaus/versions/releases)
+ * - [Changelog](https://github.com/mojohaus/versions/blob/master/ReleaseNotes.md)
+ * - [Commits](https://github.com/mojohaus/versions/compare/2.22.0...2.23.0)
+ * Updates &#x60;com.redis:testcontainers-redis&#x60; from 2.2.4 to 3.0.0
+ * - [Release notes](https://github.com/redis-field-engineering/testcontainers-redis/releases)
+ * - [Commits](https://github.com/redis-field-engineering/testcontainers-redis/compare/v2.2.4...v3.0.0)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.86.1 to 1.86.2
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.md)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: de.codecentric:spring-boot-admin-dependencies
+ * dependency-version: 4.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-bom
+ * dependency-version: 1.67.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom
+ * dependency-version: 2.32.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.13.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: se.bjurr.gitchangelog:git-changelog-maven-plugin
+ * dependency-version: 2.5.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.openapitools:openapi-generator-maven-plugin
+ * dependency-version: 7.26.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.pitest:pitest-maven
+ * dependency-version: 1.30.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.github.spotbugs:spotbugs-maven-plugin
+ * dependency-version: 4.10.5.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.codehaus.mojo:versions-maven-plugin
+ * dependency-version: 2.23.0
+ * dependency-type: direct:development
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.redis:testcontainers-redis
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: 1.86.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[8c0973e03567d60](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8c0973e03567d60) dependabot[bot] *2026-10-20 14:58:30*
+
+**chore(deps): bump axllent/mailpit (#410)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: axllent/mailpit.
+ * Updates &#x60;axllent/mailpit&#x60; from v1.31.4 to v1.31.5
+ * ---
+ * updated-dependencies:
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.31.5
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[5eb9329ec1281d7](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5eb9329ec1281d7) dependabot[bot] *2026-10-14 18:08:17*
+
+**fix(security): redefine cors config (#409)**
+
+ * refactor(architecture): remove redundant javadocs
+
+[f6f211c9f24bbbc](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f6f211c9f24bbbc) Juan Pablo Jimenez Esclusa *2026-10-13 01:06:58*
 
 **chore(deps): bump the maven-dependencies group across 1 directory with 10 updates (#408)**
 

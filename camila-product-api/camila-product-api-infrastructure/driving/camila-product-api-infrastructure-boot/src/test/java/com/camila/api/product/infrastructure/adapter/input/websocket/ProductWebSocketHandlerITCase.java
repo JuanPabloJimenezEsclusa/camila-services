@@ -1,5 +1,6 @@
 package com.camila.api.product.infrastructure.adapter.input.websocket;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -65,7 +66,8 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
       }
       """;
 
-    assert webSocketClient != null;
+
+    assertThat(webSocketClient).isNotNull();
     webSocketClient.execute(this.uri,
         session -> session.send(Mono.just(session.textMessage(findByInternalIdRequest)))
           .thenMany(session.receive().take(1).map(WebSocketMessage::getPayloadAsText))
@@ -100,7 +102,7 @@ class ProductWebSocketHandlerITCase extends MongoContainerConfig {
       }
       """;
 
-    assert webSocketClient != null;
+    assertThat(webSocketClient).isNotNull();
     webSocketClient.execute(this.uri, session -> session.send(Mono.just(session.textMessage(sortProductsRequest)))
       .thenMany(session.receive().take(1).map(WebSocketMessage::getPayloadAsText)).flatMap(message -> {
         log.info("Received sortProducts: {}", message);

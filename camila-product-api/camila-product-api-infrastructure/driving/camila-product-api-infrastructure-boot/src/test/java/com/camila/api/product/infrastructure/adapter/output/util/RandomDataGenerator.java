@@ -23,7 +23,7 @@ public class RandomDataGenerator {
       {"internalId":"%s", "name":"%s", "category":"%s", "salesUnits":%d, "stock":%s, "profitMargin":%.2f, "daysInStock":%d}
     """;
 
-  private static final String[] CATEGORY_WORDS = new String[]{"SHIRT", "PANTS", "DRESS", "SWEATER", "JACKET", "COAT",
+  private static final String[] CATEGORY_WORDS = {"SHIRT", "PANTS", "DRESS", "SWEATER", "JACKET", "COAT",
     "FOOTWEAR", "ACCESSORY"};
 
   private static final Map<String, String[]> CATEGORY_SPECIFIC_WORDS = Map.of("SHIRT",
@@ -50,14 +50,14 @@ public class RandomDataGenerator {
     "ACCESSORY", new String[]{"HAT", "SCARF", "GLOVES", "BELT", "TIE", "SOCKS", "WATCH", "SUNGLASSES", "BAG",
       "WALLET", "KEYCHAIN", "BRACELET", "NECKLACE", "EARRINGS", "RING"});
 
-  private static final String[] DESCRIPTIVE_WORDS = new String[]{"PREMIUM", "CLASSIC", "MODERN", "VINTAGE", "DELUXE",
+  private static final String[] DESCRIPTIVE_WORDS = {"PREMIUM", "CLASSIC", "MODERN", "VINTAGE", "DELUXE",
     "SIGNATURE", "ESSENTIAL", "SLIM", "RELAXED", "TAILORED", "CASUAL", "ELEGANT", "LUXURY", "COMFORTABLE",
     "BASIC", "SPORTY", "BOHO", "ECO-FRIENDLY", "SUSTAINABLE", "ETHICAL", "CHIC", "FEMININE", "MASCULINE",
     "UNISEX", "EXCLUSIVE", "LIMITED EDITION", "HANDMADE", "ARTISANAL", "DESIGNER", "COLLABORATION",
     "STREETWEAR", "ATHLEISURE", "BOHEMIAN", "GLAMOROUS", "RETRO", "FESTIVAL", "RESORT", "URBAN", "COUNTRY",
     "BEACHWEAR", "BUSINESS", "FORMAL", "CASUAL", "LOUNGEWEAR", "ACTIVEWEAR", "OUTDOOR", "LOUNGE"};
 
-  private static final String[] MATERIAL_WORDS = new String[]{"COTTON", "WOOL", "LINEN", "SILK", "CASHMERE", "DENIM",
+  private static final String[] MATERIAL_WORDS = {"COTTON", "WOOL", "LINEN", "SILK", "CASHMERE", "DENIM",
     "POLYESTER", "LEATHER", "ORGANIC", "RECYCLED", "TWILL", "VELVET", "SATIN", "SUEDE", "FLEECE", "MOHAIR",
     "ALPACA", "VISCOSE", "LYOCELL", "ACRYLIC", "BAMBOO", "HERRINGBONE", "JACQUARD", "LACE", "CHIFFON",
     "SEERSUCKER", "TWEED", "CORDUROY", "BROCADE", "GABARDINE", "JERSEY", "CHAMBRAY", "FLANNEL", "TARTAN",
