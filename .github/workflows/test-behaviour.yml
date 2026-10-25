@@ -65,58 +65,30 @@ jobs:
         with:
           name: cucumber-reports
           path: |
-            camila-product-api/target/cucumber-reports/
-            camila-product-api/target/surefire-reports/
+            camila-product-api/**/target/cucumber-reports/
+            camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/surefire-reports/
           retention-days: 30
           if-no-files-found: warn
       - name: Generate Behaviour Test Summary
         if: always()
         run: |
-          echo "## 🧪 Behaviour Testing Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -d "camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports" ]; then
-            echo "### ✅ Behaviour Tests Completed" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Test Runner:** ProductBehaviourRunner" >> $GITHUB_STEP_SUMMARY
-            echo "**Reports Location:** \`camila-product-api/target/cucumber-reports/\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            
-            # Check for HTML report
-            if [ -f "camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports/index.html" ]; then
-              echo "📊 Cucumber HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
-            fi
-          else
-            echo "### ⚠️ No Behaviour Test Reports Generated" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Test Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
+          python3 .github/scripts/behaviour_summary.py | tee behaviour-summary.md >> "$GITHUB_STEP_SUMMARY"
       - name: Comment PR with Behaviour Test Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
+            const summaryPath = 'behaviour-summary.md';
             
-            const reportsPath = 'camila-product-api/camila-product-api-infrastructure/driving/camila-product-api-infrastructure-boot/target/cucumber-reports';
-            let comment = '## 🧪 Behaviour Testing Results\n\n';
+            let comment = fs.existsSync(summaryPath)
+              ? fs.readFileSync(summaryPath, 'utf8')
+              : '## 🧪 Behaviour Testing Report\n\n⚠️ **No Cucumber reports were generated.**\n';
             
-            if (fs.existsSync(reportsPath)) {
-              comment += '✅ **Behaviour tests have been executed**\n\n';
-              comment += '**Generated Reports:**\n';
-              comment += '- Cucumber BDD test results in the artifacts\n';
-              comment += '- Test runner: ProductBehaviourRunner\n';
-              comment += '- Artifacts can be downloaded from the workflow run details\n\n';
-            } else {
-              comment += '⚠️ **No behaviour test reports were generated**\n\n';
-            }
+            comment += '\n---\n';
+            comment += '<sub>📦 Full Cucumber HTML/JSON reports are available in the `cucumber-reports` artifact.</sub>\n';
             
-            comment += '---\n';
-            comment += '_Behaviour-Driven Development (BDD) tests ensure your application meets business requirements._\n';
-            
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,

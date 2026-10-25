@@ -8,7 +8,7 @@ Changelog of camila-services.
 **fix(deps): change opentelemetry version**
 
 
-[f1b267a1c5c974b](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/f1b267a1c5c974b) JuanPabloJimenezEsclusa *2026-10-25 09:41:49*
+[ef6da2c1fc13f2a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ef6da2c1fc13f2a) JuanPabloJimenezEsclusa *2026-10-25 10:11:08*
 
 **chore(deps): bump the maven-dependencies group across 1 directory with 14 updates**
 

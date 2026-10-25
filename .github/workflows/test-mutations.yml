@@ -65,49 +65,23 @@ jobs:
       - name: Generate Mutation Test Summary
         if: always()
         run: |
-          echo "## 🧬 Mutation Testing Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -d "target/pit-reports" ]; then
-            echo "### ✅ Mutation Tests Completed" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Reports Location:** \`target/pit-reports/\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            
-            # Check for index.html to provide direct link info
-            if [ -f "target/pit-reports/index.html" ]; then
-              echo "📊 Full HTML report available in artifacts" >> $GITHUB_STEP_SUMMARY
-            fi
-          else
-            echo "### ⚠️ No Mutation Reports Generated" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Mutation Test Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
+          python3 .github/scripts/mutation_summary.py | tee mutation-summary.md >> "$GITHUB_STEP_SUMMARY"
       - name: Comment PR with Mutation Test Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
+            const summaryPath = 'mutation-summary.md';
             
-            const reportsPath = 'target/pit-reports';
-            let comment = '## 🧬 Mutation Testing Results\n\n';
+            let comment = fs.existsSync(summaryPath)
+              ? fs.readFileSync(summaryPath, 'utf8')
+              : '## 🧬 Mutation Testing Report\n\n⚠️ **No mutation reports were generated.**\n';
             
-            if (fs.existsSync(reportsPath)) {
-              comment += '✅ **Mutation tests have been executed**\n\n';
-              comment += '**Generated Reports:**\n';
-              comment += '- View detailed mutation analysis in the [PIT Reports](https://en.wikipedia.org/wiki/Mutation_testing) artifacts\n';
-              comment += '- Artifacts can be downloaded from the workflow run details\n\n';
-            } else {
-              comment += '⚠️ **No mutation reports were generated**\n\n';
-            }
+            comment += '\n---\n';
+            comment += '<sub>📦 Full PIT reports (XML/HTML) are available in the `pitest-reports` artifact.</sub>\n';
             
-            comment += '---\n';
-            comment += '_Mutation testing helps identify weaknesses in your test suite by introducing code mutations._\n';
-            
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,

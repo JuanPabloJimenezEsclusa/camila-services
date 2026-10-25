@@ -16,6 +16,7 @@ import org.junit.platform.suite.api.Suite;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.camila.api.behaviour")
 @ConfigurationParameter(key = PLUGIN_PUBLISH_ENABLED_PROPERTY_NAME, value = "false")
 @ConfigurationParameter(key = ANSI_COLORS_DISABLED_PROPERTY_NAME, value = "true")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty,html:target/cucumber-reports/Cucumber.html")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,
+  value = "pretty,html:target/cucumber-reports/Cucumber.html,json:target/cucumber-reports/cucumber.json")
 class ProductBehaviourRunner {
 }

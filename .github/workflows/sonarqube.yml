@@ -69,62 +69,36 @@ jobs:
         with:
           name: sonarqube-reports
           path: |
-            target/.sonar/
             **/target/sonar/
+            target/.sonar/
           retention-days: 30
           if-no-files-found: warn
       - name: Generate SonarQube Analysis Summary
         if: always()
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+          SONAR_PROJECT_KEY: JuanPabloJimenezEsclusa_camila-services
+          SONAR_BRANCH: develop
+          SONAR_ANALYSIS_OUTCOME: ${{ steps.sonarqube-analysis.outcome }}
         run: |
-          echo "## 📊 SonarQube Code Analysis Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -d "target/.sonar" ]; then
-            echo "### ✅ SonarQube Analysis Completed" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Analysis Type:** Code Quality & Security" >> $GITHUB_STEP_SUMMARY
-            echo "**Report Location:** \`target/.sonar/\`" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "📈 **Key Metrics:**" >> $GITHUB_STEP_SUMMARY
-            echo "- Code Coverage Analysis" >> $GITHUB_STEP_SUMMARY
-            echo "- Security Vulnerabilities Scan" >> $GITHUB_STEP_SUMMARY
-            echo "- Code Smells Detection" >> $GITHUB_STEP_SUMMARY
-            echo "- Technical Debt Assessment" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "### ⚠️ No SonarQube Analysis Reports Generated" >> $GITHUB_STEP_SUMMARY
-          fi
-          
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Analysis Artifacts:** Download from the 'Artifacts' section above" >> $GITHUB_STEP_SUMMARY
+          python3 .github/scripts/sonar_summary.py | tee sonar-summary.md >> "$GITHUB_STEP_SUMMARY"
       - name: Comment PR with SonarQube Results
         if: github.event_name == 'pull_request' && always()
         uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
+            const summaryPath = 'sonar-summary.md';
             
-            const reportsPath = 'target/.sonar';
-            let comment = '## 📊 SonarQube Code Analysis Results\n\n';
+            let comment = fs.existsSync(summaryPath)
+              ? fs.readFileSync(summaryPath, 'utf8')
+              : '## 📊 SonarQube Code Analysis\n\n⚠️ **No SonarQube results were collected.**\n';
             
-            if (fs.existsSync(reportsPath)) {
-              comment += '✅ **Code analysis has been completed**\n\n';
-              comment += '**Analysis Coverage:**\n';
-              comment += '- Code Quality Metrics\n';
-              comment += '- Security Vulnerabilities\n';
-              comment += '- Code Smells & Technical Debt\n';
-              comment += '- Coverage Analysis\n';
-              comment += '- Duplication Detection\n\n';
-              comment += '📊 **View detailed analysis:**\n';
-              comment += '- Full reports available in artifacts\n';
-              comment += '- Download from workflow run details\n\n';
-            } else {
-              comment += '⚠️ **No SonarQube analysis reports were generated**\n\n';
-            }
+            comment += '\n---\n';
+            comment += '<sub>💡 Metrics are read from SonarCloud for the `develop` branch. Full reports are in the `sonarqube-reports` artifact.</sub>\n';
             
-            comment += '---\n';
-            comment += '_SonarQube provides comprehensive code quality analysis covering maintainability, reliability, and security._\n';
-            
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
