@@ -5,13 +5,626 @@ Changelog of camila-services.
 ## Unreleased
 ### No issue
 
-**fix(deps): change opentelemetry version**
+**ci: pin ubuntu-24.04 runners for mutation, behaviour and sonarqube**
+
+ * ubuntu-latest is migrating to Ubuntu 26.04 (Oct 19 - Nov 19, 2026) and
+ * those jobs intermittently fail on the new image. GitHub documents
+ * ubuntu-24.04 as the mitigation. Same code passes locally and on
+ * ubuntu-24 runners.
+
+[942577f729b058a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/942577f729b058a) JuanPabloJimenezEsclusa *2026-11-01 23:04:09*
+
+**fix(docker): fix mongo init script path and auth env vars**
+
+ * The mongo entrypoint sources the init .sh files instead of executing them,
+ * so $0 pointed at /usr/local/bin/docker-entrypoint.sh and the script could
+ * not find ./minimum_data.script. The container exited 1 on every start and
+ * the volume was never initialized. Use BASH_SOURCE to resolve the script
+ * directory in both contexts.
+ * Also rename MONGODB_INITDB_ROOT_* to MONGO_INITDB_ROOT_* in .env, the names
+ * the image actually reads. Without them no root user was created and mongod
+ * ran without authentication.
+
+[3d1e65b60a2282c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3d1e65b60a2282c) JuanPabloJimenezEsclusa *2026-11-01 21:59:04*
+
+**chore(deps): bump docker/login-action (#424)**
+
+ * Bumps the github-actions-dependencies group with 1 update: [docker/login-action](https://github.com/docker/login-action).
+ * Updates &#x60;docker/login-action&#x60; from 4.6.0 to 4.7.0
+ * - [Release notes](https://github.com/docker/login-action/releases)
+ * - [Commits](https://github.com/docker/login-action/compare/dbcb813823bdd20940b903addbd779551569679f...81c6f93d4bc991e510b342a00b419b3bb4efc5c6)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: docker/login-action
+ * dependency-version: 4.7.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: github-actions-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[9cccbf0e19d64f2](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/9cccbf0e19d64f2) dependabot[bot] *2026-10-26 09:19:09*
+
+**chore(deps): bump the gradle-dependencies group with 5 updates (#422)**
+
+ * chore(deps): bump the gradle-dependencies group with 5 updates
+ * Bumps the gradle-dependencies group with 5 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-dependencies](https://github.com/spring-projects/spring-boot) | &#x60;4.1.1&#x60; | &#x60;4.1.2&#x60; |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.1.3&#x60; | &#x60;2025.1.4&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.39.0&#x60; | &#x60;7.41.0&#x60; |
+ * | [com.squareup.okhttp3:mockwebserver](https://github.com/lysine-dev/okhttp) | &#x60;5.5.0&#x60; | &#x60;5.5.1&#x60; |
+ * | [com.squareup.okhttp3:okhttp](https://github.com/lysine-dev/okhttp) | &#x60;5.5.0&#x60; | &#x60;5.5.1&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-dependencies&#x60; from 4.1.1 to 4.1.2
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v4.1.1...v4.1.2)
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.1.3 to 2025.1.4
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Changelog](https://github.com/spring-cloud/spring-cloud-release/blob/main/release-train-settings.xml)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.1.3...v2025.1.4)
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.39.0 to 7.41.0
+ * Updates &#x60;com.squareup.okhttp3:mockwebserver&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-dependencies
+ * dependency-version: 4.1.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.41.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.squareup.okhttp3:mockwebserver
+ * dependency-version: 5.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.5.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * fix(ci): correct dependabot ignore for the openrewrite plugin
+ * Dependabot names Gradle plugin dependencies by their bare plugin id, so the
+ * pattern org.openrewrite.rewrite:* never matched and the plugin kept being
+ * bumped inside the gradle-dependencies group (7.39.0 -&gt; 7.41.0).
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+
+[6dda45f1699c879](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/6dda45f1699c879) dependabot[bot] *2026-10-25 16:39:58*
+
+**chore(deps): bump the maven-dependencies group with 5 updates (#423)**
+
+ * Bumps the maven-dependencies group with 5 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [org.springframework.boot:spring-boot-starter-parent](https://github.com/spring-projects/spring-boot) | &#x60;4.1.1&#x60; | &#x60;4.1.2&#x60; |
+ * | [org.springframework.cloud:spring-cloud-dependencies](https://github.com/spring-cloud/spring-cloud-release) | &#x60;2025.1.3&#x60; | &#x60;2025.1.4&#x60; |
+ * | [org.springframework:spring-context-indexer](https://github.com/spring-projects/spring-framework) | &#x60;7.0.9&#x60; | &#x60;7.0.10&#x60; |
+ * | [org.springframework.boot:spring-boot-configuration-processor](https://github.com/spring-projects/spring-boot) | &#x60;4.1.1&#x60; | &#x60;4.1.2&#x60; |
+ * | [org.projectlombok:lombok](https://github.com/projectlombok/lombok) | &#x60;1.18.46&#x60; | &#x60;1.18.48&#x60; |
+ * Updates &#x60;org.springframework.boot:spring-boot-starter-parent&#x60; from 4.1.1 to 4.1.2
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v4.1.1...v4.1.2)
+ * Updates &#x60;org.springframework.cloud:spring-cloud-dependencies&#x60; from 2025.1.3 to 2025.1.4
+ * - [Release notes](https://github.com/spring-cloud/spring-cloud-release/releases)
+ * - [Changelog](https://github.com/spring-cloud/spring-cloud-release/blob/main/release-train-settings.xml)
+ * - [Commits](https://github.com/spring-cloud/spring-cloud-release/compare/v2025.1.3...v2025.1.4)
+ * Updates &#x60;org.springframework:spring-context-indexer&#x60; from 7.0.9 to 7.0.10
+ * - [Release notes](https://github.com/spring-projects/spring-framework/releases)
+ * - [Commits](https://github.com/spring-projects/spring-framework/compare/v7.0.9...v7.0.10)
+ * Updates &#x60;org.springframework.boot:spring-boot-configuration-processor&#x60; from 4.1.1 to 4.1.2
+ * - [Release notes](https://github.com/spring-projects/spring-boot/releases)
+ * - [Commits](https://github.com/spring-projects/spring-boot/compare/v4.1.1...v4.1.2)
+ * Updates &#x60;org.projectlombok:lombok&#x60; from 1.18.46 to 1.18.48
+ * - [Changelog](https://github.com/projectlombok/lombok/blob/master/doc/changelog.markdown)
+ * - [Commits](https://github.com/projectlombok/lombok/compare/v1.18.46...v1.18.48)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.springframework.boot:spring-boot-starter-parent
+ * dependency-version: 4.1.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.cloud:spring-cloud-dependencies
+ * dependency-version: 2025.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework:spring-context-indexer
+ * dependency-version: 7.0.10
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.springframework.boot:spring-boot-configuration-processor
+ * dependency-version: 4.1.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: org.projectlombok:lombok
+ * dependency-version: 1.18.48
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[cf5e3ef7c338776](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/cf5e3ef7c338776) dependabot[bot] *2026-10-25 15:58:26*
+
+**chore(deps): bump hashicorp/consul (#421)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: hashicorp/consul.
+ * Updates &#x60;hashicorp/consul&#x60; from 2.0 to 2.1
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/consul
+ * dependency-version: &#x27;2.1&#x27;
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[8a41a61e010cdfe](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8a41a61e010cdfe) dependabot[bot] *2026-10-25 15:50:04*
+
+**fix(deps): downgrade openwrite version (#420)**
 
 
-[ef6da2c1fc13f2a](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ef6da2c1fc13f2a) JuanPabloJimenezEsclusa *2026-10-25 10:11:08*
+[e7515f0e350b970](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/e7515f0e350b970) Juan Pablo Jimenez Esclusa *2026-10-25 15:41:05*
 
-**chore(deps): bump the maven-dependencies group across 1 directory with 14 updates**
+**chore(deps): bump the gradle-dependencies group with 8 updates (#418)**
 
+ * Bumps the gradle-dependencies group with 8 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [com.google.errorprone:error_prone_annotations](https://github.com/google/error-prone) | &#x60;2.50.0&#x60; | &#x60;2.51.0&#x60; |
+ * | [com.google.errorprone:error_prone_core](https://github.com/google/error-prone) | &#x60;2.50.0&#x60; | &#x60;2.51.0&#x60; |
+ * | [org.graalvm.buildtools.native](https://github.com/graalvm/native-build-tools) | &#x60;1.1.14&#x60; | &#x60;1.1.16&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.39.0&#x60; | &#x60;7.41.0&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * | [io.grpc:protoc-gen-grpc-java](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * Updates &#x60;com.google.errorprone:error_prone_annotations&#x60; from 2.50.0 to 2.51.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.50.0...v2.51.0)
+ * Updates &#x60;com.google.errorprone:error_prone_core&#x60; from 2.50.0 to 2.51.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.50.0...v2.51.0)
+ * Updates &#x60;org.graalvm.buildtools.native&#x60; from 1.1.14 to 1.1.16
+ * - [Release notes](https://github.com/graalvm/native-build-tools/releases)
+ * - [Commits](https://github.com/graalvm/native-build-tools/compare/1.1.14...1.1.16)
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.39.0 to 7.41.0
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.google.errorprone:error_prone_annotations
+ * dependency-version: 2.51.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.51.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.graalvm.buildtools.native
+ * dependency-version: 1.1.16
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.41.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[92fed9512d10a60](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/92fed9512d10a60) dependabot[bot] *2026-10-25 13:27:07*
+
+**chore(deps): bump prom/prometheus (#417)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 1 update: prom/prometheus.
+ * Updates &#x60;prom/prometheus&#x60; from v3.15.0 to v3.15.1
+ * ---
+ * updated-dependencies:
+ * - dependency-name: prom/prometheus
+ * dependency-version: v3.15.1
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[5f35e37c139f7b0](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/5f35e37c139f7b0) dependabot[bot] *2026-10-25 12:29:03*
+
+**chore(deps): bump the maven-dependencies group with 7 updates (#419)**
+
+ * Bumps the maven-dependencies group with 7 updates:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [com.squareup.okhttp3:okhttp-jvm](https://github.com/lysine-dev/okhttp) | &#x60;5.5.0&#x60; | &#x60;5.5.1&#x60; |
+ * | [com.squareup.okhttp3:mockwebserver](https://github.com/lysine-dev/okhttp) | &#x60;5.5.0&#x60; | &#x60;5.5.1&#x60; |
+ * | [com.squareup.okhttp3:okhttp](https://github.com/lysine-dev/okhttp) | &#x60;5.5.0&#x60; | &#x60;5.5.1&#x60; |
+ * | [com.google.errorprone:error_prone_core](https://github.com/google/error-prone) | &#x60;2.50.0&#x60; | &#x60;2.51.0&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.85.0&#x60; | &#x60;1.85.1&#x60; |
+ * Updates &#x60;com.squareup.okhttp3:okhttp-jvm&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.squareup.okhttp3:mockwebserver&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.google.errorprone:error_prone_core&#x60; from 2.50.0 to 2.51.0
+ * - [Release notes](https://github.com/google/error-prone/releases)
+ * - [Commits](https://github.com/google/error-prone/compare/v2.50.0...v2.51.0)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.85.0 to 1.85.1
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.85.0...v1.85.1)
+ * Updates &#x60;com.squareup.okhttp3:mockwebserver&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * Updates &#x60;com.squareup.okhttp3:okhttp&#x60; from 5.5.0 to 5.5.1
+ * - [Changelog](https://github.com/lysine-dev/okhttp/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/lysine-dev/okhttp/compare/parent-5.5.0...parent-5.5.1)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: com.squareup.okhttp3:okhttp-jvm
+ * dependency-version: 5.5.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:mockwebserver
+ * dependency-version: 5.5.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.5.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.google.errorprone:error_prone_core
+ * dependency-version: 2.51.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.1
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:mockwebserver
+ * dependency-version: 5.5.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * - dependency-name: com.squareup.okhttp3:okhttp
+ * dependency-version: 5.5.1
+ * dependency-type: direct:development
+ * update-type: version-update:semver-patch
+ * dependency-group: maven-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[ed7c51b771d5f13](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/ed7c51b771d5f13) dependabot[bot] *2026-10-25 12:16:09*
+
+**chore(deps): update hashicorp/aws requirement (#411)**
+
+ * Updates the requirements on [hashicorp/aws](https://github.com/hashicorp/terraform-provider-aws) to permit the latest version.
+ * Updates &#x60;hashicorp/aws&#x60; to 6.70.0
+ * - [Release notes](https://github.com/hashicorp/terraform-provider-aws/releases)
+ * - [Changelog](https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/hashicorp/terraform-provider-aws/compare/v6.66.0...v6.70.0)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: hashicorp/aws
+ * dependency-version: 6.68.0
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[7265d16cfc7f411](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/7265d16cfc7f411) dependabot[bot] *2026-10-25 11:59:23*
+
+**chore(deps): bump the gradle-dependencies group across 1 directory with 15 updates (#415)**
+
+ * chore(deps): bump the gradle-dependencies group across 1 directory with 15 updates
+ * Bumps the gradle-dependencies group with 15 updates in the / directory:
+ * | Package | From | To |
+ * | --- | --- | --- |
+ * | [de.codecentric:spring-boot-admin-dependencies](https://github.com/codecentric/spring-boot-admin) | &#x60;4.1.3&#x60; | &#x60;4.1.4&#x60; |
+ * | [io.opentelemetry:opentelemetry-bom](https://github.com/open-telemetry/opentelemetry-java) | &#x60;1.66.0&#x60; | &#x60;1.67.0&#x60; |
+ * | [io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom](https://github.com/open-telemetry/opentelemetry-java-instrumentation) | &#x60;2.31.1&#x60; | &#x60;2.32.0&#x60; |
+ * | [com.couchbase.client:java-client](https://github.com/couchbase/couchbase-jvm-clients) | &#x60;3.12.3&#x60; | &#x60;3.13.0&#x60; |
+ * | com.github.spotbugs | &#x60;6.5.12&#x60; | &#x60;6.5.13&#x60; |
+ * | org.openapi.generator | &#x60;7.25.0&#x60; | &#x60;7.26.0&#x60; |
+ * | org.openrewrite.rewrite | &#x60;7.39.0&#x60; | &#x60;7.41.0&#x60; |
+ * | io.freefair.lombok | &#x60;9.8.0&#x60; | &#x60;9.8.2&#x60; |
+ * | com.github.ben-manes.versions | &#x60;0.64.0&#x60; | &#x60;0.66.0&#x60; |
+ * | [com.redis:testcontainers-redis](https://github.com/redis-field-engineering/testcontainers-redis) | &#x60;2.2.4&#x60; | &#x60;3.0.0&#x60; |
+ * | [io.grpc:grpc-netty](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:protoc-gen-grpc-java](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-protobuf](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:grpc-stub](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [io.grpc:protoc-gen-grpc-java](https://github.com/grpc/grpc-java) | &#x60;1.84.0&#x60; | &#x60;1.85.0&#x60; |
+ * | [org.bouncycastle:bctls-jdk18on](https://github.com/bcgit/bc-java) | &#x60;1.86&#x60; | &#x60;1.86.2&#x60; |
+ * Updates &#x60;de.codecentric:spring-boot-admin-dependencies&#x60; from 4.1.3 to 4.1.4
+ * - [Release notes](https://github.com/codecentric/spring-boot-admin/releases)
+ * - [Commits](https://github.com/codecentric/spring-boot-admin/compare/4.1.3...4.1.4)
+ * Updates &#x60;io.opentelemetry:opentelemetry-bom&#x60; from 1.66.0 to 1.67.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java/compare/v1.66.0...v1.67.0)
+ * Updates &#x60;io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom&#x60; from 2.31.1 to 2.32.0
+ * - [Release notes](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases)
+ * - [Changelog](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/CHANGELOG.md)
+ * - [Commits](https://github.com/open-telemetry/opentelemetry-java-instrumentation/compare/v2.31.1...v2.32.0)
+ * Updates &#x60;com.couchbase.client:java-client&#x60; from 3.12.3 to 3.13.0
+ * - [Commits](https://github.com/couchbase/couchbase-jvm-clients/compare/3.12.3...3.13.0)
+ * Updates &#x60;com.github.spotbugs&#x60; from 6.5.12 to 6.5.13
+ * Updates &#x60;org.openapi.generator&#x60; from 7.25.0 to 7.26.0
+ * Updates &#x60;org.openrewrite.rewrite&#x60; from 7.39.0 to 7.41.0
+ * Updates &#x60;io.freefair.lombok&#x60; from 9.8.0 to 9.8.2
+ * Updates &#x60;com.github.ben-manes.versions&#x60; from 0.64.0 to 0.66.0
+ * Updates &#x60;com.redis:testcontainers-redis&#x60; from 2.2.4 to 3.0.0
+ * - [Release notes](https://github.com/redis-field-engineering/testcontainers-redis/releases)
+ * - [Commits](https://github.com/redis-field-engineering/testcontainers-redis/compare/v2.2.4...v3.0.0)
+ * Updates &#x60;io.grpc:grpc-netty&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-protobuf&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:grpc-stub&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;io.grpc:protoc-gen-grpc-java&#x60; from 1.84.0 to 1.85.0
+ * - [Release notes](https://github.com/grpc/grpc-java/releases)
+ * - [Commits](https://github.com/grpc/grpc-java/compare/v1.84.0...v1.85.0)
+ * Updates &#x60;org.bouncycastle:bctls-jdk18on&#x60; from 1.86 to 1.86.2
+ * - [Changelog](https://github.com/bcgit/bc-java/blob/main/docs/releasenotes.md)
+ * - [Commits](https://github.com/bcgit/bc-java/commits)
+ * ---
+ * updated-dependencies:
+ * - dependency-name: de.codecentric:spring-boot-admin-dependencies
+ * dependency-version: 4.1.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry:opentelemetry-bom
+ * dependency-version: 1.67.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom
+ * dependency-version: 2.32.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.couchbase.client:java-client
+ * dependency-version: 3.13.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.spotbugs
+ * dependency-version: 6.5.13
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openapi.generator
+ * dependency-version: 7.26.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.openrewrite.rewrite
+ * dependency-version: 7.41.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.freefair.lombok
+ * dependency-version: 9.8.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.github.ben-manes.versions
+ * dependency-version: 0.66.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: com.redis:testcontainers-redis
+ * dependency-version: 3.0.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-major
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-netty
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-protobuf
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:grpc-stub
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: io.grpc:protoc-gen-grpc-java
+ * dependency-version: 1.85.0
+ * dependency-type: direct:production
+ * update-type: version-update:semver-minor
+ * dependency-group: gradle-dependencies
+ * - dependency-name: org.bouncycastle:bctls-jdk18on
+ * dependency-version: 1.86.2
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: gradle-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * chore(ci): improve actions notifications
+ * fix(deps): downgrade openwrite version
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
+
+[3131fb5c6b7b9eb](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/3131fb5c6b7b9eb) dependabot[bot] *2026-10-25 11:49:17*
+
+**chore(deps): bump the maven-dependencies group across 1 directory with 14 updates (#416)**
+
+ * chore(deps): bump the maven-dependencies group across 1 directory with 14 updates
  * Bumps the maven-dependencies group with 14 updates in the / directory:
  * | Package | From | To |
  * | --- | --- | --- |
@@ -164,8 +777,47 @@ Changelog of camila-services.
  * dependency-group: maven-dependencies
  * ...
  * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * fix(deps): change opentelemetry version
+ * ---------
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+ * Co-authored-by: JuanPabloJimenezEsclusa &lt;juan.pablo.jimenez.esclusa@gmail.com&gt;
 
-[8c0973e03567d60](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8c0973e03567d60) dependabot[bot] *2026-10-20 14:58:30*
+[254b95ca9b61783](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/254b95ca9b61783) dependabot[bot] *2026-10-25 10:20:42*
+
+**chore(deps): bump the infrastructure-dependencies group (#414)**
+
+ * Bumps the infrastructure-dependencies group in /camila-orchestrator/dev/compose with 4 updates: grafana/grafana, elasticsearch, kibana and axllent/mailpit.
+ * Updates &#x60;grafana/grafana&#x60; from 13.2.3 to 13.2.4
+ * Updates &#x60;elasticsearch&#x60; from 9.5.3 to 9.5.5
+ * Updates &#x60;kibana&#x60; from 9.5.3 to 9.5.5
+ * Updates &#x60;axllent/mailpit&#x60; from v1.31.5 to v1.31.6
+ * ---
+ * updated-dependencies:
+ * - dependency-name: grafana/grafana
+ * dependency-version: 13.2.4
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: elasticsearch
+ * dependency-version: 9.5.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: kibana
+ * dependency-version: 9.5.5
+ * dependency-type: direct:production
+ * update-type: version-update:semver-patch
+ * dependency-group: infrastructure-dependencies
+ * - dependency-name: axllent/mailpit
+ * dependency-version: v1.31.6
+ * dependency-type: direct:production
+ * dependency-group: infrastructure-dependencies
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+ * Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+
+[de28d3c5e52a13c](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/de28d3c5e52a13c) dependabot[bot] *2026-10-24 21:40:44*
 
 **chore(deps): bump axllent/mailpit (#410)**
 

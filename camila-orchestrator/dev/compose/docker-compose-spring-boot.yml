@@ -3,7 +3,7 @@
 services:
   ## Databases
   mongodb:
-    image: mongo:9.0.2-noble
+    image: mongo:9.0.4-resolute
     container_name: camila-mongo-product-db
     hostname: mongodb
     restart: on-failure:5

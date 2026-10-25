@@ -5,6 +5,6 @@ set -o errtrace # Exit on error inside any functions or subshells.
 set -o nounset # Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
 if [[ "${debug:-}" == "true" ]]; then set -o xtrace; fi  # enable debug mode.
 
-cd "$(dirname "$0")"
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 mongosh < ./minimum_data.script
