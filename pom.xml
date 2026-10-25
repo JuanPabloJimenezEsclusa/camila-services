@@ -88,7 +88,7 @@
     <!-- GRPC -->
     <grpc-server-spring-starter.version>1.0.3</grpc-server-spring-starter.version>
     <protobuf-java.version>4.36.2</protobuf-java.version>
-    <io-grpc.version>1.85.0</io-grpc.version>
+    <io-grpc.version>1.85.1</io-grpc.version>
     <!-- Spring Boot's grpc-bom import is versioned by grpc-java.version; align it with io-grpc.version
          so transitively-pulled grpc artifacts (e.g. via spring-grpc-core) do not resolve to 1.83.1 -->
     <grpc-java.version>${io-grpc.version}</grpc-java.version>
@@ -105,7 +105,7 @@
     <instancio-junit.version>6.1.0</instancio-junit.version>
     <jmh.version>1.37</jmh.version>
     <junit-platform-suite.version>6.0.1</junit-platform-suite.version>
-    <okhttp.version>5.5.0</okhttp.version>
+    <okhttp.version>5.5.1</okhttp.version>
 
     <!-- Quality -->
     <chaos-monkey-spring-boot.version>4.0.0</chaos-monkey-spring-boot.version>
@@ -113,7 +113,7 @@
     <mapstruct.version>1.6.3</mapstruct.version>
     <commons-lang3.version>3.21.0</commons-lang3.version>
     <snakeyaml.version>2.6</snakeyaml.version>
-    <error_prone_core.version>2.50.0</error_prone_core.version>
+    <error_prone_core.version>2.51.0</error_prone_core.version>
     <pitest-maven.version>1.30.1</pitest-maven.version>
     <checkstyle.version>14.3.0</checkstyle.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
