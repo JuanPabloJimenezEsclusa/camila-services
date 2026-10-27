@@ -81,7 +81,7 @@
     <opentelemetry-instrumentation.version>2.33.0</opentelemetry-instrumentation.version>
 
     <!-- API -->
-    <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
+    <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
     <graphql-java.version>26.1</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
@@ -136,8 +136,8 @@
     <git-commit-id-maven-plugin.version>10.0.1</git-commit-id-maven-plugin.version>
     <openapi-generator-maven-plugin.version>7.26.0</openapi-generator-maven-plugin.version>
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-    <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
-    <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
+    <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
+    <maven-failsafe-plugin.version>3.6.1</maven-failsafe-plugin.version>
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
     <versions-maven-plugin.version>2.23.0</versions-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.5.4</git-changelog-maven-plugin.version>
