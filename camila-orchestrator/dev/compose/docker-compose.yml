@@ -678,7 +678,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.31.6
+    image: axllent/mailpit:v1.32.0
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1
