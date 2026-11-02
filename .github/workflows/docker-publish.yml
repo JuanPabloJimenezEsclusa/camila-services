@@ -60,7 +60,7 @@ jobs:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
       - name: Transform lowercase - github.repository_owner
         run: |
-          echo "REPOSITORY_OWNER=`echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]'`" >>${GITHUB_ENV}
+          echo "REPOSITORY_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >>${GITHUB_ENV}
       - name: Tag images
         run: |
           docker tag ${{ env.IMAGE_PRODUCT }} ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_PRODUCT }}

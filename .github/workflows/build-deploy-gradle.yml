@@ -31,7 +31,7 @@ jobs:
           distribution: 'semeru'
       - name: Setup Gradle
         # git ls-remote --tags https://github.com/gradle/actions.git
-        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
         with:
           gradle-version: '9.8.0'
       - name: Run unit tests
@@ -90,7 +90,7 @@ jobs:
           distribution: 'semeru'
           cache: 'gradle'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
         with:
           gradle-version: '9.8.0'
       - name: Build application
@@ -123,7 +123,7 @@ jobs:
           distribution: 'semeru'
           cache: 'gradle'
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+        uses: gradle/actions/setup-gradle@8da46b539cd8fe6ab27ca75128919a18d757604c
         with:
           gradle-version: '9.8.0'
       - name: Publish to GitHub Packages
