@@ -28,7 +28,7 @@ public abstract class MongoContainerConfig {
     .requireNonNull(MongoContainerConfig.class.getClassLoader().getResource("scripts/mongo/products.json"))
     .getPath();
 
-  private static final DockerImageName MONGO_IMAGE = DockerImageName.parse("mongo:9.0.2-noble");
+  private static final DockerImageName MONGO_IMAGE = DockerImageName.parse("mongo:9.0.4-resolute");
 
   private static final MongoDBContainer container = new MongoDBContainer(MONGO_IMAGE)
     .withStartupTimeout(Duration.ofMinutes(1L))
