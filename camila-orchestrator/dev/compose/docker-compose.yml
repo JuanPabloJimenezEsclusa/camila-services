@@ -218,7 +218,7 @@ services:
     networks:
       camila_product_network:
   redis:
-    image: redis:8.10.2-alpine
+    image: redis:8.10.3-alpine
     container_name: camila-redis-product-db
     hostname: redis
     restart: on-failure:3
@@ -459,7 +459,7 @@ services:
     networks:
       camila_product_network:
   alertmanager:
-    image: prom/alertmanager:v0.34.1
+    image: prom/alertmanager:v0.34.2
     container_name: alertmanager
     hostname: alertmanager
     restart: unless-stopped
@@ -485,7 +485,7 @@ services:
     networks:
       camila_product_network:
   grafana:
-    image: grafana/grafana:13.2.4
+    image: grafana/grafana:13.3.0
     container_name: grafana
     hostname: grafana
     restart: unless-stopped
@@ -678,7 +678,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.32.0
+    image: axllent/mailpit:v1.33.0
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1
