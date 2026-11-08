@@ -6,6 +6,9 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
+  # shortcut: pom.xml pins sonar.branch.name=develop, so parallel PR analyses share one
+  # SonarCloud target and can overwrite each other's metrics; make them PR-scoped
+  # (sonar.pullrequest.*) before trusting per-PR numbers
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
