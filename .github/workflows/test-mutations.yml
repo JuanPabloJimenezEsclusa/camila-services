@@ -18,8 +18,11 @@ env:
   MAVEN_CLI_OPTS: "--no-transfer-progress -B -ntp -e"
 
 jobs:
+  changes:
+    uses: ./.github/workflows/detect-java-changes.yml
   test:
-    if: github.event.pull_request.draft == false
+    needs: changes
+    if: github.event.pull_request.draft == false && needs.changes.outputs.skip != 'true'
     name: Mutation Testing Analysis
     environment: pro
     runs-on: ubuntu-latest
@@ -81,12 +84,18 @@ jobs:
             comment += '\n---\n';
             comment += '<sub>📦 Full PIT reports (XML/HTML) are available in the `pitest-reports` artifact.</sub>\n';
             
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
+            comment += '\n<!-- mutation-summary -->\n';
+            const { owner, repo } = context.repo;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner, repo, issue_number: context.issue.number, per_page: 100
             });
+            const previous = comments.find(c =>
+              c.body.includes('<!-- mutation-summary -->') && c.user.login === 'github-actions[bot]');
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body: comment });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body: comment });
+            }
       - name: Check Mutation Tests Status
         if: failure() && steps.mutation-tests.conclusion == 'failure'
         run: |
