@@ -4,6 +4,13 @@ on:
   pull_request:
     branches: [ develop ]
     types: [ opened, synchronize, reopened, ready_for_review ]
+    # safe to filter: this workflow is not a required check. Filtering a required
+    # one leaves the check Pending forever and blocks the merge.
+    paths-ignore:
+      - 'camila-orchestrator/**'
+      - 'camila-performance/**'
+      - 'openspec/**'
+      - '**/*.md'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
