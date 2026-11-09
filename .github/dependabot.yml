@@ -59,7 +59,7 @@ updates:
     directory: "/camila-orchestrator/dev/compose/"
     schedule:
       interval: "weekly"
-      time: "12:00"
+      time: "06:00"
     groups:
       infrastructure-dependencies:
         patterns:
@@ -70,7 +70,7 @@ updates:
     directory: "/camila-orchestrator/pre/aws/terraform/templates/"
     schedule:
       interval: "weekly"
-      time: "15:00"
+      time: "09:00"
     groups:
       infrastructure-dependencies:
         patterns:

@@ -12,10 +12,6 @@ concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
-permissions:
-  contents: read
-  pull-requests: write
-
 env:
   MAVEN_OPTS: "-Xmx2048m"
   MAVEN_CLI_OPTS: "--no-transfer-progress -B -ntp -e"
@@ -26,6 +22,9 @@ jobs:
   build:
     needs: changes
     if: github.event.pull_request.draft == false && needs.changes.outputs.skip != 'true'
+    permissions:
+      contents: read
+      pull-requests: write
     name: SonarQube Code Analysis
     environment: pro
     runs-on: ubuntu-latest
