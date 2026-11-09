@@ -6,12 +6,16 @@ on:
     types: [ opened, synchronize, reopened, ready_for_review ]
 
 concurrency:
-  group: build-deploy-gradle
-  cancel-in-progress: false
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  changes:
+    uses: ./.github/workflows/detect-java-changes.yml
+
   build-quality:
-    if: github.event.pull_request.draft == false
+    needs: changes
+    if: github.event.pull_request.draft == false && needs.changes.outputs.skip != 'true'
     name: Build & Quality Checks
     runs-on: ubuntu-latest
     permissions:

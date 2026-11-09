@@ -163,8 +163,9 @@ class ProductGrpcAdapterUnitTest {
 
     // Then
     verify(this.productUseCase).sortByMetricsWeights(requestParams);
+    // the adapter subscribes on boundedElastic, so onCompleted arrives on another thread
+    verify(this.responseObserver, timeout(10_000L)).onCompleted();
     verify(this.responseObserver, never()).onNext(any());
-    verify(this.responseObserver).onCompleted();
     verifyNoMoreInteractions(this.productUseCase, this.responseObserver);
   }
 

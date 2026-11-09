@@ -1,0 +1,29 @@
+name: Detect Java Changes
+
+on:
+  workflow_call:
+    outputs:
+      skip:
+        description: "true only when every changed file is a known non-Java path"
+        value: ${{ jobs.detect.outputs.skip }}
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.diff.outputs.skip }}
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - id: diff
+        run: |
+          base="origin/${{ github.base_ref }}"
+          if ! changed=$(git diff --name-only "$base"...HEAD); then
+            exit 0
+          fi
+          if [ -n "$changed" ] && ! printf '%s\n' "$changed" | grep -qvE '^(camila-orchestrator|camila-performance|openspec)/|\.md$'; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi

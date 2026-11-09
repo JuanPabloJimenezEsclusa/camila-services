@@ -6,8 +6,8 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:
-  group: behaviour-tests
-  cancel-in-progress: false
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -18,8 +18,11 @@ env:
   MAVEN_CLI_OPTS: "--no-transfer-progress -B -ntp -e"
 
 jobs:
+  changes:
+    uses: ./.github/workflows/detect-java-changes.yml
   test:
-    if: github.event.pull_request.draft == false
+    needs: changes
+    if: github.event.pull_request.draft == false && needs.changes.outputs.skip != 'true'
     name: Behaviour Testing Analysis
     environment: pro
     runs-on: ubuntu-latest
@@ -88,12 +91,18 @@ jobs:
             comment += '\n---\n';
             comment += '<sub>📦 Full Cucumber HTML/JSON reports are available in the `cucumber-reports` artifact.</sub>\n';
             
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
+            comment += '\n<!-- behaviour-summary -->\n';
+            const { owner, repo } = context.repo;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner, repo, issue_number: context.issue.number, per_page: 100
             });
+            const previous = comments.find(c =>
+              c.body.includes('<!-- behaviour-summary -->') && c.user.login === 'github-actions[bot]');
+            if (previous) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: previous.id, body: comment });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number: context.issue.number, body: comment });
+            }
       - name: Check Behaviour Tests Status
         if: failure() && steps.behaviour-tests.conclusion == 'failure'
         run: |

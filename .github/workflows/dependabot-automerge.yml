@@ -4,8 +4,9 @@ on:
   pull_request_target:
 
 concurrency:
-  group: dependabot-automerge
-  cancel-in-progress: false
+  # pull_request_target sets github.ref to the base branch, so key on the PR number instead
+  group: "${{ github.workflow }}-${{ github.event.pull_request.number }}"
+  cancel-in-progress: true
 
 permissions:
   contents: write
