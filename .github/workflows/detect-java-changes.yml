@@ -7,12 +7,11 @@ on:
         description: "true only when every changed file is a known non-Java path"
         value: ${{ jobs.detect.outputs.skip }}
 
-permissions:
-  contents: read
-
 jobs:
   detect:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       skip: ${{ steps.diff.outputs.skip }}
     steps:
