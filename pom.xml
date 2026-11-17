@@ -82,7 +82,7 @@
 
     <!-- API -->
     <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
-    <graphql-java.version>26.1</graphql-java.version>
+    <graphql-java.version>26.2</graphql-java.version>
     <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
 
     <!-- GRPC -->
@@ -111,7 +111,7 @@
     <chaos-monkey-spring-boot.version>4.0.0</chaos-monkey-spring-boot.version>
     <jspecify.version>1.0.1</jspecify.version>
     <mapstruct.version>1.6.3</mapstruct.version>
-    <commons-lang3.version>3.21.0</commons-lang3.version>
+    <commons-lang3.version>3.22.0</commons-lang3.version>
     <snakeyaml.version>2.6</snakeyaml.version>
     <error_prone_core.version>2.52.0</error_prone_core.version>
     <pitest-maven.version>1.30.2</pitest-maven.version>
@@ -123,7 +123,7 @@
     <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
 
     <!-- Database -->
-    <couchbase-java-client.version>3.13.0</couchbase-java-client.version>
+    <couchbase-java-client.version>3.13.1</couchbase-java-client.version>
 
     <!-- Build Tools -->
     <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
@@ -139,7 +139,7 @@
     <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
     <maven-failsafe-plugin.version>3.6.1</maven-failsafe-plugin.version>
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-    <versions-maven-plugin.version>2.24.0</versions-maven-plugin.version>
+    <versions-maven-plugin.version>2.25.1</versions-maven-plugin.version>
     <git-changelog-maven-plugin.version>2.5.6</git-changelog-maven-plugin.version>
     <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <sortpom-maven-plugin.version>4.0.0</sortpom-maven-plugin.version>
