@@ -3,7 +3,7 @@ plugins {
   id 'java'
   id 'jacoco'
   id 'pmd'
-  id 'org.sonarqube' version '7.5.0.8588'
+  id 'org.sonarqube' version '7.6.0.18749'
   id 'org.springframework.boot' version '4.1.2' apply false
   id 'io.spring.dependency-management' version '1.1.7' apply false
   id 'org.graalvm.buildtools.native' version '1.1.18' apply false
@@ -218,7 +218,7 @@ subprojects {
     opentelemetryInstrumentationVersion = '2.33.1'
 
     // Database
-    couchbaseJavaClientVersion = '3.13.0'
+    couchbaseJavaClientVersion = '3.13.1'
 
     // Testing
     testcontainersVersion = '2.0.5'
@@ -237,7 +237,7 @@ subprojects {
     springdocOpenapiVersion = '3.2.0'
 
     // GraphQL
-    graphqlJavaVersion = '26.1'
+    graphqlJavaVersion = '26.2'
     graphqlJavaExtendedScalarsVersion = '24.0'
 
     // GRPC
@@ -249,7 +249,7 @@ subprojects {
     lombokVersion = '1.18.38'
     mapstructVersion = '1.6.3'
     jspecifyVersion = '1.0.1'
-    commonsLang3 = '3.21.0'
+    commonsLang3 = '3.22.0'
 
     // Plugins
     checkstyleVersion = '12.3.0'
