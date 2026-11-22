@@ -12167,5 +12167,3 @@ Changelog of camila-services.
 
 
 [8e6531256f0d135](https://github.com/JuanPabloJimenezEsclusa/camila-services/commit/8e6531256f0d135) Juan Pablo Jimenez Esclusa *2023-09-29 10:08:28*
-
-

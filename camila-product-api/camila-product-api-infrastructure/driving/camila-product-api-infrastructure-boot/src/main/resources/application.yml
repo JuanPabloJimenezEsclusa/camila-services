@@ -279,7 +279,7 @@ spring:
       config:
         enabled: true
         fail-fast: false
-        prefixes: 
+        prefixes:
           -config
         default-context: application
         format: YAML

@@ -75,14 +75,14 @@ jobs:
           script: |
             const fs = require('fs');
             const summaryPath = 'mutation-summary.md';
-            
+
             let comment = fs.existsSync(summaryPath)
               ? fs.readFileSync(summaryPath, 'utf8')
               : '## 🧬 Mutation Testing Report\n\n⚠️ **No mutation reports were generated.**\n';
-            
+
             comment += '\n---\n';
             comment += '<sub>📦 Full PIT reports (XML/HTML) are available in the `pitest-reports` artifact.</sub>\n';
-            
+
             comment += '\n<!-- mutation-summary -->\n';
             const { owner, repo } = context.repo;
             const { data: comments } = await github.rest.issues.listComments({

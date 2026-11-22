@@ -31,9 +31,9 @@ Microservice example. Implements a product API with the following features:
 * JDK ~= [25.x](https://openjdk.org/projects/jdk/25/)
 * Docker ~= [29.x](https://docs.docker.com/engine/release-notes/29/)
 * Maven ~= [3.9.x](https://maven.apache.org/download.cgi)
-* Gradle ~= [9.5.x](https://gradle.org/releases)
+* Gradle ~= [9.8.x](https://gradle.org/releases)
 * Spring ~= [7.x](https://spring.io/projects/spring-framework#learn)
-* Spring-boot ~= [4.0.x](https://spring.io/projects/spring-boot#learn)
+* Spring-boot ~= [4.1.x](https://spring.io/projects/spring-boot#learn)
 * Spring-cloud ~= [2025.1.x](https://spring.io/projects/spring-cloud#learn)
 * MongoDB ~= [8.x](https://www.mongodb.com/docs/manual/release-notes/)
 * Couchbase ~= [8.x](https://docs.couchbase.com/server/current/release-notes/relnotes.html)
@@ -128,7 +128,7 @@ The best reference for this architecture is in: [software-craftsmanship](https:/
 curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products/1' \
   -H 'Accept: application/json'
-  
+
 curl -X 'GET' \
   'http://localhost:8080/product-dev/api/products?salesUnits=0.80&stock=0.18&profitMargin=0.01&daysInStock=0.01&page=0&size=20' \
   -H 'Accept: application/json'
@@ -171,7 +171,7 @@ curl --location 'http://localhost:8080/product-dev/api/graphql' \
   --header 'Accept: application/json' \
   --header 'Content-Type: application/json' \
   --data '{"query":"query findById($internalId: ID) {\n  
-    findById(internalId: $internalId) {\n   
+    findById(internalId: $internalId) {\n  
       id, internalId, category, name, salesUnits, stock, profitMargin, daysInStock\n  
     }\n}\n",
     "variables":{"internalId":"1"}}'
@@ -192,7 +192,7 @@ echo '{ "method": "SORT_PRODUCTS", "salesUnits": "0.0008", "stock": "0.9990", "p
 docker run --rm -it \
   --network=host \
   ghcr.io/vi/websocat:nightly \
-  ws://localhost:8080/product-dev/api/ws/products 
+  ws://localhost:8080/product-dev/api/ws/products
 { "method": "SORT_PRODUCTS", "salesUnits": "0.9990", "stock": "0.0008", "profitMargin": "0.0001", "daysInStock": "0.0001", "page": "0", "size": "100" }
 ```
 
@@ -269,7 +269,7 @@ db.products.aggregate([
 ```couchbasequery
 SELECT
   meta().id AS __id, p.internalId, p.name, p.category, p.salesUnits, p.stock,
-  ((p.salesUnits * 0.80) + 
+  ((p.salesUnits * 0.80) +
    ((ARRAY_SUM(ARRAY v FOR v IN OBJECT_VALUES(p.stock) END) / ARRAY_LENGTH(OBJECT_VALUES(p.stock))) * 0.18) +
    (p.profitMargin * 0.01) +
    (p.daysInStock * 0.01)) AS weightedScore

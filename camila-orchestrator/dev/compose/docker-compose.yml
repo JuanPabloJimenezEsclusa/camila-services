@@ -334,14 +334,14 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.8
     command: >
-      start-dev 
-       --hostname keycloak 
-       --http-port 9191 
-       --import-realm 
-       --log-level=WARN 
-       --health-enabled=true 
+      start-dev
+       --hostname keycloak
+       --http-port 9191
+       --import-realm
+       --log-level=WARN
+       --health-enabled=true
        --metrics-enabled=true
-       --tracing-enabled=true 
+       --tracing-enabled=true
        --telemetry-endpoint=http://otel-collector:4317
     container_name: keycloak
     hostname: keycloak

@@ -259,4 +259,3 @@ class CachePortUnitTest {
     verifyNoMoreInteractions(cachePort);
   }
 }
-

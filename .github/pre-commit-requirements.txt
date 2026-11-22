@@ -1,0 +1,17 @@
+# Installed by .github/workflows/pre-commit.yml in hash-checking mode, so the
+# gate cannot resolve to code that changed after review and pip never runs a
+# setup script. Regenerate after bumping pre-commit, on the runner image
+# (ubuntu-latest + Python 3.13, since PyYAML ships per-platform wheels):
+#   pip download --only-binary :all: --python-version 3.13 -d /tmp/wheels -r <this file>
+#   pip hash /tmp/wheels/*.whl
+cfgv==3.5.0 --hash=sha256:a8dc6b26ad22ff227d2634a65cb388215ce6cc96bbcc5cfde7641ae87e8dacc0
+distlib==0.4.4 --hash=sha256:cf09d55b1e85a89576b036aeb71550bfd68320f3f21761ca329eadadad918638
+filelock==4.3.0 --hash=sha256:f933f39f7e01249a4a49b9abab30edc6d4b874624c3de5dd0b0d137aa8adb979
+identify==2.6.20 --hash=sha256:6a16b69b93187244e0548cbfd25b3e4a6f9a7a2ad784625c3bec2b8d27b81aaa
+nodeenv==1.12.0 --hash=sha256:80644d65c10cc2be12e3e4b54b3367ff288c7ad24ae75c2dcc65454fc7449d4d
+packaging==26.3 --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+platformdirs==4.14.8 --hash=sha256:1e34af590de4d978631b751eb2202f2fee4497537a17c1720b12fcf57b331392
+pre_commit==4.7.0 --hash=sha256:2e229038ad3656081b70c27913157e4b636ef306f643f024a8a8e3f0f7b2f877
+python_discovery==1.9.6 --hash=sha256:93b10b90363d4151964cdeee2ec6601f3041b17fc2b253a1c3da7d6e7ddd8337
+pyyaml==6.0.4 --hash=sha256:50588147ab2c6a59b5f990a4905db80899a6c2bd197e046a6201f1e67587e794
+virtualenv==21.15.12 --hash=sha256:bbbf764388a18dee8c3532c77af7a29680cd8121911d6dcb3484335d76547323

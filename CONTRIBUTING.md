@@ -1,10 +1,10 @@
 # Contributing to Camila Services
 
-First off, thank you for considering contributing to Camila Services! 
+First off, thank you for considering contributing to Camila Services!
 We appreciate your time and effort in making this project better.
 
-The following is a set of guidelines for contributing to Camila Services. 
-These are mostly guidelines, not rules. 
+The following is a set of guidelines for contributing to Camila Services.
+These are mostly guidelines, not rules.
 Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## Table of Contents

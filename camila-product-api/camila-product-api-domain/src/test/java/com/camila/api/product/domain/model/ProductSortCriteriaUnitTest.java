@@ -227,4 +227,3 @@ class ProductSortCriteriaUnitTest {
     assertThat(criteria.metricWeights().stream().filter(mw -> mw.metric() == Metrics.DAYS_IN_STOCK).findFirst().orElseThrow().weight()).isZero();
   }
 }
-

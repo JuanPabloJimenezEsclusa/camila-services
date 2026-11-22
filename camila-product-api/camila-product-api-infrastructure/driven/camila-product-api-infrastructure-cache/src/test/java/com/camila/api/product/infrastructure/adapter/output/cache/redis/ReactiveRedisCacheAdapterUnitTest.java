@@ -241,4 +241,3 @@ class ReactiveRedisCacheAdapterUnitTest {
     verifyNoMoreInteractions(redisOps, valueOps);
   }
 }
-

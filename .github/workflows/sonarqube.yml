@@ -95,14 +95,14 @@ jobs:
           script: |
             const fs = require('fs');
             const summaryPath = 'sonar-summary.md';
-            
+
             let comment = fs.existsSync(summaryPath)
               ? fs.readFileSync(summaryPath, 'utf8')
               : '## 📊 SonarQube Code Analysis\n\n⚠️ **No SonarQube results were collected.**\n';
-            
+
             comment += '\n---\n';
             comment += '<sub>💡 Metrics are read from SonarCloud for the `develop` branch. Full reports are in the `sonarqube-reports` artifact.</sub>\n';
-            
+
             comment += '\n<!-- sonar-summary -->\n';
             const { owner, repo } = context.repo;
             const { data: comments } = await github.rest.issues.listComments({

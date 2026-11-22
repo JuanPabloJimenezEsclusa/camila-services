@@ -21,7 +21,7 @@ receivers:
     html: |
       <h2>Camila Services Alert: {{ .GroupLabels.alertname }}</h2>
       <p><strong>Status:</strong> {{ .Status }}</p>
-      
+
       {{ range .Alerts }}
       <h3>{{ .Annotations.summary }}</h3>
       <p>{{ .Annotations.description }}</p>

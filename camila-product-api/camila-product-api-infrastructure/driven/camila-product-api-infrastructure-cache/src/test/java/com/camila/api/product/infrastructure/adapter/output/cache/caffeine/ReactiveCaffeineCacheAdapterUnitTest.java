@@ -237,4 +237,3 @@ class ReactiveCaffeineCacheAdapterUnitTest {
     verifyNoInteractions(cache, valueWrapper);
   }
 }
-

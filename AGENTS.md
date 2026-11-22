@@ -6,8 +6,8 @@ Camila Services — microservices platform for product classification and rankin
 
 - **Architecture**: Hexagonal (Ports & Adapters) + DDD
 - **Paradigm**: Reactive (Project Reactor — `Mono`/`Flux`)
-- **Language**: Java 25, Spring Boot 4.0.x
-- **Build**: Maven 3.9.x (primary), Gradle 9.5.0 (experimental)
+- **Language**: Java 25+, Spring Boot 4.1.x
+- **Build**: Maven 3.9.x (primary), Gradle 9.8.x (experimental)
 
 ### Services
 

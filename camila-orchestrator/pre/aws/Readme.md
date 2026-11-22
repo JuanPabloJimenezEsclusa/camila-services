@@ -35,7 +35,7 @@ Based on `AWS Cloud Provider`
 <summary><strong>Expand Architecture</strong></summary>
 
   With AWS Cloud Formation
-  
+
   > Basic deployment prioritizing simplification of the architecture and leveraging the AWS free tier. Designed as a development environment.
 
   <img src="images/camila-services-aws-cf-diagram.svg" alt="camila-services-aws-cf-diagram" />
@@ -50,7 +50,7 @@ Based on `AWS Cloud Provider`
   > 3. API Gateway, to create a proxy that centralizes certain configurations such as: AUTHZ/AUTHN, quota limits, etc.
 
   <img src="images/camila-services-aws-tf-diagram.svg" alt="camila-services-aws-tf-diagram" />
-  
+
   > Docs: <a href="https://docs.aws.amazon.com/whitepapers/latest/microservices-on-aws/microservices-on-serverless-technologies.html">AWS microservices-on-serverless-technologies</a>
 
 </details>

@@ -37,7 +37,7 @@ xdg-open "http://keycloak:9191/realms/camila-realm/protocol/openid-connect/auth?
 ```
 
 ```bash
-# The response includes a "code" to be used to request the token (copy to `random_auth_code`). 
+# The response includes a "code" to be used to request the token (copy to `random_auth_code`).
 # (This code is valid for a short period only)
 client_id="camila-client"
 client_secret="Fuvf8XyBDXxU57NAOOFZVvdUIPmGgiyE"
