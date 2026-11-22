@@ -10,7 +10,7 @@ groups:
         annotations:
           summary: "Spike of 429 responses on gateway (route={{ $labels.route }})"
           description: >-
-            There is a sustained rate of 429 (Too Many Requests) on the gateway route for >2m. 
+            There is a sustained rate of 429 (Too Many Requests) on the gateway route for >2m.
             Check rate-limiter settings and client behavior.
 
       - alert: ManyFallbackInvocations

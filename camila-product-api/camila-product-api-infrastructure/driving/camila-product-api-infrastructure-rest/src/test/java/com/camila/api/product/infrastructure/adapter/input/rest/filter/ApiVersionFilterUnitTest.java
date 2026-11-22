@@ -314,4 +314,3 @@ class ApiVersionFilterUnitTest {
     verifyNoMoreInteractions(exchange, request, response, requestHeaders, responseHeaders);
   }
 }
-

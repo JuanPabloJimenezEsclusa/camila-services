@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [ --markdown-linebreak-ext=md ]
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [ --allow-multiple-documents ]
+        # CloudFormation uses short-form intrinsic tags (!Ref, !Sub) that PyYAML cannot parse.
+        exclude: ^camila-orchestrator/.*/cloudformation/templates/
+      - id: check-json
+      - id: check-added-large-files
+        args: [ "--maxkb=2000" ]
+      - id: check-merge-conflict
+      - id: detect-private-key
+  - repo: local
+    hooks:
+      - id: sync-readme-versions
+        name: sync documented versions from pom.xml
+        entry: scripts/sync-readme-versions.sh
+        language: script
+        files: '(^|/)(pom\.xml|Readme\.md|AGENTS\.md)$'
+        pass_filenames: false

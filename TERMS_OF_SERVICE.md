@@ -52,4 +52,3 @@ For notices, access requests, privacy inquiries or support, contact: juan.pablo.
 
 15. Miscellaneous
 If any provision of these Terms is held invalid, the remaining provisions remain in force. The Provider may update these Terms by publishing a new version in the repository; the version with the latest effective date is the applicable one.
-

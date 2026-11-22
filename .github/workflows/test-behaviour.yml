@@ -82,14 +82,14 @@ jobs:
           script: |
             const fs = require('fs');
             const summaryPath = 'behaviour-summary.md';
-            
+
             let comment = fs.existsSync(summaryPath)
               ? fs.readFileSync(summaryPath, 'utf8')
               : '## 🧪 Behaviour Testing Report\n\n⚠️ **No Cucumber reports were generated.**\n';
-            
+
             comment += '\n---\n';
             comment += '<sub>📦 Full Cucumber HTML/JSON reports are available in the `cucumber-reports` artifact.</sub>\n';
-            
+
             comment += '\n<!-- behaviour-summary -->\n';
             const { owner, repo } = context.repo;
             const { data: comments } = await github.rest.issues.listComments({
@@ -107,4 +107,4 @@ jobs:
         run: |
           echo "❌ Behaviour tests failed!"
           echo "Please review the test output and behaviour test report artifacts."
-          exit 1 
+          exit 1

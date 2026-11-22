@@ -55,7 +55,7 @@ docker-compose up -d --build --force-recreate
 docker-compose ps
 
 # View logs (follow option shows live updates)
-docker-compose logs mongodb couchbase redis --follow 
+docker-compose logs mongodb couchbase redis --follow
 docker-compose logs admin consul gateway backend-product --follow
 docker-compose logs fluentd elasticsearch kibana --follow
 

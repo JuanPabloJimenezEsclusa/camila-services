@@ -11,7 +11,7 @@ grpc:
   message: |
     {
       "requestParams": [
-        {    
+        {
           "salesUnits": "0.090",
           "stock": "0.900",
           "profitMargin": "0.009",

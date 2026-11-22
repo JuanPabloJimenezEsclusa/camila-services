@@ -281,7 +281,7 @@ spring:
       config:
         enabled: true
         fail-fast: false
-        prefixes: 
+        prefixes:
           - config
         default-context: ${spring.application.name}
         format: YAML

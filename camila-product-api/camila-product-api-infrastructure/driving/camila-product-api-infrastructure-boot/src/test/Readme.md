@@ -150,7 +150,7 @@ mvn clean test \
 > Report: [cucumber-reports](./../../target/cucumber-reports/Cucumber.html)
 
 ```bash
-gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner" 
+gradle clean test --tests "com.camila.api.behaviour.ProductBehaviourRunner"
 ```
 
 ### Code Analysis

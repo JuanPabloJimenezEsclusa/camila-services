@@ -26,8 +26,8 @@ graphql:
     variables: |-
       {
         "salesUnits":0.0008,
-        "stock":0.9990, 
-        "profitMargin":0.0001, 
+        "stock":0.9990,
+        "profitMargin":0.0001,
         "daysInStock": 0.0001,
         "page":0,
         "size":2,
