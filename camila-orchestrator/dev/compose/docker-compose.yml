@@ -176,7 +176,7 @@ services:
     networks:
       camila_product_network:
   couchbase:
-    image: couchbase/server:8.0.3
+    image: couchbase/server:8.0.4
     container_name: camila-couchbase-product-db
     hostname: couchbase
     restart: on-failure:5
@@ -411,7 +411,7 @@ services:
     networks:
       camila_product_network:
   node-exporter:
-    image: prom/node-exporter:v1.12.1
+    image: prom/node-exporter:v1.13.1
     container_name: node-exporter
     hostname: node-exporter
     restart: unless-stopped
@@ -678,7 +678,7 @@ services:
   ## Utilities
   mailpit:
     # https://mailpit.axllent.org/
-    image: axllent/mailpit:v1.33.1
+    image: axllent/mailpit:v1.34.0
     container_name: mailpit
     hostname: mailpit
     restart: on-failure:1
